@@ -1,0 +1,9 @@
+{
+  "name": "@based/theme",
+  "version": "0.0.1",
+  "dependencies": {
+    "@sindresorhus/fnv1a": "^2.0.1",
+    "react": "^16.13.1"
+  },
+  "license": "UNLICENSED"
+}

@@ -1,0 +1,42 @@
+{
+  "name": "based-ui",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "cd apps/playground && yarn start"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "lint-staged": {
+    "{js,json}": [
+      "prettier --write",
+      "git add"
+    ],
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ]
+  },
+  "prettier": "@saulx/prettier-config",
+  "eslintConfig": {
+    "extends": "@saulx/eslint-config"
+  },
+  "devDependencies": {
+    "@saulx/eslint-config": "https://github.com/atelier-saulx/eslint-config",
+    "@saulx/prettier-config": "https://github.com/atelier-saulx/prettier-config"   
+  },
+  "description": "Based ui components, theme and icons",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/atelier-saulx/based-ui"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/atelier-saulx/based-ui/issues"
+  },
+  "homepage": "https://github.com/atelier-saulx/based-ui#readme"
+}

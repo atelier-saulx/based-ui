@@ -1,0 +1,9 @@
+{
+  "name": "@based/icons",
+  "version": "0.0.1",
+  "dependencies": {
+    "@based/theme": "*",
+    "react": "^16.13.1"
+  },
+  "license": "UNLICENSED"
+}
