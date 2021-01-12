@@ -1,8 +1,0 @@
-{
-  "name": "testerttime",
-  "devDependencies": {
-    "@saulx/aristotle": "^2.3.3",
-    "@based/get-app-selectors": "*",
-    "@saulx/hub": "^3.7.7"
-  }
-}
