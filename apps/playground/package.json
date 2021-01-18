@@ -2,19 +2,14 @@
   "name": "@based/ui-playgound",
   "version": "0.0.1",
   "devDependencies": {
-    "@saulx/aristotle": "^2.3.3"
+    "@saulx/aristotle": "^3.0.3"
   },
   "dependencies": {
-    "@based/i18n": "*",
-    "@based/icons": "*",
-    "@based/theme": "*",
-    "@based/ui": "*",
-    "@saulx/hub": "^3.7.7",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   },
   "scripts": {
-    "start": "aristotle src/index.js"
+    "start": "aristotle watch -t src/index.js"
   },
   "license": "UNLICENSED"
 }

@@ -6,8 +6,7 @@
     "start": "cd apps/playground && yarn start"
   },
   "workspaces": [
-    "apps/*",
-    "packages/*"
+    "apps/*"
   ],
   "lint-staged": {
     "{js,json}": [
