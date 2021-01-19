@@ -6,11 +6,17 @@ import React, {
 } from 'react'
 
 import AddSvg from './Components/Add'
+import CheckedSvg from './Components/Checked'
 import ChevronLeftSvg from './Components/ChevronLeft'
 import ChevronRightSvg from './Components/ChevronRight'
+import CloseSvg from './Components/Close'
 import CollapseSvg from './Components/Collapse'
+import CustomSvg from './Components/Custom'
 import DashboardSvg from './Components/Dashboard'
 import DeleteSvg from './Components/Delete'
+import DesktopSvg from './Components/Desktop'
+import DownSvg from './Components/Down'
+import DownThickSvg from './Components/DownThick'
 import DragSvg from './Components/Drag'
 import DuplicateSvg from './Components/Duplicate'
 import EditNameSvg from './Components/EditName'
@@ -19,17 +25,33 @@ import EmptyLineSvg from './Components/EmptyLine'
 import ExpandSvg from './Components/Expand'
 import GraphSvg from './Components/Graph'
 import HideSvg from './Components/Hide'
+import LockSvg from './Components/Lock'
+import LogicSvg from './Components/Logic'
+import MobileSvg from './Components/Mobile'
 import MoreSvg from './Components/More'
+import MultipleChoiceSvg from './Components/MultipleChoice'
 import NewFlowSvg from './Components/NewFlow'
 import NewTabSvg from './Components/NewTab'
+import NewUserSvg from './Components/NewUser'
+import OpenQuestionSvg from './Components/OpenQuestion'
+import OverviewSvg from './Components/Overview'
+import RegisterSvg from './Components/Register'
 import ResetSvg from './Components/Reset'
+import ScaleQuestionSvg from './Components/ScaleQuestion'
 import ScheduleSvg from './Components/Schedule'
 import ShowSvg from './Components/Show'
 import ShowsSvg from './Components/Shows'
+import SkipSvg from './Components/Skip'
 import SmartCopySvg from './Components/SmartCopy'
+import TabletSvg from './Components/Tablet'
+import ThankYouSvg from './Components/ThankYou'
+import TimmingSvg from './Components/Timming'
 import ToggleOffScreenSvg from './Components/ToggleOff'
 import ToggleOnSvg from './Components/ToggleOn'
 import UnlockSvg from './Components/Unlock'
+import UploadSvg from './Components/Upload'
+import VideoSvg from './Components/Video'
+import WaitingScreenSvg from './Components/WaitingScreen'
 import WelcomeScreenSvg from './Components/WelcomeScreen'
 
 import { Color } from '@based/theme'
@@ -123,11 +145,17 @@ const wrapIcon = (
 }
 
 const Add = wrapIcon(AddSvg)
+const Checked = wrapIcon(CheckedSvg)
 const ChevronLeft = wrapIcon(ChevronLeftSvg)
 const ChevronRight = wrapIcon(ChevronRightSvg)
+const Close = wrapIcon(CloseSvg)
 const Collapse = wrapIcon(CollapseSvg)
+const Custom = wrapIcon(CustomSvg)
 const Dashboard = wrapIcon(DashboardSvg)
 const Delete = wrapIcon(DeleteSvg)
+const Desktop = wrapIcon(DesktopSvg)
+const Down = wrapIcon(DownSvg)
+const DownThick = wrapIcon(DownThickSvg)
 const Drag = wrapIcon(DragSvg)
 const Duplicate = wrapIcon(DuplicateSvg)
 const Edit = wrapIcon(EditSvg)
@@ -136,26 +164,48 @@ const EmptyLine = wrapIcon(EmptyLineSvg)
 const Expand = wrapIcon(ExpandSvg)
 const Graph = wrapIcon(GraphSvg)
 const Hide = wrapIcon(HideSvg)
+const Lock = wrapIcon(LockSvg)
+const Logic = wrapIcon(LogicSvg)
+const Mobile = wrapIcon(MobileSvg)
 const More = wrapIcon(MoreSvg)
+const MultipleChoice = wrapIcon(MultipleChoiceSvg)
 const NewFlow = wrapIcon(NewFlowSvg)
 const NewTab = wrapIcon(NewTabSvg)
+const NewUser = wrapIcon(NewUserSvg)
+const OpenQuestion = wrapIcon(OpenQuestionSvg)
+const Overview = wrapIcon(OverviewSvg)
+const Register = wrapIcon(RegisterSvg)
 const Reset = wrapIcon(ResetSvg)
+const ScaleQuestion = wrapIcon(ScaleQuestionSvg)
 const Schedule = wrapIcon(ScheduleSvg)
 const Show = wrapIcon(ShowSvg)
 const Shows = wrapIcon(ShowsSvg)
+const Skip = wrapIcon(SkipSvg)
 const SmartCopy = wrapIcon(SmartCopySvg)
+const Tablet = wrapIcon(TabletSvg)
+const ThankYou = wrapIcon(ThankYouSvg)
+const Timming = wrapIcon(TimmingSvg)
 const ToggleOff = wrapIcon(ToggleOffScreenSvg)
 const ToggleOn = wrapIcon(ToggleOnSvg)
 const Unlock = wrapIcon(UnlockSvg)
+const Upload = wrapIcon(UploadSvg)
+const Video = wrapIcon(VideoSvg)
+const WaitingScreen = wrapIcon(WaitingScreenSvg)
 const WelcomeScreen = wrapIcon(WelcomeScreenSvg)
 
 const icons = {
   Add,
+  Checked,
   ChevronLeft,
   ChevronRight,
+  Close,
   Collapse,
+  Custom,
   Dashboard,
   Delete,
+  Desktop,
+  Down,
+  DownThick,
   Drag,
   Duplicate,
   Edit,
@@ -164,17 +214,33 @@ const icons = {
   Expand,
   Graph,
   Hide,
+  Lock,
+  Logic,
+  Mobile,
   More,
+  MultipleChoice,
   NewFlow,
   NewTab,
+  NewUser,
+  OpenQuestion,
+  Overview,
+  Register,
   Reset,
+  ScaleQuestion,
   Schedule,
   Show,
   Shows,
+  Skip,
   SmartCopy,
+  Tablet,
+  ThankYou,
+  Timming,
   ToggleOff,
   ToggleOn,
   Unlock,
+  Upload,
+  Video,
+  WaitingScreen,
   WelcomeScreen,
 }
 
@@ -191,11 +257,17 @@ export {
   icons,
   iconFromString,
   Add,
+  Checked,
   ChevronLeft,
   ChevronRight,
+  Close,
   Collapse,
+  Custom,
   Dashboard,
   Delete,
+  Desktop,
+  Down,
+  DownThick,
   Drag,
   Duplicate,
   Edit,
@@ -204,16 +276,32 @@ export {
   Expand,
   Graph,
   Hide,
+  Lock,
+  Logic,
+  Mobile,
   More,
+  MultipleChoice,
   NewFlow,
   NewTab,
+  NewUser,
+  OpenQuestion,
+  Overview,
+  Register,
   Reset,
+  ScaleQuestion,
   Schedule,
   Show,
   Shows,
+  Skip,
   SmartCopy,
+  Tablet,
+  ThankYou,
+  Timming,
   ToggleOff,
   ToggleOn,
   Unlock,
+  Upload,
+  Video,
+  WaitingScreen,
   WelcomeScreen,
 }
