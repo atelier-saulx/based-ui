@@ -7,6 +7,8 @@ import { render } from 'react-dom'
 import isSafari from '../../util/isSafari'
 import dragScroll from './dragScroll'
 
+// needs more work!
+
 const drag = {
   cnt: 0,
 }
@@ -41,6 +43,7 @@ const useDrag = (
   index,
   ref,
   props = {
+    modifyImageElement: undefined,
     style: {
       // transform does not work on drag image
       backgroundColor: useColor('background'),
@@ -76,6 +79,8 @@ const useDrag = (
 
   const events = {
     draggable: true,
+    current: false,
+    ref: undefined,
     onDragStart: useCallback((e) => {
       setDrag(true)
       const t = ref ? ref.current : e.currentTarget
@@ -170,9 +175,10 @@ const useDrag = (
         }
       }
 
+      // @ts-ignore
       endListener.current = true
       document.body.addEventListener('dragend', end)
-    }),
+    }, []),
   }
 
   if (addRef) {

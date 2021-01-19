@@ -48,7 +48,9 @@ export const Button: FunctionComponent<ButtonProps> = ({
   if (actionKey && onClick) {
     ref = useRef()
     useEffect(() => {
-      clearTimeout(ref.timeout)
+      if (ref.timeout) {
+        clearTimeout(ref.timeout)
+      }
     }, [])
     const onKeyUp = useCallback((x: any) => {
       if (hover.onMouseDown) {
