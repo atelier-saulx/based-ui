@@ -1,36 +1,50 @@
-import React, { CSSProperties, EventHandler, SyntheticEvent, FunctionComponent } from 'react'
+import React, {
+  CSSProperties,
+  EventHandler,
+  SyntheticEvent,
+  FunctionComponent,
+} from 'react'
 
+import DashboardSvg from './Components/Dashboard'
+import DragSvg from './Components/Drag'
 import GraphSvg from './Components/Graph'
+import NewFlowSvg from './Components/NewFlow'
+import ResetSvg from './Components/Reset'
+import ScheduleSvg from './Components/Schedule'
+import ShowsSvg from './Components/Shows'
 import WelcomeScreenSvg from './Components/WelcomeScreen'
+import ToggleOffScreenSvg from './Components/ToggleOff'
 
 import { Color } from '@based/theme'
 
 export type SvgProps = {
-  color: Color,
-  framed: boolean,
-  frameColor: Color,
+  color: Color
+  framed: boolean
+  frameColor: Color
   size: number
 }
 
 type GenericEventHandler = EventHandler<SyntheticEvent>
 
 export type IconProps = {
-  color?: Color,
-  style?: CSSProperties,
-  framed?: boolean,
-  frameColor?: Color,
-  onDown?: GenericEventHandler ,
-  onHover?: GenericEventHandler,
-  onMouseEnter?: GenericEventHandler,
-  onClick?: GenericEventHandler,
-  draggable?: boolean,
-  onDragEnd?: GenericEventHandler,
-  onDrag?: GenericEventHandler,
-  onDragStart?: GenericEventHandler,
+  color?: Color
+  style?: CSSProperties
+  framed?: boolean
+  frameColor?: Color
+  onDown?: GenericEventHandler
+  onHover?: GenericEventHandler
+  onMouseEnter?: GenericEventHandler
+  onClick?: GenericEventHandler
+  draggable?: boolean
+  onDragEnd?: GenericEventHandler
+  onDrag?: GenericEventHandler
+  onDragStart?: GenericEventHandler
   size?: number
 }
 
-const Icon: FunctionComponent<IconProps & {  Svg: FunctionComponent<SvgProps> }> = ({
+const Icon: FunctionComponent<
+  IconProps & { Svg: FunctionComponent<SvgProps> }
+> = ({
   color,
   framed = false,
   frameColor = 'primary',
@@ -83,18 +97,34 @@ const Icon: FunctionComponent<IconProps & {  Svg: FunctionComponent<SvgProps> }>
   )
 }
 
-const wrapIcon = (Svg: FunctionComponent<SvgProps> ): FunctionComponent<IconProps> => {
+const wrapIcon = (
+  Svg: FunctionComponent<SvgProps>
+): FunctionComponent<IconProps> => {
   return (props: IconProps) => {
     return <Icon {...props} Svg={Svg} />
   }
 }
 
+const Dashboard = wrapIcon(DashboardSvg)
+const Drag = wrapIcon(DragSvg)
 const Graph = wrapIcon(GraphSvg)
+const NewFlow = wrapIcon(NewFlowSvg)
+const Reset = wrapIcon(ResetSvg)
+const Schedule = wrapIcon(ScheduleSvg)
+const Shows = wrapIcon(ShowsSvg)
 const WelcomeScreen = wrapIcon(WelcomeScreenSvg)
+const ToggleOff = wrapIcon(ToggleOffScreenSvg)
 
 const icons = {
+  Dashboard,
+  Drag,
   Graph,
-  WelcomeScreen
+  NewFlow,
+  Reset,
+  Schedule,
+  Shows,
+  WelcomeScreen,
+  ToggleOff,
 }
 
 const iconFromString = (str: string): null | FunctionComponent<IconProps> => {
@@ -109,6 +139,13 @@ const iconFromString = (str: string): null | FunctionComponent<IconProps> => {
 export {
   icons,
   iconFromString,
+  Dashboard,
+  Drag,
   Graph,
-  WelcomeScreen
+  NewFlow,
+  Reset,
+  Schedule,
+  Shows,
+  WelcomeScreen,
+  ToggleOff,
 }

@@ -73,7 +73,11 @@ const RenderComponents = ({ category, grid, bg = 'transparent' }) => {
                       {/* @ts-ignore */}
                       <Component
                         style={{
+<<<<<<< HEAD
                           marginBottom: '15px',
+=======
+                          marginBottom: grid ? '0px' : '15px',
+>>>>>>> 6df05608ea01bbc83b593a2b567d22f8929ea17f
                           marginRight: grid ? '15px' : '0px',
                         }}
                         key={i}
