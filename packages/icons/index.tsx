@@ -5,15 +5,19 @@ import React, {
   FunctionComponent,
 } from 'react'
 
+import ChevronLeftSvg from './Components/ChevronLeft'
 import DashboardSvg from './Components/Dashboard'
 import DragSvg from './Components/Drag'
+import EditSvg from './Components/Edit'
 import GraphSvg from './Components/Graph'
 import NewFlowSvg from './Components/NewFlow'
 import ResetSvg from './Components/Reset'
 import ScheduleSvg from './Components/Schedule'
 import ShowsSvg from './Components/Shows'
-import WelcomeScreenSvg from './Components/WelcomeScreen'
+import SmartCopySvg from './Components/SmartCopy'
 import ToggleOffScreenSvg from './Components/ToggleOff'
+import ToggleOnSvg from './Components/ToggleOn'
+import WelcomeScreenSvg from './Components/WelcomeScreen'
 
 import { Color } from '@based/theme'
 
@@ -105,26 +109,34 @@ const wrapIcon = (
   }
 }
 
+const ChevronLeft = wrapIcon(ChevronLeftSvg)
 const Dashboard = wrapIcon(DashboardSvg)
 const Drag = wrapIcon(DragSvg)
+const Edit = wrapIcon(EditSvg)
 const Graph = wrapIcon(GraphSvg)
 const NewFlow = wrapIcon(NewFlowSvg)
 const Reset = wrapIcon(ResetSvg)
 const Schedule = wrapIcon(ScheduleSvg)
 const Shows = wrapIcon(ShowsSvg)
-const WelcomeScreen = wrapIcon(WelcomeScreenSvg)
+const SmartCopy = wrapIcon(SmartCopySvg)
 const ToggleOff = wrapIcon(ToggleOffScreenSvg)
+const ToggleOn = wrapIcon(ToggleOnSvg)
+const WelcomeScreen = wrapIcon(WelcomeScreenSvg)
 
 const icons = {
+  ChevronLeft,
   Dashboard,
   Drag,
+  Edit,
   Graph,
   NewFlow,
   Reset,
   Schedule,
   Shows,
-  WelcomeScreen,
+  SmartCopy,
   ToggleOff,
+  ToggleOn,
+  WelcomeScreen,
 }
 
 const iconFromString = (str: string): null | FunctionComponent<IconProps> => {
@@ -139,13 +151,17 @@ const iconFromString = (str: string): null | FunctionComponent<IconProps> => {
 export {
   icons,
   iconFromString,
+  ChevronLeft,
   Dashboard,
   Drag,
+  Edit,
   Graph,
   NewFlow,
   Reset,
   Schedule,
   Shows,
-  WelcomeScreen,
+  SmartCopy,
   ToggleOff,
+  ToggleOn,
+  WelcomeScreen,
 }
