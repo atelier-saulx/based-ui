@@ -5,11 +5,11 @@
     "@saulx/aristotle": "^3.0.3"
   },
   "dependencies": {
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
   },
   "scripts": {
-    "start": "aristotle watch -t src/index.js"
+    "start": "aristotle watch -t src/index.ts"
   },
   "license": "UNLICENSED"
 }
