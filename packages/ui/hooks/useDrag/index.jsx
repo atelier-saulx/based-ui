@@ -1,8 +1,8 @@
 import { useColor } from '@based/theme'
 import React, { useCallback, useState, useEffect, useRef } from 'react'
 import { getSelection } from '../useSelect'
-import { Subtitle } from '../../Components/Text/Subtitle'
-import { Plus } from '@based/icons'
+import { Title } from '../../Components/Text/Title'
+import { Graph as Plus } from '@based/icons'
 import { render } from 'react-dom'
 import isSafari from '../../util/isSafari'
 import dragScroll from './dragScroll'
@@ -18,12 +18,13 @@ const MultiDragInfo = () => {
         borderRadius: 8,
         padding: 25,
         display: 'flex',
-        backgroundColor: useColor('background2'),
-        boxShadow: '0px 0px 20px ' + useColor('shadow'),
+        backgroundColor: useColor({ color: 'background', intensity: 2 }),
+        boxShadow:
+          '0px 0px 20px ' + useColor({ color: 'foreground', intensity: 5 }),
       }}
     >
       <Plus style={{ marginRight: 10 }} />
-      <Subtitle>x</Subtitle>
+      <Title>x</Title>
     </div>
   )
 }
@@ -44,7 +45,7 @@ const useDrag = (
       // transform does not work on drag image
       backgroundColor: useColor('background'),
       maxWidth: '550px',
-      border: '1px solid ' + useColor('outline'),
+      border: '1px solid ' + useColor({ color: 'foreground', intensity: 3 }),
     },
   }
 ) => {

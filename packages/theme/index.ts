@@ -12,6 +12,7 @@ export type ColorKey =
   | 'secondaryAccent'
   | 'background'
   | 'foreground'
+  | 'divider'
 
 export type Colors = {
   primary: Rgb[]
@@ -20,6 +21,7 @@ export type Colors = {
   secondaryAccent: Rgb[]
   background: Rgb[]
   foreground: Rgb[]
+  divider: Rgb[]
 }
 
 export type Theme = {
@@ -43,6 +45,7 @@ const theme: ThemeWrapper = {
         [87, 0, 210],
         [66, 0, 160],
       ],
+      divider: [[238, 236, 241]],
       primaryAccent: [
         [248, 242, 255],
         [230, 214, 252],
@@ -50,15 +53,30 @@ const theme: ThemeWrapper = {
       ],
       secondary: [[0, 0, 255]],
       secondaryAccent: [[200, 200, 255]],
-      background: [[255, 255, 255]],
+      background: [
+        [255, 255, 255],
+        [246, 246, 246],
+      ],
       foreground: [[0, 0, 0]],
     },
     dark: {
-      primary: [[255, 0, 0]],
-      primaryAccent: [[255, 200, 200]],
+      primary: [
+        [98, 0, 238],
+        [87, 0, 210],
+        [66, 0, 160],
+      ],
+      divider: [[238, 236, 241]],
+      primaryAccent: [
+        [248, 242, 255],
+        [230, 214, 252],
+        [191, 149, 251],
+      ],
       secondary: [[0, 0, 255]],
       secondaryAccent: [[200, 200, 255]],
-      background: [[255, 255, 255]],
+      background: [
+        [255, 255, 255],
+        [246, 246, 246],
+      ],
       foreground: [[0, 0, 0]],
     },
   },

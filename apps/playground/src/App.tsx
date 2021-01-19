@@ -1,7 +1,7 @@
 import React from 'react'
 import { icons } from '@based/icons'
 import { useColor, useTheme } from '@based/theme'
-import { Text, SubText, Title } from '@based/ui'
+import { Text, SubText, Title, Button } from '@based/ui'
 import { loremIpsum } from 'lorem-ipsum'
 import * as text from './text'
 
@@ -20,15 +20,15 @@ const exampleTitle = () =>
 
 const iconsArray = []
 
-const RenderComponents = ({ category, grid }) => {
+const RenderComponents = ({ category, grid, bg = 'transparent' }) => {
   const s = {
     border: '1px dashed ' + useColor({ color: 'foreground', alpha: 0.2 }),
     padding: '20px',
     borderRadius: '7px',
     display: 'flex',
-    flexDirection: grid ? 'row' : 'column',
     flexWrap: 'wrap',
-    marginBottom: '10px',
+    backgroundColor: bg,
+    flexDirection: grid ? 'row' : 'column',
   }
   return (
     <div
@@ -43,12 +43,13 @@ const RenderComponents = ({ category, grid }) => {
       >
         {category.name}
       </SubText>
+      {/* @ts-ignore */}
       <div style={s}>
         {category.components.map((v) => {
           return (
             <div
               style={{
-                marginBottom: grid ? '0px' : '15px',
+                marginBottom: '15px',
                 marginRight: grid ? '15px' : '0px',
               }}
             >
@@ -74,7 +75,7 @@ const RenderComponents = ({ category, grid }) => {
                       {/* @ts-ignore */}
                       <Component
                         style={{
-                          marginBottom: grid ? '0px' : '15px',
+                          marginBottom: '15px',
                           marginRight: grid ? '15px' : '0px',
                         }}
                         key={i}
@@ -119,14 +120,62 @@ for (let key in icons) {
   })
 }
 
+const getRandomIcon = () => {
+  const k = Object.keys(icons)
+  return k[Math.floor(Math.random() * k.length)]
+}
+
+const genButtonProps = () => {
+  const props = []
+
+  const colors = [
+    'primary',
+    'secondary',
+    'primaryAccent',
+    'secondaryAccent',
+    'background',
+    'foreground',
+  ]
+
+  for (const color of colors) {
+    const vars = [
+      {
+        icon: getRandomIcon(),
+        children: exampleTitle,
+        color
+      },
+      {
+        children: exampleTitle,
+        color
+      },
+      {
+        icon: getRandomIcon(),
+        color
+      },
+    ]
+    props.push(...vars)
+  }
+
+  return props
+}
+
 const categories = [
   {
     name: 'icons',
     Render: ({ category }) => <RenderComponents grid category={category} />,
     components: iconsArray,
-    style: {
-      display: 'flex',
-    },
+  },
+  {
+    name: 'button',
+    Render: ({ category }) => <RenderComponents grid category={category} bg = "#efefef" />,
+    components: [
+      {
+        name: 'Button',
+        category: 'button',
+        Component: Button,
+        props: genButtonProps(),
+      },
+    ],
   },
   {
     name: 'text',
