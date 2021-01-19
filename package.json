@@ -7,7 +7,7 @@
   },
   "workspaces": [
     "apps/*",
-    "package/*"
+    "packages/*"
   ],
   "lint-staged": {
     "{js,json}": [

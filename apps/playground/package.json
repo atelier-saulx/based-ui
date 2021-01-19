@@ -6,7 +6,9 @@
   },
   "dependencies": {
     "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "react-dom": "^17.0.1",
+    "@based/theme": "*",
+    "@based/ui": "*"
   },
   "scripts": {
     "start": "aristotle watch -t src/index.ts"
