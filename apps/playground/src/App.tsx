@@ -1,16 +1,26 @@
 import React, { CSSProperties } from 'react'
 
+import { useTheme } from '@based/theme'
+
+import { Code } from '@based/ui'
+
 const Bla = ({ style }: { style?: CSSProperties }) => {
   return <div style={{ ...style, background: 'red' }}>gurky</div>
 }
 
-export default ({ nuno }: { nuno: boolean }) => {
-  console.log(Bla)
+const  App = () => {  
+  useTheme()
 
   return (
-    <div style={{ border: nuno ? '1px solid green' : '1px solid blue' }}>
+    <div>
       blurx for nuno
       <Bla />
+      <Code />
     </div>
   )
+}
+
+
+export default () => {
+  return <App/>
 }

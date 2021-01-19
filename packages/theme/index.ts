@@ -113,7 +113,8 @@ export type Color =
 export const useColor = (color: Color): string => {
   if (typeof color === 'object') {
     const { intensity = 1, alpha = 1, color: c } = color
-    const rgb = theme.theme[theme.active][c][intensity - 1]
+    const selector = theme.theme[theme.active][c]
+    const rgb = selector[intensity - 1] || selector[selector.length - 1]
     if (alpha !== 1) {
       return `rgba(${rgb[0]},${rgb[1]},${rgb[2]}, ${alpha})`
     } else {
@@ -121,6 +122,7 @@ export const useColor = (color: Color): string => {
     }
   } else {
     const rgb = theme.theme[theme.active][color][0]
+    return `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
   }
 }
 

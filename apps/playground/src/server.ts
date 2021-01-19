@@ -4,7 +4,7 @@ export default ({ head, body }) => {
         <head>${head}</head>
         <body>
             <div id="root"/>
-            ${body}xxxxxxxxxxxxxxxxxxxx
+            ${body}
         </body>
     </html>
   `
