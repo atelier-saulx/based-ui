@@ -13,6 +13,7 @@ import ResetSvg from './Components/Reset'
 import ScheduleSvg from './Components/Schedule'
 import ShowsSvg from './Components/Shows'
 import WelcomeScreenSvg from './Components/WelcomeScreen'
+import ToggleOffScreenSvg from './Components/ToggleOff'
 
 import { Color } from '@based/theme'
 
@@ -112,6 +113,7 @@ const Reset = wrapIcon(ResetSvg)
 const Schedule = wrapIcon(ScheduleSvg)
 const Shows = wrapIcon(ShowsSvg)
 const WelcomeScreen = wrapIcon(WelcomeScreenSvg)
+const ToggleOff = wrapIcon(ToggleOffScreenSvg)
 
 const icons = {
   Dashboard,
@@ -122,6 +124,7 @@ const icons = {
   Schedule,
   Shows,
   WelcomeScreen,
+  ToggleOff,
 }
 
 const iconFromString = (str: string): null | FunctionComponent<IconProps> => {
@@ -144,4 +147,5 @@ export {
   Schedule,
   Shows,
   WelcomeScreen,
+  ToggleOff,
 }

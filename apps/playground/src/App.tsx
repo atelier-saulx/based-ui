@@ -24,7 +24,9 @@ const RenderComponents = ({ category, grid }) => {
     padding: '20px',
     borderRadius: '7px',
     display: 'flex',
-    flexDirection: grid ? 'row' : 'column'
+    flexDirection: grid ? 'row' : 'column',
+    flexWrap: 'wrap',
+    marginBottom: '10px',
   }
   return (
     <div
@@ -44,8 +46,8 @@ const RenderComponents = ({ category, grid }) => {
           return (
             <div
               style={{
-
-                marginBottom: grid ? '0px': '15px' , marginRight: grid ? '15px' : '0px'
+                marginBottom: grid ? '0px' : '15px',
+                marginRight: grid ? '15px' : '0px',
               }}
             >
               <SubText
@@ -69,7 +71,10 @@ const RenderComponents = ({ category, grid }) => {
                     <div>
                       {/* @ts-ignore */}
                       <Component
-                        style={{ marginBottom: grid ? '0px': '15px' , marginRight: grid ? '15px' : '0px'}}
+                        style={{
+                          marginBottom: grid ? '0px' : '15px',
+                          marginRight: grid ? '15px' : '0px',
+                        }}
                         key={i}
                         {...props}
                       >
