@@ -135,6 +135,16 @@ const genButtonProps = () => {
     'foreground',
   ]
 
+  props.push({
+    icon: getRandomIcon(),
+    children: 'foreground fucked up',
+    foregroundColor: {
+      color: 'foreground',
+      intensity: 2
+    },
+    color: { color: 'background', alpha: 1 }
+  })
+
   for (const color of colors) {
     const vars = [
       {

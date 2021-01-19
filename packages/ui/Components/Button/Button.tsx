@@ -42,14 +42,30 @@ export const Button: FunctionComponent<ButtonProps> = ({
 
   if (!foregroundColor) {
     if (c === 'primary' || c === 'secondary') {
-      foregroundColor = 'background'
+      foregroundColor = { color: 'background' }
     } else if (c === 'primaryAccent') {
-      foregroundColor = 'primary'
+      foregroundColor = { color: 'primary' }
     } else if (c === 'foreground') {
-      foregroundColor = 'background'
+      foregroundColor = { color: 'background' }
     } else if (c === 'secondaryAccent') {
-      foregroundColor = 'secondary'
+      foregroundColor = { color: 'secondary' }
     }
+  } else if (typeof foregroundColor !== 'object') {
+    foregroundColor = { color: foregroundColor }
+  }
+
+  if (
+    isHover &&
+    typeof foregroundColor === 'object' &&
+    foregroundColor.intensity > 1
+  ) {
+    foregroundColor = {
+      ...foregroundColor,
+    }
+    foregroundColor.intensity = Math.max(
+      1,
+      foregroundColor.intensity - (isActive ? 2 : 1)
+    )
   }
 
   const Icon = icon && iconFromString(icon)
@@ -64,6 +80,7 @@ export const Button: FunctionComponent<ButtonProps> = ({
         borderRadius: '4px',
         backgroundColor: useColor({
           color: c,
+          alpha: color.alpha,
           intensity: isActive ? 3 : isHover ? 2 : 1,
         }),
         ...style,

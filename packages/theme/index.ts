@@ -51,13 +51,20 @@ const theme: ThemeWrapper = {
         [230, 214, 252],
         [191, 149, 251],
       ],
-      secondary: [[0, 0, 255]],
+      secondary: [[0, 210, 255]],
       secondaryAccent: [[200, 200, 255]],
       background: [
         [255, 255, 255],
         [246, 246, 246],
+        [233, 233, 231],
+        [228, 228, 228],
       ],
-      foreground: [[0, 0, 0]],
+      foreground: [
+        [5, 24, 41],
+        [92, 104, 115],
+        [143, 142, 155],
+        [163, 168, 172],
+      ],
     },
     dark: {
       primary: [
@@ -149,11 +156,11 @@ export type Color =
 
 export const useColor = (color: Color): string => {
   if (typeof color === 'object') {
-    const { intensity = 1, alpha = 1, color: c } = color
+    const { intensity = 1, alpha = 0, color: c } = color
     const selector = theme.theme[theme.active][c]
     const rgb = selector[intensity - 1] || selector[selector.length - 1]
-    if (alpha !== 1) {
-      return `rgba(${rgb[0]},${rgb[1]},${rgb[2]}, ${alpha})`
+    if (alpha !== 0) {
+      return `rgba(${rgb[0]},${rgb[1]},${rgb[2]}, ${1 - alpha})`
     } else {
       return `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
     }
