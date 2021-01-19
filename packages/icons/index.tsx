@@ -107,6 +107,7 @@ const iconFromString = (str: string): null | FunctionComponent<IconProps> => {
 }
 
 export {
+  icons,
   iconFromString,
   Graph,
   WelcomeScreen
