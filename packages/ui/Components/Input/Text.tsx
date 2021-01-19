@@ -7,7 +7,7 @@ import React, {
 } from 'react'
 import { useColor, Color } from '@based/theme'
 import Clear from './Clear'
-import { Search, Date, Clock, Email, ChevronDown, IconProps, iconFromString } from '@based/icons'
+import { Search, Date, Clock, Email, Down, IconProps, iconFromString } from '@based/icons'
 import { emailValidator } from './validators'
 import { SubText } from '../Text/SubText'
 import useDropdown from '../../hooks/useDropdown'
@@ -182,7 +182,7 @@ export const Input: FunctionComponent<InputProps> = ({
       />
 
       {options ? (
-        <ChevronDown
+        <Down
           onClick={useDropdown(
             options,
             stateValue,
