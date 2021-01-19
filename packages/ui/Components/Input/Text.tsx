@@ -5,16 +5,13 @@ import React, {
     CSSProperties,
     FunctionComponent
 } from 'react'
-import { useColor, Color } from '@based/theme'
+import { useColor } from '@based/theme'
 import Clear from './Clear'
-import { Search, Date, Clock, Email, Down, IconProps, iconFromString } from '@based/icons'
-import { emailValidator } from './validators'
+import { Search, Date, Timing, Email, Down, IconProps, iconFromString } from '@based/icons'
+import { emailValidator, Validator } from './validators'
 import { SubText } from '../Text/SubText'
 import useDropdown from '../../hooks/useDropdown'
 import './style.css'
-
-
-export type Validator = (str) => boolean
 
 type InputProps = {
   style?: CSSProperties
@@ -30,7 +27,6 @@ type InputProps = {
   value?: string | number,
   options?: any // TODO make this from dropdown!
 }
-
 
 export const Input: FunctionComponent<InputProps> = ({
   placeholder,
