@@ -1,7 +1,7 @@
 import React from 'react'
 import { icons } from '@based/icons'
 import { useColor, useTheme } from '@based/theme'
-import { Text, SubText, Title } from '@based/ui'
+import { Text, SubText, Title, Button } from '@based/ui'
 import { loremIpsum } from 'lorem-ipsum'
 
 const exampleText = () =>
@@ -24,7 +24,7 @@ const RenderComponents = ({ category, grid }) => {
     padding: '20px',
     borderRadius: '7px',
     display: 'flex',
-    flexDirection: grid ? 'row' : 'column'
+    flexDirection: grid ? 'row' : 'column',
   }
   return (
     <div
@@ -39,13 +39,14 @@ const RenderComponents = ({ category, grid }) => {
       >
         {category.name}
       </SubText>
+      {/* @ts-ignore */}
       <div style={s}>
         {category.components.map((v) => {
           return (
             <div
               style={{
-
-                marginBottom: grid ? '0px': '15px' , marginRight: grid ? '15px' : '0px'
+                marginBottom: grid ? '0px' : '15px',
+                marginRight: grid ? '15px' : '0px',
               }}
             >
               <SubText
@@ -69,7 +70,10 @@ const RenderComponents = ({ category, grid }) => {
                     <div>
                       {/* @ts-ignore */}
                       <Component
-                        style={{ marginBottom: grid ? '0px': '15px' , marginRight: grid ? '15px' : '0px'}}
+                        style={{
+                          marginBottom: grid ? '0px' : '15px',
+                          marginRight: grid ? '15px' : '0px',
+                        }}
                         key={i}
                         {...props}
                       >
@@ -117,9 +121,29 @@ const categories = [
     name: 'icons',
     Render: ({ category }) => <RenderComponents grid category={category} />,
     components: iconsArray,
-    style: {
-      display: 'flex',
-    },
+  },
+  {
+    name: 'button',
+    Render: ({ category }) => <RenderComponents grid category={category} />,
+    components: [
+      {
+        name: 'Button',
+        category: 'button',
+        Component: Button,
+        props: [
+          {
+            icon: 'graph',
+            children: exampleTitle,
+          },
+          {
+            children: exampleTitle,
+          },
+          {
+            icon: 'graph',
+          },
+        ],
+      },
+    ],
   },
   {
     name: 'text',
