@@ -1,7 +1,20 @@
-import React from 'react'
-import { useColor } from '@based/theme'
+import React , { 
+  CSSProperties,
+  FunctionComponent,
+  EventHandler,
+  SyntheticEvent,
+} from 'react'
+import { useColor, Color } from '@based/theme'
 
-export default ({ color = 'disabled', style, onClick }) => {
+type GenericEventHandler = EventHandler<SyntheticEvent>
+
+type ClearProps = {
+  style?: CSSProperties
+  color?: Color
+  onClick?: GenericEventHandler
+}
+
+const Clear:FunctionComponent<ClearProps> = ({ color = { color: 'foreground', intensity: 4 }, style, onClick }) => {
   return (
     <div
       onClick={onClick}
@@ -31,3 +44,5 @@ export default ({ color = 'disabled', style, onClick }) => {
     </div>
   )
 }
+
+export default Clear

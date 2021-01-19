@@ -3,12 +3,16 @@ import React, {
   FunctionComponent,
   EventHandler,
   SyntheticEvent,
+  useRef,
+  useEffect,
+  useCallback
 } from 'react'
 import { useColor, Color } from '@based/theme'
 import { getValue } from '@based/i18n'
 import { iconFromString } from '@based/icons'
 import useHover from '../../hooks/useHover'
 import { Text } from '../Text/Text'
+import { useKeyUp, Key } from '../../hooks/useKeyboard'
 
 type GenericEventHandler = EventHandler<SyntheticEvent>
 
@@ -16,7 +20,7 @@ type ButtonProps = {
   style?: CSSProperties
   color?: Color
   foregroundColor?: Color
-  submitKey?: boolean // adds a key event
+  actionKey?: Key | Key[] // adds a key event
   icon?: string
   onClick?: GenericEventHandler
   onHover?: GenericEventHandler
@@ -30,12 +34,32 @@ export const Button: FunctionComponent<ButtonProps> = ({
   color = 'primary',
   onHover,
   icon,
+  actionKey,
   onClick,
   onMouseEnter,
 }) => {
   const [hover, isHover, isActive] = useHover(onHover || onMouseEnter)
   if (typeof color !== 'object') {
     color = { color }
+  }
+
+  let ref
+
+  if (actionKey && onClick) {
+    ref = useRef()
+    useEffect(() => {
+      clearTimeout(ref.timeout)
+    }, [])
+    const onKeyUp = useCallback((x: any) => {
+      if (hover.onMouseDown) {
+        hover.onMouseDown(x)
+        ref.timeout = setTimeout(() => {
+          hover.onMouseUp(x)
+        }, 100)
+      }
+      onClick(x)
+    }, [onClick])
+    useKeyUp(onKeyUp, ref, Array.isArray(actionKey) ? actionKey : [actionKey])
   }
 
   const c = color.color
@@ -71,6 +95,7 @@ export const Button: FunctionComponent<ButtonProps> = ({
   const Icon = icon && iconFromString(icon)
   return (
     <div
+      ref={ref}
       style={{
         display: 'flex',
         flexDirection: 'row',

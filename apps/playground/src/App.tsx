@@ -3,9 +3,7 @@ import { icons } from '@based/icons'
 import { useColor, useTheme } from '@based/theme'
 import { Text, SubText, Title, Button } from '@based/ui'
 import { loremIpsum } from 'lorem-ipsum'
-import * as text from './text'
 
-console.log('?????', text.longText)
 const exampleText = () =>
   loremIpsum({
     sentenceLowerBound: 10,
@@ -26,7 +24,7 @@ const RenderComponents = ({ category, grid, bg = 'transparent' }) => {
     padding: '20px',
     borderRadius: '7px',
     display: 'flex',
-    flexWrap: 'wrap',
+    flexWrap: grid ? 'wrap' : 'no-wrap',
     backgroundColor: bg,
     flexDirection: grid ? 'row' : 'column',
   }
@@ -34,6 +32,7 @@ const RenderComponents = ({ category, grid, bg = 'transparent' }) => {
     <div
       style={{
         marginBottom: '15px',
+        width: '100%'
       }}
     >
       <SubText
@@ -139,12 +138,20 @@ const genButtonProps = () => {
 
   props.push({
     icon: getRandomIcon(),
-    children: 'foreground fucked up',
+    children: 'Foreground no bg',
     foregroundColor: {
       color: 'foreground',
       intensity: 2
     },
     color: { color: 'background', alpha: 1 }
+  },
+  {
+    icon: getRandomIcon(),
+    children: 'Active on enter',
+    onClick: () => {
+      console.log('yesh')
+    },
+    actionKey: ['enter', 'down'],
   })
 
   for (const color of colors) {
