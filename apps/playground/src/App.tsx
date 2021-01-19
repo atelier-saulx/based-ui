@@ -18,13 +18,14 @@ const exampleTitle = () =>
 
 const iconsArray = []
 
-const RenderComponents = ({ category, grid }) => {
+const RenderComponents = ({ category, grid, bg = 'transparent' }) => {
   const s = {
     border: '1px dashed ' + useColor({ color: 'foreground', alpha: 0.2 }),
     padding: '20px',
     borderRadius: '7px',
     display: 'flex',
     flexWrap: 'wrap',
+    backgroundColor: bg,
     flexDirection: grid ? 'row' : 'column',
   }
   return (
@@ -164,7 +165,7 @@ const categories = [
   },
   {
     name: 'button',
-    Render: ({ category }) => <RenderComponents grid category={category} />,
+    Render: ({ category }) => <RenderComponents grid category={category} bg = "#efefef" />,
     components: [
       {
         name: 'Button',
