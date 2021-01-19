@@ -6,8 +6,6 @@ const Bla = ({ style }:{ style?: CSSProperties }) => {
 
 export default ({ nuno }: { nuno: boolean }) => {    
     console.log(Bla)
-
-
     return <div style={{ border: nuno ? '1px solid green' : '1px solid blue'}}>
         blurx for nuno
         <Bla  />

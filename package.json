@@ -6,7 +6,8 @@
     "start": "cd apps/playground && yarn start"
   },
   "workspaces": [
-    "apps/*"
+    "apps/*",
+    "package/*"
   ],
   "lint-staged": {
     "{js,json}": [
@@ -24,7 +25,7 @@
   },
   "devDependencies": {
     "@saulx/eslint-config": "https://github.com/atelier-saulx/eslint-config",
-    "@saulx/prettier-config": "https://github.com/atelier-saulx/prettier-config"   
+    "@saulx/prettier-config": "https://github.com/atelier-saulx/prettier-config"
   },
   "description": "Based ui components, theme and icons",
   "repository": {
