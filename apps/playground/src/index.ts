@@ -3,4 +3,4 @@ import App from './App'
 
 console.log('x')
 // x
-ReactDom.render(App(), document.getElementById('root'))
+ReactDom.render(App(), document.getElementById('react'))

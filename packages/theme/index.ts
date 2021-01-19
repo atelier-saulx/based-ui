@@ -53,6 +53,8 @@ export const hashTheme = (theme: ThemeWrapper): string => {
   return hash(theme.theme.light) + '' + hash(theme.theme.dark)
 }
 
+// fonts
+
 // initial theme version
 let themeVersion = hashTheme(theme)
 

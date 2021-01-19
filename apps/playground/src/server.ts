@@ -3,7 +3,7 @@ export default ({ head, body }) => {
     <html>
         <head>${head}</head>
         <body>
-            <div id="root"/>
+            <div id="react"/>
             ${body}
         </body>
     </html>

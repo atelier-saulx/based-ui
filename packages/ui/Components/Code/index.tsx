@@ -14,7 +14,7 @@ export const Code = ({
         marginBottom: 16,
       }}
     >
-      CODE
+      Code
     </div>
   )
 }
