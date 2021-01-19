@@ -7,7 +7,7 @@ import { render } from 'react-dom'
 import isSafari from '../../util/isSafari'
 import dragScroll from './dragScroll'
 
-// needs more work!
+// needs more work! for typescript
 
 const drag = {
   cnt: 0,

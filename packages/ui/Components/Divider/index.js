@@ -7,7 +7,7 @@ export default ({ color = 'outline' }) => {
       style={{
         borderBottom: '1px solid ' + useColor(color),
         marginTop: 16,
-        marginBottom: 16
+        marginBottom: 16,
       }}
     />
   )
