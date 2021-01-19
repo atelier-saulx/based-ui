@@ -3,7 +3,9 @@ import { icons } from '@based/icons'
 import { useColor, useTheme } from '@based/theme'
 import { Text, SubText, Title } from '@based/ui'
 import { loremIpsum } from 'lorem-ipsum'
+import * as text from './text'
 
+console.log('?????', text.longText)
 const exampleText = () =>
   loremIpsum({
     sentenceLowerBound: 10,
