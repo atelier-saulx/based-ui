@@ -5,14 +5,14 @@ import React, {
   FunctionComponent,
 } from 'react'
 
-import GraphSvg from './Components/Graph'
-import WelcomeScreenSvg from './Components/WelcomeScreen'
-import ShowsSvg from './Components/Shows'
-import NewFlowSvg from './Components/NewFlow'
-import ScheduleSvg from './Components/Schedule'
 import DashboardSvg from './Components/Dashboard'
 import DragSvg from './Components/Drag'
+import GraphSvg from './Components/Graph'
+import NewFlowSvg from './Components/NewFlow'
 import ResetSvg from './Components/Reset'
+import ScheduleSvg from './Components/Schedule'
+import ShowsSvg from './Components/Shows'
+import WelcomeScreenSvg from './Components/WelcomeScreen'
 
 import { Color } from '@based/theme'
 
@@ -104,24 +104,24 @@ const wrapIcon = (
   }
 }
 
-const Graph = wrapIcon(GraphSvg)
-const WelcomeScreen = wrapIcon(WelcomeScreenSvg)
-const Shows = wrapIcon(ShowsSvg)
-const NewFlow = wrapIcon(NewFlowSvg)
-const Schedule = wrapIcon(ScheduleSvg)
 const Dashboard = wrapIcon(DashboardSvg)
 const Drag = wrapIcon(DragSvg)
+const Graph = wrapIcon(GraphSvg)
+const NewFlow = wrapIcon(NewFlowSvg)
 const Reset = wrapIcon(ResetSvg)
+const Schedule = wrapIcon(ScheduleSvg)
+const Shows = wrapIcon(ShowsSvg)
+const WelcomeScreen = wrapIcon(WelcomeScreenSvg)
 
 const icons = {
-  Graph,
-  WelcomeScreen,
-  Shows,
-  NewFlow,
-  Schedule,
   Dashboard,
   Drag,
+  Graph,
+  NewFlow,
   Reset,
+  Schedule,
+  Shows,
+  WelcomeScreen,
 }
 
 const iconFromString = (str: string): null | FunctionComponent<IconProps> => {
@@ -136,12 +136,12 @@ const iconFromString = (str: string): null | FunctionComponent<IconProps> => {
 export {
   icons,
   iconFromString,
-  Graph,
-  WelcomeScreen,
-  Shows,
-  NewFlow,
-  Schedule,
   Dashboard,
   Drag,
+  Graph,
+  NewFlow,
   Reset,
+  Schedule,
+  Shows,
+  WelcomeScreen,
 }
