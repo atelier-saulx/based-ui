@@ -4,7 +4,6 @@
   "dependencies": {
     "@based/i18n": "*",
     "@based/icons": "*",
-    "@based/react": "*",
     "@based/theme": "*",
     "hex-rgb": "^4.2.0",
     "react": "^16.13.1",
