@@ -12,6 +12,7 @@ export const Code = ({
         borderBottom: '1px solid ' + useColor(color),
         marginTop: 16,
         marginBottom: 16,
+        fontFamily: 'inter'
       }}
     >
       Code

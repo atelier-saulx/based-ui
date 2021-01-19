@@ -1,6 +1,6 @@
 import ReactDom from 'react-dom'
 import App from './App'
 
-console.log('x')
+console.log('xxxxx')
 // x
-ReactDom.render(App(), document.getElementById('react'))
+ReactDom.render(App(), document.body)
