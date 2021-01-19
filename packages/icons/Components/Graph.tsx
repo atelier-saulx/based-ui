@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { FunctionComponent } from 'react'
 import { useColor } from '@based/theme'
 import { SvgProps } from '..'
 
-export default ({ color, framed, size, frameColor }: SvgProps) => {
+const Graph: FunctionComponent<SvgProps> = ({ color, framed, size, frameColor }) => {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
       {framed ? <rect width="24" height="24" rx="4" fill={useColor(frameColor)}/> : null}
@@ -13,3 +13,5 @@ export default ({ color, framed, size, frameColor }: SvgProps) => {
     </svg>
   )
 }
+
+export default Graph

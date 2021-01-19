@@ -1,39 +1,37 @@
-import React from 'react'
-import { useColor } from '@based/theme'
+import React, { CSSProperties, FunctionComponent } from 'react'
+import { useColor, Color } from '@based/theme'
 import { getValue } from '@based/i18n'
 
-export const Body = ({
-  size = 16,
+type TitleProps = {
+  style?: CSSProperties,
+  color?:  Color,
+  noSelect?: boolean
+  singleLine?: boolean
+}
+
+export const SubText: FunctionComponent<TitleProps> = ({
   children,
   style,
-  color = 'default',
+  color = 'foreground',
   noSelect,
-  singleLine
-}) => {
+  singleLine,
+} ) => {
   return (
     <div
       style={{
-        fontSize: size,
-        fontFamily: 'inter',
+        fontSize: '13px',
+        lineHeight: '20px',
         fontWeight: 'normal',
         userSelect: noSelect ? 'none' : 'text',
         color: useColor(color),
+        letterSpacing: '-0.015em',
         whiteSpace: singleLine ? 'nowrap' : null,
         overflow: singleLine ? 'hidden' : null,
         textOverflow: singleLine ? 'ellipsis' : null,
         ...style
-        // letterSpacing: ''
       }}
     >
       {getValue(children)}
     </div>
   )
-}
-
-export const B1 = props => {
-  return <Body size={16} {...props} />
-}
-
-export const B2 = props => {
-  return <Body size={14} {...props} />
 }

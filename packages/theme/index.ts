@@ -9,7 +9,7 @@ export type ColorKey =
   | 'primary'
   | 'primaryAccent'
   | 'secondary'
-  | 'secondayAccent'
+  | 'secondaryAccent'
   | 'background'
   | 'foreground'
 
@@ -122,8 +122,6 @@ export type Color =
     }
 
 export const useColor = (color: Color): string => {
-  console.log(color)
-
   if (typeof color === 'object') {
     const { intensity = 1, alpha = 1, color: c } = color
 

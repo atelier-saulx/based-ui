@@ -4,7 +4,7 @@ import { Graph , WelcomeScreen } from '@based/icons'
 
 import { useTheme } from '@based/theme'
 
-import { Code } from '@based/ui'
+import { Text, SubText, Title } from '@based/ui'
 
 const Bla = ({ style }: { style?: CSSProperties }) => {
   return <div style={{ ...style, background: 'red' }}>gurky</div>
@@ -14,18 +14,35 @@ const App = () => {
   useTheme()
   return (
     <div>
-      blurx for nuno
-      <Bla />
-      <Code />
       <Graph />
       <Graph color="primary" />
-      <Graph color="secondary" />
+      <Graph color="secondaryAccent" />
       <Graph framed />
       <WelcomeScreen framed />
-      <WelcomeScreen color="secondary"/>
+      <WelcomeScreen color="primaryAccent" />
+      <Text variant="regular">
+        Nuno is very nice man
+      </Text>
+      <Text variant="medium">
+        Nuno is very nice man
+      </Text>
+      <Text variant="semibold">
+        Nuno is very nice man
+      </Text>
+      <Title variant="regular">
+        Nuno is very nice man
+      </Title>
+      <Title variant="small">
+        Nuno is very nice man
+      </Title>
+      <SubText>
+        Nuno is very nice man
+      </SubText>
     </div>
   )
 }
+
+// <WelcomeScreen color="secondary"/>
 
 export default () => {
   return <App/>

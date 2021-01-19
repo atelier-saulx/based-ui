@@ -77,4 +77,6 @@
 //   removeAllOverlays
 // } from './Components/Overlay'
 
-export { Code } from './Components/Code'
+export { Text } from './Components/Text/Text'
+export { Title } from './Components/Text/Title'
+export { SubText } from './Components/Text/SubText'

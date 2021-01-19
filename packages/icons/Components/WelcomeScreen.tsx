@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { FunctionComponent } from 'react'
 import { useColor } from '@based/theme'
 import { SvgProps } from '..'
 
-export default ({ color, framed, size, frameColor }: SvgProps) => {
+const WelcomeScreen: FunctionComponent<SvgProps> = ({ color, framed, size, frameColor }) => {
   const c = useColor(color)
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
@@ -13,3 +13,5 @@ export default ({ color, framed, size, frameColor }: SvgProps) => {
     </svg>
   )
 }
+
+export default WelcomeScreen

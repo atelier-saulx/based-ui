@@ -30,8 +30,7 @@ export type IconProps = {
   size?: number
 }
 
-// EventHandler
-const Icon = ({
+const Icon: FunctionComponent<IconProps & {  Svg: FunctionComponent<SvgProps> }> = ({
   color,
   framed = false,
   frameColor = 'primary',
@@ -46,8 +45,7 @@ const Icon = ({
   onMouseEnter,
   onDragEnd,
   onHover,
-}: IconProps & {  Svg: FunctionComponent<SvgProps>  }) => {
-
+}) => {
   if (!color) {
     if (framed) {
       color = 'background'
