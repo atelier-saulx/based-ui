@@ -58,23 +58,30 @@ export const Button: FunctionComponent<ButtonProps> = ({
       style={{
         display: 'flex',
         flexDirection: 'row',
-        transition: 'background 0.15s',
         cursor: 'pointer',
         alignItems: 'flex-start',
-        padding: '4px 8px 4px 4px',
+        padding: children && icon ? '4px 8px 4px 4px' : '4px 8px',
         borderRadius: '4px',
         backgroundColor: useColor({
-           color: c,
-           intensity: isHover ? 2 : isActive ? 3 : 1
-            
+          color: c,
+          intensity: isActive ? 3 : isHover ? 2 : 1,
         }),
         ...style,
       }}
       onClick={onClick}
       {...hover}
     >
-      {Icon ? <Icon style={{ marginRight: 4 }} color={foregroundColor} /> : null}
-      {children ? <Text noSelect singleLine variant="medium" color={foregroundColor}>{getValue(children)}</Text> : null}
+      {Icon ? (
+        <Icon
+          style={{ marginRight: !children ? 0 : 4 }}
+          color={foregroundColor}
+        />
+      ) : null}
+      {children ? (
+        <Text noSelect singleLine variant="medium" color={foregroundColor}>
+          {getValue(children)}
+        </Text>
+      ) : null}
     </div>
   )
 }

@@ -24,6 +24,7 @@ const RenderComponents = ({ category, grid }) => {
     padding: '20px',
     borderRadius: '7px',
     display: 'flex',
+    flexWrap: 'wrap',
     flexDirection: grid ? 'row' : 'column',
   }
   return (
@@ -71,7 +72,7 @@ const RenderComponents = ({ category, grid }) => {
                       {/* @ts-ignore */}
                       <Component
                         style={{
-                          marginBottom: grid ? '0px' : '15px',
+                          marginBottom: '15px',
                           marginRight: grid ? '15px' : '0px',
                         }}
                         key={i}
@@ -116,6 +117,45 @@ for (let key in icons) {
   })
 }
 
+const getRandomIcon = () => {
+  const k = Object.keys(icons)
+  return k[Math.floor(Math.random() * k.length)]
+}
+
+const genButtonProps = () => {
+  const props = []
+
+  const colors = [
+    'primary',
+    'secondary',
+    'primaryAccent',
+    'secondaryAccent',
+    'background',
+    'foreground',
+  ]
+
+  for (const color of colors) {
+    const vars = [
+      {
+        icon: getRandomIcon(),
+        children: exampleTitle,
+        color
+      },
+      {
+        children: exampleTitle,
+        color
+      },
+      {
+        icon: getRandomIcon(),
+        color
+      },
+    ]
+    props.push(...vars)
+  }
+
+  return props
+}
+
 const categories = [
   {
     name: 'icons',
@@ -130,18 +170,7 @@ const categories = [
         name: 'Button',
         category: 'button',
         Component: Button,
-        props: [
-          {
-            icon: 'graph',
-            children: exampleTitle,
-          },
-          {
-            children: exampleTitle,
-          },
-          {
-            icon: 'graph',
-          },
-        ],
+        props: genButtonProps(),
       },
     ],
   },
