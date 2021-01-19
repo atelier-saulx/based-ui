@@ -1,6 +1,7 @@
 import { useReducer, useEffect } from 'react'
 import { hash } from '@saulx/utils'
 import './style.css'
+import './font/style.css'
 
 export type Rgb = [number, number, number]
 

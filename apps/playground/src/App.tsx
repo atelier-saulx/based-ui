@@ -20,7 +20,6 @@ const App = () => {
   )
 }
 
-
 export default () => {
   return <App/>
 }
