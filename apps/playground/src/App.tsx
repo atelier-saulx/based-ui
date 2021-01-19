@@ -47,7 +47,7 @@ const RenderComponents = ({ category, grid, bg = 'transparent' }) => {
           return (
             <div
               style={{
-                marginBottom: grid ? '0px' : '15px',
+                marginBottom: '15px',
                 marginRight: grid ? '15px' : '0px',
               }}
             >
