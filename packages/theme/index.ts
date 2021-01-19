@@ -5,11 +5,19 @@ import './font/style.css'
 
 export type Rgb = [number, number, number]
 
+export type ColorKey =
+  | 'primary'
+  | 'primaryAccent'
+  | 'secondary'
+  | 'secondayAccent'
+  | 'background'
+  | 'foreground'
+
 export type Colors = {
   primary: Rgb[]
   primaryAccent: Rgb[]
-  seconday: Rgb[]
-  secondayAccent: Rgb[]
+  secondary: Rgb[]
+  secondaryAccent: Rgb[]
   background: Rgb[]
   foreground: Rgb[]
 }
@@ -24,7 +32,7 @@ export type Listener = () => void
 export type ThemeWrapper = {
   theme: Theme
   listeners: Listener[]
-  active: string
+  active: 'light' | 'dark'
 }
 
 const theme: ThemeWrapper = {
@@ -32,16 +40,16 @@ const theme: ThemeWrapper = {
     light: {
       primary: [[255, 0, 0]],
       primaryAccent: [[255, 200, 200]],
-      seconday: [[0, 0, 255]],
-      secondayAccent: [[200, 200, 255]],
+      secondary: [[0, 0, 255]],
+      secondaryAccent: [[200, 200, 255]],
       background: [[255, 255, 255]],
       foreground: [[0, 0, 0]],
     },
     dark: {
       primary: [[255, 0, 0]],
       primaryAccent: [[255, 200, 200]],
-      seconday: [[0, 0, 255]],
-      secondayAccent: [[200, 200, 255]],
+      secondary: [[0, 0, 255]],
+      secondaryAccent: [[200, 200, 255]],
       background: [[255, 255, 255]],
       foreground: [[0, 0, 0]],
     },
@@ -81,7 +89,7 @@ if (isTouch) {
   updateBg()
 }
 
-export const useTheme = (active?: string) => {
+export const useTheme = (active?: 'light' | 'dark') => {
   if (active === undefined) {
     if (typeof window !== 'undefined') {
       const isDark = global.matchMedia('(prefers-color-scheme: dark)').matches
@@ -106,16 +114,19 @@ export const useTheme = (active?: string) => {
 }
 
 export type Color =
-  | string
+  | ColorKey
   | {
-      color: string
+      color: ColorKey
       intensity?: number
       alpha?: number
     }
 
 export const useColor = (color: Color): string => {
+  console.log(color)
+
   if (typeof color === 'object') {
     const { intensity = 1, alpha = 1, color: c } = color
+
     const selector = theme.theme[theme.active][c]
     const rgb = selector[intensity - 1] || selector[selector.length - 1]
     if (alpha !== 1) {
@@ -150,7 +161,7 @@ export const updateTheme = (update: { dark?: Colors; light?: Colors }) => {
   }
 }
 
-export const switchTheme = (label: string) => {
+export const switchTheme = (label: 'dark' | 'light') => {
   if (!label) {
     theme.active = inverseTheme()
   } else {

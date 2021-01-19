@@ -3,7 +3,10 @@
   "version": "0.0.1",
   "dependencies": {
     "@based/theme": "*",
-    "react": "^16.13.1"
+    "react": "^17.0.1"
+  },
+  "devDependencies": {
+    "@types/react": "^17.0.0"
   },
   "license": "UNLICENSED"
 }

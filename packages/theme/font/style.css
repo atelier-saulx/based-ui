@@ -197,3 +197,7 @@ explicitly, e.g.
   font-style: oblique 0deg 10deg;
   src: url('./Font.var.woff2') format('woff2');
 }
+
+html {
+  font-family: Font;
+}
