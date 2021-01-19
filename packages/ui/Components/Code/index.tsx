@@ -4,7 +4,7 @@ import { useColor, Color } from '@based/theme'
 export const Code = ({
   color = { color: 'foreground', intensity: 3 },
 }: {
-  color?: Color,
+  color?: Color
 }) => {
   return (
     <div
@@ -14,7 +14,7 @@ export const Code = ({
         marginBottom: 16,
       }}
     >
-      Code
+      Code!!
     </div>
   )
 }

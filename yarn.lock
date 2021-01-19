@@ -129,10 +129,10 @@
     "@nodelib/fs.scandir" "2.1.4"
     fastq "^1.6.0"
 
-"@saulx/aristotle-build@^1.0.6":
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/@saulx/aristotle-build/-/aristotle-build-1.0.6.tgz#147adf2145ec2e090ba0413a7cfdfaebfe98d66a"
-  integrity sha512-LNAQB2IgcByEjXA3OIrq+wQdrPRxMvKL9U1mItaNDTg4o6qxm6A28yFf6Yh/yqTNv9pXRQSkuxm4/v9Xi102MA==
+"@saulx/aristotle-build@^1.0.7":
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/@saulx/aristotle-build/-/aristotle-build-1.0.7.tgz#94464f16e4b0a34bfea16e0cdf7df941c7e08bbc"
+  integrity sha512-JQnbbGb8wJlIuCXukBYN7hnrTYGcFnc7g300Ux9fYNnvdXC5gXSOhT8lNGcZiXUFSNY3H4YJ92xamE4fY9yJ7A==
   dependencies:
     "@babel/parser" "^7.12.11"
     "@saulx/aristotle-types" "^1.0.0"
@@ -153,12 +153,12 @@
     postcss-default-unit "^1.0.0"
     postcss-flexbugs-fixes "^5.0.2"
 
-"@saulx/aristotle-create-server-dist@^1.0.7":
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/@saulx/aristotle-create-server-dist/-/aristotle-create-server-dist-1.0.7.tgz#8d1e66e15026d93bbf40838f1876884424b2d5da"
-  integrity sha512-HLVkAXY6buLnYndvbvlPQ3O8LrFevNohZnAbuyqAh0VGwl3PKlT3dxOEMeQ90OwYTmivhzh1p/I8pdnKRY9lJw==
+"@saulx/aristotle-create-server-dist@^1.0.8":
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/@saulx/aristotle-create-server-dist/-/aristotle-create-server-dist-1.0.8.tgz#ab358111fb81a8841b7d23e1dab877da8a644522"
+  integrity sha512-Y2U4yTukERzss9ZInaSy09cM67VQSEIysxZ1DbzPfa7JXHaAuJpOfD/0i418exsAyB++/2C5jZy7lmWw7aGh8g==
   dependencies:
-    "@saulx/aristotle-build" "^1.0.6"
+    "@saulx/aristotle-build" "^1.0.7"
     "@saulx/aristotle-server-utils" "^1.0.1"
     "@saulx/get-package" "^1.0.7"
     chalk "^4.1.0"
@@ -178,12 +178,12 @@
   resolved "https://registry.yarnpkg.com/@saulx/aristotle-types/-/aristotle-types-1.0.0.tgz#d79471a0c903cf33dc12b27c2ffde5ceefcdff5b"
   integrity sha512-iB1xk0pnfbBcms9GVKR/sVe+QxLWOqRHOc9sIxLG1TBnp9utiSOmhALn+7H5Gluhmi/ioKBsmhnq/t3E14H4zg==
 
-"@saulx/aristotle-watcher@^1.0.6":
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/@saulx/aristotle-watcher/-/aristotle-watcher-1.0.6.tgz#2ca09e7e05393c987c03c87b2afe53c801b62a54"
-  integrity sha512-WkYexwXExePwkUL1HSh2kNCYwI3p5TjpFFhLLzoBeMplbF7oi8tyl/ojyVZJO+3J3/h6fdrgaSTFM9tumbHPvA==
+"@saulx/aristotle-watcher@^1.0.7":
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/@saulx/aristotle-watcher/-/aristotle-watcher-1.0.7.tgz#2996ab001fff8c2c430c41c183457ea6c025b9c6"
+  integrity sha512-dqJzfc79xPDp/hP/k1CuX3fu3cyh6o7XT56AxHw50VscZjqob7YM3QSJhaNdw/d6n75lK7YRAs+h2gFWryaWYg==
   dependencies:
-    "@saulx/aristotle-build" "^1.0.6"
+    "@saulx/aristotle-build" "^1.0.7"
     "@saulx/aristotle-server-utils" "^1.0.1"
     "@saulx/aristotle-types" "^1.0.0"
     "@saulx/utils" "^1.6.6"
@@ -196,14 +196,14 @@
     source-map "^0.7.3"
     ws "^7.4.2"
 
-"@saulx/aristotle@^3.0.6":
-  version "3.0.6"
-  resolved "https://registry.yarnpkg.com/@saulx/aristotle/-/aristotle-3.0.6.tgz#14bcb6557118eb9ed28bccbc3ad6e70a9e20ad86"
-  integrity sha512-r//uIGgZDA0iJkGHH+dEwPBcL1Hghl/ucwI+XN9hQ59XnOTQIjTGNrwVcIo7+V740KzFk3a/BZ85nnMr3aZ88Q==
+"@saulx/aristotle@^3.0.7":
+  version "3.0.7"
+  resolved "https://registry.yarnpkg.com/@saulx/aristotle/-/aristotle-3.0.7.tgz#affb7c7f66bca0fbe100fb826205949637b94a88"
+  integrity sha512-Hs1WuRIGn2lS6k5NY1fdTqHCGSkCyRol8MHl/9fauDj0nNHPOLqrfobM1uRSk4inavK7KihKo+uJpnqVPZ4Htw==
   dependencies:
-    "@saulx/aristotle-build" "^1.0.6"
-    "@saulx/aristotle-create-server-dist" "^1.0.7"
-    "@saulx/aristotle-watcher" "^1.0.6"
+    "@saulx/aristotle-build" "^1.0.7"
+    "@saulx/aristotle-create-server-dist" "^1.0.8"
+    "@saulx/aristotle-watcher" "^1.0.7"
     "@saulx/get-package" "^1.0.7"
     chalk "^4.1.0"
     commander "^7.0.0"
