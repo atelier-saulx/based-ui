@@ -3,7 +3,7 @@ import React, { CSSProperties, EventHandler, SyntheticEvent, FunctionComponent }
 import GraphSvg from './Components/Graph'
 import WelcomeScreenSvg from './Components/WelcomeScreen'
 
-import { Color, useColor } from '@based/theme'
+import { Color } from '@based/theme'
 
 export type SvgProps = {
   color: Color,
