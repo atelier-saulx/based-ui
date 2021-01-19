@@ -129,17 +129,15 @@
     "@nodelib/fs.scandir" "2.1.4"
     fastq "^1.6.0"
 
-"@saulx/aristotle-build@^1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@saulx/aristotle-build/-/aristotle-build-1.0.3.tgz#0758af0c5433d2d3654046879747e36cc1547d21"
-  integrity sha512-x1WdSoIuwYTdb3dD96bhz20slrQn2/zYgGSli/UnY++E4kACw2cODD+DPQEsOS/X0kRkK8DDA31w/xC6FyFk8w==
+"@saulx/aristotle-build@^1.0.6":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@saulx/aristotle-build/-/aristotle-build-1.0.6.tgz#147adf2145ec2e090ba0413a7cfdfaebfe98d66a"
+  integrity sha512-LNAQB2IgcByEjXA3OIrq+wQdrPRxMvKL9U1mItaNDTg4o6qxm6A28yFf6Yh/yqTNv9pXRQSkuxm4/v9Xi102MA==
   dependencies:
+    "@babel/parser" "^7.12.11"
     "@saulx/aristotle-types" "^1.0.0"
     "@saulx/get-package" "^1.0.7"
     "@saulx/utils" "^1.6.1"
-    acorn "^8.0.4"
-    acorn-jsx "^5.3.1"
-    acorn-walk "^8.0.0"
     autoprefixer "^10.1.0"
     chokidar "^3.5.1"
     cssnano "^4.1.10"
@@ -155,12 +153,12 @@
     postcss-default-unit "^1.0.0"
     postcss-flexbugs-fixes "^5.0.2"
 
-"@saulx/aristotle-create-server-dist@^1.0.4":
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/@saulx/aristotle-create-server-dist/-/aristotle-create-server-dist-1.0.4.tgz#98bdde9caa799c771bce9528e9fe21a752527caf"
-  integrity sha512-G705LvErrhkq9sQONjckWXD7piPlDD/0Gopc2rp6GJ2UKifpUR2RjIyJ9U5o3iGcljTxEU1DtOszi5Z0pm64Tw==
+"@saulx/aristotle-create-server-dist@^1.0.7":
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/@saulx/aristotle-create-server-dist/-/aristotle-create-server-dist-1.0.7.tgz#8d1e66e15026d93bbf40838f1876884424b2d5da"
+  integrity sha512-HLVkAXY6buLnYndvbvlPQ3O8LrFevNohZnAbuyqAh0VGwl3PKlT3dxOEMeQ90OwYTmivhzh1p/I8pdnKRY9lJw==
   dependencies:
-    "@saulx/aristotle-build" "^1.0.3"
+    "@saulx/aristotle-build" "^1.0.6"
     "@saulx/aristotle-server-utils" "^1.0.1"
     "@saulx/get-package" "^1.0.7"
     chalk "^4.1.0"
@@ -180,12 +178,12 @@
   resolved "https://registry.yarnpkg.com/@saulx/aristotle-types/-/aristotle-types-1.0.0.tgz#d79471a0c903cf33dc12b27c2ffde5ceefcdff5b"
   integrity sha512-iB1xk0pnfbBcms9GVKR/sVe+QxLWOqRHOc9sIxLG1TBnp9utiSOmhALn+7H5Gluhmi/ioKBsmhnq/t3E14H4zg==
 
-"@saulx/aristotle-watcher@^1.0.2":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@saulx/aristotle-watcher/-/aristotle-watcher-1.0.3.tgz#13ce382086f0c976045135e00568f3506d567ded"
-  integrity sha512-sqhQjL8delIIpYq1Wg1UONoY4H5h+r5UZKVXmpBtCVXxfuJL6kHqvnIK11E8KU7D4/FmQDLwrPP20Rolw12KAA==
+"@saulx/aristotle-watcher@^1.0.6":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@saulx/aristotle-watcher/-/aristotle-watcher-1.0.6.tgz#2ca09e7e05393c987c03c87b2afe53c801b62a54"
+  integrity sha512-WkYexwXExePwkUL1HSh2kNCYwI3p5TjpFFhLLzoBeMplbF7oi8tyl/ojyVZJO+3J3/h6fdrgaSTFM9tumbHPvA==
   dependencies:
-    "@saulx/aristotle-build" "^1.0.3"
+    "@saulx/aristotle-build" "^1.0.6"
     "@saulx/aristotle-server-utils" "^1.0.1"
     "@saulx/aristotle-types" "^1.0.0"
     "@saulx/utils" "^1.6.6"
@@ -198,14 +196,14 @@
     source-map "^0.7.3"
     ws "^7.4.2"
 
-"@saulx/aristotle@^3.0.3":
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/@saulx/aristotle/-/aristotle-3.0.3.tgz#ac61f5d3b1fe4c733febb6f4705374e0823e8e9e"
-  integrity sha512-Xz3Kz2F5aw8CBKNJ1BJOS982iWtPjmiTOjsCKnJpFRE8cp786+LAuGoDBBq7QAuqHn7Hzn3raOi+vmmCHHDGWg==
+"@saulx/aristotle@^3.0.6":
+  version "3.0.6"
+  resolved "https://registry.yarnpkg.com/@saulx/aristotle/-/aristotle-3.0.6.tgz#14bcb6557118eb9ed28bccbc3ad6e70a9e20ad86"
+  integrity sha512-r//uIGgZDA0iJkGHH+dEwPBcL1Hghl/ucwI+XN9hQ59XnOTQIjTGNrwVcIo7+V740KzFk3a/BZ85nnMr3aZ88Q==
   dependencies:
-    "@saulx/aristotle-build" "^1.0.3"
-    "@saulx/aristotle-create-server-dist" "^1.0.4"
-    "@saulx/aristotle-watcher" "^1.0.2"
+    "@saulx/aristotle-build" "^1.0.6"
+    "@saulx/aristotle-create-server-dist" "^1.0.7"
+    "@saulx/aristotle-watcher" "^1.0.6"
     "@saulx/get-package" "^1.0.7"
     chalk "^4.1.0"
     commander "^7.0.0"
@@ -282,21 +280,6 @@ abbrev@1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.1.tgz#f8f2c887ad10bf67f634f005b6987fed3179aac8"
   integrity sha512-nne9/IiQ/hzIhY6pdDnbBtz7DjPTKrY00P/zvPSm5pOFkl6xuGrGnXn/VtTNNfNtAfZ9/1RtehkszU9qcTii0Q==
-
-acorn-jsx@^5.3.1:
-  version "5.3.1"
-  resolved "https://registry.yarnpkg.com/acorn-jsx/-/acorn-jsx-5.3.1.tgz#fc8661e11b7ac1539c47dbfea2e72b3af34d267b"
-  integrity sha512-K0Ptm/47OKfQRpNQ2J/oIN/3QYiK6FwW+eJbILhsdxh2WTLdl+30o8aGdTbm5JbffpFFAg/g+zi1E+jvJha5ng==
-
-acorn-walk@^8.0.0:
-  version "8.0.1"
-  resolved "https://registry.yarnpkg.com/acorn-walk/-/acorn-walk-8.0.1.tgz#d265d35db6940a656c715806a448456ee4fa3b7f"
-  integrity sha512-zn/7dYtoTVkG4EoMU55QlQU4F+m+T7Kren6Vj3C2DapWPnakG/DL9Ns5aPAPW5Ixd3uxXrV/BoMKKVFIazPcdg==
-
-acorn@^8.0.4:
-  version "8.0.4"
-  resolved "https://registry.yarnpkg.com/acorn/-/acorn-8.0.4.tgz#7a3ae4191466a6984eee0fe3407a4f3aa9db8354"
-  integrity sha512-XNP0PqF1XD19ZlLKvB7cMmnZswW4C/03pRHgirB30uSJTaS3A3V1/P4sS3HPvFmjoriPCJQs+JDSbm4bL1TxGQ==
 
 alphanum-sort@^1.0.0:
   version "1.0.2"
