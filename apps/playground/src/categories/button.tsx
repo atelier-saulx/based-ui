@@ -25,6 +25,14 @@ const genButtonProps = () => {
       },
       color: { color: 'background', opacity: 0 },
     },
+    {
+      icon: randomIcon(),
+      children: 'Button with actionKeys!',
+      actionKeys: ['Enter', 'ArrowDown'],
+      onClick: () => {
+        console.log('Key is pressed!')
+      },
+    },
     () => ({
       icon: randomIcon(),
       children: 'Active on enter and down',
@@ -38,7 +46,6 @@ const genButtonProps = () => {
         singleLine: true,
         children: 'Yesh in an overlay! eofdjdweop ewpfohj flap flap flurpy',
       }),
-      actionKeys: ['Enter', 'ArrowDown'],
     })
   )
 
