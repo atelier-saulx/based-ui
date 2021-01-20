@@ -7,7 +7,7 @@ type TitleProps = {
   color?: Color
   noSelect?: boolean
   singleLine?: boolean
-  variant?: 'regular' | 'small'
+  size?: 'regular' | 'small'
 }
 
 export const Title: FunctionComponent<TitleProps> = ({
@@ -16,14 +16,14 @@ export const Title: FunctionComponent<TitleProps> = ({
   color = { color: 'foreground' },
   noSelect,
   singleLine,
-  variant,
+  size,
 }) => {
   return (
     <div
       style={{
-        fontSize: variant === 'small' ? '17px' : '19px',
+        fontSize: size === 'small' ? '17px' : '19px',
         lineHeight: '24px',
-        fontWeight: variant === 'small' ? 600 : 'bold',
+        fontWeight: size === 'small' ? 600 : 'bold',
         userSelect: noSelect ? 'none' : 'text',
         color: useColor(color),
         letterSpacing: '-0.015em',

@@ -150,7 +150,11 @@ const genButtonProps = () => {
     () => ({
       icon: getRandomIcon(),
       children: 'Active on enter and down',
-      onClick: useOverlay(Text, { variant: 'semibold', children: 'BALLZ!' }),
+      onClick: useOverlay(icons.Add, {
+        size: 100,
+        framed: true,
+        onClick: () => console.log('clikly'),
+      }),
       actionKeys: ['Enter', 'ArrowDown'],
     })
   )
@@ -207,17 +211,17 @@ const categories = [
         Component: Text,
         props: [
           {
-            variant: 'regular',
+            weight: 'regular',
             children: exampleText,
           },
           {
-            variant: 'medium',
+            weight: 'medium',
             singleLine: true,
             noSelect: true,
             children: exampleText,
           },
           {
-            variant: 'semibold',
+            weight: 'semibold',
             children: exampleText,
           },
         ],
@@ -228,11 +232,11 @@ const categories = [
         Component: Title,
         props: [
           {
-            variant: 'regular',
+            size: 'regular',
             children: exampleTitle,
           },
           {
-            variant: 'small',
+            size: 'small',
             children: exampleTitle,
           },
         ],

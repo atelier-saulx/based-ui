@@ -7,7 +7,7 @@ type BodyProps = {
   color?: Color
   noSelect?: boolean
   singleLine?: boolean
-  variant?: 'regular' | 'medium' | 'semibold'
+  weight?: 'regular' | 'medium' | 'semibold'
 }
 
 export const Text: FunctionComponent<BodyProps> = ({
@@ -16,7 +16,7 @@ export const Text: FunctionComponent<BodyProps> = ({
   color = { color: 'foreground' },
   noSelect,
   singleLine,
-  variant = 'regular',
+  weight = 'regular',
 }) => {
   return (
     <div
@@ -24,7 +24,7 @@ export const Text: FunctionComponent<BodyProps> = ({
         fontSize: '15px',
         lineHeight: '24px',
         fontWeight:
-          variant === 'semibold' ? 600 : variant === 'medium' ? 500 : 'normal',
+          weight === 'semibold' ? 600 : weight === 'medium' ? 500 : 'normal',
         userSelect: noSelect ? 'none' : 'text',
         color: useColor(color),
         letterSpacing: '-0.015em',
