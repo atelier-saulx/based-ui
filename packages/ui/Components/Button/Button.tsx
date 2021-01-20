@@ -121,7 +121,7 @@ export const Button: FunctionComponent<ButtonProps> = ({
         />
       ) : null}
       {children ? (
-        <Text noSelect singleLine variant="medium" color={foregroundColor}>
+        <Text noSelect singleLine weight="medium" color={foregroundColor}>
           {getValue(children)}
         </Text>
       ) : null}
