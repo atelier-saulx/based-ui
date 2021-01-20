@@ -148,11 +148,11 @@ const genButtonProps = () => {
     },
     {
       icon: getRandomIcon(),
-      children: 'Active on enter',
+      children: 'Active on enter and down',
       onClick: () => {
         console.log('yesh')
       },
-      actionKeys: ['enter', 'down'],
+      actionKeys: ['Enter', 'ArrowDown'],
     }
   )
 

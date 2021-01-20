@@ -1,18 +1,24 @@
-import { useEffect } from 'react'
+import { KeyboardEventHandler, RefObject, useEffect } from 'react'
 
 const keyMap = {
-  enter: 13,
-  esc: 27,
-  up: 38,
-  down: 40,
-  left: 37,
-  right: 39,
+  Enter: 13,
+  Esc: 27,
+  ArrowUp: 38,
+  ArrowDown: 40,
+  ArrowLeft: 37,
+  ArrowRight: 39,
 }
 
-export type Key = 'enter' | 'esc' | 'up' | 'down' | 'left' | 'right'
+export type Key =
+  | 'Enter'
+  | 'Esc'
+  | 'ArrowUp'
+  | 'ArrowDown'
+  | 'ArrowLeft'
+  | 'ArrowRight'
 
 class TempEvent {
-  constructor(target: Element) {
+  constructor(target: EventTarget | Element) {
     this.current = target
     this.currentTarget = target
   }
@@ -21,61 +27,65 @@ class TempEvent {
 
   public pageY: number
 
-  public current: Element
+  public which: string
 
-  public currentTarget: Element
+  public current: EventTarget | Element
+
+  public currentTarget: EventTarget | Element
 
   preventDefault() {}
 
   stopPropagation() {}
 }
 
-export const useKeyUp = (fn, ref, keycodes) => {
+const matchKeyCode = (k: Key | Number, e: KeyboardEvent) => {
+  const code = e.code || e.key
+  const numberCode = e.keyCode || e.which
+  return (
+    code === k ||
+    k === numberCode ||
+    (typeof k === 'string' && keyMap[k] === numberCode)
+  )
+}
+
+export const useKeyUp = (
+  handler: (event: TempEvent) => void,
+  ref: RefObject<Element>,
+  keycodes: (Key | number)[]
+) => {
   useEffect(() => {
-    const fn2 = (e) => {
-      if (
-        !keycodes ||
-        keycodes.find((v) => {
-          return e.which === v || keyMap[v] === e.which
-        })
-      ) {
+    const keyHandler = (e: KeyboardEvent) => {
+      if (!keycodes || keycodes.find((k) => matchKeyCode(k, e))) {
         e.preventDefault()
         e.stopPropagation()
         const event = new TempEvent(ref ? ref.current : e.target)
-
-        event.pageX = e.pageX
-        event.pageY = e.pageY
-        fn(event)
+        handler(event)
       }
     }
-    document.addEventListener('keyup', fn2)
+    document.addEventListener('keyup', keyHandler)
     return () => {
-      document.removeEventListener('keyup', fn2)
+      document.removeEventListener('keyup', keyHandler)
     }
-  }, [fn, ref])
+  }, [handler, ref])
 }
 
-export const useKeyDown = (fn, ref, keycodes) => {
+export const useKeyDown = (
+  handler: (event: TempEvent) => void,
+  ref: RefObject<Element>,
+  keycodes: (Key | number)[]
+) => {
   useEffect(() => {
-    const fn2 = (e) => {
-      if (
-        !keycodes ||
-        keycodes.find((v) => {
-          return e.which === v || keyMap[v] === e.which
-        })
-      ) {
-        if (ref) {
-          e.currentTarget = ref.current
-          e.target = ref.current
-        }
+    const keyHandler = (e: KeyboardEvent) => {
+      if (!keycodes || keycodes.find((k) => matchKeyCode(k, e))) {
         e.preventDefault()
         e.stopPropagation()
-        fn(e)
+        const event = new TempEvent(ref ? ref.current : e.target)
+        handler(event)
       }
     }
-    document.addEventListener('keydown', fn2)
+    document.addEventListener('keydown', keyHandler)
     return () => {
-      document.removeEventListener('keydown', fn2)
+      document.removeEventListener('keydown', keyHandler)
     }
-  }, [fn])
+  }, [handler])
 }

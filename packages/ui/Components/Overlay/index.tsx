@@ -3,17 +3,38 @@ import React, {
   useEffect,
   useState,
   useRef,
-  useCallback
+  useCallback,
+  FunctionComponent,
 } from 'react'
-import { useColor } from '@based/theme'
-let listeners = []
-let overlays = []
 
-const OverlayItem = ({ children, options }) => {
+import { useColor } from '@based/theme'
+
+export type Overlay = any
+
+export type OnClose = () => void
+
+// has to go to something else
+type OverlayOptions = {
+  overlay: boolean
+}
+
+type OverlayItemProps = {
+  options?: OverlayOptions
+}
+
+export type Overlays = [Overlay, OnClose, OverlayOptions][]
+
+let listeners: (() => void)[] = []
+let overlays: Overlays = []
+
+const OverlayItem: FunctionComponent<OverlayItemProps> = ({
+  children,
+  options,
+}) => {
   const ref = useRef()
   const [visible, setVisible] = useState(false)
   useEffect(() => {
-    setVisible(1)
+    setVisible(true)
   }, [setVisible])
 
   const hidden = options && options.overlay === false
@@ -24,25 +45,27 @@ const OverlayItem = ({ children, options }) => {
       style={{
         opacity: visible ? 1 : 0,
         transition: 'opacity 0.25s',
-        backgroundColor: hidden ? null : useColor('background', 0.5),
+        backgroundColor: hidden
+          ? null
+          : useColor({ color: 'background', opacity: 0.5 }),
         width: '100vw',
         position: 'fixed',
         top: 0,
         left: 0,
         height: '100vh',
-        pointerEvents: hidden ? 'none' : 'all'
+        pointerEvents: hidden ? 'none' : 'all',
       }}
       onClick={
         hidden
           ? null
-          : useCallback(e => {
+          : useCallback((e) => {
               if (e.target === ref.current) {
                 setVisible(false)
                 setTimeout(() => {
                   removeOverlay(children)
                 }, 150)
               }
-            })
+            }, [])
       }
     >
       {children}
@@ -50,11 +73,11 @@ const OverlayItem = ({ children, options }) => {
   )
 }
 
-const Overlay = () => {
-  const [, update] = useReducer(x => x + 1, 0)
+const Overlay: FunctionComponent<void> = () => {
+  const [, update] = useReducer((x) => x + 1, 0)
   useEffect(() => {
     listeners.push(update)
-    const remove = e => {
+    const remove = (e: KeyboardEvent) => {
       if (e.keyCode === 27) {
         removeOverlay()
       }
@@ -62,7 +85,7 @@ const Overlay = () => {
     document.addEventListener('keydown', remove)
     return () => {
       document.removeEventListener('keydown', remove)
-      listeners = listeners.filter(u => u !== update)
+      listeners = listeners.filter((u) => u !== update)
     }
   }, [])
 
@@ -72,7 +95,7 @@ const Overlay = () => {
         position: 'fixed',
         zIndex: 1,
         top: 0,
-        left: 0
+        left: 0,
       }}
     >
       {overlays.map((c, i) => {
@@ -82,46 +105,44 @@ const Overlay = () => {
   )
 }
 
-// let originalOverflow
-
-const addOverlay = (overlay, onClose, options) => {
+const addOverlay = (
+  overlay: Overlay,
+  onClose: OnClose,
+  options: OverlayOptions
+) => {
   overlays.push([overlay, onClose, options])
-  listeners.forEach(update => update())
+  listeners.forEach((update) => update())
 }
 
 const removeAllOverlays = () => {
-  overlays.forEach(([, onCancel]) => {
-    if (onCancel) {
-      onCancel()
+  overlays.forEach(([, onClose]) => {
+    if (onClose) {
+      onClose()
     }
   })
   overlays = []
-
-  listeners.forEach(update => update())
+  listeners.forEach((update) => update())
 }
 
-const removeOverlay = overlay => {
+const removeOverlay = (overlay?: Overlay) => {
   if (!overlay) {
     if (overlays.length) {
-      const [, onCancel] = overlays.pop()
-      if (onCancel) {
-        onCancel()
+      const [, onClose] = overlays.pop()
+      if (onClose) {
+        onClose()
       }
     }
   } else {
-    const index = overlays.findIndex(o => o[0] === overlay)
+    const index = overlays.findIndex((o) => o[0] === overlay)
     if (index !== -1) {
-      const [, onCancel] = overlays[index]
-      if (onCancel) {
-        onCancel()
+      const [, onClose] = overlays[index]
+      if (onClose) {
+        onClose()
       }
       overlays.splice(index, 1)
     }
   }
-  if (overlays.length === 0) {
-    // document.body.style.overflowY = originalOverflow
-  }
-  listeners.forEach(update => update())
+  listeners.forEach((update) => update())
 }
 
 export { Overlay, addOverlay, removeOverlay, removeAllOverlays }
