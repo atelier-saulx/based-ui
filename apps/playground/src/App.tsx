@@ -20,7 +20,7 @@ const iconsArray = []
 
 const RenderComponents = ({ category, grid, bg = 'transparent' }) => {
   const s: CSSProperties = {
-    border: '1px dashed ' + useColor({ color: 'foreground', alpha: 0.2 }),
+    border: '1px dashed ' + useColor({ color: 'foreground', opacity: 0.2 }),
     padding: '20px',
     borderRadius: '7px',
     display: 'flex',
@@ -94,17 +94,17 @@ const RenderComponents = ({ category, grid, bg = 'transparent' }) => {
 const iconProps = [
   {},
   {
-    color: 'primary',
+    color: { color: 'primary' },
   },
   {
-    color: 'secondary',
-  },
-  {
-    framed: true,
+    color: { color: 'secondary' },
   },
   {
     framed: true,
-    frameColor: 'secondary',
+  },
+  {
+    framed: true,
+    frameColor: { color: 'secondary' },
   },
 ]
 
@@ -139,9 +139,9 @@ const genButtonProps = () => {
       children: 'Foreground no bg',
       foregroundColor: {
         color: 'foreground',
-        intensity: 2,
+        scale: 2,
       },
-      color: { color: 'background', alpha: 1 },
+      color: { color: 'background', opacity: 0 },
     },
     {
       icon: getRandomIcon(),
@@ -149,7 +149,7 @@ const genButtonProps = () => {
       onClick: () => {
         console.log('yesh')
       },
-      actionKey: ['enter', 'down'],
+      actionKeys: ['enter', 'down'],
     }
   )
 
@@ -158,15 +158,15 @@ const genButtonProps = () => {
       {
         icon: getRandomIcon(),
         children: exampleTitle,
-        color,
+        color: { color },
       },
       {
         children: exampleTitle,
-        color,
+        color: { color },
       },
       {
         icon: getRandomIcon(),
-        color,
+        color: { color },
       },
     ]
     props.push(...vars)

@@ -1,4 +1,4 @@
-import React , { 
+import React, {
   CSSProperties,
   FunctionComponent,
   EventHandler,
@@ -14,12 +14,16 @@ type ClearProps = {
   onClick?: GenericEventHandler
 }
 
-const Clear:FunctionComponent<ClearProps> = ({ color = { color: 'foreground', intensity: 4 }, style, onClick }) => {
+const Clear: FunctionComponent<ClearProps> = ({
+  color = { color: 'foreground', scale: 4 },
+  style,
+  onClick,
+}) => {
   return (
     <div
       onClick={onClick}
       style={{
-        background: useColor('background'),
+        background: useColor({ color: 'background' }),
         paddingLeft: 4,
         position: 'absolute',
         right: 15,
@@ -30,7 +34,7 @@ const Clear:FunctionComponent<ClearProps> = ({ color = { color: 'foreground', in
         alignItems: 'center',
         transition: 'opacity 0.15s',
         cursor: 'pointer',
-        ...style
+        ...style,
       }}
     >
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none">

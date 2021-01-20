@@ -3,8 +3,8 @@ import { useColor, Color } from '@based/theme'
 import { getValue } from '@based/i18n'
 
 type TitleProps = {
-  style?: CSSProperties,
-  color?:  Color,
+  style?: CSSProperties
+  color?: Color
   noSelect?: boolean
   singleLine?: boolean
   variant?: 'regular' | 'small'
@@ -13,11 +13,11 @@ type TitleProps = {
 export const Title: FunctionComponent<TitleProps> = ({
   children,
   style,
-  color = 'foreground',
+  color = { color: 'foreground' },
   noSelect,
   singleLine,
-  variant
-} ) => {
+  variant,
+}) => {
   return (
     <div
       style={{
@@ -30,7 +30,7 @@ export const Title: FunctionComponent<TitleProps> = ({
         whiteSpace: singleLine ? 'nowrap' : null,
         overflow: singleLine ? 'hidden' : null,
         textOverflow: singleLine ? 'ellipsis' : null,
-        ...style
+        ...style,
       }}
     >
       {getValue(children)}

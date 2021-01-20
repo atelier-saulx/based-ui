@@ -5,7 +5,7 @@ import React, {
   SyntheticEvent,
   useRef,
   useEffect,
-  useCallback
+  useCallback,
 } from 'react'
 import { useColor, Color } from '@based/theme'
 import { getValue } from '@based/i18n'
@@ -20,7 +20,7 @@ type ButtonProps = {
   style?: CSSProperties
   color?: Color
   foregroundColor?: Color
-  actionKey?: Key | Key[] // adds a key event
+  actionKeys?: Key[] // adds a key event
   icon?: string
   onClick?: GenericEventHandler
   onHover?: GenericEventHandler
@@ -31,37 +31,36 @@ export const Button: FunctionComponent<ButtonProps> = ({
   children,
   style,
   foregroundColor,
-  color = 'primary',
+  color = { color: 'primary' },
   onHover,
   icon,
-  actionKey,
+  actionKeys,
   onClick,
   onMouseEnter,
 }) => {
   const [hover, isHover, isActive] = useHover(onHover || onMouseEnter)
-  if (typeof color !== 'object') {
-    color = { color }
-  }
-
   let ref
 
-  if (actionKey && onClick) {
+  if (actionKeys && onClick) {
     ref = useRef()
     useEffect(() => {
       if (ref.timeout) {
         clearTimeout(ref.timeout)
       }
     }, [])
-    const onKeyUp = useCallback((x: any) => {
-      if (hover.onMouseDown) {
-        hover.onMouseDown(x)
-        ref.timeout = setTimeout(() => {
-          hover.onMouseUp(x)
-        }, 100)
-      }
-      onClick(x)
-    }, [onClick])
-    useKeyUp(onKeyUp, ref, Array.isArray(actionKey) ? actionKey : [actionKey])
+    const onKeyUp = useCallback(
+      (x: any) => {
+        if (hover.onMouseDown) {
+          hover.onMouseDown(x)
+          ref.timeout = setTimeout(() => {
+            hover.onMouseUp(x)
+          }, 100)
+        }
+        onClick(x)
+      },
+      [onClick]
+    )
+    useKeyUp(onKeyUp, ref, actionKeys)
   }
 
   const c = color.color
@@ -83,15 +82,15 @@ export const Button: FunctionComponent<ButtonProps> = ({
   if (
     isHover &&
     typeof foregroundColor === 'object' &&
-    foregroundColor.intensity > 1
+    foregroundColor.scale > 1
   ) {
     foregroundColor = {
       ...foregroundColor,
+      scale: Math.max(
+        1,
+        foregroundColor.scale - (isActive ? 2 : isHover ? 1 : 0)
+      ),
     }
-    foregroundColor.intensity = Math.max(
-      1,
-      foregroundColor.intensity - (isActive ? 2 : 1)
-    )
   }
 
   const Icon = icon && iconFromString(icon)
@@ -106,9 +105,9 @@ export const Button: FunctionComponent<ButtonProps> = ({
         padding: children && icon ? '4px 8px 4px 4px' : '4px 8px',
         borderRadius: '4px',
         backgroundColor: useColor({
-          color: c,
-          alpha: color.alpha,
-          intensity: isActive ? 3 : isHover ? 2 : 1,
+          color: color.color,
+          opacity: color.opacity,
+          scale: isActive ? 3 : isHover ? 2 : 1,
         }),
         ...style,
       }}
