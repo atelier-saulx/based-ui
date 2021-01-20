@@ -7,12 +7,6 @@ import React, {
 import { useColor } from '@based/theme'
 import { Position } from './'
 
-/*
-
-border: 1px solid rgba(215, 215, 214, 0.8);
-box-shadow: 0px 8px 16px 1px rgba(45, 45, 45, 0.15);
-*/
-
 export const InnerShared = forwardRef<
   HTMLDivElement,
   {
@@ -41,7 +35,7 @@ export const InnerShared = forwardRef<
         })}`,
         boxShadow: ` 0px 8px 16px 1px ${useColor({
           color: 'foreground',
-          scale: 2,
+          scale: 3,
           opacity: 0.15,
         })}`,
         ...style,

@@ -161,6 +161,7 @@ const genButtonProps = () => {
       onClick: useOverlay(Title, {
         style: {
           marginLeft: 10,
+          marginRight: 10,
         },
         children: 'Yesh in an overlay!',
       }),
