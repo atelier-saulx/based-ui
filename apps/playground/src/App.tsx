@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { CSSProperties } from 'react'
 import { icons } from '@based/icons'
 import { useColor, useTheme } from '@based/theme'
 import { Text, SubText, Title, Button } from '@based/ui'
@@ -19,12 +19,12 @@ const exampleTitle = () =>
 const iconsArray = []
 
 const RenderComponents = ({ category, grid, bg = 'transparent' }) => {
-  const s = {
+  const s: CSSProperties = {
     border: '1px dashed ' + useColor({ color: 'foreground', alpha: 0.2 }),
     padding: '20px',
     borderRadius: '7px',
     display: 'flex',
-    flexWrap: grid ? 'wrap' : 'no-wrap',
+    flexWrap: grid ? 'wrap' : 'nowrap',
     backgroundColor: bg,
     flexDirection: grid ? 'row' : 'column',
   }
@@ -32,7 +32,7 @@ const RenderComponents = ({ category, grid, bg = 'transparent' }) => {
     <div
       style={{
         marginBottom: '15px',
-        width: '100%'
+        width: '100%',
       }}
     >
       <SubText
@@ -42,7 +42,6 @@ const RenderComponents = ({ category, grid, bg = 'transparent' }) => {
       >
         {category.name}
       </SubText>
-      {/* @ts-ignore */}
       <div style={s}>
         {category.components.map((v) => {
           return (
@@ -64,14 +63,12 @@ const RenderComponents = ({ category, grid, bg = 'transparent' }) => {
                   let { children, ...props } = p
                   if (p.children) {
                     if (typeof p.children === 'function') {
-                      // @ts-ignore
                       children = children()
                     }
                   }
                   const { Component } = v
                   return (
                     <div>
-                      {/* @ts-ignore */}
                       <Component
                         style={{
                           marginBottom: '15px',
@@ -136,38 +133,40 @@ const genButtonProps = () => {
     'foreground',
   ]
 
-  props.push({
-    icon: getRandomIcon(),
-    children: 'Foreground no bg',
-    foregroundColor: {
-      color: 'foreground',
-      intensity: 2
+  props.push(
+    {
+      icon: getRandomIcon(),
+      children: 'Foreground no bg',
+      foregroundColor: {
+        color: 'foreground',
+        intensity: 2,
+      },
+      color: { color: 'background', alpha: 1 },
     },
-    color: { color: 'background', alpha: 1 }
-  },
-  {
-    icon: getRandomIcon(),
-    children: 'Active on enter',
-    onClick: () => {
-      console.log('yesh')
-    },
-    actionKey: ['enter', 'down'],
-  })
+    {
+      icon: getRandomIcon(),
+      children: 'Active on enter',
+      onClick: () => {
+        console.log('yesh')
+      },
+      actionKey: ['enter', 'down'],
+    }
+  )
 
   for (const color of colors) {
     const vars = [
       {
         icon: getRandomIcon(),
         children: exampleTitle,
-        color
+        color,
       },
       {
         children: exampleTitle,
-        color
+        color,
       },
       {
         icon: getRandomIcon(),
-        color
+        color,
       },
     ]
     props.push(...vars)
@@ -184,7 +183,9 @@ const categories = [
   },
   {
     name: 'button',
-    Render: ({ category }) => <RenderComponents grid category={category} bg = "#efefef" />,
+    Render: ({ category }) => (
+      <RenderComponents grid category={category} bg="#efefef" />
+    ),
     components: [
       {
         name: 'Button',
