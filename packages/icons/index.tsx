@@ -86,7 +86,7 @@ const Icon: FunctionComponent<
 > = ({
   color,
   framed = false,
-  frameColor = 'primary',
+  frameColor = { color: 'primary' },
   draggable = false,
   style,
   onClick,
@@ -101,9 +101,9 @@ const Icon: FunctionComponent<
 }) => {
   if (!color) {
     if (framed) {
-      color = 'background'
+      color = { color: 'background' }
     } else {
-      color = { color: 'foreground', intensity: 3 }
+      color = { color: 'foreground', scale: 3 }
     }
   }
 

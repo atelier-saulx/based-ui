@@ -1,13 +1,21 @@
-import React, { 
-    useState,
-    useCallback, 
-    useRef,
-    CSSProperties,
-    FunctionComponent
+import React, {
+  useState,
+  useCallback,
+  useRef,
+  CSSProperties,
+  FunctionComponent,
 } from 'react'
 import { useColor } from '@based/theme'
 import Clear from './Clear'
-import { Search, Date, Timing, Email, Down, IconProps, iconFromString } from '@based/icons'
+import {
+  // Search,
+  // Date,
+  // Timing,
+  // Email,
+  Down,
+  IconProps,
+  iconFromString,
+} from '@based/icons'
 import { emailValidator, Validator } from './validators'
 import { SubText } from '../Text/SubText'
 import useDropdown from '../../hooks/useDropdown'
@@ -18,13 +26,13 @@ type InputProps = {
   icon?: string
   placeholder?: string
   autoFocus?: boolean
-  onChange?: (value: string | number | undefined) => void,
-  type?: string,
-  validator?: Validator,
+  onChange?: (value: string | number | undefined) => void
+  type?: string
+  validator?: Validator
   identifier?: any
-  errorText?: string,
-  helperText?: string,
-  value?: string | number,
+  errorText?: string
+  helperText?: string
+  value?: string | number
   options?: any // TODO make this from dropdown!
 }
 
@@ -40,7 +48,7 @@ export const Input: FunctionComponent<InputProps> = ({
   options,
   errorText,
   helperText,
-  identifier
+  identifier,
 }) => {
   const identifierRef = useRef(identifier)
   const initialValue = useRef(value)
@@ -63,7 +71,7 @@ export const Input: FunctionComponent<InputProps> = ({
   }
 
   const update = useCallback(
-    e => {
+    (e) => {
       let newvalue = e.target ? e.target.value : e
       if (newvalue && type === 'number') {
         newvalue = Number(newvalue)
@@ -102,13 +110,13 @@ export const Input: FunctionComponent<InputProps> = ({
     if (icon) {
       Icon = iconFromString(icon)
     } else if (type === 'search') {
-      Icon = Search
+      // Icon = Search
     } else if (type === 'date') {
-      Icon = Date
+      // Icon = Date
     } else if (type === 'time') {
-      Icon = Clock
+      // Icon = Clock
     } else if (type === 'email') {
-      Icon = Email
+      // Icon = Email
     }
   }
 
@@ -133,9 +141,15 @@ export const Input: FunctionComponent<InputProps> = ({
         borderRadius: 8,
         flexGrow: 1,
         border: isFocus
-          ? '2px solid ' + (isWrong ? useColor('secondary') : useColor('primary'))
-          : '1px solid ' + (isWrong ? useColor('secondary') : useColor({ color: 'foreground', intensity: 5})),
-        ...style
+          ? '2px solid ' +
+            (isWrong
+              ? useColor({ color: 'secondary' })
+              : useColor({ color: 'primary' }))
+          : '1px solid ' +
+            (isWrong
+              ? useColor({ color: 'secondary' })
+              : useColor({ color: 'foreground', scale: 5 })),
+        ...style,
       }}
     >
       {Icon ? (
@@ -147,10 +161,10 @@ export const Input: FunctionComponent<InputProps> = ({
               bottom: 0,
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'center'
+              justifyContent: 'center',
             }}
           >
-            <Icon color={{ color: 'foreground', intensity: 4 }} />
+            <Icon color={{ color: 'foreground', scale: 4 }} />
           </div>
           <div style={{ width: 28 }} />
         </>
@@ -172,8 +186,8 @@ export const Input: FunctionComponent<InputProps> = ({
           fontSize: 16,
           background: 'none',
           fontFamily: 'Inter',
-          color: useColor('foreground'),
-          fontWeight: 'normal'
+          color: useColor({ color: 'foreground' }),
+          fontWeight: 'normal',
         }}
       />
 
@@ -183,7 +197,10 @@ export const Input: FunctionComponent<InputProps> = ({
             options,
             stateValue,
             () => {
-              return (value, index) => {
+              return (
+                value: string | number | undefined,
+                index: number | undefined
+              ) => {
                 if (index !== undefined) {
                   update(value === undefined ? '' : value)
                 }
@@ -195,31 +212,37 @@ export const Input: FunctionComponent<InputProps> = ({
               x: ({ x }) => x - 15,
               y: ({ y }) => y + 15,
               width: () => 'auto',
-              selectTarget: target => {
+              selectTarget: (target: Element) => {
                 return target.parentNode
-              }
+              },
             }
           )}
         />
       ) : (
         <Clear
-          color={isWrong ? 'secondary' : isFocus ? 'primary' :  { color: 'foreground', intensity: 4 }}
+          color={
+            isWrong
+              ? { color: 'secondary' }
+              : isFocus
+              ? { color: 'primary' }
+              : { color: 'foreground', scale: 4 }
+          }
           style={{
             // @ts-ignore
-            opacity: stateValue || stateValue === 0 ? 1 : 0
+            opacity: stateValue || stateValue === 0 ? 1 : 0,
           }}
           onClick={clear}
         />
       )}
       {isFocus && (errorText || helperText) ? (
         <SubText
-          color={isWrong ? 'secondary' : 'foreground'}
+          color={{ color: isWrong ? 'secondary' : 'foreground' }}
           style={{
             marginLeft: 15,
             fontWeight: 'normal',
             position: 'absolute',
             bottom: -20,
-            left: 0
+            left: 0,
           }}
         >
           {isWrong ? errorText : helperText || ''}

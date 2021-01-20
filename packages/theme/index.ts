@@ -153,26 +153,19 @@ export const useTheme = (active?: 'light' | 'dark') => {
   return theme[active]
 }
 
-export type Color =
-  | ColorKey
-  | {
-      color: ColorKey
-      intensity?: number
-      alpha?: number
-    }
+export type Color = {
+  color: ColorKey
+  scale?: number
+  opacity?: number
+}
 
 export const useColor = (color: Color): string => {
-  if (typeof color === 'object') {
-    const { intensity = 1, alpha = 0, color: c } = color
-    const selector = theme.theme[theme.active][c]
-    const rgb = selector[intensity - 1] || selector[selector.length - 1]
-    if (alpha !== 0) {
-      return `rgba(${rgb[0]},${rgb[1]},${rgb[2]}, ${1 - alpha})`
-    } else {
-      return `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
-    }
+  const { scale = 1, opacity = 1, color: c } = color
+  const selector = theme.theme[theme.active][c]
+  const rgb = selector[scale - 1] || selector[selector.length - 1]
+  if (opacity !== 1) {
+    return `rgba(${rgb[0]},${rgb[1]},${rgb[2]}, ${opacity})`
   } else {
-    const rgb = theme.theme[theme.active][color][0]
     return `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
   }
 }

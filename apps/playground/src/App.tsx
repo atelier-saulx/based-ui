@@ -20,7 +20,7 @@ const iconsArray = []
 
 const RenderComponents = ({ category, grid, bg = 'transparent' }) => {
   const s = {
-    border: '1px dashed ' + useColor({ color: 'foreground', alpha: 0.2 }),
+    border: '1px dashed ' + useColor({ color: 'foreground', opacity: 0.2 }),
     padding: '20px',
     borderRadius: '7px',
     display: 'flex',
@@ -32,7 +32,7 @@ const RenderComponents = ({ category, grid, bg = 'transparent' }) => {
     <div
       style={{
         marginBottom: '15px',
-        width: '100%'
+        width: '100%',
       }}
     >
       <SubText
@@ -97,17 +97,17 @@ const RenderComponents = ({ category, grid, bg = 'transparent' }) => {
 const iconProps = [
   {},
   {
-    color: 'primary',
+    color: { color: 'primary' },
   },
   {
-    color: 'secondary',
-  },
-  {
-    framed: true,
+    color: { color: 'secondary' },
   },
   {
     framed: true,
-    frameColor: 'secondary',
+  },
+  {
+    framed: true,
+    frameColor: { color: 'secondary' },
   },
 ]
 
@@ -136,38 +136,40 @@ const genButtonProps = () => {
     'foreground',
   ]
 
-  props.push({
-    icon: getRandomIcon(),
-    children: 'Foreground no bg',
-    foregroundColor: {
-      color: 'foreground',
-      intensity: 2
+  props.push(
+    {
+      icon: getRandomIcon(),
+      children: 'Foreground no bg',
+      foregroundColor: {
+        color: 'foreground',
+        scale: 2,
+      },
+      color: { color: 'background', opacity: 0 },
     },
-    color: { color: 'background', alpha: 1 }
-  },
-  {
-    icon: getRandomIcon(),
-    children: 'Active on enter',
-    onClick: () => {
-      console.log('yesh')
-    },
-    actionKey: ['enter', 'down'],
-  })
+    {
+      icon: getRandomIcon(),
+      children: 'Active on enter',
+      onClick: () => {
+        console.log('yesh')
+      },
+      actionKeys: ['enter', 'down'],
+    }
+  )
 
   for (const color of colors) {
     const vars = [
       {
         icon: getRandomIcon(),
         children: exampleTitle,
-        color
+        color: { color },
       },
       {
         children: exampleTitle,
-        color
+        color: { color },
       },
       {
         icon: getRandomIcon(),
-        color
+        color: { color },
       },
     ]
     props.push(...vars)
@@ -184,7 +186,9 @@ const categories = [
   },
   {
     name: 'button',
-    Render: ({ category }) => <RenderComponents grid category={category} bg = "#efefef" />,
+    Render: ({ category }) => (
+      <RenderComponents grid category={category} bg="#efefef" />
+    ),
     components: [
       {
         name: 'Button',
