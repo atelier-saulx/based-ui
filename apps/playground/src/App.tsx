@@ -263,9 +263,7 @@ const categories = [
   },
   {
     name: 'loader',
-    Render: ({ category }) => (
-      <RenderComponents grid category={category} bg="#efefef" />
-    ),
+    Render: ({ category }) => <RenderComponents grid category={category} />,
     components: [
       {
         name: 'Loader',
