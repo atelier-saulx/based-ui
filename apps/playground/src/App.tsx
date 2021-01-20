@@ -164,7 +164,10 @@ const genButtonProps = () => {
           marginLeft: 10,
           marginRight: 10,
         },
-        children: 'Yesh in an overlay!',
+        align: 'start',
+        width: 'auto',
+        singleLine: true,
+        children: 'Yesh in an overlay! eofdjdweop ewpfohj flap flap flurpy',
       }),
       actionKeys: ['Enter', 'ArrowDown'],
     })

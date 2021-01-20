@@ -1,5 +1,5 @@
 import React, { ComponentType, forwardRef, PropsWithChildren } from 'react'
-import useOverlay from '../../hooks/useOverlayPosition'
+import useOverlayPosition from '../../hooks/useOverlayPosition'
 import Shared from './Shared'
 
 export const GenericOverlay = forwardRef<
@@ -8,7 +8,7 @@ export const GenericOverlay = forwardRef<
     Component: ComponentType
   } & PropsWithChildren<any>
 >((props, ref) => {
-  const [elementRef, position, , resize] = useOverlay(props, ref)
+  const [elementRef, position, , resize] = useOverlayPosition(props, ref)
   return (
     <Shared ref={elementRef} position={position} align={props.align}>
       {React.createElement(props.Component, { resize, position, ...props })}

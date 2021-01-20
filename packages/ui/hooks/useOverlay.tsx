@@ -1,5 +1,6 @@
 import { addOverlay, OnClose } from '../Components/Overlay'
 import { GenericOverlay } from '../Components/Overlay/GenericOverlay'
+import { Align, PositionProps } from './useOverlayPosition'
 import React, {
   ComponentType,
   PropsWithChildren,
@@ -9,12 +10,12 @@ import React, {
 
 export default function useOverlay<P>(
   component: ComponentType<P>,
-  props?: PropsWithChildren<P & { align?: string }>,
-  handler?: (selection: any) => OnClose | undefined
-): (selection: Event, extraProps?: PropsWithChildren<any>) => void {
+  props?: PropsWithChildren<P & PositionProps>,
+  handler?: (selection: Event | any) => OnClose | undefined
+): (selection: Event, selectionProps?: PropsWithChildren<any>) => void {
   const ref = useRef(null)
   return useCallback(
-    (e: Event, extraProps) => {
+    (e: Event, selectionProps) => {
       let cancel: OnClose
       if (handler) {
         cancel = handler(e)
@@ -25,7 +26,7 @@ export default function useOverlay<P>(
           ref={ref}
           target={e.currentTarget}
           {...props}
-          {...extraProps}
+          {...selectionProps}
         />
       )
       addOverlay(reactNode, () => {

@@ -5,7 +5,7 @@ import React, {
   ReactChildren,
 } from 'react'
 import { useColor } from '@based/theme'
-import { Position } from './'
+import { Position, Align } from '../../hooks/useOverlayPosition'
 
 export const InnerShared = forwardRef<
   HTMLDivElement,
@@ -50,7 +50,7 @@ export type SharedOverlayProps = {
   width?: number | string
   style?: CSSProperties
   position?: Position
-  align?: string
+  align?: Align
   children?: ReactChildren | ReactChild
 }
 
