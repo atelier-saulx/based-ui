@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { FunctionComponent, CSSProperties } from 'react'
 import { useColor } from '@based/theme'
 
-const calcSvg = val => {
+const calcSvg = (val) => {
   const r = 84
   const c = Math.PI * (r * 2)
   if (val < 0) {
@@ -13,32 +13,43 @@ const calcSvg = val => {
   return ((100 - val) / 100) * c
 }
 
-export const ProgressIndicator = ({ value = 0, size = 25, style }) => {
+type ProgressIndicatorProps = {
+  value: number
+  size: number
+  style: CSSProperties
+}
+
+export const ProgressIndicator: FunctionComponent<ProgressIndicatorProps> = ({
+  value = 0,
+  size = 25,
+  style,
+}) => {
   return (
     <div
       style={{
         width: size,
         height: size,
-        '@keyframes': {
-          fade: {
-            '0%': {
-              opacity: 0.5
-            },
-            '50%': {
-              opacity: 1
-            },
-            '100%': {
-              opacity: 0.5
-            }
-          }
-        },
+        // TODO: Waiting for @keyframes to be implemented on parser
+        // '@keyframes': {
+        //   fade: {
+        //     '0%': {
+        //       opacity: 0.5,
+        //     },
+        //     '50%': {
+        //       opacity: 1,
+        //     },
+        //     '100%': {
+        //       opacity: 0.5,
+        //     },
+        //   },
+        // },
         animation: value > 99 ? 'fade 0.5s infinite' : '',
-        ...style
+        ...style,
       }}
     >
       <svg
         style={{
-          transform: 'rotate(-90deg)'
+          transform: 'rotate(-90deg)',
         }}
         strokeWidth="30px"
         width={size}
@@ -52,7 +63,7 @@ export const ProgressIndicator = ({ value = 0, size = 25, style }) => {
           fill="transparent"
           strokeDasharray="527.781333333"
           style={{
-            stroke: useColor('default', 0.33)
+            stroke: useColor({ color: 'foreground', opacity: 0.33 }),
           }}
         />
         <circle
@@ -65,7 +76,7 @@ export const ProgressIndicator = ({ value = 0, size = 25, style }) => {
           strokeDashoffset={calcSvg(value) + 'px'}
           style={{
             transition: 'stroke-dashoffset 0.5s linear',
-            stroke: useColor('primary')
+            stroke: useColor({ color: 'primary' }),
           }}
         />
       </svg>
