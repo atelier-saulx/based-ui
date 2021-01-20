@@ -1,4 +1,3 @@
-import React from 'React'
 import { Text, SubText, Title } from '@based/ui'
 import { randomText, randomTitle } from './util'
 import RenderComponents from '../RenderComponents'
