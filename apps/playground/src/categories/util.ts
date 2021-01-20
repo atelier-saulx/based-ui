@@ -1,0 +1,19 @@
+import { loremIpsum } from 'lorem-ipsum'
+import { icons } from '@based/icons'
+
+export const randomIcon = (): string => {
+  const k = Object.keys(icons)
+  return k[Math.floor(Math.random() * k.length)]
+}
+
+export const randomText = (): string =>
+  loremIpsum({
+    sentenceLowerBound: 10,
+    sentenceUpperBound: 200,
+  })
+
+export const randomTitle = (): string =>
+  loremIpsum({
+    sentenceLowerBound: 1,
+    sentenceUpperBound: 5,
+  })
