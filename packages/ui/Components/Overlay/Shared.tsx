@@ -1,9 +1,20 @@
-import React, { forwardRef } from 'react'
-import { useColor, getTone } from '@based/theme'
+import React, {
+  CSSProperties,
+  forwardRef,
+  ReactChild,
+  ReactChildren,
+} from 'react'
+import { useColor } from '@based/theme'
+import { Position } from './'
 
-export const InnerShared = forwardRef(({ width, style, children }, ref) => {
-  const isDark = getTone() === 'dark'
-
+export const InnerShared = forwardRef<
+  HTMLDivElement,
+  {
+    width: number | string
+    style: CSSProperties
+    children?: ReactChildren | ReactChild
+  }
+>(({ width, style, children }, ref) => {
   return (
     <div
       ref={ref}
@@ -11,19 +22,26 @@ export const InnerShared = forwardRef(({ width, style, children }, ref) => {
         pointerEvents: 'all',
         borderRadius: 6,
         width: width,
-        background: useColor('background2'),
+        background: useColor({ color: 'background', scale: 2 }),
         overflowY: 'auto',
         overflowX: 'hidden',
         paddingTop: 10,
         paddingBottom: 10,
         maxHeight: 'calc(100vh-30px)',
-        boxShadow: isDark
-          ? `0px 4px 20px ${useColor('shadow', 0.2)}`
-          : `0px 2px 2px ${useColor('shadow', 0.07)}, 0px 3px 1px ${useColor(
-              'shadow',
-              0.2
-            )}, 0px 1px 5px ${useColor('shadow', 0.1)}`,
-        ...style
+        boxShadow: `0px 2px 2px ${useColor({
+          color: 'foreground',
+          scale: 3,
+          opacity: 0.5,
+        })}, 0px 3px 1px ${{
+          color: 'foreground',
+          scale: 3,
+          opacity: 0.3,
+        }}, 0px 1px 5px ${useColor({
+          color: 'foreground',
+          scale: 3,
+          opacity: 0.1,
+        })}`,
+        ...style,
       }}
     >
       {children}
@@ -31,7 +49,15 @@ export const InnerShared = forwardRef(({ width, style, children }, ref) => {
   )
 })
 
-export default forwardRef(
+export type SharedOverlayProps = {
+  width?: number | string
+  style?: CSSProperties
+  position?: Position
+  align?: string
+  children?: ReactChildren | ReactChild
+}
+
+export default forwardRef<HTMLDivElement, SharedOverlayProps>(
   ({ position, align = 'center', children, style, width = 'auto' }, ref) => {
     return (
       <div
@@ -39,13 +65,12 @@ export default forwardRef(
           opacity: position ? 1 : 0,
           width: position ? position.containerWidth : 'auto',
           position: 'fixed',
-          // overflow: 'hidden',
           top: position ? position.y : 0,
           left: position ? position.x : 0,
           bottom: position ? position.bottom : null,
           display: 'flex',
           justifyContent: align,
-          pointerEvents: 'none'
+          pointerEvents: 'none',
         }}
       >
         <div
@@ -53,14 +78,14 @@ export default forwardRef(
             display: 'flex',
             flexDirection: 'column',
             justifyContent:
-              position && position.spaceOnTop ? 'flex-end' : 'flex-start'
+              position && position.spaceOnTop ? 'flex-end' : 'flex-start',
           }}
         >
           <InnerShared
             ref={ref}
             width={position ? position.width : width}
             style={{
-              ...style
+              ...style,
             }}
           >
             {children}

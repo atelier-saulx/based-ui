@@ -5,24 +5,32 @@ import React, {
   useRef,
   useCallback,
   FunctionComponent,
+  ReactNode,
 } from 'react'
 
 import { useColor } from '@based/theme'
 
-export type Overlay = any
-
 export type OnClose = () => void
 
-// has to go to something else
-type OverlayOptions = {
+// has to go to something else (in hook useOverlay)
+export type OverlayOptions = {
   overlay: boolean
+}
+
+export type Overlays = [ReactNode, OnClose, OverlayOptions][]
+
+export type Position = {
+  containerWidth: number
+  y: number
+  x: number
+  bottom: number
+  spaceOnTop?: number
+  width: number
 }
 
 type OverlayItemProps = {
   options?: OverlayOptions
 }
-
-export type Overlays = [Overlay, OnClose, OverlayOptions][]
 
 let listeners: (() => void)[] = []
 let overlays: Overlays = []
@@ -73,12 +81,12 @@ const OverlayItem: FunctionComponent<OverlayItemProps> = ({
   )
 }
 
-const Overlay: FunctionComponent<void> = () => {
+const Overlay = () => {
   const [, update] = useReducer((x) => x + 1, 0)
   useEffect(() => {
     listeners.push(update)
     const remove = (e: KeyboardEvent) => {
-      if (e.keyCode === 27) {
+      if (e.code === 'Esc' || e.keyCode === 27) {
         removeOverlay()
       }
     }
@@ -106,9 +114,9 @@ const Overlay: FunctionComponent<void> = () => {
 }
 
 const addOverlay = (
-  overlay: Overlay,
+  overlay: ReactNode,
   onClose: OnClose,
-  options: OverlayOptions
+  options?: OverlayOptions
 ) => {
   overlays.push([overlay, onClose, options])
   listeners.forEach((update) => update())
@@ -124,7 +132,7 @@ const removeAllOverlays = () => {
   listeners.forEach((update) => update())
 }
 
-const removeOverlay = (overlay?: Overlay) => {
+const removeOverlay = (overlay?: ReactNode) => {
   if (!overlay) {
     if (overlays.length) {
       const [, onClose] = overlays.pop()

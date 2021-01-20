@@ -1,7 +1,7 @@
 import React, { CSSProperties } from 'react'
 import { icons } from '@based/icons'
 import { useColor, useTheme } from '@based/theme'
-import { Text, SubText, Title, Button } from '@based/ui'
+import { Text, SubText, Title, Button, useOverlay, Overlay } from '@based/ui'
 import { loremIpsum } from 'lorem-ipsum'
 
 const exampleText = () =>
@@ -60,6 +60,10 @@ const RenderComponents = ({ category, grid, bg = 'transparent' }) => {
               </SubText>
               <div key={v.name} style={s}>
                 {v.props.map((p, i) => {
+                  if (typeof p === 'function') {
+                    p = p()
+                  }
+
                   let { children, ...props } = p
                   if (p.children) {
                     if (typeof p.children === 'function') {
@@ -143,14 +147,12 @@ const genButtonProps = () => {
       },
       color: { color: 'background', opacity: 0 },
     },
-    {
+    () => ({
       icon: getRandomIcon(),
       children: 'Active on enter and down',
-      onClick: () => {
-        console.log('yesh')
-      },
+      onClick: useOverlay(Text, { variant: 'semibold', children: 'BALLZ!' }),
       actionKeys: ['Enter', 'ArrowDown'],
-    }
+    })
   )
 
   for (const color of colors) {
@@ -296,16 +298,19 @@ const App = () => {
   // this is the filter
 
   return (
-    <div
-      style={{
-        padding: '15px',
-        marginBottom: '15px',
-      }}
-    >
-      {categories.map((c) => {
-        return <Category category={c} />
-      })}
-    </div>
+    <>
+      <div
+        style={{
+          padding: '15px',
+          marginBottom: '15px',
+        }}
+      >
+        {categories.map((c) => {
+          return <Category category={c} />
+        })}
+      </div>
+      <Overlay />
+    </>
   )
 }
 

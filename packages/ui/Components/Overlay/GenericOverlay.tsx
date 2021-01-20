@@ -1,8 +1,13 @@
-import React, { forwardRef } from 'react'
+import React, { ComponentType, forwardRef, PropsWithChildren } from 'react'
 import useOverlay from '../../hooks/useOverlayPosition'
 import Shared from './Shared'
 
-export const GenericOverlay = forwardRef((props, ref) => {
+export const GenericOverlay = forwardRef<
+  HTMLDivElement,
+  {
+    Component: ComponentType
+  } & PropsWithChildren<any>
+>((props, ref) => {
   const [elementRef, position, , resize] = useOverlay(props, ref)
   return (
     <Shared ref={elementRef} position={position} align={props.align}>

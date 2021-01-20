@@ -70,12 +70,17 @@
 //   useMultiple
 // }
 
-// export {
-//   Overlay,
-//   addOverlay,
-//   removeOverlay,
-//   removeAllOverlays
-// } from './Components/Overlay'
+export {
+  Overlay,
+  addOverlay,
+  removeOverlay,
+  removeAllOverlays,
+} from './Components/Overlay'
+
+import useOverlay from './hooks/useOverlay'
+import { useKeyDown, useKeyUp } from './hooks/useKeyboard'
+
+export { useOverlay, useKeyDown, useKeyUp }
 
 export { Text } from './Components/Text/Text'
 export { Title } from './Components/Text/Title'

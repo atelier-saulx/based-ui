@@ -1,4 +1,4 @@
-import { KeyboardEventHandler, RefObject, useEffect } from 'react'
+import { RefObject, useEffect } from 'react'
 
 const keyMap = {
   Enter: 13,
