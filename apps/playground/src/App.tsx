@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { CSSProperties } from 'react'
 import { icons } from '@based/icons'
 import { useColor, useTheme } from '@based/theme'
 import { Text, SubText, Title, Button } from '@based/ui'
@@ -19,12 +19,12 @@ const exampleTitle = () =>
 const iconsArray = []
 
 const RenderComponents = ({ category, grid, bg = 'transparent' }) => {
-  const s = {
+  const s: CSSProperties = {
     border: '1px dashed ' + useColor({ color: 'foreground', opacity: 0.2 }),
     padding: '20px',
     borderRadius: '7px',
     display: 'flex',
-    flexWrap: grid ? 'wrap' : 'no-wrap',
+    flexWrap: grid ? 'wrap' : 'nowrap',
     backgroundColor: bg,
     flexDirection: grid ? 'row' : 'column',
   }
@@ -42,7 +42,6 @@ const RenderComponents = ({ category, grid, bg = 'transparent' }) => {
       >
         {category.name}
       </SubText>
-      {/* @ts-ignore */}
       <div style={s}>
         {category.components.map((v) => {
           return (
@@ -64,14 +63,12 @@ const RenderComponents = ({ category, grid, bg = 'transparent' }) => {
                   let { children, ...props } = p
                   if (p.children) {
                     if (typeof p.children === 'function') {
-                      // @ts-ignore
                       children = children()
                     }
                   }
                   const { Component } = v
                   return (
                     <div>
-                      {/* @ts-ignore */}
                       <Component
                         style={{
                           marginBottom: '15px',
