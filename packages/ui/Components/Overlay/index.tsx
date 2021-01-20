@@ -52,7 +52,7 @@ const OverlayItem: FunctionComponent<OverlayItemProps> = ({
       ref={ref}
       style={{
         opacity: visible ? 1 : 0,
-        transition: 'opacity 0.25s',
+        transition: 'opacity 0.15s',
         backgroundColor: hidden
           ? null
           : useColor({ color: 'background', opacity: 0.5 }),

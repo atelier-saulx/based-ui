@@ -7,6 +7,12 @@ import React, {
 import { useColor } from '@based/theme'
 import { Position } from './'
 
+/*
+
+border: 1px solid rgba(215, 215, 214, 0.8);
+box-shadow: 0px 8px 16px 1px rgba(45, 45, 45, 0.15);
+*/
+
 export const InnerShared = forwardRef<
   HTMLDivElement,
   {
@@ -22,24 +28,21 @@ export const InnerShared = forwardRef<
         pointerEvents: 'all',
         borderRadius: 6,
         width: width,
-        background: useColor({ color: 'background', scale: 2 }),
+        background: useColor({ color: 'background', scale: 1 }),
         overflowY: 'auto',
         overflowX: 'hidden',
         paddingTop: 10,
         paddingBottom: 10,
         maxHeight: 'calc(100vh-30px)',
-        boxShadow: `0px 2px 2px ${useColor({
+        border: `1px solid ${useColor({
+          color: 'background',
+          scale: 2,
+          opacity: 0.8,
+        })}`,
+        boxShadow: ` 0px 8px 16px 1px ${useColor({
           color: 'foreground',
-          scale: 3,
-          opacity: 0.5,
-        })}, 0px 3px 1px ${{
-          color: 'foreground',
-          scale: 3,
-          opacity: 0.3,
-        }}, 0px 1px 5px ${useColor({
-          color: 'foreground',
-          scale: 3,
-          opacity: 0.1,
+          scale: 2,
+          opacity: 0.15,
         })}`,
         ...style,
       }}

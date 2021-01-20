@@ -158,10 +158,11 @@ const genButtonProps = () => {
     () => ({
       icon: getRandomIcon(),
       children: 'Active on enter and down',
-      onClick: useOverlay(icons.Add, {
-        size: 100,
-        framed: true,
-        onClick: () => console.log('clikly'),
+      onClick: useOverlay(Title, {
+        style: {
+          marginLeft: 10,
+        },
+        children: 'Yesh in an overlay!',
       }),
       actionKeys: ['Enter', 'ArrowDown'],
     })
