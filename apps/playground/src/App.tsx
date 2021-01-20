@@ -9,6 +9,7 @@ import {
   useOverlay,
   Overlay,
   Loader,
+  ProgressIndicator,
 } from '@based/ui'
 import { loremIpsum } from 'lorem-ipsum'
 
@@ -272,6 +273,20 @@ const categories = [
         category: 'loader',
         Component: Loader,
         props: [{ fadeIn: true }],
+      },
+    ],
+  },
+  {
+    name: 'progressIndicator',
+    Render: ({ category }) => (
+      <RenderComponents grid category={category} bg="#efefef" />
+    ),
+    components: [
+      {
+        name: 'ProgressIndicator',
+        category: 'progressIndicator',
+        Component: ProgressIndicator,
+        props: [{ value: 40 }],
       },
     ],
   },
