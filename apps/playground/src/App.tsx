@@ -1,7 +1,15 @@
 import React, { CSSProperties } from 'react'
 import { icons } from '@based/icons'
 import { useColor, useTheme } from '@based/theme'
-import { Text, SubText, Title, Button, useOverlay, Overlay } from '@based/ui'
+import {
+  Text,
+  SubText,
+  Title,
+  Button,
+  useOverlay,
+  Overlay,
+  Loader,
+} from '@based/ui'
 import { loremIpsum } from 'lorem-ipsum'
 
 const exampleText = () =>
@@ -250,6 +258,20 @@ const categories = [
             children: exampleTitle,
           },
         ],
+      },
+    ],
+  },
+  {
+    name: 'loader',
+    Render: ({ category }) => (
+      <RenderComponents grid category={category} bg="#efefef" />
+    ),
+    components: [
+      {
+        name: 'Loader',
+        category: 'loader',
+        Component: Loader,
+        props: [{ fadeIn: true }],
       },
     ],
   },
