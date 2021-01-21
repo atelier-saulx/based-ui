@@ -17,16 +17,14 @@ export default function useOverlay<P>(
   e: Event | SyntheticEvent,
   selectionProps?: PropsWithChildren<any>
 ) => void {
-  const ctxRef = createOverlayContextRef<PropsWithChildren<P & PositionProps>>(
-    props
-  )
+  const ctx = createOverlayContextRef(props)
   return useCallback((e: Event | SyntheticEvent, selectionProps) => {
     let cancel: OnClose
     if (handler) {
       cancel = handler(e)
     }
     const reactNode = (
-      <OverlayContext.Provider value={ctxRef}>
+      <OverlayContext.Provider value={ctx}>
         <GenericOverlay
           Component={component}
           target={e.currentTarget}
