@@ -15,7 +15,7 @@ type GenericEventHandler = EventHandler<SyntheticEvent>
 
 type SideMenuItemProps = {
   title?: string
-  iconName?: string
+  icon?: string
   style?: CSSProperties
   onClick?: (event: SyntheticEvent, meta: object) => {}
   active?: boolean
@@ -25,7 +25,7 @@ type SideMenuItemProps = {
 
 export const SideMenuItem: FunctionComponent<SideMenuItemProps> = ({
   title,
-  iconName,
+  icon,
   style,
   children,
   onClick,
@@ -35,11 +35,7 @@ export const SideMenuItem: FunctionComponent<SideMenuItemProps> = ({
   const [hover, isHover] = useHover()
   const [expanded, toggleExpand] = useReducer((v) => !v, false)
 
-  const ItemIcon = children
-    ? Expand
-    : iconName
-    ? iconFromString(iconName)
-    : null
+  const ItemIcon = children ? Expand : icon ? iconFromString(icon) : null
 
   return (
     <>

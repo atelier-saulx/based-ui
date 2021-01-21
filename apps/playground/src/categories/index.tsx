@@ -1,5 +1,12 @@
 import React from 'React'
-import { Text, SubText, Title, Loader, ProgressIndicator } from '@based/ui'
+import {
+  Text,
+  SubText,
+  Title,
+  Loader,
+  ProgressIndicator,
+  SideMenu,
+} from '@based/ui'
 import button from './button'
 import icon from './icon'
 import text from './text'
@@ -33,6 +40,37 @@ const categories = [
         category: 'progressIndicator',
         Component: ProgressIndicator,
         props: [{ value: 40 }],
+      },
+    ],
+  },
+  {
+    name: 'sidemenu',
+    Render: ({ category }) => (
+      <RenderComponents grid category={category} bg="#efefef" />
+    ),
+    components: [
+      {
+        name: 'SideMenu',
+        category: 'sidemenu',
+        Component: SideMenu,
+        props: [
+          {
+            children: [
+              {
+                title: 'Item 1',
+                icon: 'Shows',
+              },
+              {
+                title: 'Item 2',
+                icon: 'Schedule',
+              },
+              {
+                title: 'Item 3',
+                icon: 'Register',
+              },
+            ],
+          },
+        ],
       },
     ],
   },
