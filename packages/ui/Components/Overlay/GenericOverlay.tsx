@@ -3,25 +3,21 @@ import React, {
   FunctionComponent,
   PropsWithChildren,
 } from 'react'
-import useOverlayPosition, {
-  UpdateChildren,
-} from '../../hooks/useOverlayPosition'
+import useOverlayPosition from '../../hooks/useOverlayPosition'
+import useOverlayProps from '../../hooks/useOverlayProps'
 import Shared from './Shared'
 
 export type GenericOverlayProps = {
   Component: ComponentType
-  updateChildrenRef: UpdateChildren
 } & PropsWithChildren<any>
 
 export const GenericOverlay: FunctionComponent<GenericOverlayProps> = ({
-  updateChildrenRef,
   Component,
-  ...props
+  ...selectionProps
 }) => {
-  const [elementRef, position, childrenState, resize] = useOverlayPosition(
-    props,
-    updateChildrenRef
-  )
+  const props = useOverlayProps(selectionProps)
+
+  const [elementRef, position, resize] = useOverlayPosition(props)
 
   return (
     <Shared ref={elementRef} position={position} align={props.align}>
@@ -29,7 +25,6 @@ export const GenericOverlay: FunctionComponent<GenericOverlayProps> = ({
         resize,
         position,
         ...props,
-        children: childrenState,
       })}
     </Shared>
   )
