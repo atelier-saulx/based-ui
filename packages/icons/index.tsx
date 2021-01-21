@@ -65,6 +65,10 @@ export type SvgProps = {
 
 type GenericEventHandler = EventHandler<SyntheticEvent>
 
+export type Icon = FunctionComponent<
+  IconProps & { Svg: FunctionComponent<SvgProps> }
+>
+
 export type IconProps = {
   color?: Color
   style?: CSSProperties
@@ -81,9 +85,7 @@ export type IconProps = {
   size?: number
 }
 
-const Icon: FunctionComponent<
-  IconProps & { Svg: FunctionComponent<SvgProps> }
-> = ({
+const Icon: Icon = ({
   color,
   framed = false,
   frameColor = { color: 'primary' },

@@ -1,14 +1,30 @@
-import React, { useCallback, useReducer } from 'react'
+import React, {
+  useCallback,
+  useReducer,
+  FunctionComponent,
+  CSSProperties,
+  EventHandler,
+  SyntheticEvent,
+} from 'react'
 import { useColor } from '@based/theme'
-import { S1 } from '../Text/Subtitle'
-import { ArrowRight, iconFromString } from '@based/icons'
+import { Title } from '../Text/Title'
+import { Expand, iconFromString } from '@based/icons'
 import useHover from '../../hooks/useHover'
 
-export const SideMenuItem = ({
-  label, // todo remove
-  title = label,
-  icon,
-  Icon,
+type GenericEventHandler = EventHandler<SyntheticEvent>
+
+type SideMenuItemProps = {
+  title?: string
+  iconName?: string
+  style?: CSSProperties
+  onClick?: GenericEventHandler
+  active?: boolean
+  data?: GenericEventHandler
+}
+
+export const SideMenuItem: FunctionComponent<SideMenuItemProps> = ({
+  title,
+  iconName,
   style,
   children,
   onClick,
@@ -18,11 +34,11 @@ export const SideMenuItem = ({
   const [hover, isHover] = useHover()
   const [expanded, toggleExpand] = useReducer((v) => !v, false)
 
-  if (children) {
-    Icon = ArrowRight
-  } else if (icon && !Icon) {
-    Icon = iconFromString(icon)
-  }
+  const ItemIcon = children
+    ? Expand
+    : iconName
+    ? iconFromString(iconName)
+    : null
 
   return (
     <>
@@ -35,7 +51,7 @@ export const SideMenuItem = ({
           if (onClick) {
             onClick(e, { data })
           }
-        })}
+        }, [])}
         style={{
           paddingLeft: 14,
           paddingRight: 14,
@@ -48,23 +64,28 @@ export const SideMenuItem = ({
           borderRadius: 4,
           transition: 'background 0.15s',
           backgroundColor: isHover
-            ? useColor('default', 0.15)
+            ? useColor({ color: 'foreground', opacity: 0.15 })
             : active
-            ? useColor('primary', 0.1)
+            ? useColor({ color: 'primary', opacity: 0.1 })
             : null,
           ...style,
         }}
       >
-        {Icon ? (
-          <Icon
-            color={active ? 'primary' : 'default'}
+        {ItemIcon ? (
+          <ItemIcon
+            color={active ? { color: 'primary' } : { color: 'foreground' }}
             style={{
               marginRight: 8,
               transform: expanded ? 'rotate(90deg)' : '',
             }}
           />
         ) : null}
-        <S1 color={active ? 'primary' : 'default'}>{title}</S1>
+        <Title
+          size="small"
+          color={active ? { color: 'primary' } : { color: 'foreground' }}
+        >
+          {title}
+        </Title>
       </div>
       {expanded && children ? (
         <div style={{ marginLeft: 14 }}>
