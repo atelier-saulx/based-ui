@@ -30,20 +30,22 @@ export const ProgressIndicator: FunctionComponent<ProgressIndicatorProps> = ({
         width: size,
         height: size,
         // TODO: Waiting for @keyframes to be implemented on parser
-        // '@keyframes': {
-        //   fade: {
-        //     '0%': {
-        //       opacity: 0.5,
-        //     },
-        //     '50%': {
-        //       opacity: 1,
-        //     },
-        //     '100%': {
-        //       opacity: 0.5,
-        //     },
-        //   },
-        // },
-        animation: value > 99 ? 'fade 0.5s infinite' : '',
+        animationDuration: '0.5s',
+        animationIterationCount: value > 99 ? 'infinite' : null,
+        // @ts-ignore
+        '@keyframes': {
+          // fade: {
+          '0%': {
+            opacity: 0.5,
+          },
+          '50%': {
+            opacity: 1,
+          },
+          '100%': {
+            opacity: 0.5,
+          },
+          // },
+        },
         ...style,
       }}
     >
