@@ -19,15 +19,6 @@ export type OverlayOptions = {
 
 export type Overlays = [ReactNode, OnClose, OverlayOptions][]
 
-export type Position = {
-  containerWidth: number
-  y: number
-  x: number
-  bottom: number
-  spaceOnTop?: number
-  width: number
-}
-
 type OverlayItemProps = {
   options?: OverlayOptions
 }

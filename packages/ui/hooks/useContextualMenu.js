@@ -1,15 +1,17 @@
 import { useCallback } from 'react'
 
-const useContextualMenu = fn => {
-  const eventHandler = useCallback(e => {
+const useContextualMenu = (fn) => {
+  const eventHandler = useCallback((e) => {
     if (e.type === 'contextmenu') {
       e.preventDefault()
+
+      // make this cleaner
       // special value to override using current target in overlay
       e.currentTarget.rect = {
         x: e.pageX,
         y: e.pageY,
         width: 0,
-        height: 0
+        height: 0,
       }
       fn(e)
     }
@@ -17,7 +19,7 @@ const useContextualMenu = fn => {
 
   return {
     onClick: eventHandler,
-    onContextMenu: eventHandler
+    onContextMenu: eventHandler,
   }
 }
 

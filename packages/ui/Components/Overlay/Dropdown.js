@@ -1,11 +1,11 @@
 import React, { forwardRef } from 'react'
-import useOverlay from '../../hooks/useOverlayPosition'
+import useOverlayPosition from '../../hooks/useOverlayPosition'
 import { useColor } from '@based/theme'
 import { Check } from '@based/icons'
 import { Body } from '../Text/Body'
 import { Subtitle } from '../Text/Subtitle'
 import useHover from '../../hooks/useHover'
-import Shared from './Shared'
+import Shared from './Shared.tss'
 
 const Option = ({ value, index, isActive, onChange }) => {
   const [hover, isHover] = useHover()
@@ -20,7 +20,7 @@ const Option = ({ value, index, isActive, onChange }) => {
         paddingRight: 15,
         display: 'flex',
         cursor: 'pointer',
-        backgroundColor: isHover ? useColor('default', 0.04) : null
+        backgroundColor: isHover ? useColor('default', 0.04) : null,
       }}
       onClick={() => {
         onChange(value, index)
@@ -41,7 +41,7 @@ const Option = ({ value, index, isActive, onChange }) => {
 
 export const Dropdown = forwardRef((props, ref) => {
   const { align, value, onChange, multi } = props
-  const [elementRef, position, children] = useOverlay(props, ref)
+  const [elementRef, position, children] = useOverlayPosition(props, ref)
   return (
     <Shared position={position} align={align} ref={elementRef}>
       {children.map((v, index) => {
