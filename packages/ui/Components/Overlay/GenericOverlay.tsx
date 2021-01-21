@@ -3,8 +3,8 @@ import React, {
   FunctionComponent,
   PropsWithChildren,
 } from 'react'
-import useOverlayPosition from '../../hooks/useOverlayPosition'
-import useOverlayProps from '../../hooks/useOverlayProps'
+import useOverlayPosition from '../../hooks/overlay/useOverlayPosition'
+import useOverlayProps from '../../hooks/overlay/useOverlayProps'
 import Shared from './Shared'
 
 export type GenericOverlayProps = {

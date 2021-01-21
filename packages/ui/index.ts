@@ -77,10 +77,13 @@ export {
   removeAllOverlays,
 } from './Components/Overlay'
 
-import useOverlay from './hooks/useOverlay'
-import { useKeyDown, useKeyUp } from './hooks/useKeyboard'
+import useOverlay from './hooks/overlay/useOverlay'
+import useOverlayProps from './hooks/overlay/useOverlayProps'
+import useOverlayPosition from './hooks/overlay/useOverlayPosition'
 
-export { useOverlay, useKeyDown, useKeyUp }
+import { useKeyDown, useKeyUp } from './hooks/events/useKeyboard'
+
+export { useOverlay, useKeyDown, useKeyUp, useOverlayProps, useOverlayPosition }
 
 export { Text } from './Components/Text/Text'
 export { Title } from './Components/Text/Title'

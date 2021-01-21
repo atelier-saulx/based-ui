@@ -10,9 +10,9 @@ import React, {
 import { useColor, Color } from '@based/theme'
 import { getValue } from '@based/i18n'
 import { iconFromString } from '@based/icons'
-import useHover from '../../hooks/useHover'
+import useHover from '../../hooks/events/useHover'
 import { Text } from '../Text/Text'
-import { useKeyUp, Key } from '../../hooks/useKeyboard'
+import { useKeyUp, Key } from '../../hooks/events/useKeyboard'
 
 type GenericEventHandler = EventHandler<SyntheticEvent>
 

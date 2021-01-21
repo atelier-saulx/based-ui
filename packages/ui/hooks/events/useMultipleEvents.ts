@@ -1,4 +1,6 @@
-export default (...args) => {
+import { PropsWithChildren } from 'react'
+
+export default (...args: { [key: string]: any }[]): { [key: string]: any } => {
   const x = args[0]
   for (let i = 1; i < args.length; i++) {
     for (const key in args[i]) {
@@ -7,7 +9,7 @@ export default (...args) => {
           const p = x[key]
           const n = args[i][key]
           if (n) {
-            x[key] = e => {
+            x[key] = (e) => {
               let r, r1
               r1 = p(e)
               if (r1 !== undefined) {

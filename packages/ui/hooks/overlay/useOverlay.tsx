@@ -1,5 +1,5 @@
-import { addOverlay, OnClose } from '../Components/Overlay'
-import { GenericOverlay } from '../Components/Overlay/GenericOverlay'
+import { addOverlay, OnClose } from '../../Components/Overlay'
+import { GenericOverlay } from '../../Components/Overlay/GenericOverlay'
 import { PositionProps } from './useOverlayPosition'
 import React, {
   ComponentType,
