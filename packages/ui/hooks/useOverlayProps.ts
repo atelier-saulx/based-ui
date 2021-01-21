@@ -5,15 +5,12 @@ import React, {
   PropsWithChildren,
   useEffect,
   useRef,
+  useMemo,
 } from 'react'
 
 import { deepEqual } from '@saulx/utils'
 
 export class OverlayCtx<P> {
-  constructor(props: PropsWithChildren<P>) {
-    this.props = props
-  }
-
   public props: PropsWithChildren<P>
 
   public update(props: PropsWithChildren<P>) {
@@ -30,13 +27,20 @@ export class OverlayCtx<P> {
   public listeners: Set<(props: PropsWithChildren<P>) => void> = new Set()
 }
 
-const def: OverlayCtx<any> = new OverlayCtx({})
+const def: RefObject<OverlayCtx<any>> = { current: new OverlayCtx() }
 export const OverlayContext = React.createContext(def)
 
 export function createOverlayContextRef<P>(
-  initialProps: PropsWithChildren<P>
+  props: PropsWithChildren<P>
 ): RefObject<OverlayCtx<P>> {
-  const ctx: RefObject<OverlayCtx<P>> = useRef(new OverlayCtx(initialProps))
+  const ctx: RefObject<OverlayCtx<P>> = useRef(
+    useMemo(() => {
+      return new OverlayCtx()
+    }, [])
+  )
+  if (props) {
+    ctx.current.update(props)
+  }
   return ctx
 }
 
@@ -44,16 +48,16 @@ type Props = PropsWithChildren<any>
 
 export default function useOverlayProps(p?: Props): Props {
   const ctx = useContext(OverlayContext)
-  if (!ctx) {
+  if (!ctx || !ctx.current) {
     throw new Error(
       'Cannot useOverlayProps outside of an overlay (missing overlay context)'
     )
   }
-  const [props, update] = useState(ctx.props)
+  const [props, update] = useState(ctx.current.props)
   useEffect(() => {
-    ctx.listeners.add(update)
+    ctx.current.listeners.add(update)
     return () => {
-      ctx.listeners.delete(update)
+      ctx.current.listeners.delete(update)
     }
   }, [update])
   if (p) {

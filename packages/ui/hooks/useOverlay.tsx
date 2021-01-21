@@ -4,10 +4,8 @@ import { PositionProps } from './useOverlayPosition'
 import React, {
   ComponentType,
   PropsWithChildren,
-  RefObject,
   SyntheticEvent,
   useCallback,
-  useRef,
 } from 'react'
 import { OverlayContext, createOverlayContextRef } from './useOverlayProps'
 
@@ -22,18 +20,13 @@ export default function useOverlay<P>(
   const ctxRef = createOverlayContextRef<PropsWithChildren<P & PositionProps>>(
     props
   )
-
-  if (props) {
-    ctxRef.current.update(props)
-  }
-
   return useCallback((e: Event | SyntheticEvent, selectionProps) => {
     let cancel: OnClose
     if (handler) {
       cancel = handler(e)
     }
     const reactNode = (
-      <OverlayContext.Provider value={ctxRef.current}>
+      <OverlayContext.Provider value={ctxRef}>
         <GenericOverlay
           Component={component}
           target={e.currentTarget}
