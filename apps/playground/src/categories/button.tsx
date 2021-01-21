@@ -1,4 +1,4 @@
-import React from 'React'
+import React, { useEffect, useState } from 'React'
 import { Title, Button, useOverlay } from '@based/ui'
 import RenderComponents from '../RenderComponents'
 import { randomIcon, randomTitle } from './util'
@@ -33,20 +33,34 @@ const genButtonProps = () => {
         console.log('Key is pressed!')
       },
     },
-    () => ({
-      icon: randomIcon(),
-      children: 'Active on enter and down',
-      onClick: useOverlay(Title, {
-        style: {
-          marginLeft: 10,
-          marginRight: 10,
-        },
-        align: 'start',
-        width: 'auto',
-        singleLine: true,
-        children: 'Yesh in an overlay! eofdjdweop ewpfohj flap flap flurpy',
-      }),
-    })
+    () => {
+      const [text, setText] = useState('Text!')
+      useEffect(() => {
+        let cnt = 0
+        const timer = setInterval(() => {
+          ++cnt
+          setText('This is text ' + cnt)
+        }, 5000)
+        return () => clearInterval(timer)
+      }, [])
+
+      return (
+        <Button
+          onClick={useOverlay(Title, {
+            style: {
+              marginLeft: 10,
+              marginRight: 10,
+            },
+            align: 'start',
+            width: 'auto',
+            singleLine: true,
+            children: text,
+          })}
+        >
+          {text}
+        </Button>
+      )
+    }
   )
 
   for (const color of colors) {

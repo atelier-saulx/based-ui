@@ -78,7 +78,17 @@ const RenderComponents = ({ category, grid, bg = 'transparent' }) => {
               <div key={v.name} style={s}>
                 {v.props.map((p, i) => {
                   if (typeof p === 'function') {
-                    p = p()
+                    return (
+                      <div
+                        key={i}
+                        style={{
+                          marginBottom: '15px',
+                          marginRight: grid ? '15px' : '0px',
+                        }}
+                      >
+                        {React.createElement(p)}
+                      </div>
+                    )
                   }
 
                   let { children, ...props } = p
@@ -89,18 +99,16 @@ const RenderComponents = ({ category, grid, bg = 'transparent' }) => {
                   }
                   const { Component } = v
                   return (
-                    <div key={i}>
-                      <Component
-                        style={{
-                          marginBottom: '15px',
-                          marginRight: grid ? '15px' : '0px',
-                        }}
-                        key={i}
-                        {...props}
-                      >
-                        {children || null}
-                      </Component>
-                    </div>
+                    <Component
+                      style={{
+                        marginBottom: '15px',
+                        marginRight: grid ? '15px' : '0px',
+                      }}
+                      key={i}
+                      {...props}
+                    >
+                      {children || null}
+                    </Component>
                   )
                 })}
               </div>

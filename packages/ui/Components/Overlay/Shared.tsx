@@ -54,7 +54,7 @@ export type SharedOverlayProps = {
   children?: ReactChildren | ReactChild
 }
 
-export default forwardRef<HTMLDivElement, SharedOverlayProps>(
+export default forwardRef<HTMLElement, SharedOverlayProps>(
   ({ position, align = 'center', children, style, width = 'auto' }, ref) => {
     return (
       <div
