@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react'
 import { useColor } from '@based/theme'
 import { SvgProps } from '..'
 
-const Timming: FunctionComponent<SvgProps> = ({
+const Time: FunctionComponent<SvgProps> = ({
   color,
   framed,
   size,
@@ -23,4 +23,4 @@ const Timming: FunctionComponent<SvgProps> = ({
   )
 }
 
-export default Timming
+export default Time

@@ -13,6 +13,7 @@ import CloseSvg from './Components/Close'
 import CollapseSvg from './Components/Collapse'
 import CustomSvg from './Components/Custom'
 import DashboardSvg from './Components/Dashboard'
+import DateSvg from './Components/Date'
 import DeleteSvg from './Components/Delete'
 import DesktopSvg from './Components/Desktop'
 import DownSvg from './Components/Down'
@@ -39,7 +40,6 @@ import OverviewSvg from './Components/Overview'
 import RegisterSvg from './Components/Register'
 import ResetSvg from './Components/Reset'
 import ScaleQuestionSvg from './Components/ScaleQuestion'
-import ScheduleSvg from './Components/Schedule'
 import SearchSvg from './Components/Search'
 import ShowSvg from './Components/Show'
 import ShowsSvg from './Components/Shows'
@@ -47,7 +47,7 @@ import SkipSvg from './Components/Skip'
 import SmartCopySvg from './Components/SmartCopy'
 import TabletSvg from './Components/Tablet'
 import ThankYouSvg from './Components/ThankYou'
-import TimmingSvg from './Components/Timming'
+import TimeSvg from './Components/Time'
 import ToggleOffScreenSvg from './Components/ToggleOff'
 import ToggleOnSvg from './Components/ToggleOn'
 import UnlockSvg from './Components/Unlock'
@@ -156,6 +156,7 @@ const Close = wrapIcon(CloseSvg)
 const Collapse = wrapIcon(CollapseSvg)
 const Custom = wrapIcon(CustomSvg)
 const Dashboard = wrapIcon(DashboardSvg)
+const Date = wrapIcon(DateSvg)
 const Delete = wrapIcon(DeleteSvg)
 const Desktop = wrapIcon(DesktopSvg)
 const Down = wrapIcon(DownSvg)
@@ -182,7 +183,6 @@ const Overview = wrapIcon(OverviewSvg)
 const Register = wrapIcon(RegisterSvg)
 const Reset = wrapIcon(ResetSvg)
 const ScaleQuestion = wrapIcon(ScaleQuestionSvg)
-const Schedule = wrapIcon(ScheduleSvg)
 const Search = wrapIcon(SearchSvg)
 const Show = wrapIcon(ShowSvg)
 const Shows = wrapIcon(ShowsSvg)
@@ -190,7 +190,7 @@ const Skip = wrapIcon(SkipSvg)
 const SmartCopy = wrapIcon(SmartCopySvg)
 const Tablet = wrapIcon(TabletSvg)
 const ThankYou = wrapIcon(ThankYouSvg)
-const Timming = wrapIcon(TimmingSvg)
+const Time = wrapIcon(TimeSvg)
 const ToggleOff = wrapIcon(ToggleOffScreenSvg)
 const ToggleOn = wrapIcon(ToggleOnSvg)
 const Unlock = wrapIcon(UnlockSvg)
@@ -208,6 +208,7 @@ const icons = {
   Collapse,
   Custom,
   Dashboard,
+  Date,
   Delete,
   Desktop,
   Down,
@@ -234,7 +235,6 @@ const icons = {
   Register,
   Reset,
   ScaleQuestion,
-  Schedule,
   Search,
   Show,
   Shows,
@@ -242,7 +242,7 @@ const icons = {
   SmartCopy,
   Tablet,
   ThankYou,
-  Timming,
+  Time,
   ToggleOff,
   ToggleOn,
   Unlock,
@@ -272,6 +272,7 @@ export {
   Collapse,
   Custom,
   Dashboard,
+  Date,
   Delete,
   Desktop,
   Down,
@@ -298,7 +299,6 @@ export {
   Register,
   Reset,
   ScaleQuestion,
-  Schedule,
   Search,
   Show,
   Shows,
@@ -306,7 +306,7 @@ export {
   SmartCopy,
   Tablet,
   ThankYou,
-  Timming,
+  Time,
   ToggleOff,
   ToggleOn,
   Unlock,

@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react'
 import { useColor } from '@based/theme'
 import { SvgProps } from '..'
 
-const Schedule: FunctionComponent<SvgProps> = ({
+const Date: FunctionComponent<SvgProps> = ({
   color,
   framed,
   size,
@@ -21,4 +21,4 @@ const Schedule: FunctionComponent<SvgProps> = ({
   )
 }
 
-export default Schedule
+export default Date
