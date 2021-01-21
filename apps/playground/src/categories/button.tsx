@@ -40,7 +40,7 @@ const genButtonProps = () => {
         const timer = setInterval(() => {
           ++cnt
           setText('This is text ' + cnt)
-        }, 5000)
+        }, 1000)
         return () => clearInterval(timer)
       }, [])
 

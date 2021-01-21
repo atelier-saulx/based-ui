@@ -12,7 +12,8 @@
     "react-window": "^1.8.5",
     "@saulx/get-service": "^1.0.1",
     "react-window-infinite-loader": "^1.0.5",
-    "rgb-hex": "^3.0.0"
+    "rgb-hex": "^3.0.0",
+    "@saulx/utils": "^1.6.6"
   },
   "devDependencies": {
     "@types/react": "^17.0.0"

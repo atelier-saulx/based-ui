@@ -4,6 +4,7 @@ import React, {
   PropsWithChildren,
 } from 'react'
 import useOverlayPosition from '../../hooks/useOverlayPosition'
+import useOverlayProps from '../../hooks/useOverlayProps'
 import Shared from './Shared'
 
 export type GenericOverlayProps = {
@@ -12,9 +13,12 @@ export type GenericOverlayProps = {
 
 export const GenericOverlay: FunctionComponent<GenericOverlayProps> = ({
   Component,
-  ...props
+  ...selectionProps
 }) => {
+  const props = useOverlayProps(selectionProps)
+
   const [elementRef, position, resize] = useOverlayPosition(props)
+
   return (
     <Shared ref={elementRef} position={position} align={props.align}>
       {React.createElement(Component, {

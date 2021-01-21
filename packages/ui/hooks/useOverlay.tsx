@@ -23,14 +23,15 @@ export default function useOverlay<P>(
     props
   )
 
+  if (props) {
+    ctxRef.current.update(props)
+  }
+
   return useCallback((e: Event | SyntheticEvent, selectionProps) => {
     let cancel: OnClose
     if (handler) {
       cancel = handler(e)
     }
-
-    console.log(ctxRef)
-
     const reactNode = (
       <OverlayContext.Provider value={ctxRef.current}>
         <GenericOverlay

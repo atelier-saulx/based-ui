@@ -1,13 +1,13 @@
 import React, {
   useState,
-  useCallback,
-  useReducer,
   RefObject,
   useContext,
   PropsWithChildren,
   useEffect,
   useRef,
 } from 'react'
+
+import { deepEqual } from '@saulx/utils'
 
 export class OverlayCtx<P> {
   constructor(props: PropsWithChildren<P>) {
@@ -17,11 +17,14 @@ export class OverlayCtx<P> {
   public props: PropsWithChildren<P>
 
   public update(props: PropsWithChildren<P>) {
-    // has changed
-    this.listeners.forEach((v) => {
-      // if actualy changed!
-      v(props)
-    })
+    if (!deepEqual(this.props, props)) {
+      this.props = props
+      global.requestAnimationFrame(() => {
+        this.listeners.forEach((v) => {
+          v(props)
+        })
+      })
+    }
   }
 
   public listeners: Set<(props: PropsWithChildren<P>) => void> = new Set()
@@ -39,23 +42,22 @@ export function createOverlayContextRef<P>(
 
 type Props = PropsWithChildren<any>
 
-export default function useOverlayProps(): Props {
+export default function useOverlayProps(p?: Props): Props {
   const ctx = useContext(OverlayContext)
-
   if (!ctx) {
     throw new Error(
       'Cannot useOverlayProps outside of an overlay (missing overlay context)'
     )
   }
-
   const [props, update] = useState(ctx.props)
-
   useEffect(() => {
     ctx.listeners.add(update)
     return () => {
       ctx.listeners.delete(update)
     }
-  }, [])
-
+  }, [update])
+  if (p) {
+    return { ...p, ...props }
+  }
   return props
 }
