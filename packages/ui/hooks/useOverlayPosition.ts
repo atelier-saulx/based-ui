@@ -95,10 +95,6 @@ const widthCalculation: PosCalculation<number | string> = ({ width }) => {
   return width - 30
 }
 
-export type UpdateChildren = {
-  current?: (children: ReactChild | ReactChildren) => void
-}
-
 export type Resize = () => void
 
 export default ({
