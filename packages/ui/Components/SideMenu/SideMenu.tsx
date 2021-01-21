@@ -1,18 +1,23 @@
-import React, {
-  FunctionComponent,
-  CSSProperties,
-  ReactChildren,
-  ReactChild,
-} from 'react'
+import React, { FunctionComponent, CSSProperties } from 'react'
 import { useColor } from '@based/theme'
 import { Title } from '../Text/Title'
 import { SideMenuItem } from './SideMenuItem'
 
+type FooterProps = {
+  icon: string
+  title: string
+  type: string // ?
+  label: string // ?
+  children?: FooterProps[]
+}
+
 type SideMenuProps = {
   style: CSSProperties
-  children: any // TODO This needs to be fixed
-  Logo: React.ReactNode
-  footer: boolean
+  children: SideMenuProps[]
+  Logo: typeof React.Component
+  footer: FooterProps[]
+  type: string
+  label: string
 }
 
 export const SideMenu: FunctionComponent<SideMenuProps> = ({
@@ -21,7 +26,7 @@ export const SideMenu: FunctionComponent<SideMenuProps> = ({
   Logo,
   footer,
 }) => {
-  const wrapChildren = children.map((child: ReactChild, index: number) => {
+  const wrapChildren = children.map((child, index) => {
     if (child.type === 'label') {
       return (
         <Title
@@ -46,12 +51,12 @@ export const SideMenu: FunctionComponent<SideMenuProps> = ({
         height: '100%',
         width: 240,
         minWidth: 240,
-        overflowX: 'none',
+        overflowX: 'hidden',
         padding: 16,
         overflowY: 'auto',
         display: 'flex',
         flexDirection: 'column',
-        borderRight: '1px solid ' + useColor('outline'),
+        borderRight: '1px solid ' + useColor({ color: 'divider' }),
         ...style,
       }}
     >
@@ -101,7 +106,7 @@ export const SideMenu: FunctionComponent<SideMenuProps> = ({
                     marginBottom: 16,
                     marginTop: 16,
                   }}
-                  color="medium"
+                  color={{ color: 'foreground' }}
                   key={index}
                 >
                   {child.label || child.children}

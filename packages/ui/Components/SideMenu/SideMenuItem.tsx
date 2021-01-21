@@ -5,7 +5,6 @@ import React, {
   CSSProperties,
   EventHandler,
   SyntheticEvent,
-  FC,
 } from 'react'
 import { useColor } from '@based/theme'
 import { Title } from '../Text/Title'
@@ -24,7 +23,7 @@ type SideMenuItemProps = {
   children?: SideMenuItemProps[]
 }
 
-export const SideMenuItem: FC<SideMenuItemProps> = ({
+export const SideMenuItem: FunctionComponent<SideMenuItemProps> = ({
   title,
   iconName,
   style,
