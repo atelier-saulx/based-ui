@@ -21,6 +21,7 @@ import DragSvg from './Components/Drag'
 import DuplicateSvg from './Components/Duplicate'
 import EditNameSvg from './Components/EditName'
 import EditSvg from './Components/Edit'
+import EmailSvg from './Components/Email'
 import EmptyLineSvg from './Components/EmptyLine'
 import ExpandSvg from './Components/Expand'
 import GraphSvg from './Components/Graph'
@@ -39,6 +40,7 @@ import RegisterSvg from './Components/Register'
 import ResetSvg from './Components/Reset'
 import ScaleQuestionSvg from './Components/ScaleQuestion'
 import ScheduleSvg from './Components/Schedule'
+import SearchSvg from './Components/Search'
 import ShowSvg from './Components/Show'
 import ShowsSvg from './Components/Shows'
 import SkipSvg from './Components/Skip'
@@ -162,6 +164,7 @@ const Drag = wrapIcon(DragSvg)
 const Duplicate = wrapIcon(DuplicateSvg)
 const Edit = wrapIcon(EditSvg)
 const EditName = wrapIcon(EditNameSvg)
+const Email = wrapIcon(EmailSvg)
 const EmptyLine = wrapIcon(EmptyLineSvg)
 const Expand = wrapIcon(ExpandSvg)
 const Graph = wrapIcon(GraphSvg)
@@ -180,6 +183,7 @@ const Register = wrapIcon(RegisterSvg)
 const Reset = wrapIcon(ResetSvg)
 const ScaleQuestion = wrapIcon(ScaleQuestionSvg)
 const Schedule = wrapIcon(ScheduleSvg)
+const Search = wrapIcon(SearchSvg)
 const Show = wrapIcon(ShowSvg)
 const Shows = wrapIcon(ShowsSvg)
 const Skip = wrapIcon(SkipSvg)
@@ -212,6 +216,7 @@ const icons = {
   Duplicate,
   Edit,
   EditName,
+  Email,
   EmptyLine,
   Expand,
   Graph,
@@ -230,6 +235,7 @@ const icons = {
   Reset,
   ScaleQuestion,
   Schedule,
+  Search,
   Show,
   Shows,
   Skip,
@@ -274,6 +280,7 @@ export {
   Duplicate,
   Edit,
   EditName,
+  Email,
   EmptyLine,
   Expand,
   Graph,
@@ -292,6 +299,7 @@ export {
   Reset,
   ScaleQuestion,
   Schedule,
+  Search,
   Show,
   Shows,
   Skip,
