@@ -72,15 +72,15 @@ export const Loader: FunctionComponent<LoaderProps> = ({
         animationDuration: '1s',
         animationTimingFunction: 'linear',
         animationIterationCount: 'infinite',
-        animationName: 'rotate',
+        // animationName: 'rotate',
         // TODO: Needs @keyframes to be added
         // @ts-ignore
-        //'@keyframes': {
-        //  rotate: {
-        //    '0%': { transform: 'rotate(0deg)' },
-        //    '100%': { transform: 'rotate(360deg)' },
-        //  },
-        //},
+        '@keyframes': {
+          //  rotate: {
+          '0%': { transform: 'rotate(0deg)' },
+          '100%': { transform: 'rotate(360deg)' },
+          //  },
+        },
         ...style,
       }}
     >

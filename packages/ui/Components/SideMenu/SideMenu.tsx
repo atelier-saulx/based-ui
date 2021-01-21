@@ -1,22 +1,45 @@
-import React from 'react'
+import React, { FunctionComponent, CSSProperties } from 'react'
 import { useColor } from '@based/theme'
-import { S2 } from '../Text/Subtitle'
+import { Title } from '../Text/Title'
 import { SideMenuItem } from './SideMenuItem'
 
-export const SideMenu = ({ children, style, Logo, footer }) => {
+type FooterProps = {
+  icon: string
+  title: string
+  type: string // ?
+  label: string // ?
+  children?: FooterProps[]
+}
+
+type SideMenuProps = {
+  style: CSSProperties
+  children: SideMenuProps[]
+  Logo: typeof React.Component
+  footer: FooterProps[]
+  type: string
+  label: string
+}
+
+export const SideMenu: FunctionComponent<SideMenuProps> = ({
+  children,
+  style,
+  Logo,
+  footer,
+}) => {
   const wrapChildren = children.map((child, index) => {
     if (child.type === 'label') {
       return (
-        <S2
+        <Title
+          size="small"
           style={{
             marginBottom: 16,
-            marginTop: 16
+            marginTop: 16,
           }}
-          color="medium"
+          color={{ color: 'foreground' }}
           key={index}
         >
           {child.label || child.children}
-        </S2>
+        </Title>
       )
     }
     return <SideMenuItem key={index} {...child} />
@@ -28,13 +51,13 @@ export const SideMenu = ({ children, style, Logo, footer }) => {
         height: '100%',
         width: 240,
         minWidth: 240,
-        overflowX: 'none',
+        overflowX: 'hidden',
         padding: 16,
         overflowY: 'auto',
         display: 'flex',
         flexDirection: 'column',
-        borderRight: '1px solid ' + useColor('outline'),
-        ...style
+        borderRight: '1px solid ' + useColor({ color: 'divider' }),
+        ...style,
       }}
     >
       {Logo ? (
@@ -44,7 +67,7 @@ export const SideMenu = ({ children, style, Logo, footer }) => {
             alignItems: 'center',
             minHeight: 60 - 16,
             paddingBottom: 16,
-            marginBottom: 32
+            marginBottom: 32,
           }}
         >
           <Logo />
@@ -57,7 +80,7 @@ export const SideMenu = ({ children, style, Logo, footer }) => {
               flexGrow: 1,
               flexBasis: '100%',
               display: 'flex',
-              flexDirection: 'column'
+              flexDirection: 'column',
             }}
           >
             {wrapChildren}
@@ -71,22 +94,23 @@ export const SideMenu = ({ children, style, Logo, footer }) => {
           style={{
             display: 'flex',
             flexDirection: 'column',
-            flexGrow: 0
+            flexGrow: 0,
           }}
         >
           {footer.map((child, index) => {
             if (child.type === 'label') {
               return (
-                <S2
+                <Title
+                  size="small"
                   style={{
                     marginBottom: 16,
-                    marginTop: 16
+                    marginTop: 16,
                   }}
-                  color="medium"
+                  color={{ color: 'foreground' }}
                   key={index}
                 >
                   {child.label || child.children}
-                </S2>
+                </Title>
               )
             }
             return <SideMenuItem key={index} {...child} />
