@@ -3,19 +3,40 @@ import React, {
   useRef,
   useState,
   useContext,
-  useEffect
+  useEffect,
+  FunctionComponent,
+  EventHandler,
+  SyntheticEvent,
+  CSSProperties,
 } from 'react'
 import { useColor } from '@based/theme'
 import '../Input/style.css'
-import { Upload, Plus } from '@based/icons'
+import { Upload, Add } from '@based/icons'
 import useHover from '../../hooks/useHover'
 import useMultiple from '../../hooks/useMultiple'
 import useDrop from '../../hooks/useDrop'
 import { ProgressContext } from './ProgressContext'
 import uploadFile from './uploadFile'
-import { ProgressIndicator } from '../ProgressIndicator'
+import { ProgressIndicator } from '../ProgressIndicator/ProgressIndicator'
 
-const Text = ({ onChange, value, placeholder, focus, blur }) => {
+type GenericEventHandler = EventHandler<SyntheticEvent>
+
+type TextProps = {
+  onChange?: GenericEventHandler
+  value: string
+  placeholder?: string
+  focus?: GenericEventHandler
+  blur?: GenericEventHandler
+  style?: CSSProperties
+}
+const Text: FunctionComponent<TextProps> = ({
+  onChange,
+  value,
+  placeholder,
+  focus,
+  blur,
+  style,
+}) => {
   return (
     <input
       type="text"
@@ -30,20 +51,30 @@ const Text = ({ onChange, value, placeholder, focus, blur }) => {
         fontSize: 16,
         background: 'none',
         fontFamily: 'Inter',
-        color: useColor('default'),
-        fontWeight: 'normal'
+        color: useColor({ color: 'foreground' }),
+        fontWeight: 'normal',
+        ...style,
       }}
     />
   )
 }
 
-export const FileUpload = ({
+type FileUploadProps = {
+  value: string
+  onChange: GenericEventHandler
+  identifier: string
+  placeholder: string
+  progressId: string
+  video: boolean
+}
+
+export const FileUpload: FunctionComponent<FileUploadProps> = ({
   value = '',
   onChange = () => {},
   identifier,
   placeholder,
   progressId,
-  video = false
+  video = false,
 }) => {
   const identifierRef = useRef(identifier)
   const initialValue = useRef(value)
@@ -56,17 +87,23 @@ export const FileUpload = ({
     progressId = progressIdReal.current
   }
 
-  const [inProgress, progressUpdate] = useState()
+  type InProgress = {
+    progress: number
+    type: string
+    name: string
+    transcoding: boolean
+  }
+  const [inProgress, progressUpdate] = useState<InProgress>()
 
   useEffect(() => {
-    const update = item => {
+    const update = (item) => {
       if (item && item.id === progressId) {
         if (item.isComplete) {
           setValue(item.url)
           onChange(item.url)
-          progressUpdate(false)
+          progressUpdate(null)
         } else if (item.removed) {
-          progressUpdate(false)
+          progressUpdate(null)
         } else {
           progressUpdate(item)
         }
@@ -80,14 +117,14 @@ export const FileUpload = ({
   }, [progressUpdate, onChange, setValue, progressId])
 
   const [drop, isDrop] = useDrop(
-    useCallback(e => {
+    useCallback((e) => {
       uploadFile(
         e.dataTransfer.files,
         progress,
         progressId,
-        video ? 'video' : false
+        video ? 'video' : null
       )
-    })
+    }, [])
   )
 
   const [hover, isHover] = useHover()
@@ -104,7 +141,7 @@ export const FileUpload = ({
   }
 
   const update = useCallback(
-    e => {
+    (e) => {
       const newvalue = e.target.value
       setValue(newvalue)
       onChange(newvalue)
@@ -133,24 +170,26 @@ export const FileUpload = ({
         paddingLeft: isFocus ? 14 : 15,
         paddingRight: isFocus ? 14 : 15,
         border: isDrop
-          ? '2px dashed ' + useColor('primary')
+          ? '2px dashed ' + useColor({ color: 'primary' })
           : isFocus || isHover
-          ? '2px solid ' + useColor('primary')
-          : '1px solid ' + useColor('outline')
+          ? '2px solid ' + useColor({ color: 'primary' })
+          : '1px solid ' + useColor({ color: 'divider' }),
       }}
       {...useMultiple(hover, drop)}
     >
       {inProgress ? (
         <ProgressIndicator value={inProgress.progress} />
       ) : isDrop ? (
-        <Plus color="primary" />
+        <Add color={{ color: 'primary' }} />
       ) : (
-        <Upload color={isHover ? useColor('primary') : useColor('default')} />
+        <Upload
+          color={isHover ? { color: 'primary' } : { color: 'foreground' }}
+        />
       )}
       <input
         type="file"
         // {...useTooltip('Upload a file')}
-        onChange={useCallback(async e => {
+        onChange={useCallback(async (e) => {
           const files = e.target.files
           uploadFile(files, progress, progressId, video ? 'video' : undefined)
           e.target.value = ''
@@ -163,7 +202,7 @@ export const FileUpload = ({
           width: 50,
           height: 50,
           opacity: 0,
-          cursor: 'pointer'
+          cursor: 'pointer',
         }}
       />
       <div
@@ -171,13 +210,13 @@ export const FileUpload = ({
           marginLeft: 15,
           display: 'flex',
           width: '100%',
-          justifyContent: 'space-between'
+          justifyContent: 'space-between',
         }}
       >
         <div
           style={{
             width: '100%',
-            display: 'flex'
+            display: 'flex',
           }}
         >
           <Text
@@ -197,7 +236,7 @@ export const FileUpload = ({
             blur={blur}
             focus={focus}
             style={{
-              minWidth: '100%'
+              minWidth: '100%',
             }}
           />
         </div>

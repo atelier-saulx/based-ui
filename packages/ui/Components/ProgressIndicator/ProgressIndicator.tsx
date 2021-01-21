@@ -15,8 +15,8 @@ const calcSvg = (val) => {
 
 type ProgressIndicatorProps = {
   value: number
-  size: number
-  style: CSSProperties
+  size?: number
+  style?: CSSProperties
 }
 
 export const ProgressIndicator: FunctionComponent<ProgressIndicatorProps> = ({
