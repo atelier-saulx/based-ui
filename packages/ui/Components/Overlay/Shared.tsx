@@ -8,7 +8,7 @@ import { useColor } from '@based/theme'
 import { Position, Align } from '../../hooks/useOverlayPosition'
 
 export const InnerShared = forwardRef<
-  HTMLDivElement,
+  HTMLElement,
   {
     width: number | string
     style: CSSProperties

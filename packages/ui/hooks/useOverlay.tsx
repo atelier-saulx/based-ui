@@ -4,12 +4,13 @@ import { PositionProps } from './useOverlayPosition'
 import React, {
   ComponentType,
   PropsWithChildren,
+  RefObject,
   SyntheticEvent,
   useCallback,
   useRef,
 } from 'react'
+import { OverlayContext, createOverlayContextRef } from './useOverlayProps'
 
-// maybe want to make the props not mixed?
 export default function useOverlay<P>(
   component: ComponentType<P>,
   props?: PropsWithChildren<P & PositionProps>,
@@ -18,52 +19,29 @@ export default function useOverlay<P>(
   e: Event | SyntheticEvent,
   selectionProps?: PropsWithChildren<any>
 ) => void {
-  const ref = useRef(null)
+  const ctxRef = createOverlayContextRef<PropsWithChildren<P & PositionProps>>(
+    props
+  )
 
-  // console.log('update!')
-
-  // lets call this update
-
-  if (ref.current) {
-    if (props && props.children) {
-      // console.log('go time', props.children)
-      ref.current(props.children)
+  return useCallback((e: Event | SyntheticEvent, selectionProps) => {
+    let cancel: OnClose
+    if (handler) {
+      cancel = handler(e)
     }
-  }
 
-  // @ts-ignore
-  console.log('PROPS', props)
-  ref.props = props
+    console.log(ctxRef)
 
-  // add the updateState here not usePosition
-
-  // then we have component state here
-
-  // and split the props
-
-  return useCallback(
-    (e: Event | SyntheticEvent, selectionProps) => {
-      let cancel: OnClose
-      if (handler) {
-        cancel = handler(e)
-      }
-
-      console.log('>>>', ref.props)
-
-      const reactNode = (
+    const reactNode = (
+      <OverlayContext.Provider value={ctxRef.current}>
         <GenericOverlay
           Component={component}
           target={e.currentTarget}
-          updateChildrenRef={ref}
-          {...ref.props}
           {...selectionProps}
         />
-      )
-      addOverlay(reactNode, () => {
-        delete ref.current
-        if (cancel) cancel()
-      })
-    },
-    [ref]
-  )
+      </OverlayContext.Provider>
+    )
+    addOverlay(reactNode, () => {
+      if (cancel) cancel()
+    })
+  }, [])
 }

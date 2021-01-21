@@ -101,27 +101,16 @@ export type UpdateChildren = {
 
 export type Resize = () => void
 
-export default (
-  {
-    children,
-    target,
-    selectTarget = selectSelf,
-    width = widthCalculation,
-    x = xCalculation,
-    y = yCalculation,
-    maxY = maxYCalculation,
-    maxX = maxXCalculation,
-    align = 'center',
-  }: PositionPropsFn,
-  ref?: UpdateChildren
-): [RefObject<HTMLElement>, Position, ReactChild | ReactChildren, Resize] => {
-  console.log('HELLO', ref)
-
-  const [childrenState, updateChildren] = useState(children)
-  if (ref) {
-    ref.current = updateChildren
-  }
-
+export default ({
+  target,
+  selectTarget = selectSelf,
+  width = widthCalculation,
+  x = xCalculation,
+  y = yCalculation,
+  maxY = maxYCalculation,
+  maxX = maxXCalculation,
+  align = 'center',
+}: PositionPropsFn): [RefObject<HTMLElement>, Position, Resize] => {
   const elementRef: RefObject<HTMLElement> = useRef()
   const [position, setPosition] = useState<Position>()
   const [sizeForceUpdate, resize] = useReducer((x) => x + 1, 0)
@@ -177,10 +166,9 @@ export default (
     calcSize()
     global.addEventListener('resize', calcSize)
     return () => {
-      console.log('REMOVE')
       global.removeEventListener('resize', calcSize)
     }
   }, [target, sizeForceUpdate])
 
-  return [elementRef, position, childrenState, resize]
+  return [elementRef, position, resize]
 }
