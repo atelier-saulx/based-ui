@@ -2,7 +2,7 @@
   "name": "@based/ui-playgound",
   "version": "0.0.1",
   "devDependencies": {
-    "@saulx/aristotle": "^3.0.9"
+    "@saulx/aristotle": "^3.0.12"
   },
   "dependencies": {
     "react": "^17.0.1",
