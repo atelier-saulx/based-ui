@@ -1,15 +1,21 @@
 import { createContext } from 'react'
 
-export const ProgressContext = createContext()
+export const ProgressContext = createContext(null)
 
 const cache = {}
+
+type CachedProgress = {
+      service: string
+      url: string
+      listeners: Set<any> // Needs type
+      items: any
+      inProgress: boolean
+    }
 
 export const createProgress = ({
   url,
   service = '',
-  path = '',
-  authentication = () => {}
-}) => {
+}: { url:string, service: string}): CachedProgress => {
   if (!url && !service) {
     throw new Error('Upload context needs an url or service ')
   }
