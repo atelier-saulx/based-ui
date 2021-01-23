@@ -19,25 +19,3 @@ export function getValue(
   }
   return value
 }
-
-export const useConstant = (field: string, langauge: Language = lang) => {
-  // add hook for hub / from a server
-  const f = dictionary[field]
-  if (f) {
-    return f[langauge] || f.en || field
-  }
-  return field
-}
-
-export const updateDictionary = () => {
-  // add fields to dict
-  // for shared values or from server
-}
-
-export const getLanguage = () => {
-  return lang
-}
-
-export const setLanguage = () => {
-  // has to update the whole app
-}
