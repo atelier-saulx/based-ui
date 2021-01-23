@@ -1,7 +1,10 @@
 import { useCallback, useRef, useEffect } from 'react'
 
-// uses raf so time can be longer!
-export default (fn, refs, frames = 1) => {
+export default (
+  fn: Function,
+  refs: any[] = [],
+  frames: number = 1
+): Function => {
   const ref = useRef(null)
   useEffect(
     frames > 1
@@ -37,7 +40,7 @@ export default (fn, refs, frames = 1) => {
             }
             ref.current = {
               timer: global.requestAnimationFrame(throttle),
-              frames
+              frames,
             }
           }
         }

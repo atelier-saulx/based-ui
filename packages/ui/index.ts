@@ -81,6 +81,7 @@ import useOverlay from './hooks/overlay/useOverlay'
 import useOverlayProps from './hooks/overlay/useOverlayProps'
 import useOverlayPosition from './hooks/overlay/useOverlayPosition'
 import useTooltip from './hooks/overlay/useTooltip'
+import useThrottledCallback from './hooks/useThrottledCallback'
 
 import { useKeyDown, useKeyUp } from './hooks/events/useKeyboard'
 
@@ -91,6 +92,7 @@ export {
   useOverlayProps,
   useOverlayPosition,
   useTooltip,
+  useThrottledCallback,
 }
 
 export { Text } from './Components/Text/Text'
