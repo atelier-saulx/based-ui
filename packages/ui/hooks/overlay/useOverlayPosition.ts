@@ -16,9 +16,9 @@ export type PosCalculation<T = number> =
   | ((targetRect: ClientRect, elementRect: ClientRect, align: Align) => T)
   | T
 
-export type MaxCalculation<T = number> =
+export type MaxMinCalculation<T = number> =
   | ((
-      value: number,
+      value: T,
       elementRect: ClientRect,
       align: Align,
       targetRect: ClientRect,
@@ -33,8 +33,9 @@ export type PositionProps = {
   width?: PosCalculation<string | number>
   x?: PosCalculation
   y?: PosCalculation
-  maxY?: MaxCalculation
-  maxX?: MaxCalculation
+  maxY?: MaxMinCalculation
+  maxX?: MaxMinCalculation
+  minWidth?: MaxMinCalculation<number | string>
   align?: Align
 }
 
@@ -49,10 +50,11 @@ export type Position = {
   bottom?: number
   width?: number | string
   spaceOnTop?: boolean
-  correctedX?: number | boolean
-  correctedY?: number | boolean
+  correctedX?: number
+  correctedY?: number
   elementRect?: ClientRect
   targetRect?: ClientRect
+  minWidth?: number | string
 }
 
 const selectSelf: SelectTarget = (t) => t
@@ -61,7 +63,7 @@ const xCalculation: PosCalculation = ({ left }) => left
 
 const yCalculation: PosCalculation = ({ top, height }) => top + height + 10
 
-const maxYCalculation: MaxCalculation = (y, elem) => {
+const maxYCalculation: MaxMinCalculation = (y, elem) => {
   const maxH = global.innerHeight - 30
   if (y + elem.height > maxH) {
     const over = y + elem.height - maxH
@@ -70,13 +72,13 @@ const maxYCalculation: MaxCalculation = (y, elem) => {
   return y
 }
 
-const maxXCalculation: MaxCalculation = (x, elem, align, _rect, pos) => {
+const maxXCalculation: MaxMinCalculation = (x, elem, align, _rect, pos) => {
   const maxW = global.innerWidth - 30
   if (x + elem.width > maxW) {
     const over = x + elem.width - maxW
     return x - over + 7.5
   }
-  pos.correctedX = false
+  delete pos.correctedX
   if (align === 'center') {
     const diff = pos.containerWidth - elem.width
     if (x + diff < 15) {
@@ -104,6 +106,7 @@ export default ({
   y = yCalculation,
   maxY = maxYCalculation,
   maxX = maxXCalculation,
+  minWidth,
   align = 'center',
 }: PositionPropsFn): [RefObject<HTMLElement>, Position, Resize] => {
   const elementRef: RefObject<HTMLElement> = useRef()
@@ -118,12 +121,23 @@ export default ({
       const pos: Position = {}
       pos.elementRect = elementRect
       pos.targetRect = rect
+
       pos.width =
         typeof width === 'function' ? width(rect, elementRect, align) : width
+
       pos.containerWidth = Math.max(
         typeof pos.width === 'number' ? pos.width : 0,
         rect.width
       )
+
+      if (minWidth) {
+        pos.minWidth =
+          typeof minWidth === 'function'
+            ? <number | string>(
+                minWidth(pos.width, elementRect, align, rect, pos)
+              )
+            : minWidth
+      }
 
       const calcedX = typeof x === 'function' ? x(rect, elementRect, align) : x
       const calcedY = typeof y === 'function' ? y(rect, elementRect, align) : y

@@ -1,14 +1,14 @@
-import { addOverlay, OnClose } from '../../Components/Overlay'
+import { addOverlay, OnClose, removeOverlay } from '../../Components/Overlay'
 import { PositionProps } from './useOverlayPosition'
 
 import { Tooltip, TooltipProps } from '../../Components/Overlay/Tooltip'
 
 import React, {
   PropsWithChildren,
-  SyntheticEvent,
   useCallback,
   ReactChild,
   ReactChildren,
+  ReactNode,
 } from 'react'
 import { OverlayContext, createOverlayContextRef } from './useOverlayProps'
 
@@ -22,14 +22,15 @@ export default function useTooltip(
   return {
     onMouseEnter: useCallback(
       (e, extraProps) => {
-        let cancel, dropdown
+        let cancel: OnClose
+        let dropdown: ReactNode
         if (handler) {
           cancel = handler(e)
         }
-        prev.current = children
+        // prev.current = children
         const target = e.currentTarget
         const removeListeners = () => {
-          clearTimeout(timer.current)
+          // clearTimeout(timer.current)
           target.removeEventListener('mouseleave', leave)
           target.removeEventListener('click', leave)
         }
@@ -37,28 +38,28 @@ export default function useTooltip(
           removeListeners()
           if (dropdown) removeOverlay(dropdown)
         }
-        clearTimeout(timer.current)
+        // clearTimeout(timer.current)
         target.addEventListener('mouseleave', leave)
 
         target.addEventListener('mouseleave', leave)
         target.addEventListener('click', leave)
-        timer.current = setTimeout(() => {
-          dropdown = (
-            <Tooltip ref={ref} target={target} {...props} {...extraProps}>
-              {children}
-            </Tooltip>
-          )
-          addOverlay(
-            dropdown,
-            () => {
-              delete ref.current
-              delete prev.current
-              removeListeners()
-              if (cancel) cancel()
-            },
-            { overlay: false }
-          )
-        }, 500)
+        // timer.current = setTimeout(() => {
+        dropdown = (
+          <Tooltip target={target} {...props} {...extraProps}>
+            {children}
+          </Tooltip>
+        )
+        addOverlay(
+          dropdown,
+          () => {
+            // delete ref.current
+            // delete prev.current
+            removeListeners()
+            if (cancel) cancel()
+          },
+          { overlay: false }
+        )
+        // }, 500)
       },
       [ctx]
     ),

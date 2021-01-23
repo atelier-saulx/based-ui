@@ -5,7 +5,7 @@ import React, {
   ReactChildren,
 } from 'react'
 import { useColor } from '@based/theme'
-import { Position, Align } from '../../hooks/useOverlayPosition'
+import { Position, Align } from '../../hooks/overlay/useOverlayPosition'
 
 export const InnerShared = forwardRef<
   HTMLElement,
@@ -30,12 +30,12 @@ export const InnerShared = forwardRef<
         maxHeight: 'calc(100vh-30px)',
         border: `1px solid ${useColor({
           color: 'background',
-          scale: 2,
+          tone: 2,
           opacity: 0.8,
         })}`,
         boxShadow: ` 0px 8px 16px 1px ${useColor({
           color: 'foreground',
-          scale: 3,
+          tone: 3,
           opacity: 0.15,
         })}`,
         ...style,

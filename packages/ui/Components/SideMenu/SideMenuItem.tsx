@@ -9,7 +9,7 @@ import React, {
 import { useColor } from '@based/theme'
 import { Title } from '../Text/Title'
 import { Expand, iconFromString } from '@based/icons'
-import useHover from '../../hooks/useHover'
+import useHover from '../../hooks/events/useHover'
 
 type GenericEventHandler = EventHandler<SyntheticEvent>
 

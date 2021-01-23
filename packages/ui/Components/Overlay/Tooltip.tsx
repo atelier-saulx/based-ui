@@ -3,16 +3,19 @@ import React, {
   PropsWithChildren,
   FunctionComponent,
   CSSProperties,
+  ReactNode,
 } from 'react'
 import useOverlayPosition, {
   PositionPropsFn,
 } from '../../hooks/overlay/useOverlayPosition'
 import { useColor, Color } from '@based/theme'
 import { Title } from '../Text/Title'
+import useOverlayProps from '../../hooks/overlay/useOverlayProps'
 
 const Arrow: FunctionComponent<{
   color?: Color
   style?: CSSProperties
+  x: number
 }> = ({ color = { color: 'foreground' }, style, x }) => {
   return (
     <div
@@ -48,8 +51,10 @@ const Arrow: FunctionComponent<{
 
 export type TooltipProps = PropsWithChildren<PositionPropsFn>
 
-export const Tooltip: FunctionComponent<TooltipProps> = (props) => {
-  let body
+export const Tooltip: FunctionComponent<TooltipProps> = (initialProps) => {
+  let body: ReactNode = null
+
+  const props = useOverlayProps(initialProps)
 
   const {
     align = 'center',
@@ -62,9 +67,9 @@ export const Tooltip: FunctionComponent<TooltipProps> = (props) => {
       const maxH = global.innerHeight - 30
       if (
         y + elem.height > maxH ||
-        (y < rect.height + rect.y + 10 && y > rect.y - 10)
+        (y < rect.height + rect.top + 10 && y > rect.top - 10)
       ) {
-        return y + elem.height - rect.y
+        return y + elem.height - rect.top
       }
       return y
     },
@@ -74,7 +79,7 @@ export const Tooltip: FunctionComponent<TooltipProps> = (props) => {
         const over = x + elem.width - maxW
         return x - over / 2 + 7.5
       }
-      pos.correctedX = false
+      delete pos.correctedX
       if (align === 'center') {
         const diff = pos.containerWidth - elem.width
         if (x + diff < 15) {
@@ -103,29 +108,19 @@ export const Tooltip: FunctionComponent<TooltipProps> = (props) => {
 
   let arrowX = 0
 
-  // how to do it
-  if (position) {
-    const tX = position.targetRect.x + position.targetRect.width / 2
-
-    if (
-      // position.x < 16 ||
-      position.x + position.elementRect.width >
-      global.innerWidth - 16
-    ) {
-      arrowX = (tX - position.x) / 2
-    } else if (position.correctedX) {
-      // width
-
-      arrowX = position.correctedX + tX + 7.5
-    }
+  const tX = position.targetRect.left + position.targetRect.width / 2
+  if (position.x + position.elementRect.width > global.innerWidth - 16) {
+    arrowX = (tX - position.x) / 2
+  } else if (position.correctedX) {
+    arrowX = position.correctedX + tX + 7.5
   }
 
-  const type = typeof childrenState
+  const type = typeof props.children
 
   if (type === 'string' || type === 'number') {
-    body = <Title color={{ on: 'default' }}>{childrenState}</Title>
+    body = <Title color={{ color: 'background' }}>{props.children}</Title>
   } else {
-    body = childrenState
+    body = props.children
   }
 
   const spaceOnTop = position && position.spaceOnTop
@@ -163,10 +158,14 @@ export const Tooltip: FunctionComponent<TooltipProps> = (props) => {
             alignItems: 'center',
             display: 'flex',
             justifyContent: 'center',
-            minWidth: props.minWidth || 175,
+            minWidth: position.minWidth || 175,
             maxHeight: 'calc(100vh-30px)',
             position: 'relative',
-            boxShadow: `0px 0px 20px ${useColor('shadow', 0.1)}`,
+            boxShadow: `0px 0px 20px ${useColor({
+              color: 'foreground',
+              tone: 4,
+              opacity: 0.3,
+            })}`,
           }}
         >
           {body}
