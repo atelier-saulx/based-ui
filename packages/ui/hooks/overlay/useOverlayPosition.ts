@@ -39,7 +39,6 @@ export type PositionProps = {
 }
 
 export type PositionPropsFn = PositionProps & {
-  children: ReactChild | ReactChildren
   target: Target
 }
 

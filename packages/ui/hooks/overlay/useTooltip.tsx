@@ -1,18 +1,24 @@
-import { addOverlay, removeOverlay } from '../Components/Overlay'
-import { Tooltip } from '../Components/Overlay/Tooltip'
-import React, { useCallback, useRef } from 'react'
+import { addOverlay, OnClose } from '../../Components/Overlay'
+import { PositionProps } from './useOverlayPosition'
 
-export default (children, props = {}, handler, refs = []) => {
-  const ref = useRef()
-  const prev = useRef()
-  const timer = useRef()
+import { Tooltip, TooltipProps } from '../../Components/Overlay/Tooltip'
 
-  if (ref.current) {
-    if (prev.current !== children) {
-      prev.current = children
-      ref.current(children)
-    }
-  }
+import React, {
+  PropsWithChildren,
+  SyntheticEvent,
+  useCallback,
+  ReactChild,
+  ReactChildren,
+} from 'react'
+import { OverlayContext, createOverlayContextRef } from './useOverlayProps'
+
+export default function useTooltip(
+  children: ReactChild | ReactChildren[],
+  props?: PropsWithChildren<TooltipProps & PositionProps>,
+  handler?: (selection: Event | any) => OnClose | undefined
+): {} {
+  const ctx = createOverlayContextRef(props)
+
   return {
     onMouseEnter: useCallback(
       (e, extraProps) => {
@@ -54,7 +60,22 @@ export default (children, props = {}, handler, refs = []) => {
           )
         }, 500)
       },
-      [ref, ...refs]
-    )
+      [ctx]
+    ),
   }
+
+  // return useCallback((e: Event | SyntheticEvent, selectionProps) => {
+  //   let cancel: OnClose
+  //   if (handler) {
+  //     cancel = handler(e)
+  //   }
+  //   const reactNode = (
+  //     <OverlayContext.Provider value={ctx}>
+
+  //     </OverlayContext.Provider>
+  //   )
+  //   addOverlay(reactNode, () => {
+  //     if (cancel) cancel()
+  //   })
+  // }, [])
 }

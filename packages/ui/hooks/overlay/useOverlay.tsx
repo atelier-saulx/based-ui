@@ -18,22 +18,25 @@ export default function useOverlay<P>(
   selectionProps?: PropsWithChildren<any>
 ) => void {
   const ctx = createOverlayContextRef(props)
-  return useCallback((e: Event | SyntheticEvent, selectionProps) => {
-    let cancel: OnClose
-    if (handler) {
-      cancel = handler(e)
-    }
-    const reactNode = (
-      <OverlayContext.Provider value={ctx}>
-        <GenericOverlay
-          Component={component}
-          target={e.currentTarget}
-          {...selectionProps}
-        />
-      </OverlayContext.Provider>
-    )
-    addOverlay(reactNode, () => {
-      if (cancel) cancel()
-    })
-  }, [])
+  return useCallback(
+    (e: Event | SyntheticEvent, selectionProps) => {
+      let cancel: OnClose
+      if (handler) {
+        cancel = handler(e)
+      }
+      const reactNode = (
+        <OverlayContext.Provider value={ctx}>
+          <GenericOverlay
+            Component={component}
+            target={e.currentTarget}
+            {...selectionProps}
+          />
+        </OverlayContext.Provider>
+      )
+      addOverlay(reactNode, () => {
+        if (cancel) cancel()
+      })
+    },
+    [ctx]
+  )
 }

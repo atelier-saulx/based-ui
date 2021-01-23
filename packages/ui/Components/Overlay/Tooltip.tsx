@@ -1,11 +1,19 @@
-import React, { forwardRef } from 'react'
-import useOverlay from '../../hooks/useOverlayPosition'
-import { useColor } from '@based/theme'
-import { Subtitle } from '../Text/Subtitle'
+import React, {
+  forwardRef,
+  PropsWithChildren,
+  FunctionComponent,
+  CSSProperties,
+} from 'react'
+import useOverlayPosition, {
+  PositionPropsFn,
+} from '../../hooks/overlay/useOverlayPosition'
+import { useColor, Color } from '@based/theme'
+import { Title } from '../Text/Title'
 
-// maybe make this with a context for inverse
-
-const Arrow = ({ color = 'default', style, x }) => {
+const Arrow: FunctionComponent<{
+  color?: Color
+  style?: CSSProperties
+}> = ({ color = { color: 'foreground' }, style, x }) => {
   return (
     <div
       style={{
@@ -13,12 +21,12 @@ const Arrow = ({ color = 'default', style, x }) => {
         display: 'flex',
         justifyContent: 'center',
         width: '100%',
-        ...style
+        ...style,
       }}
     >
       <svg
         style={{
-          transform: `translate3d(${x}px, 0px, 0px)`
+          transform: `translate3d(${x}px, 0px, 0px)`,
         }}
         width="18"
         height="18"
@@ -38,12 +46,13 @@ const Arrow = ({ color = 'default', style, x }) => {
   )
 }
 
-export const Tooltip = forwardRef((props, ref) => {
+export type TooltipProps = PropsWithChildren<PositionPropsFn>
+
+export const Tooltip: FunctionComponent<TooltipProps> = (props) => {
   let body
 
   const {
     align = 'center',
-    children,
     target,
     selectTarget,
     width = () => 'auto',
@@ -78,23 +87,19 @@ export const Tooltip = forwardRef((props, ref) => {
         return 15
       }
       return x
-    }
+    },
   } = props
 
-  const [elementRef, position, childrenState] = useOverlay(
-    {
-      y,
-      x,
-      align,
-      children,
-      target,
-      selectTarget,
-      width,
-      maxY,
-      maxX
-    },
-    ref
-  )
+  const [elementRef, position] = useOverlayPosition({
+    y,
+    x,
+    align,
+    target,
+    selectTarget,
+    width,
+    maxY,
+    maxX,
+  })
 
   let arrowX = 0
 
@@ -118,7 +123,7 @@ export const Tooltip = forwardRef((props, ref) => {
   const type = typeof childrenState
 
   if (type === 'string' || type === 'number') {
-    body = <Subtitle color={{ on: 'default' }}>{childrenState}</Subtitle>
+    body = <Title color={{ on: 'default' }}>{childrenState}</Title>
   } else {
     body = childrenState
   }
@@ -136,7 +141,7 @@ export const Tooltip = forwardRef((props, ref) => {
         bottom: position ? position.bottom : null,
         display: 'flex',
         justifyContent: align,
-        pointerEvents: 'none'
+        pointerEvents: 'none',
       }}
     >
       <div
@@ -144,7 +149,7 @@ export const Tooltip = forwardRef((props, ref) => {
           display: 'flex',
           position: 'relative',
           flexDirection: 'column',
-          justifyContent: spaceOnTop ? 'flex-end' : 'flex-start'
+          justifyContent: spaceOnTop ? 'flex-end' : 'flex-start',
         }}
       >
         <div
@@ -153,7 +158,7 @@ export const Tooltip = forwardRef((props, ref) => {
             pointerEvents: 'all',
             borderRadius: 6,
             width: position ? position.width : 'auto',
-            background: useColor('default'),
+            background: useColor({ color: 'foreground' }),
             padding: 15,
             alignItems: 'center',
             display: 'flex',
@@ -161,7 +166,7 @@ export const Tooltip = forwardRef((props, ref) => {
             minWidth: props.minWidth || 175,
             maxHeight: 'calc(100vh-30px)',
             position: 'relative',
-            boxShadow: `0px 0px 20px ${useColor('shadow', 0.1)}`
+            boxShadow: `0px 0px 20px ${useColor('shadow', 0.1)}`,
           }}
         >
           {body}
@@ -171,11 +176,11 @@ export const Tooltip = forwardRef((props, ref) => {
               left: 0,
               right: 0,
               top: spaceOnTop ? null : -9,
-              bottom: spaceOnTop ? -9 : null
+              bottom: spaceOnTop ? -9 : null,
             }}
           />
         </div>
       </div>
     </div>
   )
-})
+}

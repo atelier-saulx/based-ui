@@ -13,6 +13,8 @@ import { deepEqual } from '@saulx/utils'
 export class OverlayCtx<P> {
   public props: PropsWithChildren<P>
 
+  public timer: NodeJS.Timeout
+
   public update(props: PropsWithChildren<P>) {
     if (!deepEqual(this.props, props)) {
       this.props = props
