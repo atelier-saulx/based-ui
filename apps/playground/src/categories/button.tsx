@@ -21,7 +21,7 @@ const genButtonProps = () => {
       children: 'Foreground no bg',
       foregroundColor: {
         color: 'foreground',
-        scale: 2,
+        tone: 2,
       },
       color: { color: 'background', opacity: 0 },
     },
