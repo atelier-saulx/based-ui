@@ -1,20 +1,26 @@
 const dictionary = new Map()
+import { Language } from './types'
 
-let lang = 'en'
+export { Language }
 
-export const getValue = (value, langauge = lang) => {
+let lang: Language = 'en'
+
+type Value = string | { [key: string]: string | number }
+
+export function getValue(
+  value: Value | Value[],
+  langauge: Language = lang
+): any {
   if (Array.isArray(value)) {
-    return value.map(getValue)
+    return value.map((v) => getValue(v))
   }
-
   if (typeof value === 'object' && !('$$typeof' in value)) {
     return value[langauge] || value.en
   }
-
   return value
 }
 
-export const useConstant = (field, langauge = lang) => {
+export const useConstant = (field: string, langauge: Language = lang) => {
   // add hook for hub / from a server
   const f = dictionary[field]
   if (f) {
