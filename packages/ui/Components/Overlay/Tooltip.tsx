@@ -1,8 +1,8 @@
 import React, {
-  forwardRef,
   PropsWithChildren,
   FunctionComponent,
   CSSProperties,
+  RefObject,
   ReactNode,
 } from 'react'
 import useOverlayPosition, {

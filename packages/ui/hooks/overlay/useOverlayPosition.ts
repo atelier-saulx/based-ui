@@ -108,8 +108,8 @@ export default ({
   maxX = maxXCalculation,
   minWidth,
   align = 'center',
-}: PositionPropsFn): [RefObject<HTMLElement>, Position, Resize] => {
-  const elementRef: RefObject<HTMLElement> = useRef()
+}: PositionPropsFn): [RefObject<HTMLDivElement>, Position, Resize] => {
+  const elementRef: RefObject<HTMLDivElement> = useRef()
   const [position, setPosition] = useState<Position>()
   const [sizeForceUpdate, resize] = useReducer((x) => x + 1, 0)
   useEffect(() => {
