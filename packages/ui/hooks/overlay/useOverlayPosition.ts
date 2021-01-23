@@ -43,6 +43,10 @@ export type PositionPropsFn = PositionProps & {
   target: Target
 }
 
+export type PositionPropsFnOptional = PositionProps & {
+  target?: Target
+}
+
 export type Position = {
   containerWidth?: number
   y?: number
@@ -108,7 +112,11 @@ export default ({
   maxX = maxXCalculation,
   minWidth,
   align = 'center',
-}: PositionPropsFn): [RefObject<HTMLDivElement>, Position, Resize] => {
+}: PositionPropsFn): [
+  RefObject<HTMLDivElement>,
+  Position | undefined,
+  Resize
+] => {
   const elementRef: RefObject<HTMLDivElement> = useRef()
   const [position, setPosition] = useState<Position>()
   const [sizeForceUpdate, resize] = useReducer((x) => x + 1, 0)

@@ -1,4 +1,3 @@
-const dictionary = new Map()
 import { Language } from './types'
 
 export { Language }

@@ -6,7 +6,7 @@ import React, {
   ReactNode,
 } from 'react'
 import useOverlayPosition, {
-  PositionPropsFn,
+  PositionPropsFnOptional,
 } from '../../hooks/overlay/useOverlayPosition'
 import { useColor, Color } from '@based/theme'
 import { Title } from '../Text/Title'
@@ -49,7 +49,11 @@ const Arrow: FunctionComponent<{
   )
 }
 
-export type TooltipProps = PropsWithChildren<PositionPropsFn>
+export type TooltipProps = PropsWithChildren<
+  PositionPropsFnOptional & {
+    style?: CSSProperties
+  }
+>
 
 export const Tooltip: FunctionComponent<TooltipProps> = (initialProps) => {
   let body: ReactNode = null
@@ -108,17 +112,23 @@ export const Tooltip: FunctionComponent<TooltipProps> = (initialProps) => {
 
   let arrowX = 0
 
-  const tX = position.targetRect.left + position.targetRect.width / 2
-  if (position.x + position.elementRect.width > global.innerWidth - 16) {
-    arrowX = (tX - position.x) / 2
-  } else if (position.correctedX) {
-    arrowX = position.correctedX + tX + 7.5
+  if (position) {
+    const tX = position.targetRect.left + position.targetRect.width / 2
+    if (position.x + position.elementRect.width > global.innerWidth - 16) {
+      arrowX = (tX - position.x) / 2
+    } else if (position.correctedX) {
+      arrowX = position.correctedX + tX + 7.5
+    }
   }
 
   const type = typeof props.children
 
   if (type === 'string' || type === 'number') {
-    body = <Title color={{ color: 'background' }}>{props.children}</Title>
+    body = (
+      <Title size="small" singleLine color={{ color: 'background' }}>
+        {props.children}
+      </Title>
+    )
   } else {
     body = props.children
   }
@@ -129,7 +139,7 @@ export const Tooltip: FunctionComponent<TooltipProps> = (initialProps) => {
     <div
       style={{
         opacity: position ? 1 : 0,
-        width: position ? position.containerWidth : 150,
+        width: position ? position.containerWidth : 200,
         position: 'fixed',
         top: position ? position.y : 0,
         left: position ? position.x : 0,
@@ -158,7 +168,7 @@ export const Tooltip: FunctionComponent<TooltipProps> = (initialProps) => {
             alignItems: 'center',
             display: 'flex',
             justifyContent: 'center',
-            minWidth: position.minWidth || 175,
+            minWidth: position ? position.minWidth : 200,
             maxHeight: 'calc(100vh-30px)',
             position: 'relative',
             boxShadow: `0px 0px 20px ${useColor({
@@ -166,6 +176,7 @@ export const Tooltip: FunctionComponent<TooltipProps> = (initialProps) => {
               tone: 4,
               opacity: 0.3,
             })}`,
+            ...props.style,
           }}
         >
           {body}

@@ -80,10 +80,18 @@ export {
 import useOverlay from './hooks/overlay/useOverlay'
 import useOverlayProps from './hooks/overlay/useOverlayProps'
 import useOverlayPosition from './hooks/overlay/useOverlayPosition'
+import useTooltip from './hooks/overlay/useTooltip'
 
 import { useKeyDown, useKeyUp } from './hooks/events/useKeyboard'
 
-export { useOverlay, useKeyDown, useKeyUp, useOverlayProps, useOverlayPosition }
+export {
+  useOverlay,
+  useKeyDown,
+  useKeyUp,
+  useOverlayProps,
+  useOverlayPosition,
+  useTooltip,
+}
 
 export { Text } from './Components/Text/Text'
 export { Title } from './Components/Text/Title'
