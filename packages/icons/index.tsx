@@ -13,6 +13,7 @@ import CloseSvg from './Components/Close'
 import CollapseSvg from './Components/Collapse'
 import CustomSvg from './Components/Custom'
 import DashboardSvg from './Components/Dashboard'
+import DateSvg from './Components/Date'
 import DeleteSvg from './Components/Delete'
 import DesktopSvg from './Components/Desktop'
 import DownSvg from './Components/Down'
@@ -21,6 +22,7 @@ import DragSvg from './Components/Drag'
 import DuplicateSvg from './Components/Duplicate'
 import EditNameSvg from './Components/EditName'
 import EditSvg from './Components/Edit'
+import EmailSvg from './Components/Email'
 import EmptyLineSvg from './Components/EmptyLine'
 import ExpandSvg from './Components/Expand'
 import GraphSvg from './Components/Graph'
@@ -38,14 +40,14 @@ import OverviewSvg from './Components/Overview'
 import RegisterSvg from './Components/Register'
 import ResetSvg from './Components/Reset'
 import ScaleQuestionSvg from './Components/ScaleQuestion'
-import ScheduleSvg from './Components/Schedule'
+import SearchSvg from './Components/Search'
 import ShowSvg from './Components/Show'
 import ShowsSvg from './Components/Shows'
 import SkipSvg from './Components/Skip'
 import SmartCopySvg from './Components/SmartCopy'
 import TabletSvg from './Components/Tablet'
 import ThankYouSvg from './Components/ThankYou'
-import TimmingSvg from './Components/Timming'
+import TimeSvg from './Components/Time'
 import ToggleOffScreenSvg from './Components/ToggleOff'
 import ToggleOnSvg from './Components/ToggleOn'
 import UnlockSvg from './Components/Unlock'
@@ -65,6 +67,10 @@ export type SvgProps = {
 
 type GenericEventHandler = EventHandler<SyntheticEvent>
 
+export type Icon = FunctionComponent<
+  IconProps & { Svg: FunctionComponent<SvgProps> }
+>
+
 export type IconProps = {
   color?: Color
   style?: CSSProperties
@@ -81,9 +87,7 @@ export type IconProps = {
   size?: number
 }
 
-const Icon: FunctionComponent<
-  IconProps & { Svg: FunctionComponent<SvgProps> }
-> = ({
+const Icon: Icon = ({
   color,
   framed = false,
   frameColor = { color: 'primary' },
@@ -152,6 +156,7 @@ const Close = wrapIcon(CloseSvg)
 const Collapse = wrapIcon(CollapseSvg)
 const Custom = wrapIcon(CustomSvg)
 const Dashboard = wrapIcon(DashboardSvg)
+const Date = wrapIcon(DateSvg)
 const Delete = wrapIcon(DeleteSvg)
 const Desktop = wrapIcon(DesktopSvg)
 const Down = wrapIcon(DownSvg)
@@ -160,6 +165,7 @@ const Drag = wrapIcon(DragSvg)
 const Duplicate = wrapIcon(DuplicateSvg)
 const Edit = wrapIcon(EditSvg)
 const EditName = wrapIcon(EditNameSvg)
+const Email = wrapIcon(EmailSvg)
 const EmptyLine = wrapIcon(EmptyLineSvg)
 const Expand = wrapIcon(ExpandSvg)
 const Graph = wrapIcon(GraphSvg)
@@ -177,14 +183,14 @@ const Overview = wrapIcon(OverviewSvg)
 const Register = wrapIcon(RegisterSvg)
 const Reset = wrapIcon(ResetSvg)
 const ScaleQuestion = wrapIcon(ScaleQuestionSvg)
-const Schedule = wrapIcon(ScheduleSvg)
+const Search = wrapIcon(SearchSvg)
 const Show = wrapIcon(ShowSvg)
 const Shows = wrapIcon(ShowsSvg)
 const Skip = wrapIcon(SkipSvg)
 const SmartCopy = wrapIcon(SmartCopySvg)
 const Tablet = wrapIcon(TabletSvg)
 const ThankYou = wrapIcon(ThankYouSvg)
-const Timming = wrapIcon(TimmingSvg)
+const Time = wrapIcon(TimeSvg)
 const ToggleOff = wrapIcon(ToggleOffScreenSvg)
 const ToggleOn = wrapIcon(ToggleOnSvg)
 const Unlock = wrapIcon(UnlockSvg)
@@ -202,6 +208,7 @@ const icons = {
   Collapse,
   Custom,
   Dashboard,
+  Date,
   Delete,
   Desktop,
   Down,
@@ -210,6 +217,7 @@ const icons = {
   Duplicate,
   Edit,
   EditName,
+  Email,
   EmptyLine,
   Expand,
   Graph,
@@ -227,14 +235,14 @@ const icons = {
   Register,
   Reset,
   ScaleQuestion,
-  Schedule,
+  Search,
   Show,
   Shows,
   Skip,
   SmartCopy,
   Tablet,
   ThankYou,
-  Timming,
+  Time,
   ToggleOff,
   ToggleOn,
   Unlock,
@@ -264,6 +272,7 @@ export {
   Collapse,
   Custom,
   Dashboard,
+  Date,
   Delete,
   Desktop,
   Down,
@@ -272,6 +281,7 @@ export {
   Duplicate,
   Edit,
   EditName,
+  Email,
   EmptyLine,
   Expand,
   Graph,
@@ -289,14 +299,14 @@ export {
   Register,
   Reset,
   ScaleQuestion,
-  Schedule,
+  Search,
   Show,
   Shows,
   Skip,
   SmartCopy,
   Tablet,
   ThankYou,
-  Timming,
+  Time,
   ToggleOff,
   ToggleOn,
   Unlock,

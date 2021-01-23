@@ -1,7 +1,11 @@
-import React from 'react'
+import React, { CSSProperties, FunctionComponent } from 'react'
 import { useColor } from '@based/theme'
 
-export default ({ children, style }) => {
+type TopbarProps = {
+  style: CSSProperties
+}
+
+export const Topbar: FunctionComponent<TopbarProps> = ({ children, style }) => {
   return (
     <div
       style={{
@@ -15,8 +19,8 @@ export default ({ children, style }) => {
         alignItems: 'center',
         display: 'flex',
         justifyContent: 'space-between',
-        borderBottom: '1px solid ' + useColor('outline'),
-        ...style
+        borderBottom: '1px solid ' + useColor({ color: 'divider' }),
+        ...style,
       }}
     >
       {children}
