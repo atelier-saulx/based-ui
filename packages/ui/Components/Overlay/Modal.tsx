@@ -114,8 +114,6 @@ export const Modal: FunctionComponent<ModalProps> = (initialProps) => {
         style={{
           pointerEvents: 'all',
           background: useColor({ color: 'background' }),
-          overflowY: 'auto',
-          overflowX: 'hidden',
           width: 910,
           maxWidth: 'calc(100% - 30px)',
           boxShadow: `0px 8px 16px 1px ${useColor({
@@ -129,7 +127,9 @@ export const Modal: FunctionComponent<ModalProps> = (initialProps) => {
         <div
           style={{
             minHeight: 180,
-            paddingBottom: 32,
+            paddingBottom: header ? 40 : 60,
+            overflowY: 'auto',
+            overflowX: 'hidden',
             position: 'relative',
             maxHeight: header ? 'calc(100% - 140px)' : 'calc(100% - 60px)',
           }}
@@ -137,7 +137,6 @@ export const Modal: FunctionComponent<ModalProps> = (initialProps) => {
           <div
             style={{
               marginTop: header ? 32 : 60,
-              marginBottom: 32,
               paddingLeft: 80,
               paddingRight: 80,
               display: 'flex',
@@ -151,8 +150,7 @@ export const Modal: FunctionComponent<ModalProps> = (initialProps) => {
               style={{
                 display: 'flex',
                 justifyContent: 'flex-end',
-                marginTop: 24,
-                marginBottom: 32,
+                marginTop: 32,
                 marginRight: 80,
               }}
             >

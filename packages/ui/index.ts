@@ -83,10 +83,12 @@ import useOverlayPosition from './hooks/overlay/useOverlayPosition'
 import useTooltip from './hooks/overlay/useTooltip'
 import useThrottledCallback from './hooks/useThrottledCallback'
 import useModal from './hooks/overlay/useModal'
+import useContextualMenu from './hooks/events/useContextualMenu'
 
 import { useKeyDown, useKeyUp } from './hooks/events/useKeyboard'
 
 export {
+  useContextualMenu,
   useOverlay,
   useKeyDown,
   useKeyUp,

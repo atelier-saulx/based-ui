@@ -1,6 +1,11 @@
-import { useCallback } from 'react'
+import { useCallback, EventHandler, SyntheticEvent } from 'react'
 
-const useContextualMenu = (fn) => {
+export type ContextualMenuEvent = {
+  onClick: EventHandler<SyntheticEvent>
+  onContextMenu: EventHandler<SyntheticEvent>
+}
+
+const useContextualMenu = (fn: EventHandler<SyntheticEvent>) => {
   const eventHandler = useCallback((e) => {
     if (e.type === 'contextmenu') {
       e.preventDefault()
@@ -15,8 +20,7 @@ const useContextualMenu = (fn) => {
       }
       fn(e)
     }
-  })
-
+  }, [])
   return {
     onClick: eventHandler,
     onContextMenu: eventHandler,

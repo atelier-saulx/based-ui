@@ -6,15 +6,16 @@ import {
   useTooltip,
   useModal,
   Text,
+  useContextualMenu,
 } from '@based/ui'
 import RenderComponents from '../RenderComponents'
-import { randomText, randomTitle } from './util'
+import { randomLongText, randomTitle } from './util'
 
 const ModalChildren = ({ children }) => {
   return (
     <div>
       <Title>Hello this is a child</Title>
-      <Text>{randomText()}</Text>
+      <Text>{randomLongText()}</Text>
       <div
         style={{
           display: 'flex',
@@ -23,7 +24,13 @@ const ModalChildren = ({ children }) => {
           marginBottom: 16,
         }}
       >
-        <Button>Snurky pants</Button>
+        <Button
+          {...useContextualMenu(() => {
+            console.log('CONTEXTUAL!')
+          })}
+        >
+          Snurky pants
+        </Button>
       </div>
       {children}
     </div>

@@ -25,6 +25,7 @@ type ButtonProps = {
   onClick?: GenericEventHandler
   onHover?: GenericEventHandler
   onMouseEnter?: GenericEventHandler
+  onContextMenu?: GenericEventHandler
 }
 
 export const Button: FunctionComponent<ButtonProps> = ({
@@ -37,6 +38,7 @@ export const Button: FunctionComponent<ButtonProps> = ({
   actionKeys,
   onClick,
   onMouseEnter,
+  onContextMenu,
 }) => {
   const [hover, isHover, isActive] = useHover(onHover || onMouseEnter)
   let ref
@@ -113,6 +115,7 @@ export const Button: FunctionComponent<ButtonProps> = ({
       }}
       onClick={onClick}
       {...hover}
+      onContextMenu={onContextMenu}
     >
       {Icon ? (
         <Icon

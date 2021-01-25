@@ -12,6 +12,12 @@ export const randomText = (): string =>
     sentenceUpperBound: 200,
   })
 
+export const randomLongText = (): string =>
+  loremIpsum({
+    sentenceLowerBound: 10,
+    sentenceUpperBound: 2000,
+  })
+
 export const randomTitle = (): string =>
   loremIpsum({
     sentenceLowerBound: 1,
