@@ -10,13 +10,13 @@
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #555;
+  background: #9e9e9e;
   border-radius: 8px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #666;
+  background: #999;
 }
 
 html,
