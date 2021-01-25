@@ -8,7 +8,7 @@ import useOverlayPosition, {
   PositionPropsFnOptional,
 } from '../../hooks/overlay/useOverlayPosition'
 import { useColor, Color } from '@based/theme'
-import { Text } from '../Text/Text'
+import { Text } from '../Text'
 import useOverlayProps from '../../hooks/overlay/useOverlayProps'
 
 const Arrow: FunctionComponent<{

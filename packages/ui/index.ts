@@ -99,7 +99,7 @@ export {
   useModal,
 }
 
-export { Text } from './Components/Text/Text'
+export { Text } from './Components/Text'
 export { Title } from './Components/Text/Title'
 export { SubText } from './Components/Text/SubText'
 export { Button } from './Components/Button'

@@ -5,7 +5,7 @@ import React, {
   FunctionComponent,
 } from 'react'
 import { useColor, Color } from '@based/theme'
-import { Text } from '../Text/Text'
+import { Text } from '../Text'
 import { Close } from '@based/icons'
 import { Button } from '../Button'
 import useOverlayProps from '../../hooks/overlay/useOverlayProps'
