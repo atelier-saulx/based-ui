@@ -22,6 +22,7 @@ const uploadFile = async (files, progress, progressId, type = 'file') => {
     try {
       const xhr = new global.XMLHttpRequest()
 
+      console.log({ progress })
       if (progress.items[progressId]) {
         if (progress.items[progressId].gettingRemoved) {
           clearTimeout(progress.items[progressId].gettingRemoved)
@@ -41,29 +42,29 @@ const uploadFile = async (files, progress, progressId, type = 'file') => {
         name: file.name,
         kind: file.kind,
         progress: 0,
-        type
+        type,
       }
 
       progress.items[progressId] = item
 
-      xhr.upload.onprogress = p => {
+      xhr.upload.onprogress = (p) => {
         const item = progress.items[progressId]
         item.progress =
           (100 * (p.loaded || p.position)) / (p.totalSize || p.total)
-        progress.listeners.forEach(update => update({ ...item }))
+        progress.listeners.forEach((update) => update({ ...item }))
       }
 
-      xhr.onerror = p => {
+      xhr.onerror = (p) => {
         console.error('error', p)
       }
 
       xhr.timeout = 1e3 * 60 * 60 * 24
 
-      xhr.onabort = p => {
+      xhr.onabort = (p) => {
         console.error('abort', p)
       }
 
-      xhr.ontimeout = p => {
+      xhr.ontimeout = (p) => {
         console.error('on timeout', p)
       }
 
@@ -90,13 +91,13 @@ const uploadFile = async (files, progress, progressId, type = 'file') => {
               item.isComplete = false
               item.transcoding = true
               item.progress = status.progress
-              progress.listeners.forEach(update => update({ ...item }))
+              progress.listeners.forEach((update) => update({ ...item }))
               setTimeout(checkStatus, 1e3)
             } else {
               item.url = status.url
               item.isComplete = true
 
-              progress.listeners.forEach(update => update({ ...item }))
+              progress.listeners.forEach((update) => update({ ...item }))
               clearTimeout(item.gettingRemoved)
               xhr.abort()
               delete item.xhr
@@ -106,17 +107,17 @@ const uploadFile = async (files, progress, progressId, type = 'file') => {
                   item.gettingRemoved = setTimeout(() => {
                     delete progress.items[progressId].gettingRemoved
                     delete progress.items[progressId]
-                    progress.listeners.forEach(update =>
+                    progress.listeners.forEach((update) =>
                       update({ progressId, removed: true, progress: 100 })
                     )
                   }, 1e3)
-                  progress.listeners.forEach(update =>
+                  progress.listeners.forEach((update) =>
                     update({ progressId, removed: true, progress: 100 })
                   )
                 } else {
                   delete progress.items[progressId].gettingRemoved
                   delete progress.items[progressId]
-                  progress.listeners.forEach(update =>
+                  progress.listeners.forEach((update) =>
                     update({ progressId, removed: true, progress: 100 })
                   )
                 }
@@ -136,17 +137,17 @@ const uploadFile = async (files, progress, progressId, type = 'file') => {
       if (!progress.inProgress) {
         progress.inProgress = true
       }
-      progress.listeners.forEach(update => update({ ...item }))
+      progress.listeners.forEach((update) => update({ ...item }))
 
       if (progress.service) {
         url = (
           await getService({
             serviceName: progress.service,
-            registryUrl: global.BREG.map(v =>
+            registryUrl: global.BREG.map((v) =>
               v.indexOf('http') === 0
                 ? v
                 : 'https://based-service-registry-' + v + '.based.io'
-            )
+            ),
           })
         ).url
       } else {

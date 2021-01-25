@@ -1,24 +1,17 @@
 import { createContext } from 'react'
 
-export const ProgressContext = createContext(null)
 
 const cache = {}
 
-type CachedProgress = {
+export type ProgressContext= {
       service: string
       url: string
-      listeners: Set<any> // Needs type
-      items: any
-      inProgress: boolean
+      listeners?: Set<any> // Needs type
+      items?: any
+      inProgress?: boolean
     }
 
-export const createProgress = ({
-  url,
-  service = '',
-}: { url:string, service: string}): CachedProgress => {
-  if (!url && !service) {
-    throw new Error('Upload context needs an url or service ')
-  }
+export const createProgressContext = ({url, service}: ProgressContext): ProgressContext => {
   const key = `${url}-${service}`
   if (!(key in cache)) {
     cache[key] = {
@@ -31,3 +24,4 @@ export const createProgress = ({
   }
   return cache[key]
 }
+

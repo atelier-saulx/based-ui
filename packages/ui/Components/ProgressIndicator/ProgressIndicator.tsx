@@ -29,7 +29,6 @@ export const ProgressIndicator: FunctionComponent<ProgressIndicatorProps> = ({
       style={{
         width: size,
         height: size,
-        // TODO: Waiting for @keyframes to be implemented on parser
         animationDuration: '0.5s',
         animationIterationCount: value > 99 ? 'infinite' : null,
         // @ts-ignore

@@ -1,4 +1,5 @@
-import { Loader, ProgressIndicator, SideMenu } from '@based/ui'
+import { FileUpload, Loader, ProgressIndicator, SideMenu } from '@based/ui'
+import { fakeUploadFile } from '@based/ui/Components/Upload/fakeUploadFile'
 import RenderComponents from '../RenderComponents'
 
 export default {
@@ -55,6 +56,17 @@ export default {
               ],
             },
           ],
+        },
+      ],
+    },
+    {
+      name: 'FileUpload',
+      category: 'misc',
+      Component: FileUpload,
+      props: [
+        {
+          value: 'This is value',
+          uploadFileScript: fakeUploadFile,
         },
       ],
     },
