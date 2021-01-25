@@ -8,7 +8,7 @@ import {
   Text,
 } from '@based/ui'
 import RenderComponents from '../RenderComponents'
-import { randomText } from './util'
+import { randomText, randomTitle } from './util'
 
 const ModalChildren = ({ children }) => {
   return (
@@ -99,14 +99,13 @@ export default {
             }, 1000)
             return () => clearInterval(timer)
           }, [])
-
           return (
             <Button
               onClick={useModal(<ModalChildren>{text}</ModalChildren>, {
                 header: {
                   icon: 'time',
                   framed: true,
-                  title: 'Snurpy',
+                  title: randomTitle(),
                   closeButton: true,
                   children: (
                     <div>
@@ -135,13 +134,12 @@ export default {
             }, 1000)
             return () => clearInterval(timer)
           }, [])
-
           return (
             <Button
               onClick={useModal(<ModalChildren>{text}</ModalChildren>, {
                 header: {
                   icon: 'time',
-                  title: 'Snurpy',
+                  title: randomTitle(),
                   closeButton: true,
                   children: (
                     <div>
@@ -170,7 +168,6 @@ export default {
             }, 1000)
             return () => clearInterval(timer)
           }, [])
-
           return (
             <Button
               onClick={useModal(<ModalChildren>{text}</ModalChildren>, {
@@ -195,7 +192,6 @@ export default {
             }, 1000)
             return () => clearInterval(timer)
           }, [])
-
           return (
             <Button onClick={useModal(<ModalChildren>{text}</ModalChildren>)}>
               {text}
@@ -212,14 +208,13 @@ export default {
             }, 1000)
             return () => clearInterval(timer)
           }, [])
-
           return (
             <Button
               onClick={useModal(<ModalChildren>{text}</ModalChildren>, {
                 header: {
                   icon: 'time',
                   framed: true,
-                  title: '1. Snurpy',
+                  title: randomTitle(),
                   closeButton: true,
                 },
               })}

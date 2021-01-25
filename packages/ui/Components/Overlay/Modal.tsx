@@ -70,7 +70,13 @@ export const ModalHeader: FunctionComponent<ModalHeaderProps> = ({
             }}
           />
         ) : null}
-        {title ? <Text weight="semibold">{title}</Text> : <div />}
+        {title ? (
+          <Text singleLine weight="semibold">
+            {title}
+          </Text>
+        ) : (
+          <div />
+        )}
       </div>
       <div
         style={{
@@ -146,7 +152,7 @@ export const Modal: FunctionComponent<ModalProps> = (initialProps) => {
                 display: 'flex',
                 justifyContent: 'flex-end',
                 marginTop: 24,
-                marginBottom: header ? 48 : 32,
+                marginBottom: 32,
                 marginRight: 80,
               }}
             >
