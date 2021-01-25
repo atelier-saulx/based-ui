@@ -202,6 +202,32 @@ export default {
             </Button>
           )
         },
+        () => {
+          const [text, setText] = useState('useModal Variant D')
+          useEffect(() => {
+            let cnt = 0
+            const timer = setInterval(() => {
+              ++cnt
+              setText('useModal Variant D ' + cnt)
+            }, 1000)
+            return () => clearInterval(timer)
+          }, [])
+
+          return (
+            <Button
+              onClick={useModal(<ModalChildren>{text}</ModalChildren>, {
+                header: {
+                  icon: 'time',
+                  framed: true,
+                  title: '1. Snurpy',
+                  closeButton: true,
+                },
+              })}
+            >
+              {text}
+            </Button>
+          )
+        },
       ],
     },
   ],
