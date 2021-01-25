@@ -30,7 +30,7 @@ export default {
             },
             {
               title: 'Item 2',
-              icon: 'Schedule',
+              icon: 'Date',
             },
             {
               title: 'Item 3',

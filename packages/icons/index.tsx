@@ -107,7 +107,7 @@ const Icon: Icon = ({
     if (framed) {
       color = { color: 'background' }
     } else {
-      color = { color: 'foreground', scale: 3 }
+      color = { color: 'foreground', tone: 3 }
     }
   }
 
