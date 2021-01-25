@@ -4,7 +4,7 @@ export { Language }
 
 let lang: Language = 'en'
 
-type Value = string | { [key: string]: string | number } | (string | number)[]
+type Value = any
 
 export function getValue(
   value: Value | Value[],
