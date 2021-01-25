@@ -8,14 +8,14 @@ import React, {
 } from 'react'
 import { useColor } from '@based/theme'
 import { Title } from '../Text/Title'
-import { Expand, iconFromString } from '@based/icons'
+import { Expand, iconFromString, IconName } from '@based/icons'
 import useHover from '../../hooks/events/useHover'
 
 type GenericEventHandler = EventHandler<SyntheticEvent>
 
 type SideMenuItemProps = {
   title?: string
-  icon?: string
+  icon?: IconName
   style?: CSSProperties
   onClick?: (event: SyntheticEvent, meta: object) => {}
   active?: boolean
