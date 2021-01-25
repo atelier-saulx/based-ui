@@ -2,7 +2,6 @@ import React, {
   PropsWithChildren,
   FunctionComponent,
   CSSProperties,
-  RefObject,
   ReactNode,
 } from 'react'
 import useOverlayPosition, {
