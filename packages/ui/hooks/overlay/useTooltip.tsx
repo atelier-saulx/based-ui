@@ -54,8 +54,6 @@ export default function useTooltip(
           if (tooltip) removeOverlay(tooltip)
         }
         target.addEventListener('mouseleave', leave)
-
-        target.addEventListener('mouseleave', leave)
         target.addEventListener('click', leave)
         ctx.current.timer = setTimeout(() => {
           tooltip = (
@@ -73,7 +71,7 @@ export default function useTooltip(
             },
             { overlay: false }
           )
-        }, props.initialTimer || 1000)
+        }, props.initialTimer || 500)
       },
 
       [ctx]

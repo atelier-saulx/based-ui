@@ -1,7 +1,7 @@
-import { addOverlay, removeOverlay } from '../Components/Overlay'
-import { Dropdown } from '../Components/Overlay/Dropdown'
+import { addOverlay, removeOverlay } from '../../Components/Overlay'
+import { Dropdown } from '../../Components/Overlay/Dropdown'
 import React, { useCallback, useRef } from 'react'
-import isEqual from '../util/isEqual'
+import isEqual from '../../util/isEqual'
 
 export default (selectOptions, value, handler, refs = [], props = {}) => {
   const ref = useRef(null)

@@ -1,12 +1,4 @@
-import {
-  useEffect,
-  useRef,
-  useState,
-  useReducer,
-  ReactChild,
-  ReactChildren,
-  RefObject,
-} from 'react'
+import { useEffect, useRef, useState, useReducer, RefObject } from 'react'
 
 export type Align = 'start' | 'center' | 'end'
 
