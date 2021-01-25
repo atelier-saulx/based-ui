@@ -17,9 +17,8 @@ import useHover from '../../hooks/events/useHover'
 import useMultiple from '../../hooks/events/useMultipleEvents'
 import useDrop from '../../hooks/drag/useDrop'
 import { createProgressContext, ProgressContext } from './ProgressContext'
-import uploadFile from './uploadFile'
 import { ProgressIndicator } from '../ProgressIndicator/ProgressIndicator'
-import { UploadFileScript } from './fakeUploadFile' // TODO: this should come from real uploadFileScript
+import { uploadFile } from './fakeUploadFile' // TODO: this should come from real uploadFileScript
 
 type GenericEventHandler = EventHandler<SyntheticEvent>
 
@@ -68,7 +67,7 @@ type FileUploadProps = {
   placeholder: string
   progressId: string
   video: boolean
-  uploadFileScript: UploadFileScript
+  fake?: boolean
 }
 
 export const FileUpload: FunctionComponent<FileUploadProps> = ({
@@ -78,13 +77,13 @@ export const FileUpload: FunctionComponent<FileUploadProps> = ({
   placeholder,
   progressId,
   video = false,
-  uploadFileScript = uploadFile,
+  fake,
 }) => {
   const identifierRef = useRef(identifier)
   const initialValue = useRef(value)
   const [stateValue, setValue] = useState(value)
   const [isFocus, setFocus] = useState(false)
-  const progressContext = useContext(
+  const progress = useContext(
     createContext(createProgressContext({ url: null, service: null }))
   )
   const progressIdReal = useRef((~~(Math.random() * 99999999)).toString(16))
@@ -94,50 +93,52 @@ export const FileUpload: FunctionComponent<FileUploadProps> = ({
   }
 
   type FileUploadStatus = {
-    step: 'normal' | 'uploading' | 'transcoding'
-    name?: string
-    percentage?: number
+    step: 'idle' | 'uploading' | 'transcoding'
+    progress: ProgressContext
   }
 
-  const [status, updateStatus] = useState<FileUploadStatus>({
-    step: 'normal',
-  })
+  type InProgress =
+    | {
+        progress: number
+        type: string
+        name: string
+        transcoding: boolean
+      }
+    | false
+  const [inProgress, progressUpdate] = useState<InProgress>()
 
-  // type InProgress = {
-  //   progress: number
-  //   type: string
-  //   name: string
-  //   transcoding: boolean
-  // }
-  // const [inProgress, progressUpdate] = useState<InProgress>()
-
-  // useEffect(() => {
-  //   const update = (item) => {
-  //     if (item && item.id === progressId) {
-  //       if (item.isComplete) {
-  //         setValue(item.url)
-  //         onChange(item.url)
-  //       }
-  //       updateStatus({ ...status, step: 'normal' })
-  //     }
-  //   }
-  //   if (progressContext) {
-  //     // progressUpdate(progress.items[progressId])
-  //     updateStatus({ ...status, step: 'normal' })
-  //     progressContext.listeners.add(update)
-  //   }
-  //   return () => {
-  //     progressContext && progressContext.listeners.delete(update)
-  //   }
-  // }, [onChange, setValue, progressId])
+  useEffect(() => {
+    const update = (item) => {
+      console.log('Upadte', item.id, progressId, item)
+      if (item && item.id === progressId) {
+        if (item.isComplete) {
+          setValue(item.url)
+          onChange(item.url)
+          progressUpdate(false)
+        } else if (item.removed) {
+          progressUpdate(false)
+        } else {
+          progressUpdate(item)
+        }
+      }
+    }
+    if (progress) {
+      progressUpdate(progress.items[progressId])
+      progress.listeners.add(update)
+    }
+    return () => {
+      progress && progress.listeners.delete(update)
+    }
+  }, [progressUpdate, onChange, setValue, progressId])
 
   const [drop, isDrop] = useDrop(
     useCallback((e) => {
-      uploadFileScript(
+      uploadFile(
         e.dataTransfer.files,
-        progressContext,
+        progress,
         progressId,
-        video ? 'video' : null
+        video ? 'video' : null,
+        fake
       )
     }, [])
   )
@@ -192,18 +193,7 @@ export const FileUpload: FunctionComponent<FileUploadProps> = ({
       }}
       {...useMultiple([hover, drop])}
     >
-      {status.step === 'uploading' ? (
-        <ProgressIndicator value={23} />
-      ) : status.step === 'transcoding' ? (
-        <ProgressIndicator value={100} />
-      ) : isDrop ? (
-        <Add color={{ color: 'primary' }} />
-      ) : (
-        <Upload
-          color={isHover ? { color: 'primary' } : { color: 'foreground' }}
-        />
-      )}
-      {/* {inProgress ? (
+      {inProgress ? (
         <ProgressIndicator value={inProgress.progress} />
       ) : isDrop ? (
         <Add color={{ color: 'primary' }} />
@@ -211,17 +201,18 @@ export const FileUpload: FunctionComponent<FileUploadProps> = ({
         <Upload
           color={isHover ? { color: 'primary' } : { color: 'foreground' }}
         />
-      )} */}
+      )}
       <input
         type="file"
         // {...useTooltip('Upload a file')}
         onChange={useCallback(async (e) => {
           const files = e.target.files
-          uploadFileScript(
+          uploadFile(
             files,
-            progressContext,
+            progress,
             progressId,
-            video ? 'video' : undefined
+            video ? 'video' : undefined,
+            fake
           )
           e.target.value = ''
         }, [])}
@@ -255,20 +246,13 @@ export const FileUpload: FunctionComponent<FileUploadProps> = ({
             value={
               isDrop
                 ? 'Drop file to upload'
-                : status.step === 'transcoding'
-                ? `Transcoding ${status.name}...`
-                : status.step === 'uploading'
-                ? `Uploading ${status.name}... ${~~status.percentage}%`
+                : inProgress
+                ? inProgress.type === 'video' && inProgress.transcoding
+                  ? `Transcoding ${
+                      inProgress.name
+                    }... ${~~inProgress.progress}%`
+                  : `Uploading ${inProgress.name}... ${~~inProgress.progress}%`
                 : stateValue
-              // isDrop
-              //   ? 'Drop file to upload'
-              //   : inProgress
-              //   ? inProgress.type === 'video' && inProgress.transcoding
-              //     ? `Transcoding ${
-              //         inProgress.name
-              //       }... ${~~inProgress.progress}%`
-              //     : `Uploading ${inProgress.name}... ${~~inProgress.progress}%`
-              //   : stateValue
             }
             onChange={update}
             blur={blur}

@@ -22,7 +22,6 @@ const uploadFile = async (files, progress, progressId, type = 'file') => {
     try {
       const xhr = new global.XMLHttpRequest()
 
-      console.log({ progress })
       if (progress.items[progressId]) {
         if (progress.items[progressId].gettingRemoved) {
           clearTimeout(progress.items[progressId].gettingRemoved)
