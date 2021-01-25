@@ -10,9 +10,9 @@ import React, {
 import { useColor, Color } from '@based/theme'
 import { getValue } from '@based/i18n'
 import { iconFromString } from '@based/icons'
-import useHover from '../../hooks/useHover'
-import { Text } from '../Text/Text'
-import { useKeyUp, Key } from '../../hooks/useKeyboard'
+import useHover from '../../hooks/events/useHover'
+import { Text } from '../Text'
+import { useKeyUp, Key } from '../../hooks/events/useKeyboard'
 
 type GenericEventHandler = EventHandler<SyntheticEvent>
 
@@ -25,6 +25,7 @@ type ButtonProps = {
   onClick?: GenericEventHandler
   onHover?: GenericEventHandler
   onMouseEnter?: GenericEventHandler
+  onContextMenu?: GenericEventHandler
 }
 
 export const Button: FunctionComponent<ButtonProps> = ({
@@ -37,6 +38,7 @@ export const Button: FunctionComponent<ButtonProps> = ({
   actionKeys,
   onClick,
   onMouseEnter,
+  onContextMenu,
 }) => {
   const [hover, isHover, isActive] = useHover(onHover || onMouseEnter)
   let ref
@@ -82,13 +84,13 @@ export const Button: FunctionComponent<ButtonProps> = ({
   if (
     isHover &&
     typeof foregroundColor === 'object' &&
-    foregroundColor.scale > 1
+    foregroundColor.tone > 1
   ) {
     foregroundColor = {
       ...foregroundColor,
-      scale: Math.max(
+      tone: Math.max(
         1,
-        foregroundColor.scale - (isActive ? 2 : isHover ? 1 : 0)
+        foregroundColor.tone - (isActive ? 2 : isHover ? 1 : 0)
       ),
     }
   }
@@ -107,12 +109,13 @@ export const Button: FunctionComponent<ButtonProps> = ({
         backgroundColor: useColor({
           color: color.color,
           opacity: color.opacity,
-          scale: isActive ? 3 : isHover ? 2 : 1,
+          tone: isActive ? 3 : isHover ? 2 : 1,
         }),
         ...style,
       }}
       onClick={onClick}
       {...hover}
+      onContextMenu={onContextMenu}
     >
       {Icon ? (
         <Icon

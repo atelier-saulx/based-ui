@@ -21,7 +21,7 @@ const genButtonProps = () => {
       children: 'Foreground no bg',
       foregroundColor: {
         color: 'foreground',
-        scale: 2,
+        tone: 2,
       },
       color: { color: 'background', opacity: 0 },
     },
@@ -32,34 +32,6 @@ const genButtonProps = () => {
       onClick: () => {
         console.log('Key is pressed!')
       },
-    },
-    () => {
-      const [text, setText] = useState('Text!')
-      useEffect(() => {
-        let cnt = 0
-        const timer = setInterval(() => {
-          ++cnt
-          setText('This is text ' + cnt)
-        }, 1000)
-        return () => clearInterval(timer)
-      }, [])
-
-      return (
-        <Button
-          onClick={useOverlay(Title, {
-            style: {
-              marginLeft: 10,
-              marginRight: 10,
-            },
-            align: 'start',
-            width: 'auto',
-            singleLine: true,
-            children: text,
-          })}
-        >
-          {text}
-        </Button>
-      )
     }
   )
 

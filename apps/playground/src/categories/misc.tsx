@@ -25,16 +25,34 @@ export default {
         {
           children: [
             {
-              title: 'Item 1',
+              title: 'Shows',
               icon: 'Shows',
+              active: true,
             },
             {
-              title: 'Item 2',
-              icon: 'Schedule',
+              title: 'Dashboard',
+              icon: 'Dashboard',
             },
             {
-              title: 'Item 3',
-              icon: 'Register',
+              title: 'Settings',
+              icon: 'Settings',
+            },
+            {
+              title: 'SubItems',
+              children: [
+                {
+                  title: 'Subitem 1',
+                  icon: 'Custom',
+                },
+                {
+                  title: 'Subitem 2',
+                  icon: 'Custom',
+                },
+                {
+                  title: 'Subitem 3',
+                  icon: 'Custom',
+                },
+              ],
             },
           ],
         },

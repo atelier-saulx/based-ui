@@ -1,10 +1,10 @@
 import { useColor } from '@based/theme'
 import React, { useCallback, useState, useEffect, useRef } from 'react'
-import { getSelection } from '../useSelect'
-import { Title } from '../../Components/Text/Title'
+import { getSelection } from '../../useSelect'
+import { Title } from '../../../Components/Text/Title'
 import { Graph as Plus } from '@based/icons'
 import { render } from 'react-dom'
-import isSafari from '../../util/isSafari'
+import isSafari from '../../../util/isSafari'
 import dragScroll from './dragScroll'
 
 // needs more work! for typescript

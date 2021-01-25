@@ -3,18 +3,18 @@ import React, {
   useCallback,
   createContext,
   useContext,
-  useEffect
+  useEffect,
 } from 'react'
 
 const addListeners = () => {
-  document.addEventListener('click', e => {
+  document.addEventListener('click', (e) => {
     if (!e.shiftKey) {
       clearSelection()
     }
   })
 
-  document.addEventListener('keyup', e => {
-    if (e.keyCode === 27) {
+  document.addEventListener('keyup', (e) => {
+    if (e.code === 'Esc' || e.keyCode === 27) {
       clearSelection()
     }
   })
@@ -35,7 +35,7 @@ export const SelectableCollection = ({ children, data }) => {
       value={{
         data,
         children: {},
-        selection: new Set()
+        selection: new Set(),
       }}
     >
       {children}
@@ -78,7 +78,7 @@ export const clearSelection = () => {
 }
 
 export const useClick = (onClick, refs) => {
-  return useCallback(e => {
+  return useCallback((e) => {
     if (!e.shiftKey) {
       onClick(e)
     }
@@ -103,7 +103,7 @@ export const useSelect = (data, index) => {
   return [
     {
       onMouseDown: useCallback(
-        e => {
+        (e) => {
           if (e.shiftKey) {
             const s = selection.get(data)
             if (isSelected) {
@@ -123,7 +123,7 @@ export const useSelect = (data, index) => {
               }
             } else {
               if (s) {
-                if (!s.find(v => v === selectionContext)) {
+                if (!s.find((v) => v === selectionContext)) {
                   s.push(selectionContext, index)
                 }
               } else {
@@ -133,7 +133,7 @@ export const useSelect = (data, index) => {
               if (selectionContext) {
                 selectionContext.selection.add(data)
                 // Needs to be improved!
-                selectionContext.selection.forEach(d => {
+                selectionContext.selection.forEach((d) => {
                   const s = selection.get(d)
                   if (!s) {
                     console.warn(
@@ -169,8 +169,8 @@ export const useSelect = (data, index) => {
           }
         },
         [isSelected]
-      )
+      ),
     },
-    isSelected
+    isSelected,
   ]
 }

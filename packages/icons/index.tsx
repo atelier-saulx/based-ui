@@ -41,6 +41,7 @@ import RegisterSvg from './Components/Register'
 import ResetSvg from './Components/Reset'
 import ScaleQuestionSvg from './Components/ScaleQuestion'
 import SearchSvg from './Components/Search'
+import SettingsSvg from './Components/Settings'
 import ShowSvg from './Components/Show'
 import ShowsSvg from './Components/Shows'
 import SkipSvg from './Components/Skip'
@@ -107,7 +108,7 @@ const Icon: Icon = ({
     if (framed) {
       color = { color: 'background' }
     } else {
-      color = { color: 'foreground', scale: 3 }
+      color = { color: 'foreground', tone: 3 }
     }
   }
 
@@ -184,6 +185,7 @@ const Register = wrapIcon(RegisterSvg)
 const Reset = wrapIcon(ResetSvg)
 const ScaleQuestion = wrapIcon(ScaleQuestionSvg)
 const Search = wrapIcon(SearchSvg)
+const Settings = wrapIcon(SettingsSvg)
 const Show = wrapIcon(ShowSvg)
 const Shows = wrapIcon(ShowsSvg)
 const Skip = wrapIcon(SkipSvg)
@@ -236,6 +238,7 @@ const icons = {
   Reset,
   ScaleQuestion,
   Search,
+  Settings,
   Show,
   Shows,
   Skip,
@@ -252,9 +255,11 @@ const icons = {
   WelcomeScreen,
 }
 
-const iconFromString = (str: string): null | FunctionComponent<IconProps> => {
+export type IconName = keyof typeof icons
+
+const iconFromString = (str: IconName): null | FunctionComponent<IconProps> => {
   if (str && typeof str === 'string') {
-    str = str[0].toUpperCase() + str.slice(1)
+    // str = str[0].toUpperCase() + str.slice(1)  // should not be needed with IconName type
     return icons[str]
   } else {
     return null
@@ -300,6 +305,7 @@ export {
   Reset,
   ScaleQuestion,
   Search,
+  Settings,
   Show,
   Shows,
   Skip,

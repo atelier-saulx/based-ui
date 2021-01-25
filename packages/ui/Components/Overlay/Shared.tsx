@@ -5,10 +5,10 @@ import React, {
   ReactChildren,
 } from 'react'
 import { useColor } from '@based/theme'
-import { Position, Align } from '../../hooks/useOverlayPosition'
+import { Position, Align } from '../../hooks/overlay/useOverlayPosition'
 
 export const InnerShared = forwardRef<
-  HTMLElement,
+  HTMLDivElement,
   {
     width: number | string
     style: CSSProperties
@@ -20,23 +20,19 @@ export const InnerShared = forwardRef<
       ref={ref}
       style={{
         pointerEvents: 'all',
-        borderRadius: 6,
+        borderRadius: 2,
         width: width,
-        background: useColor({ color: 'background', scale: 1 }),
+        background: useColor({ color: 'background' }),
         overflowY: 'auto',
         overflowX: 'hidden',
         paddingTop: 10,
         paddingBottom: 10,
         maxHeight: 'calc(100vh-30px)',
-        border: `1px solid ${useColor({
-          color: 'background',
-          scale: 2,
-          opacity: 0.8,
-        })}`,
-        boxShadow: ` 0px 8px 16px 1px ${useColor({
+
+        boxShadow: `0px 8px 16px 1px ${useColor({
           color: 'foreground',
-          scale: 3,
-          opacity: 0.15,
+          tone: 2,
+          opacity: 0.33,
         })}`,
         ...style,
       }}
@@ -54,7 +50,7 @@ export type SharedOverlayProps = {
   children?: ReactChildren | ReactChild
 }
 
-export default forwardRef<HTMLElement, SharedOverlayProps>(
+export default forwardRef<HTMLDivElement, SharedOverlayProps>(
   ({ position, align = 'center', children, style, width = 'auto' }, ref) => {
     return (
       <div

@@ -46,7 +46,7 @@ const OverlayItem: FunctionComponent<OverlayItemProps> = ({
         transition: 'opacity 0.15s',
         backgroundColor: hidden
           ? null
-          : useColor({ color: 'background', opacity: 0.5 }),
+          : useColor({ color: 'foreground', tone: 4, opacity: 0.5 }),
         width: '100vw',
         position: 'fixed',
         top: 0,

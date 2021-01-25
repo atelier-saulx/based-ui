@@ -1,11 +1,21 @@
-import React, { forwardRef } from 'react'
-import useOverlay from '../../hooks/useOverlayPosition'
-import { useColor } from '@based/theme'
-import { Subtitle } from '../Text/Subtitle'
+import React, {
+  PropsWithChildren,
+  FunctionComponent,
+  CSSProperties,
+  ReactNode,
+} from 'react'
+import useOverlayPosition, {
+  PositionPropsFnOptional,
+} from '../../hooks/overlay/useOverlayPosition'
+import { useColor, Color } from '@based/theme'
+import { Text } from '../Text'
+import useOverlayProps from '../../hooks/overlay/useOverlayProps'
 
-// maybe make this with a context for inverse
-
-const Arrow = ({ color = 'default', style, x }) => {
+const Arrow: FunctionComponent<{
+  color?: Color
+  style?: CSSProperties
+  x: number
+}> = ({ color = { color: 'foreground' }, style, x }) => {
   return (
     <div
       style={{
@@ -13,12 +23,12 @@ const Arrow = ({ color = 'default', style, x }) => {
         display: 'flex',
         justifyContent: 'center',
         width: '100%',
-        ...style
+        ...style,
       }}
     >
       <svg
         style={{
-          transform: `translate3d(${x}px, 0px, 0px)`
+          transform: `translate3d(${x}px, 0px, 0px)`,
         }}
         width="18"
         height="18"
@@ -38,12 +48,19 @@ const Arrow = ({ color = 'default', style, x }) => {
   )
 }
 
-export const Tooltip = forwardRef((props, ref) => {
-  let body
+export type TooltipProps = PropsWithChildren<
+  PositionPropsFnOptional & {
+    style?: CSSProperties
+  }
+>
+
+export const Tooltip: FunctionComponent<TooltipProps> = (initialProps) => {
+  let body: ReactNode = null
+
+  const props = useOverlayProps(initialProps)
 
   const {
     align = 'center',
-    children,
     target,
     selectTarget,
     width = () => 'auto',
@@ -53,9 +70,9 @@ export const Tooltip = forwardRef((props, ref) => {
       const maxH = global.innerHeight - 30
       if (
         y + elem.height > maxH ||
-        (y < rect.height + rect.y + 10 && y > rect.y - 10)
+        (y < rect.height + rect.top + 10 && y > rect.top - 10)
       ) {
-        return y + elem.height - rect.y
+        return y + elem.height - rect.top
       }
       return y
     },
@@ -65,7 +82,7 @@ export const Tooltip = forwardRef((props, ref) => {
         const over = x + elem.width - maxW
         return x - over / 2 + 7.5
       }
-      pos.correctedX = false
+      delete pos.correctedX
       if (align === 'center') {
         const diff = pos.containerWidth - elem.width
         if (x + diff < 15) {
@@ -78,49 +95,41 @@ export const Tooltip = forwardRef((props, ref) => {
         return 15
       }
       return x
-    }
+    },
   } = props
 
-  const [elementRef, position, childrenState] = useOverlay(
-    {
-      y,
-      x,
-      align,
-      children,
-      target,
-      selectTarget,
-      width,
-      maxY,
-      maxX
-    },
-    ref
-  )
+  const [elementRef, position] = useOverlayPosition({
+    y,
+    x,
+    align,
+    target,
+    selectTarget,
+    width,
+    maxY,
+    maxX,
+  })
 
   let arrowX = 0
 
-  // how to do it
   if (position) {
-    const tX = position.targetRect.x + position.targetRect.width / 2
-
-    if (
-      // position.x < 16 ||
-      position.x + position.elementRect.width >
-      global.innerWidth - 16
-    ) {
+    const tX = position.targetRect.left + position.targetRect.width / 2
+    if (position.x + position.elementRect.width > global.innerWidth - 16) {
       arrowX = (tX - position.x) / 2
     } else if (position.correctedX) {
-      // width
-
       arrowX = position.correctedX + tX + 7.5
     }
   }
 
-  const type = typeof childrenState
+  const type = typeof props.children
 
   if (type === 'string' || type === 'number') {
-    body = <Subtitle color={{ on: 'default' }}>{childrenState}</Subtitle>
+    body = (
+      <Text weight="semibold" singleLine color={{ color: 'background' }}>
+        {props.children}
+      </Text>
+    )
   } else {
-    body = childrenState
+    body = props.children
   }
 
   const spaceOnTop = position && position.spaceOnTop
@@ -129,14 +138,14 @@ export const Tooltip = forwardRef((props, ref) => {
     <div
       style={{
         opacity: position ? 1 : 0,
-        width: position ? position.containerWidth : 150,
+        width: position ? position.containerWidth : 200,
         position: 'fixed',
         top: position ? position.y : 0,
         left: position ? position.x : 0,
         bottom: position ? position.bottom : null,
         display: 'flex',
         justifyContent: align,
-        pointerEvents: 'none'
+        pointerEvents: 'none',
       }}
     >
       <div
@@ -144,24 +153,29 @@ export const Tooltip = forwardRef((props, ref) => {
           display: 'flex',
           position: 'relative',
           flexDirection: 'column',
-          justifyContent: spaceOnTop ? 'flex-end' : 'flex-start'
+          justifyContent: spaceOnTop ? 'flex-end' : 'flex-start',
         }}
       >
         <div
           ref={elementRef}
           style={{
             pointerEvents: 'all',
-            borderRadius: 6,
+            borderRadius: 2,
             width: position ? position.width : 'auto',
-            background: useColor('default'),
-            padding: 15,
+            background: useColor({ color: 'foreground' }),
+            padding: 10,
             alignItems: 'center',
             display: 'flex',
             justifyContent: 'center',
-            minWidth: props.minWidth || 175,
+            minWidth: position ? position.minWidth : 200,
             maxHeight: 'calc(100vh-30px)',
             position: 'relative',
-            boxShadow: `0px 0px 20px ${useColor('shadow', 0.1)}`
+            boxShadow: `0px 0px 20px ${useColor({
+              color: 'foreground',
+              tone: 4,
+              opacity: 0.8,
+            })}`,
+            ...props.style,
           }}
         >
           {body}
@@ -171,11 +185,11 @@ export const Tooltip = forwardRef((props, ref) => {
               left: 0,
               right: 0,
               top: spaceOnTop ? null : -9,
-              bottom: spaceOnTop ? -9 : null
+              bottom: spaceOnTop ? -9 : null,
             }}
           />
         </div>
       </div>
     </div>
   )
-})
+}

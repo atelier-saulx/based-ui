@@ -1,5 +1,5 @@
 import { useState, useCallback, EventHandler, SyntheticEvent } from 'react'
-import { isDragging } from './useDrag'
+import { isDragging } from '../drag/useDrag'
 
 export type Hover = [
   {

@@ -155,14 +155,14 @@ export const useTheme = (active?: 'light' | 'dark') => {
 
 export type Color = {
   color: ColorKey
-  scale?: number
+  tone?: number
   opacity?: number
 }
 
 export const useColor = (color: Color): string => {
-  const { scale = 1, opacity = 1, color: c } = color
+  const { tone = 1, opacity = 1, color: c } = color
   const selector = theme.theme[theme.active][c]
-  const rgb = selector[scale - 1] || selector[selector.length - 1]
+  const rgb = selector[tone - 1] || selector[selector.length - 1]
   if (opacity !== 1) {
     return `rgba(${rgb[0]},${rgb[1]},${rgb[2]}, ${opacity})`
   } else {
