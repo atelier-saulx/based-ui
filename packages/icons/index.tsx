@@ -41,6 +41,7 @@ import RegisterSvg from './Components/Register'
 import ResetSvg from './Components/Reset'
 import ScaleQuestionSvg from './Components/ScaleQuestion'
 import SearchSvg from './Components/Search'
+import SettingsSvg from './Components/Settings'
 import ShowSvg from './Components/Show'
 import ShowsSvg from './Components/Shows'
 import SkipSvg from './Components/Skip'
@@ -184,6 +185,7 @@ const Register = wrapIcon(RegisterSvg)
 const Reset = wrapIcon(ResetSvg)
 const ScaleQuestion = wrapIcon(ScaleQuestionSvg)
 const Search = wrapIcon(SearchSvg)
+const Settings = wrapIcon(SettingsSvg)
 const Show = wrapIcon(ShowSvg)
 const Shows = wrapIcon(ShowsSvg)
 const Skip = wrapIcon(SkipSvg)
@@ -236,6 +238,7 @@ const icons = {
   Reset,
   ScaleQuestion,
   Search,
+  Settings,
   Show,
   Shows,
   Skip,
@@ -302,6 +305,7 @@ export {
   Reset,
   ScaleQuestion,
   Search,
+  Settings,
   Show,
   Shows,
   Skip,
