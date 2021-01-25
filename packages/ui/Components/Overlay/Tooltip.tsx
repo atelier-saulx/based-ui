@@ -8,7 +8,7 @@ import useOverlayPosition, {
   PositionPropsFnOptional,
 } from '../../hooks/overlay/useOverlayPosition'
 import { useColor, Color } from '@based/theme'
-import { Title } from '../Text/Title'
+import { Text } from '../Text/Text'
 import useOverlayProps from '../../hooks/overlay/useOverlayProps'
 
 const Arrow: FunctionComponent<{
@@ -124,9 +124,9 @@ export const Tooltip: FunctionComponent<TooltipProps> = (initialProps) => {
 
   if (type === 'string' || type === 'number') {
     body = (
-      <Title size="small" singleLine color={{ color: 'background' }}>
+      <Text weight="semibold" singleLine color={{ color: 'background' }}>
         {props.children}
-      </Title>
+      </Text>
     )
   } else {
     body = props.children
@@ -160,10 +160,10 @@ export const Tooltip: FunctionComponent<TooltipProps> = (initialProps) => {
           ref={elementRef}
           style={{
             pointerEvents: 'all',
-            borderRadius: 6,
+            borderRadius: 2,
             width: position ? position.width : 'auto',
             background: useColor({ color: 'foreground' }),
-            padding: 15,
+            padding: 10,
             alignItems: 'center',
             display: 'flex',
             justifyContent: 'center',
@@ -173,7 +173,7 @@ export const Tooltip: FunctionComponent<TooltipProps> = (initialProps) => {
             boxShadow: `0px 0px 20px ${useColor({
               color: 'foreground',
               tone: 4,
-              opacity: 0.3,
+              opacity: 0.8,
             })}`,
             ...props.style,
           }}

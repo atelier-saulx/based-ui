@@ -114,6 +114,7 @@ export const Modal: FunctionComponent<ModalProps> = (initialProps) => {
         style={{
           pointerEvents: 'all',
           background: useColor({ color: 'background' }),
+          borderRadius: '2px',
           width: 910,
           maxWidth: 'calc(100% - 30px)',
           boxShadow: `0px 8px 16px 1px ${useColor({
