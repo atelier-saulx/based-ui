@@ -252,9 +252,11 @@ const icons = {
   WelcomeScreen,
 }
 
-const iconFromString = (str: string): null | FunctionComponent<IconProps> => {
+export type IconName = keyof typeof icons
+
+const iconFromString = (str: IconName): null | FunctionComponent<IconProps> => {
   if (str && typeof str === 'string') {
-    str = str[0].toUpperCase() + str.slice(1)
+    // str = str[0].toUpperCase() + str.slice(1)  // should not be needed with IconName type
     return icons[str]
   } else {
     return null
