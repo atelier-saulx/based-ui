@@ -7,7 +7,7 @@ import React, {
   SyntheticEvent,
 } from 'react'
 import { useColor } from '@based/theme'
-import { Title } from '../Text/Title'
+import { Text } from '../Text'
 import { Expand, iconFromString, IconName } from '@based/icons'
 import useHover from '../../hooks/events/useHover'
 
@@ -61,28 +61,30 @@ export const SideMenuItem: FunctionComponent<SideMenuItemProps> = ({
           borderRadius: 4,
           transition: 'background 0.15s',
           backgroundColor: isHover
-            ? useColor({ color: 'foreground', opacity: 0.15 })
+            ? useColor({ color: 'background', tone: 2 })
             : active
-            ? useColor({ color: 'primary', opacity: 0.1 })
+            ? useColor({ color: 'background', tone: 3 })
             : null,
           ...style,
         }}
       >
         {ItemIcon ? (
           <ItemIcon
-            color={active ? { color: 'primary' } : { color: 'foreground' }}
+            color={{ color: 'foreground' }}
             style={{
               marginRight: 8,
               transform: expanded ? 'rotate(90deg)' : '',
             }}
           />
         ) : null}
-        <Title
-          size="small"
-          color={active ? { color: 'primary' } : { color: 'foreground' }}
+        <Text
+          weight="medium"
+          color={
+            active ? { color: 'foreground' } : { color: 'foreground', tone: 2 }
+          }
         >
           {title}
-        </Title>
+        </Text>
       </div>
       {expanded && children ? (
         <div style={{ marginLeft: 14 }}>
