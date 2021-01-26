@@ -326,6 +326,20 @@ export default {
 
                 return (
                   <>
+                    <ContextualMenuItem
+                      label={`Flur`}
+                      onClick={useDropdown(
+                        [
+                          { label: 'hello', icon: 'skip' },
+                          { label: 'bye', icon: 'smartCopy' },
+                        ],
+                        (value, index) => {
+                          console.log('-->', value, index)
+                        },
+                        undefined,
+                        { multi: true }
+                      )}
+                    />
                     <ContextualMenuItem label="Edit" icon="skip">
                       <ContextualMenuItem
                         border
@@ -335,16 +349,17 @@ export default {
                       />
                     </ContextualMenuItem>
                     <ContextualMenuItem border label="Delete" icon="close">
-                      <div
-                        style={{ padding: 30 }}
-                        onClick={useDropdown(
-                          ['hello', 'bye!', 'snurky pants for you'],
-                          (value, index) => {
-                            console.log('-->', value, index)
-                          }
-                        )}
-                      >
-                        <Text>Remove {data.text}</Text>
+                      <div style={{ display: 'flex', padding: 20 }}>
+                        <Button
+                          onClick={useDropdown(
+                            ['hello', 'bye!', 'snurky pants for you'],
+                            (value, index) => {
+                              console.log('-->', value, index)
+                            }
+                          )}
+                        >
+                          Remove this
+                        </Button>
                       </div>
                     </ContextualMenuItem>
                   </>

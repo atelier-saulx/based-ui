@@ -7,9 +7,7 @@ import React, {
   SyntheticEvent,
   CSSProperties,
 } from 'react'
-import useOverlayPosition, {
-  PositionPropsFn,
-} from '../../hooks/overlay/useOverlayPosition'
+import useOverlayPosition from '../../hooks/overlay/useOverlayPosition'
 import useOverlayProps, {
   OverlayContext,
 } from '../../hooks/overlay/useOverlayProps'
@@ -44,8 +42,8 @@ const Next: FunctionComponent<NextProps> = ({ label, children }) => {
         }, [])}
         style={{
           display: 'flex',
-          paddingTop: 10,
-          paddingBottom: 10,
+          paddingTop: 5,
+          paddingBottom: 5,
           paddingLeft: 15,
           paddingRight: 15,
           width: '100%',
@@ -58,7 +56,7 @@ const Next: FunctionComponent<NextProps> = ({ label, children }) => {
       >
         <ChevronLeft />
         <Text
-          weight="semibold"
+          weight="medium"
           singleLine
           noSelect
           style={{
@@ -118,51 +116,61 @@ export const ContextualMenuItem: FunctionComponent<ContextualMenuItemProps> = ({
   )
   return (
     <div
-      {...hover}
-      onClick={click}
       style={{
-        display: 'flex',
-        paddingTop: border ? 15 : 10,
-        paddingBottom: 10,
-        paddingLeft: 15,
-        paddingRight: 15,
-        marginTop: border ? 10 : 0,
-        borderColor: useColor({ color: 'foreground', tone: 5, opacity: 0.33 }),
+        paddingTop: border ? 7.5 : 0,
+        marginTop: border ? 7.5 : 0,
+        borderColor: useColor({
+          color: 'foreground',
+          tone: 5,
+          opacity: 0.33,
+        }),
         borderStyle: 'solid',
         borderWidth: 0,
         borderTopWidth: border ? 1 : null,
-        width: '100%',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        cursor: 'pointer',
-        backgroundColor: isHover
-          ? useColor({ color: 'foreground', tone: 5, opacity: 0.33 })
-          : null,
-        ...style,
       }}
     >
       <div
+        {...hover}
+        onClick={click}
         style={{
           display: 'flex',
+          paddingTop: 5,
+          paddingBottom: 5,
+          paddingLeft: 15,
+          paddingRight: 15,
+          width: '100%',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          cursor: 'pointer',
+          backgroundColor: isHover
+            ? useColor({ color: 'foreground', tone: 5, opacity: 0.33 })
+            : null,
+          ...style,
         }}
       >
-        {IconComponent ? (
-          <IconComponent color={{ color: 'foreground', tone: 2 }} />
-        ) : null}
-        <Text
+        <div
           style={{
-            marginLeft: 14,
-            marginRight: 15,
+            display: 'flex',
           }}
-          singleLine
-          noSelect
         >
-          {label}
-        </Text>
+          {IconComponent ? (
+            <IconComponent color={{ color: 'foreground', tone: 2 }} />
+          ) : null}
+          <Text
+            style={{
+              marginLeft: !IconComponent ? 14 + 24 : 14,
+              marginRight: 15,
+            }}
+            singleLine
+            noSelect
+          >
+            {label}
+          </Text>
+        </div>
+        {children && !onClick ? (
+          <ChevronRight color={{ color: 'foreground', tone: 3 }} />
+        ) : null}
       </div>
-      {children && !onClick ? (
-        <ChevronRight color={{ color: 'foreground', tone: 3 }} />
-      ) : null}
     </div>
   )
 }
