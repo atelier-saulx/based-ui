@@ -1,52 +1,77 @@
 import { addOverlay, removeOverlay } from '../../Components/Overlay'
-import { Dropdown } from '../../Components/Overlay/Dropdown'
+import {
+  Dropdown,
+  DropdownOption,
+  DropdownOptions,
+} from '../../Components/Overlay/Dropdown'
 import { PositionProps } from './useOverlayPosition'
 import React, { useCallback, SyntheticEvent, PropsWithChildren } from 'react'
 import { OverlayContext, createOverlayContextRef } from './useOverlayProps'
 
 export type SelectFn = (
   value?: (string | number) | (string | number)[],
-  index?: number
+  index?: number | number[]
 ) => void
 
 // make multi a bit nicer e.g. when you pass value as an array it means multi!
 
+// dont make the handler
+
 export default (
-  selectOptions: (string | number)[],
-  value: (string | number) | (string | number)[],
-  handler: (e: SyntheticEvent | Event) => SelectFn,
+  options: DropdownOptions,
+  select: SelectFn,
+  value?: (string | number) | (string | number)[],
   props: PositionProps & { multi?: boolean } = {}
 ): ((
   e: Event | SyntheticEvent,
   selectionProps?: PropsWithChildren<any>
 ) => void) => {
-  const ctx = createOverlayContextRef(props)
+  if (!props.width) {
+    props.width = 'auto'
+  }
 
-  const multi = props.multi
+  const ctx = createOverlayContextRef({
+    value,
+    items: options,
+    ...props,
+  })
 
   return useCallback(
     (e, extraProps) => {
       e.preventDefault()
       e.stopPropagation()
-      const select = handler(e)
       const dropdown = (
         <OverlayContext.Provider value={ctx}>
           <Dropdown
             value={value}
             target={e.currentTarget}
-            items={selectOptions}
+            items={options}
             onChange={(v, index) => {
-              if (multi && Array.isArray(value)) {
-                const index = value.indexOf(v)
+              let label = typeof v === 'object' ? v.label : v
+
+              if (ctx.current.props.multi) {
+                let value = ctx.current.props.value
+                if (!Array.isArray(value)) {
+                  value = []
+                }
+                const index = value.indexOf(label)
+                value = [...value]
                 if (index !== -1) {
                   value.splice(index, 1)
                 } else {
-                  value.push(v)
+                  value.push(label)
                 }
-                select([...value], index)
+                select(
+                  value,
+                  value.map((v) => ctx.current.props.items.indexOf(v))
+                )
+                ctx.current.update({ ...ctx.current.props, value })
               } else {
-                select(v, index)
-                removeOverlay(dropdown)
+                select(label, index)
+                ctx.current.update({ ...ctx.current.props, value: label })
+                ctx.current.timer = setTimeout(() => {
+                  removeOverlay(dropdown)
+                }, 200)
               }
             }}
             {...props}
@@ -54,11 +79,9 @@ export default (
           />
         </OverlayContext.Provider>
       )
-      addOverlay(dropdown, () => {
-        select()
-      })
+      addOverlay(dropdown)
       return true
     },
-    [value]
+    [ctx]
   )
 }

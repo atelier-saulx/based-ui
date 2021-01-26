@@ -5,8 +5,11 @@ import {
   useOverlay,
   useTooltip,
   useModal,
+  ContextualMenuItem,
   Text,
+  useMenu,
   useContextualMenu,
+  useDropdown,
 } from '@based/ui'
 import RenderComponents from '../RenderComponents'
 import { randomLongText, randomTitle } from './util'
@@ -41,9 +44,8 @@ export default {
   Render: ({ category }) => <RenderComponents grid category={category} />,
   components: [
     {
-      name: 'overlay hooks',
-      category: 'button',
-      Component: Button,
+      name: 'basic overlay',
+      category: 'overlay',
       props: [
         () => {
           const [text, setText] = useState('useOverlay')
@@ -58,6 +60,7 @@ export default {
 
           return (
             <Button
+              color={{ color: 'secondary' }}
               onClick={useOverlay(Title, {
                 style: {
                   marginLeft: 10,
@@ -69,10 +72,17 @@ export default {
                 children: text,
               })}
             >
-              {text}
+              useOverlay
             </Button>
           )
         },
+      ],
+    },
+
+    {
+      name: 'tooltip',
+      category: 'overlay',
+      props: [
         () => {
           const [text, setText] = useState('useTooltip')
           useEffect(() => {
@@ -86,15 +96,23 @@ export default {
 
           return (
             <Button
+              color={{ color: 'foreground' }}
               {...useTooltip(text, {
                 align: 'start',
                 width: 'auto',
               })}
             >
-              {text}
+              tooltip
             </Button>
           )
         },
+      ],
+    },
+
+    {
+      name: 'modal',
+      category: 'overlay',
+      props: [
         () => {
           const [text, setText] = useState('useModal')
           useEffect(() => {
@@ -126,7 +144,7 @@ export default {
                 },
               })}
             >
-              {text}
+              useModal
             </Button>
           )
         },
@@ -160,7 +178,7 @@ export default {
                 },
               })}
             >
-              {text}
+              useModal Variant A
             </Button>
           )
         },
@@ -184,7 +202,7 @@ export default {
                 },
               })}
             >
-              {text}
+              useModal Variant B
             </Button>
           )
         },
@@ -200,7 +218,7 @@ export default {
           }, [])
           return (
             <Button onClick={useModal(<ModalChildren>{text}</ModalChildren>)}>
-              {text}
+              useModal Variant C
             </Button>
           )
         },
@@ -225,7 +243,134 @@ export default {
                 },
               })}
             >
-              {text}
+              useModal Variant D
+            </Button>
+          )
+        },
+      ],
+    },
+
+    {
+      name: 'dropdown',
+      category: 'overlay',
+      props: [
+        () => {
+          return (
+            <Button
+              color={{ color: 'foreground', tone: 2 }}
+              onClick={useDropdown(
+                ['hello', 'bye!', 'snurky pants for you'],
+                (value, index) => {
+                  console.log('-->', value, index)
+                },
+                'hello'
+              )}
+            >
+              Simple dropdown
+            </Button>
+          )
+        },
+        () => {
+          return (
+            <Button
+              color={{ color: 'foreground', tone: 2 }}
+              onClick={useDropdown(
+                ['hello', 'bye!', 'snurky pants for you'],
+                (value, index) => {
+                  console.log('-->', value, index)
+                },
+                undefined,
+                {
+                  multi: true,
+                }
+              )}
+            >
+              Multi dropdown
+            </Button>
+          )
+        },
+        () => {
+          return (
+            <Button
+              color={{ color: 'foreground', tone: 2 }}
+              onClick={useDropdown(
+                [
+                  { label: 'hello', icon: 'skip' },
+                  { label: 'bye', icon: 'smartCopy' },
+                ],
+                (value, index) => {
+                  console.log('-->', value, index)
+                },
+                undefined,
+                { multi: true }
+              )}
+            >
+              Multi icon dropdown
+            </Button>
+          )
+        },
+      ],
+    },
+
+    {
+      name: 'menu',
+      category: 'overlay',
+      props: [
+        () => {
+          return (
+            <Button
+              onClick={useMenu(
+                () => {
+                  const data = {
+                    text: 'x',
+                  }
+
+                  return (
+                    <>
+                      <ContextualMenuItem
+                        label={`Flur`}
+                        onClick={useDropdown(
+                          [
+                            { label: 'hello', icon: 'skip' },
+                            { label: 'bye', icon: 'smartCopy' },
+                          ],
+                          (value, index) => {
+                            console.log('-->', value, index)
+                          },
+                          undefined,
+                          { multi: true }
+                        )}
+                      />
+                      <ContextualMenuItem label="Edit" icon="skip">
+                        <ContextualMenuItem
+                          border
+                          label={`Edit ${data.text}`}
+                          icon="search"
+                          onClick={useModal(<Title>Modal!</Title>)}
+                        />
+                      </ContextualMenuItem>
+                      <ContextualMenuItem border label="Delete" icon="close">
+                        <div style={{ display: 'flex', padding: 20 }}>
+                          <Button
+                            onClick={useDropdown(
+                              ['hello', 'bye!', 'snurky pants for you'],
+                              (value, index) => {
+                                console.log('-->', value, index)
+                              }
+                            )}
+                          >
+                            Remove this
+                          </Button>
+                        </div>
+                        <Text style={{ padding: 35 }}>{randomLongText()}</Text>
+                      </ContextualMenuItem>
+                    </>
+                  )
+                },
+                { width: 500 }
+              )}
+            >
+              Contextual menu
             </Button>
           )
         },

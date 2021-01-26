@@ -81,6 +81,10 @@ export const Button: FunctionComponent<ButtonProps> = ({
     foregroundColor = { color: foregroundColor }
   }
 
+  if (!color.tone) {
+    color.tone = 1
+  }
+
   if (
     isHover &&
     typeof foregroundColor === 'object' &&
@@ -109,7 +113,11 @@ export const Button: FunctionComponent<ButtonProps> = ({
         backgroundColor: useColor({
           color: color.color,
           opacity: color.opacity,
-          tone: isActive ? 3 : isHover ? 2 : 1,
+          tone: isActive
+            ? color.tone + 2
+            : isHover
+            ? color.tone + 1
+            : color.tone,
         }),
         ...style,
       }}

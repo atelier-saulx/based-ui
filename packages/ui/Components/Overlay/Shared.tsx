@@ -10,12 +10,12 @@ import { Position, Align } from '../../hooks/overlay/useOverlayPosition'
 
 export const InnerShared = forwardRef<
   HTMLDivElement,
-  {
+  PropsWithChildren<{
     width: number | string
+    minWidth?: number | string
     style: CSSProperties
-    children?: ReactChildren | ReactChild
-  }
->(({ width, style, children }, ref) => {
+  }>
+>(({ width, style, children, minWidth }, ref) => {
   return (
     <div
       ref={ref}
@@ -23,13 +23,13 @@ export const InnerShared = forwardRef<
         pointerEvents: 'all',
         borderRadius: 2,
         width: width,
+        minWidth: 256,
         background: useColor({ color: 'background' }),
         overflowY: 'auto',
         overflowX: 'hidden',
         paddingTop: 10,
         paddingBottom: 10,
         maxHeight: 'calc(100vh-30px)',
-
         boxShadow: `0px 8px 16px 1px ${useColor({
           color: 'foreground',
           tone: 2,
