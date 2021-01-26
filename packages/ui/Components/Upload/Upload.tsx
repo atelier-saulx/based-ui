@@ -3,19 +3,41 @@ import React, {
   useRef,
   useState,
   useContext,
-  useEffect
+  useEffect,
+  FunctionComponent,
+  EventHandler,
+  SyntheticEvent,
+  CSSProperties,
+  createContext,
 } from 'react'
 import { useColor } from '@based/theme'
 import '../Input/style.css'
-import { Upload, Plus } from '@based/icons'
-import useHover from '../../hooks/useHover'
-import useMultiple from '../../hooks/useMultiple'
-import useDrop from '../../hooks/useDrop'
-import { ProgressContext } from './ProgressContext'
-import uploadFile from './uploadFile'
-import { ProgressIndicator } from '../ProgressIndicator'
+import { Upload, Add } from '@based/icons'
+import useHover from '../../hooks/events/useHover'
+import useMultiple from '../../hooks/events/useMultipleEvents'
+import useDrop from '../../hooks/drag/useDrop'
+import { createProgressContext, ProgressContext } from './ProgressContext'
+import { ProgressIndicator } from '../ProgressIndicator/ProgressIndicator'
+import { uploadFile } from './uploadFile'
 
-const Text = ({ onChange, value, placeholder, focus, blur }) => {
+type GenericEventHandler = EventHandler<SyntheticEvent>
+
+type TextProps = {
+  onChange?: GenericEventHandler
+  value: string
+  placeholder?: string
+  focus?: GenericEventHandler
+  blur?: GenericEventHandler
+  style?: CSSProperties
+}
+const Text: FunctionComponent<TextProps> = ({
+  onChange,
+  value,
+  placeholder,
+  focus,
+  blur,
+  style,
+}) => {
   return (
     <input
       type="text"
@@ -30,64 +52,99 @@ const Text = ({ onChange, value, placeholder, focus, blur }) => {
         fontSize: 16,
         background: 'none',
         fontFamily: 'Inter',
-        color: useColor('default'),
-        fontWeight: 'normal'
+        color: useColor({ color: 'foreground' }),
+        fontWeight: 'normal',
+        ...style,
       }}
     />
   )
 }
 
-export const FileUpload = ({
+type FileUploadProps = {
+  value: string
+  onChange: GenericEventHandler
+  identifier: string
+  placeholder: string
+  progressId: string
+  video: boolean
+  fake?: boolean
+  url: string
+  service: string
+}
+
+export const FileUpload: FunctionComponent<FileUploadProps> = ({
   value = '',
   onChange = () => {},
   identifier,
   placeholder,
   progressId,
-  video = false
+  video = false,
+  url = null,
+  service = null,
+  fake,
 }) => {
   const identifierRef = useRef(identifier)
   const initialValue = useRef(value)
   const [stateValue, setValue] = useState(value)
   const [isFocus, setFocus] = useState(false)
-  const progress = useContext(ProgressContext)
+  const progress = useContext(
+    createContext(createProgressContext({ url, service }))
+  )
   const progressIdReal = useRef((~~(Math.random() * 99999999)).toString(16))
 
   if (!progressId) {
     progressId = progressIdReal.current
   }
 
-  const [inProgress, progressUpdate] = useState()
+  type FileUploadStatus = {
+    step: 'idle' | 'uploading' | 'transcoding'
+    progress: ProgressContext
+  }
+
+  type Status = {
+    progress?: number
+    type?: string
+    name?: string
+    transcoding?: boolean
+    inProgress: boolean
+  }
+  const [status, updateStatus] = useState<Status>(null)
+  const [inProgress, updateInProgress] = useState<boolean>(false)
 
   useEffect(() => {
-    const update = item => {
+    const update = (item) => {
       if (item && item.id === progressId) {
         if (item.isComplete) {
           setValue(item.url)
           onChange(item.url)
-          progressUpdate(false)
+          updateInProgress(false)
         } else if (item.removed) {
-          progressUpdate(false)
+          updateInProgress(false)
         } else {
-          progressUpdate(item)
+          updateStatus(item)
         }
       }
     }
-    progressUpdate(progress.items[progressId])
-    progress.listeners.add(update)
-    return () => {
-      progress.listeners.delete(update)
+    if (progress) {
+      updateStatus(progress.items[progressId])
+      progress.listeners.add(update)
     }
-  }, [progressUpdate, onChange, setValue, progressId])
+    return () => {
+      progress && progress.listeners.delete(update)
+    }
+  }, [updateStatus, onChange, setValue, progressId])
 
   const [drop, isDrop] = useDrop(
-    useCallback(e => {
+    useCallback((e) => {
       uploadFile(
         e.dataTransfer.files,
         progress,
         progressId,
-        video ? 'video' : false
+        video ? 'video' : null,
+        fake
       )
-    })
+      updateInProgress(true)
+    }, [])
   )
 
   const [hover, isHover] = useHover()
@@ -104,7 +161,7 @@ export const FileUpload = ({
   }
 
   const update = useCallback(
-    e => {
+    (e) => {
       const newvalue = e.target.value
       setValue(newvalue)
       onChange(newvalue)
@@ -133,27 +190,36 @@ export const FileUpload = ({
         paddingLeft: isFocus ? 14 : 15,
         paddingRight: isFocus ? 14 : 15,
         border: isDrop
-          ? '2px dashed ' + useColor('primary')
+          ? '2px dashed ' + useColor({ color: 'primary' })
           : isFocus || isHover
-          ? '2px solid ' + useColor('primary')
-          : '1px solid ' + useColor('outline')
+          ? '2px solid ' + useColor({ color: 'primary' })
+          : '1px solid ' + useColor({ color: 'divider' }),
       }}
-      {...useMultiple(hover, drop)}
+      {...useMultiple([hover, drop])}
     >
       {inProgress ? (
-        <ProgressIndicator value={inProgress.progress} />
+        <ProgressIndicator value={status.progress} />
       ) : isDrop ? (
-        <Plus color="primary" />
+        <Add color={{ color: 'primary' }} />
       ) : (
-        <Upload color={isHover ? useColor('primary') : useColor('default')} />
+        <Upload
+          color={isHover ? { color: 'primary' } : { color: 'foreground' }}
+        />
       )}
       <input
         type="file"
         // {...useTooltip('Upload a file')}
-        onChange={useCallback(async e => {
+        onChange={useCallback(async (e) => {
           const files = e.target.files
-          uploadFile(files, progress, progressId, video ? 'video' : undefined)
+          uploadFile(
+            files,
+            progress,
+            progressId,
+            video ? 'video' : undefined,
+            fake
+          )
           e.target.value = ''
+          updateInProgress(true)
         }, [])}
         style={{
           position: 'absolute',
@@ -163,7 +229,7 @@ export const FileUpload = ({
           width: 50,
           height: 50,
           opacity: 0,
-          cursor: 'pointer'
+          cursor: 'pointer',
         }}
       />
       <div
@@ -171,13 +237,13 @@ export const FileUpload = ({
           marginLeft: 15,
           display: 'flex',
           width: '100%',
-          justifyContent: 'space-between'
+          justifyContent: 'space-between',
         }}
       >
         <div
           style={{
             width: '100%',
-            display: 'flex'
+            display: 'flex',
           }}
         >
           <Text
@@ -186,18 +252,16 @@ export const FileUpload = ({
               isDrop
                 ? 'Drop file to upload'
                 : inProgress
-                ? inProgress.type === 'video' && inProgress.transcoding
-                  ? `Transcoding ${
-                      inProgress.name
-                    }... ${~~inProgress.progress}%`
-                  : `Uploading ${inProgress.name}... ${~~inProgress.progress}%`
+                ? status.type === 'video' && status.transcoding
+                  ? `Transcoding ${status.name}... ${~~status.progress}%`
+                  : `Uploading ${status.name}... ${~~status.progress}%`
                 : stateValue
             }
             onChange={update}
             blur={blur}
             focus={focus}
             style={{
-              minWidth: '100%'
+              minWidth: '100%',
             }}
           />
         </div>
