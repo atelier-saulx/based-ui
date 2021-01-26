@@ -106,7 +106,7 @@ const Overlay = () => {
 
 const addOverlay = (
   overlay: ReactNode,
-  onClose: OnClose,
+  onClose: OnClose = () => {},
   options?: OverlayOptions
 ) => {
   overlays.push([overlay, onClose, options])

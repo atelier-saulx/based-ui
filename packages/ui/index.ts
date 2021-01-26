@@ -77,6 +77,7 @@ export {
   removeAllOverlays,
 } from './Components/Overlay'
 
+import useDropdown from './hooks/overlay/useDropdown'
 import useOverlay from './hooks/overlay/useOverlay'
 import useOverlayProps from './hooks/overlay/useOverlayProps'
 import useOverlayPosition from './hooks/overlay/useOverlayPosition'
@@ -97,6 +98,7 @@ export {
   useTooltip,
   useThrottledCallback,
   useModal,
+  useDropdown,
 }
 
 export { Text } from './Components/Text'

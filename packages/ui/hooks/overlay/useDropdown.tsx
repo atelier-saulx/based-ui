@@ -11,24 +11,27 @@ export type SelectFn = (
 
 // make multi a bit nicer e.g. when you pass value as an array it means multi!
 
+// dont make the handler
+
 export default (
   selectOptions: (string | number)[],
   value: (string | number) | (string | number)[],
-  handler: (e: SyntheticEvent | Event) => SelectFn,
+  select: SelectFn,
   props: PositionProps & { multi?: boolean } = {}
 ): ((
   e: Event | SyntheticEvent,
   selectionProps?: PropsWithChildren<any>
 ) => void) => {
-  const ctx = createOverlayContextRef(props)
-
-  const multi = props.multi
+  const ctx = createOverlayContextRef({
+    value,
+    items: selectOptions,
+    ...props
+  })
 
   return useCallback(
     (e, extraProps) => {
       e.preventDefault()
       e.stopPropagation()
-      const select = handler(e)
       const dropdown = (
         <OverlayContext.Provider value={ctx}>
           <Dropdown
@@ -36,7 +39,7 @@ export default (
             target={e.currentTarget}
             items={selectOptions}
             onChange={(v, index) => {
-              if (multi && Array.isArray(value)) {
+              if (ctx.current.props.multi && Array.isArray(value)) {
                 const index = value.indexOf(v)
                 if (index !== -1) {
                   value.splice(index, 1)
@@ -54,11 +57,9 @@ export default (
           />
         </OverlayContext.Provider>
       )
-      addOverlay(dropdown, () => {
-        select()
-      })
+      addOverlay(dropdown)
       return true
     },
-    [value]
+    [ctx]
   )
 }

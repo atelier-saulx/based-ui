@@ -62,7 +62,7 @@ export type DropdownProps = {
   value?: (string | number) | (string | number)[]
 }
 
-export const Dropdown = (initialProps: PositionPropsFn & DropdownProps) => {
+export const Dropdown: FunctionComponent<PositionPropsFn & DropdownProps> = (initialProps) => {
   const props = useOverlayProps<PositionPropsFn & DropdownProps>(initialProps)
   const { align, value, onChange, multi, items } = props
   const [elementRef, position] = useOverlayPosition(props)

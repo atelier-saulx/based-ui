@@ -7,6 +7,7 @@ import {
   useModal,
   Text,
   useContextualMenu,
+  useDropdown,
 } from '@based/ui'
 import RenderComponents from '../RenderComponents'
 import { randomLongText, randomTitle } from './util'
@@ -58,6 +59,7 @@ export default {
 
           return (
             <Button
+              color={{ color: 'secondary' }}
               onClick={useOverlay(Title, {
                 style: {
                   marginLeft: 10,
@@ -86,6 +88,7 @@ export default {
 
           return (
             <Button
+              color={{ color: 'foreground' }}
               {...useTooltip(text, {
                 align: 'start',
                 width: 'auto',
@@ -226,6 +229,18 @@ export default {
               })}
             >
               {text}
+            </Button>
+          )
+        },
+        () => {
+          return (
+            <Button
+              color={{ color: 'primary', tone: 2 }}
+              onClick={useDropdown(['hello', 'bye!'], ['hello'], (value, index) => {
+                console.log('-->', value, index)
+              })}
+            >
+              Simple dropdown
             </Button>
           )
         },
