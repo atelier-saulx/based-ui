@@ -146,7 +146,7 @@ export const Input: FunctionComponent<InputProps> = ({
         paddingRight: isFocus ? 11 : 12,
         display: 'flex',
         alignItems: 'center',
-        borderRadius: 8,
+        borderRadius: '4px',
         flexGrow: 1,
         background: useColor({
           color: color.color,
