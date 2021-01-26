@@ -2,8 +2,8 @@ import React, {
   useCallback,
   useContext,
   PropsWithChildren,
+  useEffect,
   FunctionComponent,
-  EventHandler,
   SyntheticEvent,
   CSSProperties,
 } from 'react'
@@ -60,7 +60,7 @@ const Next: FunctionComponent<NextProps> = ({ label, children }) => {
           singleLine
           noSelect
           style={{
-            marginLeft: 14,
+            marginLeft: 4,
           }}
         >
           {label}
@@ -105,8 +105,6 @@ export const ContextualMenuItem: FunctionComponent<ContextualMenuItemProps> = ({
           removeOverlay()
         }
       } else {
-        console.log('CONTENT')
-
         ctx.current.merge({
           content: <Next label={label}>{children}</Next>,
         })
@@ -136,8 +134,8 @@ export const ContextualMenuItem: FunctionComponent<ContextualMenuItemProps> = ({
           display: 'flex',
           paddingTop: 5,
           paddingBottom: 5,
-          paddingLeft: 15,
-          paddingRight: 15,
+          paddingLeft: 8,
+          paddingRight: 8,
           width: '100%',
           justifyContent: 'space-between',
           alignItems: 'center',
@@ -158,8 +156,8 @@ export const ContextualMenuItem: FunctionComponent<ContextualMenuItemProps> = ({
           ) : null}
           <Text
             style={{
-              marginLeft: !IconComponent ? 14 + 24 : 14,
-              marginRight: 15,
+              marginLeft: !IconComponent ? 8 + 24 : 8,
+              marginRight: 8,
             }}
             singleLine
             noSelect
@@ -182,7 +180,7 @@ export const Menu: FunctionComponent<GenericOverlayProps> = (initialProps) => {
     align,
     target,
     selectTarget,
-    width = () => 300,
+    width = 256,
     y,
     x,
     maxY = (y, elem, _align, rect) => {
@@ -210,13 +208,23 @@ export const Menu: FunctionComponent<GenericOverlayProps> = (initialProps) => {
     maxY,
     maxX,
   })
+  const ctx = useContext(OverlayContext)
+
+  useEffect(() => {
+    const x = () => {
+      resize()
+      setTimeout(() => resize, 200)
+    }
+    ctx.current.listeners.add(x)
+    return () => {
+      ctx.current.listeners.delete(x)
+    }
+  }, [ctx, resize])
 
   let content = props.content
 
-  console.log('CONTENT', content)
-
   return (
-    <Shared width={300} ref={elementRef} position={position} align={align}>
+    <Shared ref={elementRef} position={position} align={align}>
       <div
         style={{
           display: 'flex',
@@ -228,8 +236,6 @@ export const Menu: FunctionComponent<GenericOverlayProps> = (initialProps) => {
       >
         <div
           style={{
-            // opacity: content ? 0 : 1,
-            // transition: 'opacity 0.4s',
             minWidth: '100%',
           }}
         >

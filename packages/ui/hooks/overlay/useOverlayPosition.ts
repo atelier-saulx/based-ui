@@ -69,14 +69,18 @@ const maxYCalculation: MaxMinCalculation = (y, elem) => {
 }
 
 const maxXCalculation: MaxMinCalculation = (x, elem, align, _rect, pos) => {
+  let w = elem.width
+  if (typeof pos.width === 'number') {
+    w = pos.width
+  }
   const maxW = global.innerWidth - 30
-  if (x + elem.width > maxW) {
-    const over = x + elem.width - maxW
+  if (x + w > maxW) {
+    const over = x + w - maxW
     return x - over + 7.5
   }
   delete pos.correctedX
   if (align === 'center') {
-    const diff = pos.containerWidth - elem.width
+    const diff = pos.containerWidth - w
     if (x + diff < 15) {
       pos.correctedX = diff
       return (-1 * diff) / 2 + 15

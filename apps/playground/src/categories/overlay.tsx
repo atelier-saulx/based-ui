@@ -72,7 +72,7 @@ export default {
                 children: text,
               })}
             >
-              {text}
+              useOverlay
             </Button>
           )
         },
@@ -102,7 +102,7 @@ export default {
                 width: 'auto',
               })}
             >
-              {text}
+              tooltip
             </Button>
           )
         },
@@ -144,7 +144,7 @@ export default {
                 },
               })}
             >
-              {text}
+              useModal
             </Button>
           )
         },
@@ -178,7 +178,7 @@ export default {
                 },
               })}
             >
-              {text}
+              useModal Variant A
             </Button>
           )
         },
@@ -202,7 +202,7 @@ export default {
                 },
               })}
             >
-              {text}
+              useModal Variant B
             </Button>
           )
         },
@@ -218,7 +218,7 @@ export default {
           }, [])
           return (
             <Button onClick={useModal(<ModalChildren>{text}</ModalChildren>)}>
-              {text}
+              useModal Variant C
             </Button>
           )
         },
@@ -243,7 +243,7 @@ export default {
                 },
               })}
             >
-              {text}
+              useModal Variant D
             </Button>
           )
         },
@@ -319,52 +319,56 @@ export default {
         () => {
           return (
             <Button
-              onClick={useMenu(() => {
-                const data = {
-                  text: 'x',
-                }
+              onClick={useMenu(
+                () => {
+                  const data = {
+                    text: 'x',
+                  }
 
-                return (
-                  <>
-                    <ContextualMenuItem
-                      label={`Flur`}
-                      onClick={useDropdown(
-                        [
-                          { label: 'hello', icon: 'skip' },
-                          { label: 'bye', icon: 'smartCopy' },
-                        ],
-                        (value, index) => {
-                          console.log('-->', value, index)
-                        },
-                        undefined,
-                        { multi: true }
-                      )}
-                    />
-                    <ContextualMenuItem label="Edit" icon="skip">
+                  return (
+                    <>
                       <ContextualMenuItem
-                        border
-                        label={`Edit ${data.text}`}
-                        icon="search"
-                        onClick={useModal(<Title>Modal!</Title>)}
+                        label={`Flur`}
+                        onClick={useDropdown(
+                          [
+                            { label: 'hello', icon: 'skip' },
+                            { label: 'bye', icon: 'smartCopy' },
+                          ],
+                          (value, index) => {
+                            console.log('-->', value, index)
+                          },
+                          undefined,
+                          { multi: true }
+                        )}
                       />
-                    </ContextualMenuItem>
-                    <ContextualMenuItem border label="Delete" icon="close">
-                      <div style={{ display: 'flex', padding: 20 }}>
-                        <Button
-                          onClick={useDropdown(
-                            ['hello', 'bye!', 'snurky pants for you'],
-                            (value, index) => {
-                              console.log('-->', value, index)
-                            }
-                          )}
-                        >
-                          Remove this
-                        </Button>
-                      </div>
-                    </ContextualMenuItem>
-                  </>
-                )
-              })}
+                      <ContextualMenuItem label="Edit" icon="skip">
+                        <ContextualMenuItem
+                          border
+                          label={`Edit ${data.text}`}
+                          icon="search"
+                          onClick={useModal(<Title>Modal!</Title>)}
+                        />
+                      </ContextualMenuItem>
+                      <ContextualMenuItem border label="Delete" icon="close">
+                        <div style={{ display: 'flex', padding: 20 }}>
+                          <Button
+                            onClick={useDropdown(
+                              ['hello', 'bye!', 'snurky pants for you'],
+                              (value, index) => {
+                                console.log('-->', value, index)
+                              }
+                            )}
+                          >
+                            Remove this
+                          </Button>
+                        </div>
+                        <Text style={{ padding: 35 }}>{randomLongText()}</Text>
+                      </ContextualMenuItem>
+                    </>
+                  )
+                },
+                { width: 500 }
+              )}
             >
               Contextual menu
             </Button>

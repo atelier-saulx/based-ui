@@ -52,8 +52,8 @@ const Option: FunctionComponent<OptionProps> = ({
         width: '100%',
         paddingTop: 5,
         paddingBottom: 5,
-        paddingLeft: 15,
-        paddingRight: 15,
+        paddingLeft: Icon ? 8 : 16,
+        paddingRight: 8,
         display: 'flex',
         cursor: 'pointer',
         backgroundColor: isHover
@@ -64,7 +64,7 @@ const Option: FunctionComponent<OptionProps> = ({
         onChange(value, index)
       }}
     >
-      {Icon ? <Icon style={{ marginRight: 15 }} /> : null}
+      {Icon ? <Icon style={{ marginRight: 8 }} /> : null}
       <div
         style={{
           width: '100%',
@@ -101,7 +101,7 @@ const Option: FunctionComponent<OptionProps> = ({
           </Text>
         )}
         <Checked
-          style={{ opacity: isActive ? 1 : 0, marginLeft: 15 }}
+          style={{ opacity: isActive ? 1 : 0, marginLeft: 8 }}
           color={{ color: isActive ? 'primary' : 'foreground' }}
         />
       </div>
