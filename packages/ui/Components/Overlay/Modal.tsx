@@ -6,7 +6,7 @@ import React, {
 } from 'react'
 import { useColor, Color } from '@based/theme'
 import { Text } from '../Text'
-import { Close } from '@based/icons'
+import { Close, IconName } from '@based/icons'
 import { Button } from '../Button'
 import useOverlayProps from '../../hooks/overlay/useOverlayProps'
 import { OnClose } from './'
@@ -16,7 +16,7 @@ export type ModalHeaderProps = PropsWithChildren<{
   closeButton?: boolean
   title?: string
   onClose?: OnClose
-  icon?: string
+  icon?: Color
   framed?: boolean
 }>
 
@@ -26,7 +26,7 @@ export type ModalProps = {
   confirmButton?: {
     label?: string
     color?: Color
-    icon?: string // replace with iconName!
+    icon?: IconName
     onConfirm: EventHandler<SyntheticEvent>
   }
 }
@@ -124,7 +124,7 @@ export const Modal: FunctionComponent<ModalProps> = (initialProps) => {
           })}`,
         }}
       >
-        {header ? <ModalHeader {...header} /> : null}
+        {header ? <ModalHeader onClose={onClose} {...header} /> : null}
         <div
           style={{
             minHeight: 180,

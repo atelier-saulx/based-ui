@@ -255,12 +255,63 @@ const icons = {
   WelcomeScreen,
 }
 
-export type IconName = keyof typeof icons
+export type IconName =
+  | keyof typeof icons
+  | 'add'
+  | 'checked'
+  | 'chevronLeft'
+  | 'chevronRight'
+  | 'close'
+  | 'collapse'
+  | 'custom'
+  | 'dashboard'
+  | 'date'
+  | 'delete'
+  | 'desktop'
+  | 'down'
+  | 'downThick'
+  | 'drag'
+  | 'duplicate'
+  | 'edit'
+  | 'editName'
+  | 'email'
+  | 'emptyLine'
+  | 'expand'
+  | 'graph'
+  | 'hide'
+  | 'lock'
+  | 'logic'
+  | 'mobile'
+  | 'more'
+  | 'multipleChoice'
+  | 'newFlow'
+  | 'newTab'
+  | 'newUser'
+  | 'openQuestion'
+  | 'overview'
+  | 'register'
+  | 'reset'
+  | 'scaleQuestion'
+  | 'search'
+  | 'settings'
+  | 'show'
+  | 'shows'
+  | 'skip'
+  | 'smartCopy'
+  | 'tablet'
+  | 'thankYou'
+  | 'time'
+  | 'toggleOff'
+  | 'toggleOn'
+  | 'unlock'
+  | 'upload'
+  | 'video'
+  | 'waitingScreen'
+  | 'welcomeScreen'
 
 const iconFromString = (str: IconName): null | FunctionComponent<IconProps> => {
   if (str && typeof str === 'string') {
-    // str = str[0].toUpperCase() + str.slice(1)  // should not be needed with IconName type
-    return icons[str]
+    return icons[str[0].toUpperCase() + str.slice(1)]
   } else {
     return null
   }
