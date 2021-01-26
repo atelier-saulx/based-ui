@@ -23,6 +23,7 @@ import useDropdown from '../../hooks/overlay/useDropdown'
 import './style.css'
 import { DropdownOptions } from '../Overlay/Dropdown'
 import useHover from '../../hooks/events/useHover'
+import { ProgressIndicator } from '../ProgressIndicator/ProgressIndicator'
 
 type InputProps = {
   style?: CSSProperties
@@ -39,6 +40,7 @@ type InputProps = {
   value?: string | number
   options?: DropdownOptions
   color?: Color
+  progress?: number
 }
 
 export const Input: FunctionComponent<InputProps> = ({
@@ -56,6 +58,7 @@ export const Input: FunctionComponent<InputProps> = ({
   errorText,
   helperText,
   identifier,
+  progress,
 }) => {
   const identifierRef = useRef(identifier)
   const initialValue = useRef(value)
@@ -168,7 +171,11 @@ export const Input: FunctionComponent<InputProps> = ({
         ...style,
       }}
     >
-      {Icon ? (
+      {progress !== null ? (
+        <div style={{ marginRight: 9 }}>
+          <ProgressIndicator value={progress} />
+        </div>
+      ) : Icon ? (
         <>
           <div
             style={{
