@@ -51,9 +51,27 @@ const Option: FunctionComponent<OptionProps> = ({
         color={{ color: isActive ? 'primary' : 'foreground' }}
       />
       {isActive ? (
-        <Text singleLine noSelect weight="semibold">
-          {value}
-        </Text>
+        <div>
+          <Text
+            singleLine
+            noSelect
+            weight="semibold"
+            style={{
+              position: 'absolute',
+            }}
+          >
+            {value}
+          </Text>
+          <Text
+            singleLine
+            noSelect
+            style={{
+              opacity: 0,
+            }}
+          >
+            {value}
+          </Text>
+        </div>
       ) : (
         <Text singleLine noSelect>
           {value}

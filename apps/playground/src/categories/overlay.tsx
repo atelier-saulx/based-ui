@@ -42,8 +42,8 @@ export default {
   Render: ({ category }) => <RenderComponents grid category={category} />,
   components: [
     {
-      name: 'overlay hooks',
-      category: 'button',
+      name: 'basic overlay',
+      category: 'overlay',
       Component: Button,
       props: [
         () => {
@@ -75,6 +75,14 @@ export default {
             </Button>
           )
         },
+      ],
+    },
+
+    {
+      name: 'tooltip',
+      category: 'overlay',
+      Component: Button,
+      props: [
         () => {
           const [text, setText] = useState('useTooltip')
           useEffect(() => {
@@ -98,6 +106,14 @@ export default {
             </Button>
           )
         },
+      ],
+    },
+
+    {
+      name: 'modal',
+      category: 'overlay',
+      Component: Button,
+      props: [
         () => {
           const [text, setText] = useState('useModal')
           useEffect(() => {
@@ -232,15 +248,28 @@ export default {
             </Button>
           )
         },
+      ],
+    },
+
+    {
+      name: 'dropdown',
+      category: 'overlay',
+      Component: Button,
+      props: [
         () => {
           return (
             <Button
-              color={{ color: 'primary', tone: 2 }}
-              onClick={useDropdown(['hello', 'bye!', 'snurky pants for you'], undefined, (value, index) => {
-                console.log('-->', value, index)
-              }, {
-                multi: true
-              })}
+              color={{ color: 'primary', opacity: 0.5 }}
+              onClick={useDropdown(
+                ['hello', 'bye!', 'snurky pants for you'],
+                undefined,
+                (value, index) => {
+                  console.log('-->', value, index)
+                },
+                {
+                  multi: true,
+                }
+              )}
             >
               Simple dropdown
             </Button>
