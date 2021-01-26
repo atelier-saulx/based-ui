@@ -68,6 +68,8 @@ type FileUploadProps = {
   progressId: string
   video: boolean
   fake?: boolean
+  url: string
+  service: string
 }
 
 export const FileUpload: FunctionComponent<FileUploadProps> = ({
@@ -77,6 +79,8 @@ export const FileUpload: FunctionComponent<FileUploadProps> = ({
   placeholder,
   progressId,
   video = false,
+  url = null,
+  service = null,
   fake,
 }) => {
   const identifierRef = useRef(identifier)
@@ -84,7 +88,7 @@ export const FileUpload: FunctionComponent<FileUploadProps> = ({
   const [stateValue, setValue] = useState(value)
   const [isFocus, setFocus] = useState(false)
   const progress = useContext(
-    createContext(createProgressContext({ url: null, service: null }))
+    createContext(createProgressContext({ url, service }))
   )
   const progressIdReal = useRef((~~(Math.random() * 99999999)).toString(16))
 
@@ -97,39 +101,38 @@ export const FileUpload: FunctionComponent<FileUploadProps> = ({
     progress: ProgressContext
   }
 
-  type InProgress =
-    | {
-        progress: number
-        type: string
-        name: string
-        transcoding: boolean
-      }
-    | false
-  const [inProgress, progressUpdate] = useState<InProgress>()
+  type Status = {
+    progress?: number
+    type?: string
+    name?: string
+    transcoding?: boolean
+    inProgress: boolean
+  }
+  const [status, updateStatus] = useState<Status>(null)
+  const [inProgress, updateInProgress] = useState<boolean>(false)
 
   useEffect(() => {
     const update = (item) => {
-      console.log('Upadte', item.id, progressId, item)
       if (item && item.id === progressId) {
         if (item.isComplete) {
           setValue(item.url)
           onChange(item.url)
-          progressUpdate(false)
+          updateInProgress(false)
         } else if (item.removed) {
-          progressUpdate(false)
+          updateInProgress(false)
         } else {
-          progressUpdate(item)
+          updateStatus(item)
         }
       }
     }
     if (progress) {
-      progressUpdate(progress.items[progressId])
+      updateStatus(progress.items[progressId])
       progress.listeners.add(update)
     }
     return () => {
       progress && progress.listeners.delete(update)
     }
-  }, [progressUpdate, onChange, setValue, progressId])
+  }, [updateStatus, onChange, setValue, progressId])
 
   const [drop, isDrop] = useDrop(
     useCallback((e) => {
@@ -140,6 +143,7 @@ export const FileUpload: FunctionComponent<FileUploadProps> = ({
         video ? 'video' : null,
         fake
       )
+      updateInProgress(true)
     }, [])
   )
 
@@ -194,7 +198,7 @@ export const FileUpload: FunctionComponent<FileUploadProps> = ({
       {...useMultiple([hover, drop])}
     >
       {inProgress ? (
-        <ProgressIndicator value={inProgress.progress} />
+        <ProgressIndicator value={status.progress} />
       ) : isDrop ? (
         <Add color={{ color: 'primary' }} />
       ) : (
@@ -215,6 +219,7 @@ export const FileUpload: FunctionComponent<FileUploadProps> = ({
             fake
           )
           e.target.value = ''
+          updateInProgress(true)
         }, [])}
         style={{
           position: 'absolute',
@@ -247,11 +252,9 @@ export const FileUpload: FunctionComponent<FileUploadProps> = ({
               isDrop
                 ? 'Drop file to upload'
                 : inProgress
-                ? inProgress.type === 'video' && inProgress.transcoding
-                  ? `Transcoding ${
-                      inProgress.name
-                    }... ${~~inProgress.progress}%`
-                  : `Uploading ${inProgress.name}... ${~~inProgress.progress}%`
+                ? status.type === 'video' && status.transcoding
+                  ? `Transcoding ${status.name}... ${~~status.progress}%`
+                  : `Uploading ${status.name}... ${~~status.progress}%`
                 : stateValue
             }
             onChange={update}

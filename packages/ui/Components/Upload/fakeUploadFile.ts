@@ -1,3 +1,4 @@
+import getService from '@saulx/get-service'
 import {ProgressContext, ProgressContextItem} from "./ProgressContext"
 
 // TODO: This should be moved to the actual uploadFileScript
@@ -29,6 +30,7 @@ export const uploadFile:UploadFileScript = async (files, progressContext, progre
 
   if (files.length) {
     try {
+        const xhr = new global.XMLHttpRequest()
       if (progressContext.items[progressId]) {
         if (progressContext.items[progressId].gettingRemoved) {
           clearTimeout(progressContext.items[progressId].gettingRemoved)
@@ -43,7 +45,7 @@ export const uploadFile:UploadFileScript = async (files, progressContext, progre
       const file = files[0]
 
       const item:ProgressContextItem = {
-        xhr: null,
+        xhr: fake ? null : xhr,
         size: file.size,
         id: progressId,
         name: file.name,
@@ -60,6 +62,7 @@ export const uploadFile:UploadFileScript = async (files, progressContext, progre
         const fakeProgress = () => {
           item.progress = Math.min((item.progress || 0) + (Math.ceil(Math.random() * (10 - 4) + 4)), 100)
           if (item.progress >= 100) {
+            item.url = 'http://fake.'+ item.name
             clearInterval(fakeProgressInterval)
             item.isComplete = true
               progressContext.inProgress = false
@@ -73,89 +76,90 @@ export const uploadFile:UploadFileScript = async (files, progressContext, progre
         }
         fakeProgressInterval = setInterval(fakeProgress, 500)
       } else {
-        //
-        // xhr.upload.onprogress = (p) => {
-        //   const item = progress.items[progressId]
-        //   item.progress =
-        //     (100 * (p.loaded || p.position)) / (p.totalSize || p.total)
-        //   progress.listeners.forEach((update) => update({ ...item }))
-        // }
-        //
-        // xhr.onerror = (p) => {
-        //   console.error('error', p)
-        // }
-        //
-        // xhr.timeout = 1e3 * 60 * 60 * 24
-        //
-        // xhr.onabort = (p) => {
-        //   console.error('abort', p)
-        // }
-        //
-        // xhr.ontimeout = (p) => {
-        //   console.error('on timeout', p)
-        // }
-        //
-        // xhr.onload = () => {
-        //   const item = progress.items[progressId]
-        //   item.isComplete = true
-        //   item.progress = 100
-        //
-        //   let res = {}
-        //   try {
-        //     res = JSON.parse(xhr.response)
-        //   } catch (err) {
-        //     console.error('something wrong with file upload', err)
-        //   }
-        //
-        //   const checkStatus = () => {
-        //     item.statusXhr = new global.XMLHttpRequest()
-        //     item.statusXhr.onload = () => {
-        //       const status = JSON.parse(item.statusXhr.response)
-        //       item.statusXhr.abort()
-        //       delete item.statusXhr
-        //
-        //       if (status.progress < 100 || status.transcoding === true) {
-        //         item.isComplete = false
-        //         item.transcoding = true
-        //         item.progress = status.progress
-        //         progress.listeners.forEach((update) => update({ ...item }))
-        //         setTimeout(checkStatus, 1e3)
-        //       } else {
-        //         item.url = status.url
-        //         item.isComplete = true
-        //
-        //         progress.listeners.forEach((update) => update({ ...item }))
-        //         clearTimeout(item.gettingRemoved)
-        //         xhr.abort()
-        //         delete item.xhr
-        //         item.gettingRemoved = setTimeout(() => {
-        //           progress.inProgress = false
-        //           if (Object.keys(progress.items).length === 1) {
-        //             item.gettingRemoved = setTimeout(() => {
-        //               delete progress.items[progressId].gettingRemoved
-        //               delete progress.items[progressId]
-        //               progress.listeners.forEach((update) =>
-        //                 update({ progressId, removed: true, progress: 100 })
-        //               )
-        //             }, 1e3)
-        //             progress.listeners.forEach((update) =>
-        //               update({ progressId, removed: true, progress: 100 })
-        //             )
-        //           } else {
-        //             delete progress.items[progressId].gettingRemoved
-        //             delete progress.items[progressId]
-        //             progress.listeners.forEach((update) =>
-        //               update({ progressId, removed: true, progress: 100 })
-        //             )
-        //           }
-        //         }, 1e3)
-        //       }
-        //     }
-        //     item.statusXhr.open('GET', url + '/' + res.key)
-        //     item.statusXhr.send()
-        //   }
-        //   checkStatus()
-        // }
+
+        xhr.upload.onprogress = (p:ProgressEvent) => {
+          const item = progressContext.items[progressId]
+          // @ts-ignore
+          item.progress = (100 * (p.loaded || p.position)) / (p.totalSize || p.total)
+          progressContext.listeners.forEach((update) => update({ ...item }))
+        }
+
+        xhr.onerror = (p) => {
+          console.error('error', p)
+        }
+
+        xhr.timeout = 1e3 * 60 * 60 * 24
+
+        xhr.onabort = (p) => {
+          console.error('abort', p)
+        }
+
+        xhr.ontimeout = (p) => {
+          console.error('on timeout', p)
+        }
+
+        xhr.onload = () => {
+          const item = progressContext.items[progressId]
+          item.isComplete = true
+          item.progress = 100
+
+          // TODO: res needs type from service
+          let res:any = {}
+          try {
+            res = JSON.parse(xhr.response)
+          } catch (err) {
+            console.error('something wrong with file upload', err)
+          }
+
+          const checkStatus = () => {
+            item.statusXhr = new global.XMLHttpRequest()
+            item.statusXhr.onload = () => {
+              const status = JSON.parse(item.statusXhr.response)
+              item.statusXhr.abort()
+              delete item.statusXhr
+
+              if (status.progress < 100 || status.transcoding === true) {
+                item.isComplete = false
+                item.transcoding = true
+                item.progress = status.progress
+                progressContext.listeners.forEach((update) => update({ ...item }))
+                setTimeout(checkStatus, 1e3)
+              } else {
+                item.url = status.url
+                item.isComplete = true
+
+                progressContext.listeners.forEach((update) => update({ ...item }))
+                clearTimeout(item.gettingRemoved)
+                xhr.abort()
+                delete item.xhr
+                item.gettingRemoved = setTimeout(() => {
+                  progressContext.inProgress = false
+                  if (Object.keys(progressContext.items).length === 1) {
+                    item.gettingRemoved = setTimeout(() => {
+                      delete progressContext.items[progressId].gettingRemoved
+                      delete progressContext.items[progressId]
+                      progressContext.listeners.forEach((update) =>
+                        update({ progressId, removed: true, progress: 100 })
+                      )
+                    }, 1e3)
+                    progressContext.listeners.forEach((update) =>
+                      update({ progressId, removed: true, progress: 100 })
+                    )
+                  } else {
+                    delete progressContext.items[progressId].gettingRemoved
+                    delete progressContext.items[progressId]
+                    progressContext.listeners.forEach((update) =>
+                      update({ progressId, removed: true, progress: 100 })
+                    )
+                  }
+                }, 1e3)
+              }
+            }
+            item.statusXhr.open('GET', url + '/' + res.key)
+            item.statusXhr.send()
+          }
+          checkStatus()
+        }
       }
 
       item.size = (<File>body.get('file')).size
@@ -167,24 +171,26 @@ export const uploadFile:UploadFileScript = async (files, progressContext, progre
 
       if (progressContext.service) {
         console.error("Implement get service")
-        // url = (
-        //   await getService({
-        //     serviceName: progress.service,
-        //     registryUrl: global.BREG.map((v) =>
-        //       v.indexOf('http') === 0
-        //         ? v
-        //         : 'https://based-service-registry-' + v + '.based.io'
-        //     ),
-        //   })
-        // ).url
+        url = (
+          await getService({
+            serviceName: progressContext.service,
+            // TODO: BREG needs to be added to global type
+            // @ts-ignore
+            registryUrl: global.BREG.map((v) =>
+              v.indexOf('http') === 0
+                ? v
+                : 'https://based-service-registry-' + v + '.based.io'
+            ),
+          })
+        ).url
       } else {
         url = progressContext.url
       }
 
       if (!fake) {
-      // xhr.open('POST', url)
-      // xhr.setRequestHeader('type', type)
-      // xhr.send(body)
+        xhr.open('POST', url)
+        xhr.setRequestHeader('type', type)
+        xhr.send(body)
       }
     } catch (err) {
       /* handle error */
