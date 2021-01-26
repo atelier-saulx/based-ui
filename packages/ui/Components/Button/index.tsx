@@ -9,7 +9,7 @@ import React, {
 } from 'react'
 import { useColor, Color } from '@based/theme'
 import { getValue } from '@based/i18n'
-import { iconFromString } from '@based/icons'
+import { iconFromString, IconName } from '@based/icons'
 import useHover from '../../hooks/events/useHover'
 import { Text } from '../Text'
 import { useKeyUp, Key } from '../../hooks/events/useKeyboard'
@@ -21,7 +21,7 @@ type ButtonProps = {
   color?: Color
   foregroundColor?: Color
   actionKeys?: Key[] // adds a key event
-  icon?: string
+  icon?: IconName
   onClick?: GenericEventHandler
   onHover?: GenericEventHandler
   onMouseEnter?: GenericEventHandler

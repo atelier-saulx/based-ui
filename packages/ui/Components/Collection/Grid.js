@@ -12,7 +12,7 @@ import useDrag from '../../hooks/useDrag'
 import {
   useSelect,
   useClick,
-  SelectableCollection
+  SelectableCollection,
 } from '../../hooks/useSelect'
 import useMultiple from '../../hooks/useMultiple'
 import useDragScroll from '../../hooks/useDragScroll'
@@ -43,13 +43,13 @@ const Image = ({ data, field }) => {
               0.2
             )} 100%)`,
         backgroundSize: 'cover',
-        backgroundPosition: 'center'
+        backgroundPosition: 'center',
       }}
     />
   )
 }
 
-const GridItem = props => {
+const GridItem = (props) => {
   const { columnCount } = useContext(GridContext)
   const { columnIndex, rowIndex, data } = props
   const index = columnIndex + rowIndex * columnCount
@@ -70,7 +70,7 @@ const GridItemWrapped = ({ style, columnIndex, rowIndex, data }) => {
     contextualMenu,
     width,
     draggable,
-    onOptions
+    onOptions,
   } = useContext(GridContext)
   const index = columnIndex + rowIndex * columnCount
   const itemData = data[index]
@@ -86,7 +86,7 @@ const GridItemWrapped = ({ style, columnIndex, rowIndex, data }) => {
       ref={ref}
       style={{
         padding: 8,
-        ...style
+        ...style,
       }}
     >
       <div
@@ -102,7 +102,7 @@ const GridItemWrapped = ({ style, columnIndex, rowIndex, data }) => {
             (isHover && !isSelected
               ? useColor('default', 0.6)
               : useColor(isSelected || isHover ? 'default' : 'outline')),
-          borderRadius: 8
+          borderRadius: 8,
         }}
         {...useMultiple(
           hover,
@@ -111,16 +111,16 @@ const GridItemWrapped = ({ style, columnIndex, rowIndex, data }) => {
           onClick
             ? {
                 onClick: useClick(
-                  e => {
+                  (e) => {
                     onClick(e, { data: itemData, index })
                   },
                   [onClick, itemData, index]
-                )
+                ),
               }
             : undefined,
           contextualMenu
             ? useOptions(
-                useCallback(e => {
+                useCallback((e) => {
                   onOptions(e, { data: itemData, index })
                 }),
                 [onOptions, itemData, index]
@@ -135,7 +135,7 @@ const GridItemWrapped = ({ style, columnIndex, rowIndex, data }) => {
               display: 'flex',
               position: 'relative',
               justifyContent: 'center',
-              alignItems: 'center'
+              alignItems: 'center',
             }}
           >
             {fields.graphic.type === 'graphic' ? (
@@ -154,7 +154,7 @@ const GridItemWrapped = ({ style, columnIndex, rowIndex, data }) => {
                   fields.graphic.type === 'image' ? 'secondary' : 'default'
                 }
                 onClick={useCallback(
-                  e => onOptions(e, { data: itemData, index }),
+                  (e) => onOptions(e, { data: itemData, index }),
                   [itemData]
                 )}
                 style={{
@@ -162,7 +162,7 @@ const GridItemWrapped = ({ style, columnIndex, rowIndex, data }) => {
                   transition: 'opacity 0.15s',
                   position: 'absolute',
                   top: 10,
-                  right: 15
+                  right: 15,
                 }}
               />
             ) : null}
@@ -172,7 +172,7 @@ const GridItemWrapped = ({ style, columnIndex, rowIndex, data }) => {
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'flex-end',
-              padding: 16
+              padding: 16,
             }}
           >
             <Body>{selectData(fields.title, itemData)}</Body>
@@ -197,9 +197,9 @@ export const Grid = ({
   fields = {
     title: 'title',
     graphic: {
-      type: 'graphic'
-    }
-  }
+      type: 'graphic',
+    },
+  },
 }) => {
   return (
     <div
@@ -208,7 +208,7 @@ export const Grid = ({
         height: '100%',
         marginLeft: -8,
         marginRight: -8,
-        borderRadius: 8
+        borderRadius: 8,
       }}
     >
       <AutoSizer>
@@ -230,7 +230,7 @@ export const Grid = ({
             width: w - 16,
             height: h - 16,
             // Menu,
-            columnCount
+            columnCount,
           }
           return (
             <SelectableCollection data={data}>

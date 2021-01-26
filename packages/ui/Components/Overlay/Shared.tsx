@@ -1,6 +1,7 @@
 import React, {
   CSSProperties,
   forwardRef,
+  PropsWithChildren,
   ReactChild,
   ReactChildren,
 } from 'react'
@@ -42,13 +43,12 @@ export const InnerShared = forwardRef<
   )
 })
 
-export type SharedOverlayProps = {
+export type SharedOverlayProps = PropsWithChildren<{
   width?: number | string
   style?: CSSProperties
   position?: Position
   align?: Align
-  children?: ReactChildren | ReactChild
-}
+}>
 
 export default forwardRef<HTMLDivElement, SharedOverlayProps>(
   ({ position, align = 'center', children, style, width = 'auto' }, ref) => {

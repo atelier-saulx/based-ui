@@ -19,7 +19,6 @@ const ModalChildren = ({ children }) => {
       <div
         style={{
           display: 'flex',
-          // width: 'auto',
           marginTop: 16,
           marginBottom: 16,
         }}
