@@ -12,7 +12,8 @@ import { OverlayContext, createOverlayContextRef } from './useOverlayProps'
 export default function useOverlay<P>(
   component: ComponentType<P>,
   props?: PropsWithChildren<P & PositionProps>,
-  handler?: (selection: Event | any) => OnClose | undefined
+  handler?: (selection: Event | any) => OnClose | undefined,
+  Overlay: ComponentType = GenericOverlay
 ): (
   e: Event | SyntheticEvent,
   selectionProps?: PropsWithChildren<any>
@@ -26,7 +27,7 @@ export default function useOverlay<P>(
       }
       const reactNode = (
         <OverlayContext.Provider value={ctx}>
-          <GenericOverlay
+          <Overlay
             Component={component}
             target={e.currentTarget}
             {...selectionProps}

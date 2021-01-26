@@ -1,36 +1,46 @@
 import React, {
-  forwardRef,
   useCallback,
-  createContext,
-  useState,
   useContext,
+  PropsWithChildren,
+  FunctionComponent,
+  EventHandler,
+  SyntheticEvent,
+  CSSProperties,
 } from 'react'
-import useOverlay from '../../hooks/useOverlayPosition'
+import useOverlayPosition, {
+  PositionPropsFn,
+} from '../../hooks/overlay/useOverlayPosition'
+import useOverlayProps, {
+  OverlayContext,
+} from '../../hooks/overlay/useOverlayProps'
 import { useColor } from '@based/theme'
-import { ChevronRight, ChevronLeft, iconFromString } from '@based/icons'
-import { Body } from '../Text/Body'
-import { Subtitle } from '../Text/Subtitle'
-import useHover from '../../hooks/useHover'
+import {
+  ChevronRight,
+  ChevronLeft,
+  iconFromString,
+  IconName,
+  IconProps,
+} from '@based/icons'
+import { Text } from '../Text'
+import useHover from '../../hooks/events/useHover'
 import Shared from './Shared'
 import { removeOverlay } from './index'
+import { GenericOverlayProps } from './GenericOverlay'
 
-
-export type UpdateMenu = () => void
-
-export type MenuContextProps = {
-  updateMenu: 
+export type NextProps = {
+  label?: string
 }
 
-const MenuContext = createContext()
-
-const Next = ({ label, updateMenu, children }) => {
+const Next: FunctionComponent<NextProps> = ({ label, children }) => {
   const [hover, isHover] = useHover()
+  const ctx = useContext(OverlayContext)
+
   return (
     <div>
       <div
         {...hover}
         onClick={useCallback(() => {
-          updateMenu()
+          ctx.current.merge({ content: undefined })
         }, [])}
         style={{
           display: 'flex',
@@ -41,38 +51,55 @@ const Next = ({ label, updateMenu, children }) => {
           width: '100%',
           alignItems: 'center',
           cursor: 'pointer',
-          backgroundColor: isHover ? useColor('default', 0.05) : null,
+          backgroundColor: isHover
+            ? useColor({ color: 'foreground', opacity: 0.05 })
+            : null,
         }}
       >
         <ChevronLeft />
-        <Subtitle
+        <Text
+          weight="semibold"
+          singleLine
+          noSelect
           style={{
             marginLeft: 14,
-            whiteSpace: 'nowrap',
           }}
         >
           {label}
-        </Subtitle>
+        </Text>
       </div>
       {children}
     </div>
   )
 }
 
-export const ContextualMenuItem = ({
+export type ContextualMenuItemProps = {
+  icon?: IconName
+  label?: string
+  onClick?: (
+    e: Event | SyntheticEvent,
+    selectionProps?: PropsWithChildren<any>
+  ) => boolean | void
+  style?: CSSProperties
+  border?: boolean
+}
+
+export const ContextualMenuItem: FunctionComponent<ContextualMenuItemProps> = ({
   icon,
-  Icon,
   label,
   children,
   onClick,
   style,
   border,
 }) => {
+  let IconComponent: FunctionComponent<IconProps>
   if (icon) {
-    Icon = iconFromString(icon)
+    IconComponent = iconFromString(icon)
   }
   const [hover, isHover] = useHover()
-  const { updateMenu } = useContext(MenuContext) || {}
+
+  const ctx = useContext(OverlayContext)
+
   const click = useCallback(
     (e) => {
       if (onClick) {
@@ -80,14 +107,14 @@ export const ContextualMenuItem = ({
           removeOverlay()
         }
       } else {
-        updateMenu(
-          <Next label={label} updateMenu={updateMenu}>
-            {children}
-          </Next>
-        )
+        console.log('CONTENT')
+
+        ctx.current.merge({
+          content: <Next label={label}>{children}</Next>,
+        })
       }
     },
-    [onClick, updateMenu, children]
+    [onClick, children, ctx]
   )
   return (
     <div
@@ -100,7 +127,7 @@ export const ContextualMenuItem = ({
         paddingLeft: 15,
         paddingRight: 15,
         marginTop: border ? 10 : 0,
-        borderColor: useColor('outline'),
+        borderColor: useColor({ color: 'foreground', tone: 5, opacity: 0.33 }),
         borderStyle: 'solid',
         borderWidth: 0,
         borderTopWidth: border ? 1 : null,
@@ -108,7 +135,9 @@ export const ContextualMenuItem = ({
         justifyContent: 'space-between',
         alignItems: 'center',
         cursor: 'pointer',
-        backgroundColor: isHover ? useColor('default', 0.05) : null,
+        backgroundColor: isHover
+          ? useColor({ color: 'foreground', tone: 5, opacity: 0.33 })
+          : null,
         ...style,
       }}
     >
@@ -117,27 +146,32 @@ export const ContextualMenuItem = ({
           display: 'flex',
         }}
       >
-        {Icon ? <Icon color="medium" /> : null}
-        <Body
+        {IconComponent ? (
+          <IconComponent color={{ color: 'foreground', tone: 2 }} />
+        ) : null}
+        <Text
           style={{
             marginLeft: 14,
             marginRight: 15,
-            whiteSpace: 'nowrap',
-            userSelect: 'none',
           }}
+          singleLine
+          noSelect
         >
           {label}
-        </Body>
+        </Text>
       </div>
-      {children && !onClick ? <ChevronRight color="medium" /> : null}
+      {children && !onClick ? (
+        <ChevronRight color={{ color: 'foreground', tone: 3 }} />
+      ) : null}
     </div>
   )
 }
 
-export const Menu = (props) => {
+export const Menu: FunctionComponent<GenericOverlayProps> = (initialProps) => {
+  const props = useOverlayProps(initialProps)
+
   const {
     align,
-    children,
     target,
     selectTarget,
     width = () => 300,
@@ -158,66 +192,53 @@ export const Menu = (props) => {
     },
     maxX,
   } = props
-  const [content, updateMenu] = useState()
-  const [elementRef, position, , resize] = useOverlay(
-    {
-      align,
-      y,
-      x,
-      children,
-      target,
-      selectTarget,
-      width,
-      maxY,
-      maxX,
-    },
-    ref
-  )
+  const [elementRef, position, resize] = useOverlayPosition({
+    align,
+    y,
+    x,
+    target,
+    selectTarget,
+    width,
+    maxY,
+    maxX,
+  })
+
+  let content = props.content
+
+  console.log('CONTENT', content)
+
   return (
-    <MenuContext.Provider
-      value={{
-        updateMenu: useCallback((c) => {
-          updateMenu(c)
-          resize()
-        }, []),
-        props,
-      }}
-    >
-      <Shared width={300} ref={elementRef} position={position} align={align}>
+    <Shared width={300} ref={elementRef} position={position} align={align}>
+      <div
+        style={{
+          display: 'flex',
+          transition: 'transform 0.15s',
+          transform: content
+            ? 'translate3d(-100%,0px,0px)'
+            : `translate3d(0px,0px,0px)`,
+        }}
+      >
         <div
           style={{
-            display: 'flex',
-            transition: 'transform 0.15s',
-            transform: content
-              ? 'translate3d(-100%,0px,0px)'
-              : `translate3d(0px,0px,0px)`,
+            // opacity: content ? 0 : 1,
+            // transition: 'opacity 0.4s',
+            minWidth: '100%',
           }}
         >
-          <div
-            style={{
-              // opacity: content ? 0 : 1,
-              // transition: 'opacity 0.4s',
-              minWidth: '100%',
-            }}
-          >
-            {React.createElement(props.Component, {
-              resize,
-              updateMenu,
-              position,
-              ...props,
-            })}
-          </div>
-          <div
-            style={{
-              // opacity: content ? 1 : 0,
-              // transition: 'opacity 0.4s',
-              minWidth: '100%',
-            }}
-          >
-            {content}
-          </div>
+          {React.createElement(props.Component, {
+            resize,
+            position,
+            ...props,
+          })}
         </div>
-      </Shared>
-    </MenuContext.Provider>
+        <div
+          style={{
+            minWidth: '100%',
+          }}
+        >
+          {content}
+        </div>
+      </div>
+    </Shared>
   )
 }

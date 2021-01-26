@@ -77,6 +77,7 @@ export {
   removeAllOverlays,
 } from './Components/Overlay'
 
+import useMenu from './hooks/overlay/useMenu'
 import useDropdown from './hooks/overlay/useDropdown'
 import useOverlay from './hooks/overlay/useOverlay'
 import useOverlayProps from './hooks/overlay/useOverlayProps'
@@ -99,6 +100,7 @@ export {
   useThrottledCallback,
   useModal,
   useDropdown,
+  useMenu,
 }
 
 export { Text } from './Components/Text'
@@ -109,3 +111,4 @@ export { Loader } from './Components/Loader/Loader'
 export { ProgressIndicator } from './Components/ProgressIndicator/ProgressIndicator'
 export { SideMenu } from './Components/SideMenu/SideMenu'
 export { Topbar } from './Components/Topbar/Topbar'
+export { ContextualMenuItem } from './Components/Overlay/Menu'

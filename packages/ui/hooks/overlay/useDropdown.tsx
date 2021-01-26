@@ -1,5 +1,9 @@
 import { addOverlay, removeOverlay } from '../../Components/Overlay'
-import { Dropdown } from '../../Components/Overlay/Dropdown'
+import {
+  Dropdown,
+  DropdownOption,
+  DropdownOptions,
+} from '../../Components/Overlay/Dropdown'
 import { PositionProps } from './useOverlayPosition'
 import React, { useCallback, SyntheticEvent, PropsWithChildren } from 'react'
 import { OverlayContext, createOverlayContextRef } from './useOverlayProps'
@@ -14,9 +18,9 @@ export type SelectFn = (
 // dont make the handler
 
 export default (
-  selectOptions: (string | number)[],
-  value: (string | number) | (string | number)[],
+  options: DropdownOptions,
   select: SelectFn,
+  value?: (string | number) | (string | number)[],
   props: PositionProps & { multi?: boolean } = {}
 ): ((
   e: Event | SyntheticEvent,
@@ -28,7 +32,7 @@ export default (
 
   const ctx = createOverlayContextRef({
     value,
-    items: selectOptions,
+    items: options,
     ...props,
   })
 
@@ -41,19 +45,21 @@ export default (
           <Dropdown
             value={value}
             target={e.currentTarget}
-            items={selectOptions}
+            items={options}
             onChange={(v, index) => {
+              let label = typeof v === 'object' ? v.label : v
+
               if (ctx.current.props.multi) {
                 let value = ctx.current.props.value
                 if (!Array.isArray(value)) {
                   value = []
                 }
-                const index = value.indexOf(v)
-                 value = [...value]
+                const index = value.indexOf(label)
+                value = [...value]
                 if (index !== -1) {
                   value.splice(index, 1)
                 } else {
-                  value.push(v)
+                  value.push(label)
                 }
                 select(
                   value,
@@ -61,9 +67,8 @@ export default (
                 )
                 ctx.current.update({ ...ctx.current.props, value })
               } else {
-                value = v
-                select(value, index)
-                ctx.current.update({ ...ctx.current.props, value })
+                select(label, index)
+                ctx.current.update({ ...ctx.current.props, value: label })
                 ctx.current.timer = setTimeout(() => {
                   removeOverlay(dropdown)
                 }, 200)

@@ -27,7 +27,7 @@ export type ModalProps = {
     label?: string
     color?: Color
     icon?: IconName
-    onConfirm: EventHandler<SyntheticEvent >
+    onConfirm: EventHandler<SyntheticEvent>
   }
 }
 

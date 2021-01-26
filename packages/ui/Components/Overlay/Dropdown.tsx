@@ -3,18 +3,26 @@ import useOverlayPosition, {
   PositionPropsFn,
 } from '../../hooks/overlay/useOverlayPosition'
 import useOverlayProps from '../../hooks/overlay/useOverlayProps'
-
 import { useColor } from '@based/theme'
-import { Checked } from '@based/icons'
+import { Checked, iconFromString, IconName, IconProps } from '@based/icons'
 import { Text } from '../Text'
-import { Title } from '../Text/Title'
 import useHover from '../../hooks/events/useHover'
 import Shared from './Shared'
 
-export type OnChange = (value: string | number, index: number) => void
+export type DropdownOption =
+  | string
+  | number
+  | {
+      icon: IconName
+      label: string | number
+    }
+
+export type OnChange = (value: DropdownOption, index: number) => void
+
+export type DropdownOptions = DropdownOption[]
 
 export type OptionProps = {
-  value: string | number
+  value: DropdownOption
   index: number
   isActive: boolean
   onChange: OnChange
@@ -27,6 +35,16 @@ const Option: FunctionComponent<OptionProps> = ({
   onChange,
 }) => {
   const [hover, isHover] = useHover()
+
+  let Icon: FunctionComponent<IconProps>
+  let label: string | number
+  if (typeof value === 'object') {
+    label = value.label
+    Icon = iconFromString(value.icon)
+  } else {
+    label = value
+  }
+
   return (
     <div
       {...hover}
@@ -46,43 +64,53 @@ const Option: FunctionComponent<OptionProps> = ({
         onChange(value, index)
       }}
     >
-      <Checked
-        style={{ opacity: isActive ? 1 : 0, marginRight: 15 }}
-        color={{ color: isActive ? 'primary' : 'foreground' }}
-      />
-      {isActive ? (
-        <div>
-          <Text
-            singleLine
-            noSelect
-            weight="semibold"
-            style={{
-              position: 'absolute',
-            }}
-          >
-            {value}
+      {Icon ? <Icon style={{ marginRight: 15 }} /> : null}
+      <div
+        style={{
+          width: '100%',
+          display: 'flex',
+          alignContent: 'center',
+          justifyContent: 'space-between',
+        }}
+      >
+        {isActive ? (
+          <div>
+            <Text
+              singleLine
+              noSelect
+              weight="semibold"
+              style={{
+                position: 'absolute',
+              }}
+            >
+              {label}
+            </Text>
+            <Text
+              singleLine
+              noSelect
+              style={{
+                opacity: 0,
+              }}
+            >
+              {label}
+            </Text>
+          </div>
+        ) : (
+          <Text singleLine noSelect>
+            {label}
           </Text>
-          <Text
-            singleLine
-            noSelect
-            style={{
-              opacity: 0,
-            }}
-          >
-            {value}
-          </Text>
-        </div>
-      ) : (
-        <Text singleLine noSelect>
-          {value}
-        </Text>
-      )}
+        )}
+        <Checked
+          style={{ opacity: isActive ? 1 : 0, marginLeft: 15 }}
+          color={{ color: isActive ? 'primary' : 'foreground' }}
+        />
+      </div>
     </div>
   )
 }
 
 export type DropdownProps = {
-  items: (string | number)[]
+  items: DropdownOptions
   onChange: OnChange
   multi?: boolean
   value?: (string | number) | (string | number)[]
@@ -102,6 +130,13 @@ export const Dropdown: FunctionComponent<PositionPropsFn & DropdownProps> = (
   return (
     <Shared position={position} align={align} ref={elementRef}>
       {items.map((v, index) => {
+        let label: string | number
+        if (typeof v === 'object') {
+          label = v.label
+        } else {
+          label = v
+        }
+
         return (
           <Option
             value={v}
@@ -109,8 +144,8 @@ export const Dropdown: FunctionComponent<PositionPropsFn & DropdownProps> = (
             key={index}
             isActive={
               multi && Array.isArray(value)
-                ? value.indexOf(v) !== -1
-                : v === value
+                ? value.indexOf(label) !== -1
+                : label === value
             }
             onChange={onChange}
           />

@@ -5,7 +5,9 @@ import {
   useOverlay,
   useTooltip,
   useModal,
+  ContextualMenuItem,
   Text,
+  useMenu,
   useContextualMenu,
   useDropdown,
 } from '@based/ui'
@@ -258,10 +260,10 @@ export default {
               color={{ color: 'foreground', tone: 2 }}
               onClick={useDropdown(
                 ['hello', 'bye!', 'snurky pants for you'],
-                'hello',
                 (value, index) => {
                   console.log('-->', value, index)
-                }
+                },
+                'hello'
               )}
             >
               Simple dropdown
@@ -274,10 +276,10 @@ export default {
               color={{ color: 'foreground', tone: 2 }}
               onClick={useDropdown(
                 ['hello', 'bye!', 'snurky pants for you'],
-                undefined,
                 (value, index) => {
                   console.log('-->', value, index)
                 },
+                undefined,
                 {
                   multi: true,
                 }
@@ -286,7 +288,27 @@ export default {
               Multi dropdown
             </Button>
           )
-        }
+        },
+        () => {
+          return (
+            <Button
+              color={{ color: 'foreground', tone: 2 }}
+              onClick={useDropdown(
+                [
+                  { label: 'hello', icon: 'skip' },
+                  { label: 'bye', icon: 'smartCopy' },
+                ],
+                (value, index) => {
+                  console.log('-->', value, index)
+                },
+                undefined,
+                { multi: true }
+              )}
+            >
+              Multi icon dropdown
+            </Button>
+          )
+        },
       ],
     },
 
@@ -297,16 +319,39 @@ export default {
         () => {
           return (
             <Button
-              color={{ color: 'foreground', tone: 2 }}
-              onClick={useDropdown(
-                ['hello', 'bye!', 'snurky pants for you'],
-                'hello',
-                (value, index) => {
-                  console.log('-->', value, index)
+              onClick={useMenu(() => {
+                const data = {
+                  text: 'x',
                 }
-              )}
+
+                return (
+                  <>
+                    <ContextualMenuItem label="Edit" icon="skip">
+                      <ContextualMenuItem
+                        border
+                        label={`Edit ${data.text}`}
+                        icon="search"
+                        onClick={useModal(<Title>Modal!</Title>)}
+                      />
+                    </ContextualMenuItem>
+                    <ContextualMenuItem border label="Delete" icon="close">
+                      <div
+                        style={{ padding: 30 }}
+                        onClick={useDropdown(
+                          ['hello', 'bye!', 'snurky pants for you'],
+                          (value, index) => {
+                            console.log('-->', value, index)
+                          }
+                        )}
+                      >
+                        <Text>Remove {data.text}</Text>
+                      </div>
+                    </ContextualMenuItem>
+                  </>
+                )
+              })}
             >
-              Simple dropdown
+              Contextual menu
             </Button>
           )
         },
