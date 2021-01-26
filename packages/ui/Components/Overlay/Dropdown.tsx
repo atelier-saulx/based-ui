@@ -57,7 +57,7 @@ const Option: FunctionComponent<OptionProps> = ({
         display: 'flex',
         cursor: 'pointer',
         backgroundColor: isHover
-          ? useColor({ color: 'foreground', tone: 5, opacity: 0.33 })
+          ? useColor({ color: 'foreground', tone: 5, opacity: 0.15 })
           : null,
       }}
       onClick={() => {

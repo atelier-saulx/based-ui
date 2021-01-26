@@ -28,12 +28,19 @@ export const InnerShared = forwardRef<
         overflowY: 'auto',
         overflowX: 'hidden',
         paddingTop: 10,
+        border:
+          '1px solid ' +
+          useColor({
+            color: 'foreground',
+            tone: 2,
+            opacity: 0.05,
+          }),
         paddingBottom: 10,
         maxHeight: 'calc(100vh-30px)',
         boxShadow: `0px 8px 16px 1px ${useColor({
           color: 'foreground',
           tone: 2,
-          opacity: 0.33,
+          opacity: 0.15,
         })}`,
         ...style,
       }}

@@ -141,7 +141,7 @@ export const ContextualMenuItem: FunctionComponent<ContextualMenuItemProps> = ({
           alignItems: 'center',
           cursor: 'pointer',
           backgroundColor: isHover
-            ? useColor({ color: 'foreground', tone: 5, opacity: 0.33 })
+            ? useColor({ color: 'foreground', tone: 5, opacity: 0.15 })
             : null,
           ...style,
         }}

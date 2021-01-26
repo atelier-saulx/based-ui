@@ -79,7 +79,7 @@ export default (
           />
         </OverlayContext.Provider>
       )
-      addOverlay(dropdown)
+      addOverlay(dropdown, undefined, { transparent: true })
       return true
     },
     [ctx]

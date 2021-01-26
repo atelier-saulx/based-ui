@@ -14,7 +14,8 @@ export type OnClose = () => void
 
 // has to go to something else (in hook useOverlay)
 export type OverlayOptions = {
-  overlay: boolean
+  overlay?: boolean
+  transparent?: boolean
 }
 
 export type Overlays = [ReactNode, OnClose, OverlayOptions][]
@@ -38,15 +39,18 @@ const OverlayItem: FunctionComponent<OverlayItemProps> = ({
 
   const hidden = options && options.overlay === false
 
+  const transparent = options && options.transparent
+
   return (
     <div
       ref={ref}
       style={{
         opacity: visible ? 1 : 0,
         transition: 'opacity 0.15s',
-        backgroundColor: hidden
-          ? null
-          : useColor({ color: 'foreground', tone: 4, opacity: 0.5 }),
+        backgroundColor:
+          hidden || transparent
+            ? null
+            : useColor({ color: 'foreground', tone: 4, opacity: 0.5 }),
         width: '100vw',
         position: 'fixed',
         top: 0,
@@ -54,18 +58,17 @@ const OverlayItem: FunctionComponent<OverlayItemProps> = ({
         height: '100vh',
         pointerEvents: hidden ? 'none' : 'all',
       }}
-
       onMouseDown={
         hidden
-        ? null
-        : useCallback((e) => {
-            if (e.target === ref.current) {
-              setVisible(false)
-              setTimeout(() => {
-                removeOverlay(children)
-              }, 150)
-            }
-          }, [])
+          ? null
+          : useCallback((e) => {
+              if (e.target === ref.current) {
+                setVisible(false)
+                setTimeout(() => {
+                  removeOverlay(children)
+                }, 150)
+              }
+            }, [])
       }
     >
       {children}
