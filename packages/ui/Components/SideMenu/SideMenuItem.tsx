@@ -79,6 +79,8 @@ export const SideMenuItem: FunctionComponent<SideMenuItemProps> = ({
         ) : null}
         <Text
           weight="medium"
+          singleLine
+          noSelect
           color={
             active ? { color: 'foreground' } : { color: 'foreground', tone: 2 }
           }
