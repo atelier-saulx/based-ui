@@ -254,7 +254,7 @@ export const Input: FunctionComponent<InputProps> = ({
             tone: isWrong ? 1 : 3,
           }}
           style={{
-            marginLeft: 16,
+            marginLeft: 4,
             position: 'absolute',
             bottom: -25,
             left: 0,
