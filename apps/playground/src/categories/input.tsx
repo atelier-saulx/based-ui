@@ -1,5 +1,5 @@
 import React from 'React'
-import { Input, Button } from '@based/ui'
+import { Input, CheckBox, RadioButton } from '@based/ui'
 import RenderComponents from '../RenderComponents'
 import { randomIcon } from './util'
 
@@ -7,6 +7,36 @@ export default {
   name: 'input',
   Render: ({ category }) => <RenderComponents grid category={category} />,
   components: [
+    {
+      name: 'CheckBox',
+      Component: CheckBox,
+      props: [
+        {
+          children: 'Hello',
+          onChange: () => {},
+        },
+        {
+          children: 'Hello Checked',
+          onChange: () => {},
+          value: true,
+        },
+      ],
+    },
+    {
+      name: 'RadioButton',
+      Component: RadioButton,
+      props: [
+        {
+          children: 'Hello',
+          onChange: () => {},
+        },
+        {
+          children: 'Hello Checked',
+          onChange: () => {},
+          value: true,
+        },
+      ],
+    },
     {
       name: 'Input',
       category: 'input',
