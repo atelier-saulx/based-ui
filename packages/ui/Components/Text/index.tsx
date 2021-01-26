@@ -17,18 +17,18 @@ export const Text: FunctionComponent<BodyProps> = ({
   color = { color: 'foreground' },
   noSelect,
   singleLine,
-  weight = 'regular'
+  weight = 'regular',
 }) => {
   return (
     <div
       style={{
         fontSize: '15px',
         lineHeight: '24px',
+        letterSpacing: '-0.015em',
         fontWeight:
           weight === 'semibold' ? 600 : weight === 'medium' ? 500 : 'normal',
         userSelect: noSelect ? 'none' : 'text',
         color: useColor(color),
-        letterSpacing: '-0.015em',
         whiteSpace: singleLine ? 'nowrap' : null,
         overflow: singleLine ? 'hidden' : null,
         textOverflow: singleLine ? 'ellipsis' : null,

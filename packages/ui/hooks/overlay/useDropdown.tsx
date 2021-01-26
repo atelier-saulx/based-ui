@@ -48,7 +48,6 @@ export default (
             items={options}
             onChange={(v, index) => {
               let label = typeof v === 'object' ? v.label : v
-
               if (ctx.current.props.multi) {
                 let value = ctx.current.props.value
                 if (!Array.isArray(value)) {

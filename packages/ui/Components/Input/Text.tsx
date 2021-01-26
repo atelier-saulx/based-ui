@@ -5,7 +5,7 @@ import React, {
   CSSProperties,
   FunctionComponent,
 } from 'react'
-import { useColor } from '@based/theme'
+import { useColor, Color } from '@based/theme'
 import Clear from './Clear'
 import {
   Search,
@@ -21,20 +21,24 @@ import { emailValidator, Validator } from './validators'
 import { SubText } from '../Text/SubText'
 import useDropdown from '../../hooks/overlay/useDropdown'
 import './style.css'
+import { DropdownOptions } from '../Overlay/Dropdown'
+import useHover from '../../hooks/events/useHover'
 
 type InputProps = {
   style?: CSSProperties
   icon?: IconName
   placeholder?: string
+  border?: boolean
   autoFocus?: boolean
-  onChange?: (value: string | number | undefined) => void
-  type?: string
+  onChange: (value: string | number | undefined) => void
+  type?: 'text' | 'email' | 'number' | 'date' | 'time' | 'search'
   validator?: Validator
   identifier?: any
   errorText?: string
   helperText?: string
   value?: string | number
-  options?: any
+  options?: DropdownOptions
+  color?: Color
 }
 
 export const Input: FunctionComponent<InputProps> = ({
@@ -42,7 +46,9 @@ export const Input: FunctionComponent<InputProps> = ({
   value = '',
   onChange,
   autoFocus,
+  border,
   icon,
+  color = { color: 'background', tone: 1 },
   style,
   type = 'text',
   validator,
@@ -56,6 +62,7 @@ export const Input: FunctionComponent<InputProps> = ({
   const [stateValue, setValue] = useState(value)
   const [isFocus, setFocus] = useState(false)
   const [isWrong, setWrong] = useState(false)
+  const [hover, isHover] = useHover()
 
   if (value !== stateValue && value !== initialValue.current && !isFocus) {
     initialValue.current = value
@@ -125,7 +132,6 @@ export const Input: FunctionComponent<InputProps> = ({
     if (!validator) {
       validator = emailValidator
     }
-    // languages...
     if (!errorText) {
       errorText = 'Please enter a valid email adress'
     }
@@ -133,14 +139,19 @@ export const Input: FunctionComponent<InputProps> = ({
 
   return (
     <div
+      {...hover}
       style={{
         position: 'relative',
-        paddingLeft: isFocus ? 14 : 15,
-        paddingRight: isFocus ? 14 : 15,
+        paddingLeft: isFocus ? 11 : 12,
+        paddingRight: isFocus ? 11 : 12,
         display: 'flex',
         alignItems: 'center',
         borderRadius: 8,
         flexGrow: 1,
+        background: useColor({
+          color: color.color,
+          tone: isFocus || isHover ? color.tone + 1 : 1,
+        }),
         border: isFocus
           ? '2px solid ' +
             (isWrong
@@ -149,7 +160,11 @@ export const Input: FunctionComponent<InputProps> = ({
           : '1px solid ' +
             (isWrong
               ? useColor({ color: 'secondary' })
-              : useColor({ color: 'foreground', tone: 5 })),
+              : useColor({
+                  color: 'foreground',
+                  tone: 5,
+                  opacity: border ? 0.15 : 0,
+                })),
         ...style,
       }}
     >
@@ -181,12 +196,15 @@ export const Input: FunctionComponent<InputProps> = ({
         placeholder={placeholder}
         style={{
           width: '100%',
-          paddingTop: isFocus ? 11.5 : 12.5,
-          paddingBottom: isFocus ? 11.5 : 12.5,
+          paddingLeft: Icon ? 6.5 : 0,
+          paddingTop: isFocus ? 6.5 : 7.5,
+          paddingBottom: isFocus ? 6.5 : 7.5,
           appearance: 'none',
-          fontSize: 16,
+          fontSize: '15px',
+          lineHeight: '24px',
+          letterSpacing: '-0.015em',
           background: 'none',
-          fontFamily: 'Inter',
+          fontFamily: 'Font',
           color: useColor({ color: 'foreground' }),
           fontWeight: 'normal',
         }}
@@ -196,22 +214,16 @@ export const Input: FunctionComponent<InputProps> = ({
         <Down
           onClick={useDropdown(
             options,
-
-            () => {
-              return (
-                value: string | number | undefined,
-                index: number | undefined
-              ) => {
-                if (index !== undefined) {
-                  update(value === undefined ? '' : value)
-                }
+            (value, index) => {
+              if (index !== undefined) {
+                update(value === undefined ? '' : value)
               }
             },
             stateValue,
             {
               align: 'end',
-              x: ({ x }) => x - 15,
-              y: ({ y }) => y + 15,
+              x: ({ left }) => left - 15,
+              y: ({ top }) => top + 15,
               width: () => 'auto',
               selectTarget: (target: Element) => {
                 return target.parentNode
