@@ -14,6 +14,13 @@ import useHover from '../../hooks/useHover'
 import Shared from './Shared'
 import { removeOverlay } from './index'
 
+
+export type UpdateMenu = () => void
+
+export type MenuContextProps = {
+  updateMenu: 
+}
+
 const MenuContext = createContext()
 
 const Next = ({ label, updateMenu, children }) => {
@@ -24,7 +31,7 @@ const Next = ({ label, updateMenu, children }) => {
         {...hover}
         onClick={useCallback(() => {
           updateMenu()
-        })}
+        }, [])}
         style={{
           display: 'flex',
           paddingTop: 10,
@@ -127,7 +134,7 @@ export const ContextualMenuItem = ({
   )
 }
 
-export const Menu = forwardRef((props, ref) => {
+export const Menu = (props) => {
   const {
     align,
     children,
@@ -172,7 +179,7 @@ export const Menu = forwardRef((props, ref) => {
         updateMenu: useCallback((c) => {
           updateMenu(c)
           resize()
-        }),
+        }, []),
         props,
       }}
     >
@@ -213,4 +220,4 @@ export const Menu = forwardRef((props, ref) => {
       </Shared>
     </MenuContext.Provider>
   )
-})
+}

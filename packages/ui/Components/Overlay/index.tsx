@@ -54,17 +54,18 @@ const OverlayItem: FunctionComponent<OverlayItemProps> = ({
         height: '100vh',
         pointerEvents: hidden ? 'none' : 'all',
       }}
-      onClick={
+
+      onMouseDown={
         hidden
-          ? null
-          : useCallback((e) => {
-              if (e.target === ref.current) {
-                setVisible(false)
-                setTimeout(() => {
-                  removeOverlay(children)
-                }, 150)
-              }
-            }, [])
+        ? null
+        : useCallback((e) => {
+            if (e.target === ref.current) {
+              setVisible(false)
+              setTimeout(() => {
+                removeOverlay(children)
+              }, 150)
+            }
+          }, [])
       }
     >
       {children}

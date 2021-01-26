@@ -44,7 +44,6 @@ export default {
     {
       name: 'basic overlay',
       category: 'overlay',
-      Component: Button,
       props: [
         () => {
           const [text, setText] = useState('useOverlay')
@@ -81,7 +80,6 @@ export default {
     {
       name: 'tooltip',
       category: 'overlay',
-      Component: Button,
       props: [
         () => {
           const [text, setText] = useState('useTooltip')
@@ -112,7 +110,6 @@ export default {
     {
       name: 'modal',
       category: 'overlay',
-      Component: Button,
       props: [
         () => {
           const [text, setText] = useState('useModal')
@@ -254,12 +251,27 @@ export default {
     {
       name: 'dropdown',
       category: 'overlay',
-      Component: Button,
       props: [
         () => {
           return (
             <Button
-              color={{ color: 'primary', opacity: 0.5 }}
+              color={{ color: 'foreground', tone: 2 }}
+              onClick={useDropdown(
+                ['hello', 'bye!', 'snurky pants for you'],
+                'hello',
+                (value, index) => {
+                  console.log('-->', value, index)
+                }
+              )}
+            >
+              Simple dropdown
+            </Button>
+          )
+        },
+        () => {
+          return (
+            <Button
+              color={{ color: 'foreground', tone: 2 }}
               onClick={useDropdown(
                 ['hello', 'bye!', 'snurky pants for you'],
                 undefined,
@@ -268,6 +280,29 @@ export default {
                 },
                 {
                   multi: true,
+                }
+              )}
+            >
+              Multi dropdown
+            </Button>
+          )
+        }
+      ],
+    },
+
+    {
+      name: 'menu',
+      category: 'overlay',
+      props: [
+        () => {
+          return (
+            <Button
+              color={{ color: 'foreground', tone: 2 }}
+              onClick={useDropdown(
+                ['hello', 'bye!', 'snurky pants for you'],
+                'hello',
+                (value, index) => {
+                  console.log('-->', value, index)
                 }
               )}
             >
