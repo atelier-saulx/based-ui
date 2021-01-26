@@ -1,8 +1,8 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { ProgressContext, createProgress } from './ProgressContext'
-import { ProgressIndicator } from '../ProgressIndicator'
+import { ProgressIndicator } from '../ProgressIndicator/ProgressIndicator'
 import { InnerShared } from '../Overlay/Shared'
-import { Subtitle } from '../Text/Subtitle'
+import { Title } from '../Text/Title'
 import { Close } from '@based/icons'
 
 const Inner = ({ progress }) => {
@@ -34,10 +34,10 @@ const Inner = ({ progress }) => {
           maxHeight: 600,
           height: items.length * 60 + 20,
           padding: 10,
-          background: 'white'
+          background: 'white',
         }}
       >
-        {items.map(v => {
+        {items.map((v) => {
           return (
             <div
               key={v.id}
@@ -45,7 +45,7 @@ const Inner = ({ progress }) => {
                 display: 'flex',
                 alignItems: 'center',
                 height: 60,
-                justifyContent: 'space-between'
+                justifyContent: 'space-between',
               }}
             >
               <div
@@ -53,7 +53,7 @@ const Inner = ({ progress }) => {
                   display: 'flex',
                   alignItems: 'center',
                   paddingLeft: 10,
-                  paddingRight: 10
+                  paddingRight: 10,
                 }}
               >
                 <ProgressIndicator
@@ -70,7 +70,7 @@ const Inner = ({ progress }) => {
               </div>
               <Close
                 style={{
-                  marginRight: 10
+                  marginRight: 10,
                 }}
                 onClick={() => {
                   if (v.xhr) {
@@ -82,7 +82,7 @@ const Inner = ({ progress }) => {
                   if (!Object.keys(progress.items).length) {
                     progress.inProgress = false
                   }
-                  progress.listeners.forEach(update => update({ ...v }))
+                  progress.listeners.forEach((update) => update({ ...v }))
                 }}
               />
             </div>
