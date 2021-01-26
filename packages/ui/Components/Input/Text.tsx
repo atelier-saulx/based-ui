@@ -8,22 +8,23 @@ import React, {
 import { useColor } from '@based/theme'
 import Clear from './Clear'
 import {
-  // Search,
-  // Date,
-  // Timing,
-  // Email,
+  Search,
+  Date,
+  Time,
+  Email,
   Down,
   IconProps,
   iconFromString,
+  IconName,
 } from '@based/icons'
 import { emailValidator, Validator } from './validators'
 import { SubText } from '../Text/SubText'
-import useDropdown from '../../hooks/useDropdown'
+import useDropdown from '../../hooks/overlay/useDropdown'
 import './style.css'
 
 type InputProps = {
   style?: CSSProperties
-  icon?: string
+  icon?: IconName
   placeholder?: string
   autoFocus?: boolean
   onChange?: (value: string | number | undefined) => void
@@ -33,7 +34,7 @@ type InputProps = {
   errorText?: string
   helperText?: string
   value?: string | number
-  options?: any // TODO make this from dropdown!
+  options?: any
 }
 
 export const Input: FunctionComponent<InputProps> = ({
@@ -110,13 +111,13 @@ export const Input: FunctionComponent<InputProps> = ({
     if (icon) {
       Icon = iconFromString(icon)
     } else if (type === 'search') {
-      // Icon = Search
+      Icon = Search
     } else if (type === 'date') {
-      // Icon = Date
+      Icon = Date
     } else if (type === 'time') {
-      // Icon = Clock
+      Icon = Time
     } else if (type === 'email') {
-      // Icon = Email
+      Icon = Email
     }
   }
 
@@ -148,7 +149,7 @@ export const Input: FunctionComponent<InputProps> = ({
           : '1px solid ' +
             (isWrong
               ? useColor({ color: 'secondary' })
-              : useColor({ color: 'foreground', scale: 5 })),
+              : useColor({ color: 'foreground', tone: 5 })),
         ...style,
       }}
     >
@@ -164,7 +165,7 @@ export const Input: FunctionComponent<InputProps> = ({
               justifyContent: 'center',
             }}
           >
-            <Icon color={{ color: 'foreground', scale: 4 }} />
+            <Icon color={{ color: 'foreground', tone: 4 }} />
           </div>
           <div style={{ width: 28 }} />
         </>
@@ -195,7 +196,7 @@ export const Input: FunctionComponent<InputProps> = ({
         <Down
           onClick={useDropdown(
             options,
-            stateValue,
+
             () => {
               return (
                 value: string | number | undefined,
@@ -206,9 +207,9 @@ export const Input: FunctionComponent<InputProps> = ({
                 }
               }
             },
-            [update],
+            stateValue,
             {
-              align: 'flex-end',
+              align: 'end',
               x: ({ x }) => x - 15,
               y: ({ y }) => y + 15,
               width: () => 'auto',
@@ -225,7 +226,7 @@ export const Input: FunctionComponent<InputProps> = ({
               ? { color: 'secondary' }
               : isFocus
               ? { color: 'primary' }
-              : { color: 'foreground', scale: 4 }
+              : { color: 'foreground', tone: 4 }
           }
           style={{
             // @ts-ignore

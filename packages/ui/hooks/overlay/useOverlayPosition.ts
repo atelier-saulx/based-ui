@@ -2,7 +2,9 @@ import { useEffect, useRef, useState, useReducer, RefObject } from 'react'
 
 export type Align = 'start' | 'center' | 'end'
 
-export type Target = Element & { rect?: ClientRect }
+export type Target = (HTMLElement | Element | EventTarget) & {
+  rect?: ClientRect
+}
 
 export type PosCalculation<T = number> =
   | ((targetRect: ClientRect, elementRect: ClientRect, align: Align) => T)
