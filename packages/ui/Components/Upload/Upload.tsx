@@ -18,7 +18,7 @@ import useMultiple from '../../hooks/events/useMultipleEvents'
 import useDrop from '../../hooks/drag/useDrop'
 import { createProgressContext, ProgressContext } from './ProgressContext'
 import { ProgressIndicator } from '../ProgressIndicator/ProgressIndicator'
-import { uploadFile } from './fakeUploadFile' // TODO: this should come from real uploadFileScript
+import { uploadFile } from './uploadFile'
 
 type GenericEventHandler = EventHandler<SyntheticEvent>
 
