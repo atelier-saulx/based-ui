@@ -16,7 +16,7 @@ export type ModalHeaderProps = PropsWithChildren<{
   closeButton?: boolean
   title?: string
   onClose?: OnClose
-  icon?: Color
+  icon?: IconName
   framed?: boolean
 }>
 
@@ -27,7 +27,7 @@ export type ModalProps = {
     label?: string
     color?: Color
     icon?: IconName
-    onConfirm: EventHandler<SyntheticEvent>
+    onConfirm: EventHandler<SyntheticEvent >
   }
 }
 
@@ -158,7 +158,7 @@ export const Modal: FunctionComponent<ModalProps> = (initialProps) => {
               <Button
                 onClick={(e) => {
                   confirmButton.onConfirm(e)
-                  onClose(e)
+                  onClose()
                 }}
                 color={confirmButton.color || { color: 'primary' }}
                 icon={confirmButton.icon}

@@ -48,7 +48,7 @@ export function createOverlayContextRef<P>(
 
 type Props = PropsWithChildren<any>
 
-export default function useOverlayProps(p?: Props): Props {
+export default function useOverlayProps<P = Props>(p?: P): P {
   const ctx = useContext(OverlayContext)
   if (!ctx || !ctx.current) {
     throw new Error(
