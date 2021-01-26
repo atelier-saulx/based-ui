@@ -101,7 +101,8 @@ const RenderComponents = ({ category, grid, bg = 'transparent' }) => {
                   return (
                     <Component
                       style={{
-                        marginBottom: '15px',
+                        marginTop: '20px',
+                        marginBottom: '20px',
                         marginRight: grid ? '15px' : '0px',
                       }}
                       key={i}

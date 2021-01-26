@@ -249,12 +249,14 @@ export const Input: FunctionComponent<InputProps> = ({
       )}
       {isFocus && (errorText || helperText) ? (
         <SubText
-          color={{ color: isWrong ? 'secondary' : 'foreground' }}
+          color={{
+            color: isWrong ? 'secondary' : 'foreground',
+            tone: isWrong ? 1 : 3,
+          }}
           style={{
-            marginLeft: 15,
-            fontWeight: 'normal',
+            marginLeft: 16,
             position: 'absolute',
-            bottom: -20,
+            bottom: -25,
             left: 0,
           }}
         >

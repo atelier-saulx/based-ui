@@ -19,7 +19,7 @@ export const Input = ({
   options,
   errorText,
   helperText,
-  identifier
+  identifier,
 }) => {
   const identifierRef = useRef(identifier)
   const initialValue = useRef(value)
@@ -42,7 +42,7 @@ export const Input = ({
   }
 
   const update = useCallback(
-    e => {
+    (e) => {
       let newvalue = e.target ? e.target.value : e
       if (newvalue && type === 'number') {
         newvalue = Number(newvalue)
@@ -109,7 +109,7 @@ export const Input = ({
         border: isFocus
           ? '2px solid ' + (isWrong ? useColor('error') : useColor('primary'))
           : '1px solid ' + (isWrong ? useColor('error') : useColor('outline')),
-        ...style
+        ...style,
       }}
     >
       {Icon ? (
@@ -121,7 +121,7 @@ export const Input = ({
               bottom: 0,
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'center'
+              justifyContent: 'center',
             }}
           >
             <Icon size="small" color="medium" />
@@ -147,7 +147,7 @@ export const Input = ({
           background: 'none',
           fontFamily: 'Inter',
           color: useColor('default'),
-          fontWeight: 'normal'
+          fontWeight: 'normal',
         }}
       />
 
@@ -169,9 +169,9 @@ export const Input = ({
               x: ({ x }) => x - 15,
               y: ({ y }) => y + 15,
               width: () => 'auto',
-              selectTarget: target => {
+              selectTarget: (target) => {
                 return target.parentNode
-              }
+              },
             }
           )}
         />
@@ -179,7 +179,7 @@ export const Input = ({
         <Clear
           color={isWrong ? 'error' : isFocus ? 'primary' : 'disabled'}
           style={{
-            opacity: stateValue || stateValue === 0 ? 1 : 0
+            opacity: stateValue || stateValue === 0 ? 1 : 0,
           }}
           onClick={clear}
         />
@@ -191,8 +191,8 @@ export const Input = ({
             marginLeft: 15,
             fontWeight: 'normal',
             position: 'absolute',
-            bottom: -20,
-            left: 0
+            bottom: 20,
+            left: 0,
           }}
         >
           {isWrong ? errorText : helperText || ''}

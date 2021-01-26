@@ -38,6 +38,7 @@ export default {
         {
           placeholder: 'Search it good',
           type: 'search',
+          helperText: 'Ok this is used to search!',
           onChange: () => {},
         },
         {
