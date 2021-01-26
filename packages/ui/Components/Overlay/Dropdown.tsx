@@ -32,14 +32,14 @@ const Option: FunctionComponent<OptionProps> = ({
       {...hover}
       style={{
         width: '100%',
-        paddingTop: 10,
-        paddingBottom: 10,
+        paddingTop: 5,
+        paddingBottom: 5,
         paddingLeft: 15,
         paddingRight: 15,
         display: 'flex',
         cursor: 'pointer',
         backgroundColor: isHover
-          ? useColor({ color: 'foreground', tone: 5 })
+          ? useColor({ color: 'foreground', tone: 5, opacity: 0.33 })
           : null,
       }}
       onClick={() => {
@@ -50,7 +50,15 @@ const Option: FunctionComponent<OptionProps> = ({
         style={{ opacity: isActive ? 1 : 0, marginRight: 15 }}
         color={{ color: isActive ? 'primary' : 'foreground' }}
       />
-      {isActive ? <Title>{value}</Title> : <Text noSelect>{value}</Text>}
+      {isActive ? (
+        <Text singleLine noSelect weight="semibold">
+          {value}
+        </Text>
+      ) : (
+        <Text singleLine noSelect>
+          {value}
+        </Text>
+      )}
     </div>
   )
 }
@@ -62,9 +70,16 @@ export type DropdownProps = {
   value?: (string | number) | (string | number)[]
 }
 
-export const Dropdown: FunctionComponent<PositionPropsFn & DropdownProps> = (initialProps) => {
+export const Dropdown: FunctionComponent<PositionPropsFn & DropdownProps> = (
+  initialProps
+) => {
   const props = useOverlayProps<PositionPropsFn & DropdownProps>(initialProps)
   const { align, value, onChange, multi, items } = props
+
+  if (!props.minWidth) {
+    props.minWidth = 250
+  }
+
   const [elementRef, position] = useOverlayPosition(props)
   return (
     <Shared position={position} align={align} ref={elementRef}>

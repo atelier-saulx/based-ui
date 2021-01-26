@@ -236,8 +236,10 @@ export default {
           return (
             <Button
               color={{ color: 'primary', tone: 2 }}
-              onClick={useDropdown(['hello', 'bye!'], ['hello'], (value, index) => {
+              onClick={useDropdown(['hello', 'bye!', 'snurky pants for you'], undefined, (value, index) => {
                 console.log('-->', value, index)
+              }, {
+                multi: true
               })}
             >
               Simple dropdown

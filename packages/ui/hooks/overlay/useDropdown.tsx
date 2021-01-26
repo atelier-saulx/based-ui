@@ -6,7 +6,7 @@ import { OverlayContext, createOverlayContextRef } from './useOverlayProps'
 
 export type SelectFn = (
   value?: (string | number) | (string | number)[],
-  index?: number
+  index?: number | number[]
 ) => void
 
 // make multi a bit nicer e.g. when you pass value as an array it means multi!
@@ -22,10 +22,14 @@ export default (
   e: Event | SyntheticEvent,
   selectionProps?: PropsWithChildren<any>
 ) => void) => {
+  if (!props.width) {
+    props.width = 'auto'
+  }
+
   const ctx = createOverlayContextRef({
     value,
     items: selectOptions,
-    ...props
+    ...props,
   })
 
   return useCallback(
@@ -39,14 +43,23 @@ export default (
             target={e.currentTarget}
             items={selectOptions}
             onChange={(v, index) => {
-              if (ctx.current.props.multi && Array.isArray(value)) {
-                const index = value.indexOf(v)
-                if (index !== -1) {
-                  value.splice(index, 1)
-                } else {
-                  value.push(v)
+              let value = ctx.current.props.value
+              if (ctx.current.props.multi) {
+                if (!Array.isArray(value)) {
+                  value = []
                 }
-                select([...value], index)
+                const index = value.indexOf(v)
+                const v2 = [...value]
+                if (index !== -1) {
+                  v2.splice(index, 1)
+                } else {
+                  v2.push(v)
+                }
+                select(
+                  v2,
+                  v2.map((v) => ctx.current.props.items.indexOf(v))
+                )
+                ctx.current.update({ ...ctx.current.props, value: v2 })
               } else {
                 select(v, index)
                 removeOverlay(dropdown)
