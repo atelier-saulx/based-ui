@@ -155,11 +155,11 @@ export const Input: FunctionComponent<InputProps> = ({
         border: isFocus
           ? '2px solid ' +
             (isWrong
-              ? useColor({ color: 'secondary' })
+              ? useColor({ color: 'error' })
               : useColor({ color: 'primary' }))
           : '1px solid ' +
             (isWrong
-              ? useColor({ color: 'secondary' })
+              ? useColor({ color: 'error' })
               : useColor({
                   color: 'foreground',
                   tone: 5,
@@ -235,7 +235,7 @@ export const Input: FunctionComponent<InputProps> = ({
         <Clear
           color={
             isWrong
-              ? { color: 'secondary' }
+              ? { color: 'error' }
               : isFocus
               ? { color: 'primary' }
               : { color: 'foreground', tone: 4 }
@@ -250,7 +250,7 @@ export const Input: FunctionComponent<InputProps> = ({
       {isFocus && (errorText || helperText) ? (
         <SubText
           color={{
-            color: isWrong ? 'secondary' : 'foreground',
+            color: isWrong ? 'error' : 'foreground',
             tone: isWrong ? 1 : 3,
           }}
           style={{

@@ -13,6 +13,7 @@ export type ColorKey =
   | 'background'
   | 'foreground'
   | 'divider'
+  | 'error'
 
 export type Colors = {
   primary: Rgb[]
@@ -22,6 +23,7 @@ export type Colors = {
   background: Rgb[]
   foreground: Rgb[]
   divider: Rgb[]
+  error: Rgb[]
 }
 
 export type Theme = {
@@ -51,6 +53,7 @@ const theme: ThemeWrapper = {
         [230, 214, 252],
         [191, 149, 251],
       ],
+      error: [[230, 8, 13]],
       secondary: [[217, 19, 174]],
       secondaryAccent: [[200, 200, 255]],
       background: [
@@ -67,6 +70,7 @@ const theme: ThemeWrapper = {
       ],
     },
     dark: {
+      error: [[255, 0, 0]],
       primary: [
         [98, 0, 238],
         [87, 0, 210],
