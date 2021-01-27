@@ -8,7 +8,7 @@ import React, {
   useMemo,
 } from 'react'
 
-import { deepEqual } from '@saulx/utils'
+import { deepEqual, deepMerge } from '@saulx/utils'
 
 export class OverlayCtx<P> {
   public props: PropsWithChildren<P>
@@ -24,6 +24,15 @@ export class OverlayCtx<P> {
         })
       })
     }
+  }
+
+  public merge(props: Object) {
+    this.props = { ...this.props, ...props }
+    global.requestAnimationFrame(() => {
+      this.listeners.forEach((v) => {
+        v(this.props)
+      })
+    })
   }
 
   public listeners: Set<(props: PropsWithChildren<P>) => void> = new Set()
@@ -48,7 +57,7 @@ export function createOverlayContextRef<P>(
 
 type Props = PropsWithChildren<any>
 
-export default function useOverlayProps(p?: Props): Props {
+export default function useOverlayProps<P = Props>(p?: P): P {
   const ctx = useContext(OverlayContext)
   if (!ctx || !ctx.current) {
     throw new Error(

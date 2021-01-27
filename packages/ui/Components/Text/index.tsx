@@ -7,6 +7,7 @@ type BodyProps = {
   color?: Color
   noSelect?: boolean
   singleLine?: boolean
+  overflow?: boolean
   weight?: 'regular' | 'medium' | 'semibold'
 }
 
@@ -23,11 +24,11 @@ export const Text: FunctionComponent<BodyProps> = ({
       style={{
         fontSize: '15px',
         lineHeight: '24px',
+        letterSpacing: '-0.015em',
         fontWeight:
           weight === 'semibold' ? 600 : weight === 'medium' ? 500 : 'normal',
         userSelect: noSelect ? 'none' : 'text',
         color: useColor(color),
-        letterSpacing: '-0.015em',
         whiteSpace: singleLine ? 'nowrap' : null,
         overflow: singleLine ? 'hidden' : null,
         textOverflow: singleLine ? 'ellipsis' : null,

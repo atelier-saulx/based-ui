@@ -2,7 +2,9 @@ import { useEffect, useRef, useState, useReducer, RefObject } from 'react'
 
 export type Align = 'start' | 'center' | 'end'
 
-export type Target = Element & { rect?: ClientRect }
+export type Target = (HTMLElement | Element | EventTarget) & {
+  rect?: ClientRect
+}
 
 export type PosCalculation<T = number> =
   | ((targetRect: ClientRect, elementRect: ClientRect, align: Align) => T)
@@ -69,21 +71,18 @@ const maxYCalculation: MaxMinCalculation = (y, elem) => {
 }
 
 const maxXCalculation: MaxMinCalculation = (x, elem, align, _rect, pos) => {
+  let w = elem.width
+  if (typeof pos.width === 'number') {
+    w = pos.width
+  }
   const maxW = global.innerWidth - 30
-
-  console.log(x, elem.width, pos.width, maxW)
-
-  if (x + pos.width > maxW) {
-    console.log('hello')
-
-    const over = x + pos.width - maxW
+  if (x + w > maxW) {
+    const over = x + w - maxW
     return x - over + 7.5
   }
   delete pos.correctedX
   if (align === 'center') {
-    console.log('hello xx')
-
-    const diff = pos.containerWidth - pos.width
+    const diff = pos.containerWidth - w
     if (x + diff < 15) {
       pos.correctedX = diff
       return (-1 * diff) / 2 + 15
@@ -100,6 +99,19 @@ const widthCalculation: PosCalculation<number | string> = ({ width }) => {
 }
 
 export type Resize = () => void
+
+const getTargetRect = (
+  target: Target,
+  selectTarget: SelectTarget
+): ClientRect => {
+  const t = selectTarget(target)
+  // @ts-ignore
+  if (t.getBoundingClientRect) {
+    // @ts-ignore
+    return t.getBoundingClientRect()
+  }
+  return { left: 0, top: 0, height: 0, width: 0, bottom: 0, right: 0 }
+}
 
 export default ({
   target,
@@ -121,9 +133,7 @@ export default ({
   const [sizeForceUpdate, resize] = useReducer((x) => x + 1, 0)
   useEffect(() => {
     const calcSize = () => {
-      const rect = target.rect
-        ? target.rect
-        : selectTarget(target).getBoundingClientRect()
+      const rect = target.rect || getTargetRect(target, selectTarget)
       const elementRect = elementRef.current.getBoundingClientRect()
       const pos: Position = {}
       pos.elementRect = elementRect

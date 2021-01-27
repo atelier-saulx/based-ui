@@ -15,7 +15,7 @@ type ClearProps = {
 }
 
 const Clear: FunctionComponent<ClearProps> = ({
-  color = { color: 'foreground', scale: 4 },
+  color = { color: 'foreground', tone: 4 },
   style,
   onClick,
 }) => {
@@ -23,7 +23,6 @@ const Clear: FunctionComponent<ClearProps> = ({
     <div
       onClick={onClick}
       style={{
-        background: useColor({ color: 'background' }),
         paddingLeft: 4,
         position: 'absolute',
         right: 15,

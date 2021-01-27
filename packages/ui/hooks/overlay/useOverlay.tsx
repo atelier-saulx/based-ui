@@ -1,4 +1,4 @@
-import { addOverlay, OnClose } from '../../Components/Overlay'
+import { addOverlay, OnClose, OverlayOptions } from '../../Components/Overlay'
 import { GenericOverlay } from '../../Components/Overlay/GenericOverlay'
 import { PositionProps } from './useOverlayPosition'
 import React, {
@@ -12,7 +12,9 @@ import { OverlayContext, createOverlayContextRef } from './useOverlayProps'
 export default function useOverlay<P>(
   component: ComponentType<P>,
   props?: PropsWithChildren<P & PositionProps>,
-  handler?: (selection: Event | any) => OnClose | undefined
+  handler?: (selection: Event | any) => OnClose | undefined,
+  Overlay: ComponentType = GenericOverlay,
+  options: OverlayOptions = { transparent: true }
 ): (
   e: Event | SyntheticEvent,
   selectionProps?: PropsWithChildren<any>
@@ -26,16 +28,20 @@ export default function useOverlay<P>(
       }
       const reactNode = (
         <OverlayContext.Provider value={ctx}>
-          <GenericOverlay
+          <Overlay
             Component={component}
             target={e.currentTarget}
             {...selectionProps}
           />
         </OverlayContext.Provider>
       )
-      addOverlay(reactNode, () => {
-        if (cancel) cancel()
-      })
+      addOverlay(
+        reactNode,
+        () => {
+          if (cancel) cancel()
+        },
+        options
+      )
     },
     [ctx]
   )

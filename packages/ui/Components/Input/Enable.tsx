@@ -1,23 +1,34 @@
-import React, { useReducer, useCallback } from 'react'
-import { Check } from '../Button/Checkbox'
+import React, {
+  useReducer,
+  useCallback,
+  FunctionComponent,
+  CSSProperties,
+} from 'react'
+import { Check } from '../Button/CheckBox'
 import { Radio } from '../Button/Radio'
-import { Body } from '../Text/Body'
+import { Text } from '../Text'
 
-export const CheckBox = ({
+export type EnableInputProps = {
+  style?: CSSProperties
+  onChange: (value: boolean | void) => void
+  value?: boolean
+}
+
+export const CheckBox: FunctionComponent<EnableInputProps> = ({
   style,
   children,
   onChange,
   value = false,
   ...rest
 }) => {
-  const [enabled, update] = useReducer(x => !x, value)
+  const [enabled, update] = useReducer((x) => !x, value)
   return (
     <div
       style={{
         display: 'flex',
         alignItems: 'center',
         cursor: 'pointer',
-        ...style
+        ...style,
       }}
       onClick={useCallback(() => {
         if (onChange) {
@@ -28,26 +39,26 @@ export const CheckBox = ({
       }, [onChange])}
     >
       <Check {...rest} overRideValue={enabled} />
-      <Body
+      <Text
         noSelect
         style={{
-          marginLeft: 15
+          marginLeft: 15,
         }}
       >
         {children}
-      </Body>
+      </Text>
     </div>
   )
 }
 
-export const RadioButton = ({
+export const RadioButton: FunctionComponent<EnableInputProps> = ({
   style,
   children,
   onChange,
   value = false,
   ...rest
 }) => {
-  const [enabled, update] = useReducer(x => !x, value)
+  const [enabled, update] = useReducer((x) => !x, value)
 
   return (
     <div
@@ -55,7 +66,7 @@ export const RadioButton = ({
         display: 'flex',
         alignItems: 'center',
         cursor: 'pointer',
-        ...style
+        ...style,
       }}
       onClick={useCallback(() => {
         if (onChange) {
@@ -66,14 +77,14 @@ export const RadioButton = ({
       }, [onChange])}
     >
       <Radio overRideValue={enabled} {...rest} />
-      <Body
+      <Text
         noSelect
         style={{
-          marginLeft: 15
+          marginLeft: 15,
         }}
       >
         {children}
-      </Body>
+      </Text>
     </div>
   )
 }

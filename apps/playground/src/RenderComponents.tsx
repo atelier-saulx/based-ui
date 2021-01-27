@@ -51,7 +51,7 @@ const ComponentWrapper = ({ Component, grid, componentProps, children }) => {
   return (
     <div
       style={{
-        marginBottom: '15px',
+        marginBottom: '20px',
         marginRight: grid ? '15px' : '0px',
       }}
       {...useTooltip(<PropsInfo componentProps={componentProps} />, {

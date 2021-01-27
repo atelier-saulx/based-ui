@@ -25,6 +25,7 @@ import EditSvg from './Components/Edit'
 import EmailSvg from './Components/Email'
 import EmptyLineSvg from './Components/EmptyLine'
 import ExpandSvg from './Components/Expand'
+import GermanySvg from './Components/Germany'
 import GraphSvg from './Components/Graph'
 import HideSvg from './Components/Hide'
 import LockSvg from './Components/Lock'
@@ -32,15 +33,19 @@ import LogicSvg from './Components/Logic'
 import MobileSvg from './Components/Mobile'
 import MoreSvg from './Components/More'
 import MultipleChoiceSvg from './Components/MultipleChoice'
+import NetherlandsSvg from './Components/Netherlands'
 import NewFlowSvg from './Components/NewFlow'
 import NewTabSvg from './Components/NewTab'
 import NewUserSvg from './Components/NewUser'
 import OpenQuestionSvg from './Components/OpenQuestion'
 import OverviewSvg from './Components/Overview'
+import PolandSvg from './Components/Poland'
 import RegisterSvg from './Components/Register'
 import ResetSvg from './Components/Reset'
+import RussiaSvg from './Components/Russia'
 import ScaleQuestionSvg from './Components/ScaleQuestion'
 import SearchSvg from './Components/Search'
+import SettingsSvg from './Components/Settings'
 import ShowSvg from './Components/Show'
 import ShowsSvg from './Components/Shows'
 import SkipSvg from './Components/Skip'
@@ -50,6 +55,7 @@ import ThankYouSvg from './Components/ThankYou'
 import TimeSvg from './Components/Time'
 import ToggleOffScreenSvg from './Components/ToggleOff'
 import ToggleOnSvg from './Components/ToggleOn'
+import UnitedKingdomSvg from './Components/UnitedKingdom'
 import UnlockSvg from './Components/Unlock'
 import UploadSvg from './Components/Upload'
 import VideoSvg from './Components/Video'
@@ -107,7 +113,7 @@ const Icon: Icon = ({
     if (framed) {
       color = { color: 'background' }
     } else {
-      color = { color: 'foreground', scale: 3 }
+      color = { color: 'foreground', tone: 3 }
     }
   }
 
@@ -168,6 +174,7 @@ const EditName = wrapIcon(EditNameSvg)
 const Email = wrapIcon(EmailSvg)
 const EmptyLine = wrapIcon(EmptyLineSvg)
 const Expand = wrapIcon(ExpandSvg)
+const Germany = wrapIcon(GermanySvg)
 const Graph = wrapIcon(GraphSvg)
 const Hide = wrapIcon(HideSvg)
 const Lock = wrapIcon(LockSvg)
@@ -175,15 +182,19 @@ const Logic = wrapIcon(LogicSvg)
 const Mobile = wrapIcon(MobileSvg)
 const More = wrapIcon(MoreSvg)
 const MultipleChoice = wrapIcon(MultipleChoiceSvg)
+const Netherlands = wrapIcon(NetherlandsSvg)
 const NewFlow = wrapIcon(NewFlowSvg)
 const NewTab = wrapIcon(NewTabSvg)
 const NewUser = wrapIcon(NewUserSvg)
 const OpenQuestion = wrapIcon(OpenQuestionSvg)
 const Overview = wrapIcon(OverviewSvg)
+const Poland = wrapIcon(PolandSvg)
 const Register = wrapIcon(RegisterSvg)
 const Reset = wrapIcon(ResetSvg)
+const Russia = wrapIcon(RussiaSvg)
 const ScaleQuestion = wrapIcon(ScaleQuestionSvg)
 const Search = wrapIcon(SearchSvg)
+const Settings = wrapIcon(SettingsSvg)
 const Show = wrapIcon(ShowSvg)
 const Shows = wrapIcon(ShowsSvg)
 const Skip = wrapIcon(SkipSvg)
@@ -193,6 +204,7 @@ const ThankYou = wrapIcon(ThankYouSvg)
 const Time = wrapIcon(TimeSvg)
 const ToggleOff = wrapIcon(ToggleOffScreenSvg)
 const ToggleOn = wrapIcon(ToggleOnSvg)
+const UnitedKingdom = wrapIcon(UnitedKingdomSvg)
 const Unlock = wrapIcon(UnlockSvg)
 const Upload = wrapIcon(UploadSvg)
 const Video = wrapIcon(VideoSvg)
@@ -220,6 +232,7 @@ const icons = {
   Email,
   EmptyLine,
   Expand,
+  Germany,
   Graph,
   Hide,
   Lock,
@@ -227,15 +240,19 @@ const icons = {
   Mobile,
   More,
   MultipleChoice,
+  Netherlands,
   NewFlow,
   NewTab,
   NewUser,
   OpenQuestion,
   Overview,
+  Poland,
   Register,
   Reset,
+  Russia,
   ScaleQuestion,
   Search,
+  Settings,
   Show,
   Shows,
   Skip,
@@ -245,6 +262,7 @@ const icons = {
   Time,
   ToggleOff,
   ToggleOn,
+  UnitedKingdom,
   Unlock,
   Upload,
   Video,
@@ -252,10 +270,68 @@ const icons = {
   WelcomeScreen,
 }
 
-const iconFromString = (str: string): null | FunctionComponent<IconProps> => {
+export type IconName =
+  | keyof typeof icons
+  | 'add'
+  | 'checked'
+  | 'chevronLeft'
+  | 'chevronRight'
+  | 'close'
+  | 'collapse'
+  | 'custom'
+  | 'dashboard'
+  | 'date'
+  | 'delete'
+  | 'desktop'
+  | 'down'
+  | 'downThick'
+  | 'drag'
+  | 'duplicate'
+  | 'edit'
+  | 'editName'
+  | 'email'
+  | 'emptyLine'
+  | 'expand'
+  | 'germany'
+  | 'graph'
+  | 'hide'
+  | 'lock'
+  | 'logic'
+  | 'mobile'
+  | 'more'
+  | 'multipleChoice'
+  | 'netherlands'
+  | 'newFlow'
+  | 'newTab'
+  | 'newUser'
+  | 'openQuestion'
+  | 'overview'
+  | 'poland'
+  | 'register'
+  | 'reset'
+  | 'russia'
+  | 'scaleQuestion'
+  | 'search'
+  | 'settings'
+  | 'show'
+  | 'shows'
+  | 'skip'
+  | 'smartCopy'
+  | 'tablet'
+  | 'thankYou'
+  | 'time'
+  | 'toggleOff'
+  | 'toggleOn'
+  | 'unitedKingdom'
+  | 'unlock'
+  | 'upload'
+  | 'video'
+  | 'waitingScreen'
+  | 'welcomeScreen'
+
+const iconFromString = (str: IconName): null | FunctionComponent<IconProps> => {
   if (str && typeof str === 'string') {
-    str = str[0].toUpperCase() + str.slice(1)
-    return icons[str]
+    return icons[str[0].toUpperCase() + str.slice(1)]
   } else {
     return null
   }
@@ -284,6 +360,7 @@ export {
   Email,
   EmptyLine,
   Expand,
+  Germany,
   Graph,
   Hide,
   Lock,
@@ -291,15 +368,19 @@ export {
   Mobile,
   More,
   MultipleChoice,
+  Netherlands,
   NewFlow,
   NewTab,
   NewUser,
   OpenQuestion,
   Overview,
+  Poland,
   Register,
   Reset,
+  Russia,
   ScaleQuestion,
   Search,
+  Settings,
   Show,
   Shows,
   Skip,
@@ -309,6 +390,7 @@ export {
   Time,
   ToggleOff,
   ToggleOn,
+  UnitedKingdom,
   Unlock,
   Upload,
   Video,

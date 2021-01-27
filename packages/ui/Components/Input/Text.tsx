@@ -5,35 +5,42 @@ import React, {
   CSSProperties,
   FunctionComponent,
 } from 'react'
-import { useColor } from '@based/theme'
+import { useColor, Color } from '@based/theme'
 import Clear from './Clear'
 import {
-  // Search,
-  // Date,
-  // Timing,
-  // Email,
+  Search,
+  Date,
+  Time,
+  Email,
   Down,
   IconProps,
   iconFromString,
+  IconName,
 } from '@based/icons'
 import { emailValidator, Validator } from './validators'
 import { SubText } from '../Text/SubText'
-import useDropdown from '../../hooks/useDropdown'
+import useDropdown from '../../hooks/overlay/useDropdown'
 import './style.css'
+import { DropdownOptions } from '../Overlay/Dropdown'
+import useHover from '../../hooks/events/useHover'
+import { ProgressIndicator } from '../ProgressIndicator/ProgressIndicator'
 
 type InputProps = {
   style?: CSSProperties
-  icon?: string
+  icon?: IconName
   placeholder?: string
+  border?: boolean
   autoFocus?: boolean
-  onChange?: (value: string | number | undefined) => void
-  type?: string
+  onChange: (value: string | number | undefined) => void
+  type?: 'text' | 'email' | 'number' | 'date' | 'time' | 'search'
   validator?: Validator
   identifier?: any
   errorText?: string
   helperText?: string
   value?: string | number
-  options?: any // TODO make this from dropdown!
+  options?: DropdownOptions
+  color?: Color
+  progress?: number
 }
 
 export const Input: FunctionComponent<InputProps> = ({
@@ -41,7 +48,9 @@ export const Input: FunctionComponent<InputProps> = ({
   value = '',
   onChange,
   autoFocus,
+  border,
   icon,
+  color = { color: 'background', tone: 1 },
   style,
   type = 'text',
   validator,
@@ -49,12 +58,14 @@ export const Input: FunctionComponent<InputProps> = ({
   errorText,
   helperText,
   identifier,
+  progress,
 }) => {
   const identifierRef = useRef(identifier)
   const initialValue = useRef(value)
   const [stateValue, setValue] = useState(value)
   const [isFocus, setFocus] = useState(false)
   const [isWrong, setWrong] = useState(false)
+  const [hover, isHover] = useHover()
 
   if (value !== stateValue && value !== initialValue.current && !isFocus) {
     initialValue.current = value
@@ -110,13 +121,13 @@ export const Input: FunctionComponent<InputProps> = ({
     if (icon) {
       Icon = iconFromString(icon)
     } else if (type === 'search') {
-      // Icon = Search
+      Icon = Search
     } else if (type === 'date') {
-      // Icon = Date
+      Icon = Date
     } else if (type === 'time') {
-      // Icon = Clock
+      Icon = Time
     } else if (type === 'email') {
-      // Icon = Email
+      Icon = Email
     }
   }
 
@@ -124,7 +135,6 @@ export const Input: FunctionComponent<InputProps> = ({
     if (!validator) {
       validator = emailValidator
     }
-    // languages...
     if (!errorText) {
       errorText = 'Please enter a valid email adress'
     }
@@ -132,27 +142,40 @@ export const Input: FunctionComponent<InputProps> = ({
 
   return (
     <div
+      {...hover}
       style={{
         position: 'relative',
-        paddingLeft: isFocus ? 14 : 15,
-        paddingRight: isFocus ? 14 : 15,
+        paddingLeft: isFocus ? 11 : 12,
+        paddingRight: isFocus ? 11 : 12,
         display: 'flex',
         alignItems: 'center',
-        borderRadius: 8,
+        borderRadius: '4px',
         flexGrow: 1,
+        background: useColor({
+          color: color.color,
+          tone: isFocus || isHover ? color.tone + 1 : 1,
+        }),
         border: isFocus
           ? '2px solid ' +
             (isWrong
-              ? useColor({ color: 'secondary' })
+              ? useColor({ color: 'error' })
               : useColor({ color: 'primary' }))
           : '1px solid ' +
             (isWrong
-              ? useColor({ color: 'secondary' })
-              : useColor({ color: 'foreground', scale: 5 })),
+              ? useColor({ color: 'error' })
+              : useColor({
+                  color: 'foreground',
+                  tone: 5,
+                  opacity: border ? 0.15 : 0,
+                })),
         ...style,
       }}
     >
-      {Icon ? (
+      {progress !== null ? (
+        <div style={{ marginRight: 9 }}>
+          <ProgressIndicator value={progress} />
+        </div>
+      ) : Icon ? (
         <>
           <div
             style={{
@@ -164,7 +187,7 @@ export const Input: FunctionComponent<InputProps> = ({
               justifyContent: 'center',
             }}
           >
-            <Icon color={{ color: 'foreground', scale: 4 }} />
+            <Icon color={{ color: 'foreground', tone: 4 }} />
           </div>
           <div style={{ width: 28 }} />
         </>
@@ -180,12 +203,15 @@ export const Input: FunctionComponent<InputProps> = ({
         placeholder={placeholder}
         style={{
           width: '100%',
-          paddingTop: isFocus ? 11.5 : 12.5,
-          paddingBottom: isFocus ? 11.5 : 12.5,
+          paddingLeft: Icon ? 6.5 : 0,
+          paddingTop: isFocus ? 6.5 : 7.5,
+          paddingBottom: isFocus ? 6.5 : 7.5,
           appearance: 'none',
-          fontSize: 16,
+          fontSize: '15px',
+          lineHeight: '24px',
+          letterSpacing: '-0.015em',
           background: 'none',
-          fontFamily: 'Inter',
+          fontFamily: 'Font',
           color: useColor({ color: 'foreground' }),
           fontWeight: 'normal',
         }}
@@ -195,22 +221,16 @@ export const Input: FunctionComponent<InputProps> = ({
         <Down
           onClick={useDropdown(
             options,
-            stateValue,
-            () => {
-              return (
-                value: string | number | undefined,
-                index: number | undefined
-              ) => {
-                if (index !== undefined) {
-                  update(value === undefined ? '' : value)
-                }
+            (value, index) => {
+              if (index !== undefined) {
+                update(value === undefined ? '' : value)
               }
             },
-            [update],
+            stateValue,
             {
-              align: 'flex-end',
-              x: ({ x }) => x - 15,
-              y: ({ y }) => y + 15,
+              align: 'end',
+              x: ({ left }) => left - 15,
+              y: ({ top }) => top + 15,
               width: () => 'auto',
               selectTarget: (target: Element) => {
                 return target.parentNode
@@ -222,10 +242,10 @@ export const Input: FunctionComponent<InputProps> = ({
         <Clear
           color={
             isWrong
-              ? { color: 'secondary' }
+              ? { color: 'error' }
               : isFocus
               ? { color: 'primary' }
-              : { color: 'foreground', scale: 4 }
+              : { color: 'foreground', tone: 4 }
           }
           style={{
             // @ts-ignore
@@ -236,12 +256,14 @@ export const Input: FunctionComponent<InputProps> = ({
       )}
       {isFocus && (errorText || helperText) ? (
         <SubText
-          color={{ color: isWrong ? 'secondary' : 'foreground' }}
+          color={{
+            color: isWrong ? 'error' : 'foreground',
+            tone: isWrong ? 1 : 3,
+          }}
           style={{
-            marginLeft: 15,
-            fontWeight: 'normal',
+            marginLeft: 4,
             position: 'absolute',
-            bottom: -20,
+            bottom: -25,
             left: 0,
           }}
         >
