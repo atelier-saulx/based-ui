@@ -72,11 +72,10 @@ export const Tooltip: FunctionComponent<TooltipProps> = (initialProps) => {
             borderRadius: 2,
             width: position ? position.width : 'auto',
             background: useColor({ color: 'background' }),
-
+            overflow: 'hidden',
             padding: 10,
             alignItems: 'center',
             display: 'flex',
-            // justifyContent: 'center',
             minWidth: position ? position.minWidth : 200,
             maxHeight: 'calc(100vh-30px)',
             position: 'relative',

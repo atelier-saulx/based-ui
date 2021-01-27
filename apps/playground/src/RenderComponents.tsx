@@ -1,32 +1,49 @@
 import React, { CSSProperties } from 'react'
 import { useColor } from '@based/theme'
-import { SubText, useTooltip, Text } from '@based/ui'
+import { SubText, useTooltip, Text, Code } from '@based/ui'
 
 const parseProps = (p) => {
   let children = []
 
   for (let key in p) {
-    const value = p[key]
+    let value = p[key]
+
+    let body
+
+    if (typeof value === 'function') {
+      value = value.toString()
+
+      body = (
+        <Text singleLine style={{ opacity: 0.5 }}>
+          {value}
+        </Text>
+      )
+    } else {
+      if (typeof value === 'object') {
+        value = JSON.stringify(value, null, 2)
+        body = <Code style={{ opacity: 0.5 }}>{value}</Code>
+      } else {
+        value = JSON.stringify(value, null, 2)
+        body = <Text style={{ opacity: 0.5 }}>{value}</Text>
+      }
+    }
 
     children.push(
       <div
         key={key}
         style={{
+          width: '100%',
           display: 'flex',
           marginRight: 15,
           justifyContent: 'space-between',
-          border: '1px solid blue',
           marginBottom: 10,
           marginTop: 10,
         }}
       >
-        <Text
-          style={{ minWidth: 100, maxWidth: 100 }}
-          color={{ color: 'background' }}
-        >
+        <Text weight="medium" style={{ minWidth: 100, maxWidth: 100 }}>
           {key}
         </Text>
-        <Text color={{ color: 'background' }}>{JSON.stringify(value)}</Text>
+        {body}
       </div>
     )
   }
@@ -44,7 +61,16 @@ const parseProps = (p) => {
 }
 
 const PropsInfo = ({ componentProps }) => {
-  return <div>{parseProps(componentProps)}</div>
+  return (
+    <div
+      style={{
+        width: '100%',
+        padding: 20,
+      }}
+    >
+      {parseProps(componentProps)}
+    </div>
+  )
 }
 
 const ComponentWrapper = ({ Component, grid, componentProps, children }) => {

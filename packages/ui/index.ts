@@ -31,6 +31,7 @@ export {
   useMenu,
 }
 
+export { Code } from './Components/Text/Code'
 export { Text } from './Components/Text'
 export { Title } from './Components/Text/Title'
 export { SubText } from './Components/Text/SubText'
