@@ -4,6 +4,8 @@ import React, {
   createContext,
   useContext,
   useEffect,
+  EventHandler,
+  SyntheticEvent,
 } from 'react'
 
 const addListeners = () => {
@@ -24,12 +26,22 @@ if (typeof window !== 'undefined') {
   addListeners()
 }
 
-export const SelectionContext = createContext()
+export type SelectableContext = {
+  data: any
+  children: { [key: string]: (...args: any[]) => void }
+  selection: Set<any>
+}
+
+const defCtx = {
+  data: [],
+  children: {},
+  selection: new Set(),
+}
+
+export const SelectionContext = createContext(defCtx)
 SelectionContext.displayName = 'SelectionContext'
 
 export const SelectableCollection = ({ children, data }) => {
-  // dont make new Sets all the time!
-  // need to gaurd it some how
   return (
     <SelectionContext.Provider
       value={{
@@ -45,7 +57,6 @@ export const SelectableCollection = ({ children, data }) => {
 
 export const selection = new Map()
 
-// posibility for withing a context
 export const getSelection = () => {
   return [...selection.keys()]
 }
@@ -77,7 +88,10 @@ export const clearSelection = () => {
   })
 }
 
-export const useClick = (onClick, refs) => {
+export const useClick = (
+  onClick: EventHandler<SyntheticEvent>,
+  refs: any[] = []
+) => {
   return useCallback((e) => {
     if (!e.shiftKey) {
       onClick(e)
