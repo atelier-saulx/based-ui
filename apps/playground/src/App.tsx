@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useColor, useTheme } from '@based/theme'
 import categories from './categories'
-import { Overlay, Input } from '@based/ui'
+import { Overlay, UploadIndicator, Input } from '@based/ui'
 
 const Category = ({ category }) => {
   const Render = category.Render
@@ -18,7 +18,7 @@ const App = () => {
   const [filter, setFilter] = useState(window.location.hash.slice(1))
 
   return (
-    <>
+    <UploadIndicator>
       <div
         style={{
           padding: '15px',
@@ -53,7 +53,7 @@ const App = () => {
           })}
       </div>
       <Overlay />
-    </>
+    </UploadIndicator>
   )
 }
 
