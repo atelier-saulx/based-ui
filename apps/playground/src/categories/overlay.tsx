@@ -28,7 +28,7 @@ const ModalChildren = ({ children }) => {
       >
         <Button
           {...useContextualMenu(() => {
-            console.log('CONTEXTUAL!')
+            return 'yes!'
           })}
         >
           Snurky pants
@@ -78,7 +78,6 @@ export default {
         },
       ],
     },
-
     {
       name: 'tooltip',
       category: 'overlay',
@@ -95,20 +94,13 @@ export default {
           }, [])
 
           return (
-            <Button
-              color={{ color: 'foreground' }}
-              {...useTooltip(text, {
-                align: 'start',
-                width: 'auto',
-              })}
-            >
+            <Button color={{ color: 'foreground' }} {...useTooltip(text)}>
               tooltip
             </Button>
           )
         },
       ],
     },
-
     {
       name: 'modal',
       category: 'overlay',

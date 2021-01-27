@@ -14,12 +14,14 @@ import useTooltip from './hooks/overlay/useTooltip'
 import useThrottledCallback from './hooks/useThrottledCallback'
 import useModal from './hooks/overlay/useModal'
 import useContextualMenu from './hooks/events/useContextualMenu'
-
+import useMultipleEvents from './hooks/events/useMultipleEvents'
 import { useKeyDown, useKeyUp } from './hooks/events/useKeyboard'
+import useHover from './hooks/events/useHover'
 
 export {
   useContextualMenu,
   useOverlay,
+  useHover,
   useKeyDown,
   useKeyUp,
   useOverlayProps,
@@ -29,6 +31,7 @@ export {
   useModal,
   useDropdown,
   useMenu,
+  useMultipleEvents,
 }
 
 export { Code } from './Components/Text/Code'
@@ -43,4 +46,6 @@ export { Topbar } from './Components/Topbar/Topbar'
 export { FileUpload } from './Components/Upload/Upload'
 export { ContextualMenuItem } from './Components/Overlay/Menu'
 export { Input } from './Components/Input/Text'
+export { Select } from './Components/Input/Select'
 export { CheckBox, RadioButton } from './Components/Input/Enable'
+export { MultilineTextInput } from './Components/Input/Multiline'

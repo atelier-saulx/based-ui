@@ -145,6 +145,7 @@ export const Input: FunctionComponent<InputProps> = ({
       {...hover}
       style={{
         position: 'relative',
+
         paddingLeft: isFocus ? 11 : 12,
         paddingRight: isFocus ? 11 : 12,
         display: 'flex',
@@ -166,7 +167,7 @@ export const Input: FunctionComponent<InputProps> = ({
               : useColor({
                   color: 'foreground',
                   tone: 5,
-                  opacity: border ? 0.15 : 0,
+                  opacity: border ? 0.33 : 0,
                 })),
         ...style,
       }}
@@ -228,12 +229,11 @@ export const Input: FunctionComponent<InputProps> = ({
             },
             stateValue,
             {
-              align: 'end',
+              align: 'flex-end',
               x: ({ left }) => left - 15,
               y: ({ top }) => top + 15,
-              width: () => 'auto',
               selectTarget: (target: Element) => {
-                return target.parentNode
+                return target.parentNode.parentNode
               },
             }
           )}

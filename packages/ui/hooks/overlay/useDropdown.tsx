@@ -21,15 +21,12 @@ export default (
   options: DropdownOptions,
   select: SelectFn,
   value?: (string | number) | (string | number)[],
-  props: PositionProps & { multi?: boolean } = {}
+  props: PositionProps & { multi?: boolean } = {},
+  handler?: () => () => void
 ): ((
   e: Event | SyntheticEvent,
   selectionProps?: PropsWithChildren<any>
 ) => void) => {
-  if (!props.width) {
-    props.width = 'auto'
-  }
-
   const ctx = createOverlayContextRef({
     value,
     items: options,
@@ -40,6 +37,7 @@ export default (
     (e, extraProps) => {
       e.preventDefault()
       e.stopPropagation()
+      const cancel = handler && handler()
       const dropdown = (
         <OverlayContext.Provider value={ctx}>
           <Dropdown
@@ -78,7 +76,7 @@ export default (
           />
         </OverlayContext.Provider>
       )
-      addOverlay(dropdown, undefined, { transparent: true })
+      addOverlay(dropdown, cancel, { transparent: true })
       return true
     },
     [ctx]

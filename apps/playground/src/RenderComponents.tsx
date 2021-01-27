@@ -1,6 +1,13 @@
 import React, { CSSProperties } from 'react'
 import { useColor } from '@based/theme'
-import { SubText, useTooltip, Text, Code } from '@based/ui'
+import {
+  SubText,
+  useTooltip,
+  Text,
+  Code,
+  useMultipleEvents,
+  useHover,
+} from '@based/ui'
 
 const parseProps = (p) => {
   let children = []
@@ -47,7 +54,7 @@ const parseProps = (p) => {
           marginTop: 10,
         }}
       >
-        <Text weight="medium" style={{ minWidth: 100, maxWidth: 100 }}>
+        <Text weight="medium" style={{ minWidth: 150, maxWidth: 150 }}>
           {key}
         </Text>
         {body}
@@ -81,15 +88,25 @@ const PropsInfo = ({ componentProps }) => {
 }
 
 const ComponentWrapper = ({ Component, grid, componentProps, children }) => {
+  const [hover, isHover] = useHover()
   return (
     <div
       style={{
         marginBottom: '20px',
+        borderRadius: 4,
+        padding: 10,
         marginRight: grid ? '15px' : '0px',
+        border: isHover
+          ? '1px dashed ' +
+            useColor({ color: 'foreground', tone: 5, opacity: 0.5 })
+          : '1px solid rgba(0,0,0,0)',
       }}
-      {...useTooltip(<PropsInfo componentProps={componentProps} />, {
-        width: 500,
-      })}
+      {...useMultipleEvents(
+        useTooltip(<PropsInfo componentProps={componentProps} />, {
+          width: 500,
+        }),
+        hover
+      )}
     >
       <Component {...componentProps}>{children || null}</Component>
     </div>

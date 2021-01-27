@@ -122,13 +122,14 @@ export const Dropdown: FunctionComponent<PositionPropsFn & DropdownProps> = (
   const props = useOverlayProps<PositionPropsFn & DropdownProps>(initialProps)
   const { align, value, onChange, multi, items } = props
 
-  if (!props.minWidth) {
-    props.minWidth = 250
-  }
-
   const [elementRef, position] = useOverlayPosition(props)
   return (
-    <Shared position={position} align={align} ref={elementRef}>
+    <Shared
+      width={props.width}
+      position={position}
+      align={align}
+      ref={elementRef}
+    >
       {items.map((v, index) => {
         let label: string | number
         if (typeof v === 'object') {

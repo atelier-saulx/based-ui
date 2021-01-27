@@ -15,7 +15,7 @@ export const InnerShared = forwardRef<
     minWidth?: number | string
     style: CSSProperties
   }>
->(({ width, style, children, minWidth }, ref) => {
+>(({ width, style, children }, ref) => {
   return (
     <div
       ref={ref}
@@ -23,7 +23,7 @@ export const InnerShared = forwardRef<
         pointerEvents: 'all',
         borderRadius: 2,
         width: width,
-        minWidth: 256,
+        // minWidth: 256,
         background: useColor({ color: 'background' }),
         overflowY: 'auto',
         overflowX: 'hidden',

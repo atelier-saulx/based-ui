@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, useReducer, RefObject } from 'react'
 
-export type Align = 'start' | 'center' | 'end'
+export type Align = 'flex-start' | 'center' | 'flex-end'
 
 export type Target = (HTMLElement | Element | EventTarget) & {
   rect?: ClientRect
@@ -29,7 +29,6 @@ export type PositionProps = {
   y?: PosCalculation
   maxY?: MaxMinCalculation
   maxX?: MaxMinCalculation
-  minWidth?: MaxMinCalculation<number | string>
   align?: Align
 }
 
@@ -48,7 +47,6 @@ export type Position = {
   bottom?: number
   width?: number | string
   spaceOnTop?: boolean
-  correctedX?: number
   correctedY?: number
   elementRect?: ClientRect
   targetRect?: ClientRect
@@ -76,26 +74,27 @@ const maxXCalculation: MaxMinCalculation = (x, elem, align, _rect, pos) => {
     w = pos.width
   }
   const maxW = global.innerWidth - 30
-  if (x + w > maxW) {
-    const over = x + w - maxW
-    return x - over + 7.5
-  }
-  delete pos.correctedX
+
   if (align === 'center') {
     const diff = pos.containerWidth - w
     if (x + diff < 15) {
-      pos.correctedX = diff
-      return (-1 * diff) / 2 + 15
+      x = (-1 * diff) / 2 + 15
+    }
+    const actualW = (-1 * diff) / 2 + pos.containerWidth
+    if (x + actualW > maxW) {
+      const over = x + actualW - maxW
+      x = x - over + 12.5
+    }
+  } else {
+    if (x + w > maxW) {
+      const over = x + w - maxW
+      x = x - over + 12.5
     }
   }
   if (x < 15) {
     return 15
   }
   return x
-}
-
-const widthCalculation: PosCalculation<number | string> = ({ width }) => {
-  return width - 30
 }
 
 export type Resize = () => void
@@ -116,12 +115,11 @@ const getTargetRect = (
 export default ({
   target,
   selectTarget = selectSelf,
-  width = widthCalculation,
+  width = 'auto',
   x = xCalculation,
   y = yCalculation,
   maxY = maxYCalculation,
   maxX = maxXCalculation,
-  minWidth,
   align = 'center',
 }: PositionPropsFn): [
   RefObject<HTMLDivElement>,
@@ -142,19 +140,7 @@ export default ({
       pos.width =
         typeof width === 'function' ? width(rect, elementRect, align) : width
 
-      pos.containerWidth = Math.min(
-        typeof pos.width === 'number' ? pos.width : 0,
-        rect.width
-      )
-
-      if (minWidth) {
-        pos.minWidth =
-          typeof minWidth === 'function'
-            ? <number | string>(
-                minWidth(pos.width, elementRect, align, rect, pos)
-              )
-            : minWidth
-      }
+      pos.containerWidth = rect.width
 
       const calcedX = typeof x === 'function' ? x(rect, elementRect, align) : x
       const calcedY = typeof y === 'function' ? y(rect, elementRect, align) : y
@@ -174,11 +160,10 @@ export default ({
       if (pos.y < rect.top) {
         pos.spaceOnTop = true
         const windowHeight = global.innerHeight
+
         if (15 + elementRef.current.scrollHeight > rect.top) {
           if (elementRect.height > windowHeight - 40) {
             pos.bottom = null
-          } else {
-            // there is another case TODO: work out later
           }
         } else {
           pos.bottom = windowHeight - rect.top + 15

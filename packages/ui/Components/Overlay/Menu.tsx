@@ -176,28 +176,7 @@ export const ContextualMenuItem: FunctionComponent<ContextualMenuItemProps> = ({
 export const Menu: FunctionComponent<GenericOverlayProps> = (initialProps) => {
   const props = useOverlayProps(initialProps)
 
-  const {
-    align,
-    target,
-    selectTarget,
-    width = 256,
-    y,
-    x,
-    maxY = (y, elem, _align, rect) => {
-      if (y > global.innerHeight / 2) {
-        return y - elem.height - 25 - rect.height
-      }
-
-      const maxH = global.innerHeight - 30
-      if (y + elem.height > maxH) {
-        const over = y + elem.height - maxH
-        return y - over
-      }
-
-      return y
-    },
-    maxX,
-  } = props
+  const { align, target, selectTarget, width = 256, y, x, maxY, maxX } = props
   const [elementRef, position, resize] = useOverlayPosition({
     align,
     y,
@@ -224,7 +203,12 @@ export const Menu: FunctionComponent<GenericOverlayProps> = (initialProps) => {
   let content = props.content
 
   return (
-    <Shared ref={elementRef} position={position} align={align}>
+    <Shared
+      width={props.width}
+      ref={elementRef}
+      position={position}
+      align={align}
+    >
       <div
         style={{
           display: 'flex',

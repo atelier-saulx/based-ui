@@ -59,9 +59,7 @@ const genButtonProps = () => {
 
 export default {
   name: 'button',
-  Render: ({ category }) => (
-    <RenderComponents grid category={category} bg="#efefef" />
-  ),
+  Render: ({ category }) => <RenderComponents grid category={category} />,
   components: [
     {
       name: 'Button',

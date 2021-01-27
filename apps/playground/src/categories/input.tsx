@@ -1,12 +1,69 @@
 import React from 'React'
-import { Input, CheckBox, RadioButton } from '@based/ui'
+import {
+  Input,
+  CheckBox,
+  MultilineTextInput,
+  Select,
+  RadioButton,
+} from '@based/ui'
 import RenderComponents from '../RenderComponents'
-import { randomIcon } from './util'
+import { randomText } from './util'
 
 export default {
   name: 'input',
-  Render: ({ category }) => <RenderComponents grid category={category} />,
+  Render: ({ category }) => <RenderComponents category={category} />,
   components: [
+    {
+      name: 'MultilineTextInput',
+      Component: MultilineTextInput,
+      props: [
+        {
+          children: 'Hello',
+          onChange: () => {},
+          placeholder: 'Put text',
+        },
+        {
+          children: 'Hello Checked',
+          onChange: () => {},
+          value: randomText,
+          placeholder: 'Put text',
+        },
+      ],
+    },
+    {
+      name: 'Select',
+      Component: Select,
+      props: [
+        {
+          onChange: () => {},
+          placeholder: 'Select greeting',
+          options: ['Hello', 'Bye'],
+        },
+        {
+          onChange: () => {},
+          border: true,
+          multi: true,
+          placeholder: 'Select multiple greetings',
+          options: ['Hello', 'Bye', 'For You'],
+        },
+        {
+          onChange: () => {},
+          border: true,
+          multi: true,
+          placeholder: 'Select some things',
+          options: [
+            {
+              icon: 'time',
+              label: 'on time',
+            },
+            {
+              icon: 'date',
+              label: 'too late',
+            },
+          ],
+        },
+      ],
+    },
     {
       name: 'CheckBox',
       Component: CheckBox,

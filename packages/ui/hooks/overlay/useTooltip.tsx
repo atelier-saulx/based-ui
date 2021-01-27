@@ -1,7 +1,7 @@
 import { addOverlay, OnClose, removeOverlay } from '../../Components/Overlay'
-import { PositionProps } from './useOverlayPosition'
+import { PositionPropsFnOptional } from './useOverlayPosition'
 import { OverlayContext } from './useOverlayProps'
-import { Tooltip, TooltipProps } from '../../Components/Overlay/Tooltip'
+import { GenericOverlay } from '../../Components/Overlay/GenericOverlay'
 
 import React, {
   PropsWithChildren,
@@ -22,7 +22,7 @@ export type TooltipEvents = {
 export default function useTooltip(
   children: ReactChild | ReactChildren[],
   props: PropsWithChildren<
-    TooltipProps & PositionProps & { initialTimer?: number }
+    PositionPropsFnOptional & { initialTimer?: number }
   > = {},
   handler?: (selection: Event | any) => OnClose | undefined
 ): TooltipEvents {
@@ -58,9 +58,9 @@ export default function useTooltip(
         ctx.current.timer = setTimeout(() => {
           tooltip = (
             <OverlayContext.Provider value={ctx}>
-              <Tooltip target={target} {...props} {...extraProps}>
+              <GenericOverlay target={target} {...props} {...extraProps}>
                 {children}
-              </Tooltip>
+              </GenericOverlay>
             </OverlayContext.Provider>
           )
           addOverlay(
