@@ -1,12 +1,16 @@
-import React, { useState, useContext, useEffect } from 'react'
-import { ProgressContext, createProgress } from './ProgressContext'
+import React, { useState, useContext, useEffect, createContext } from 'react'
+import {
+  ProgressContext,
+  createProgressContext,
+  ProgressContextItem,
+} from './ProgressContext'
 import { ProgressIndicator } from '../ProgressIndicator/ProgressIndicator'
 import { InnerShared } from '../Overlay/Shared'
 import { Title } from '../Text/Title'
 import { Close } from '@based/icons'
 
-const Inner = ({ progress }) => {
-  const items = Object.values(progress.items)
+const Inner = ({ visible, progress }) => {
+  const items: ProgressContextItem[] = Object.values(progress.items)
   const [inProgress, update] = useState(false)
 
   useEffect(() => {
@@ -17,7 +21,7 @@ const Inner = ({ progress }) => {
   }, [progress.inProgress])
 
   return (
-    <div>
+    <div style={{ display: visible ? null : 'none' }}>
       <InnerShared
         style={{
           opacity: inProgress ? 1 : 0,
@@ -37,7 +41,7 @@ const Inner = ({ progress }) => {
           background: 'white',
         }}
       >
-        {items.map((v) => {
+        {items.map((v: ProgressContextItem) => {
           return (
             <div
               key={v.id}
@@ -60,13 +64,13 @@ const Inner = ({ progress }) => {
                   value={v.progress}
                   style={{ marginRight: 20 }}
                 />
-                <Subtitle>
+                <Title size="small">
                   {`${
                     v.type === 'video' && v.progress > 99
                       ? 'Transcoding...'
                       : v.name
                   }`}
-                </Subtitle>
+                </Title>
               </div>
               <Close
                 style={{
@@ -96,42 +100,49 @@ const Inner = ({ progress }) => {
 }
 
 const UploadIndicatorNested = () => {
-  const progress = useContext(ProgressContext)
+  const progressContext = useContext(
+    createContext(createProgressContext({ url: null, service: null }))
+  )
   const [, update] = useState()
-  const [visible, updateVisible] = useState()
+  const [visible, updateVisible] = useState<boolean>()
 
   useEffect(() => {
-    progress.listeners.add(update)
+    progressContext.listeners.add(update)
     return () => {
-      progress.listeners.delete(update)
+      progressContext.listeners.delete(update)
     }
   }, [])
 
   useEffect(() => {
     let t
-    if (progress.inProgress) {
-      updateVisible(progress.inProgress)
+    if (progressContext.inProgress) {
+      updateVisible(progressContext.inProgress)
     } else {
       t = setTimeout(() => {
-        updateVisible(progress.inProgress)
+        updateVisible(progressContext.inProgress)
       }, 1100)
     }
     return () => clearTimeout(t)
-  }, [progress.inProgress])
+  }, [progressContext.inProgress])
 
   if (!visible) {
     return null
   }
 
-  return <Inner visible={visible} progress={progress} />
+  return <Inner visible={visible} progress={progressContext} />
 }
 
+const Context = createContext({})
+
 export const UploadIndicator = ({ children, ...props }) => {
-  const progress = createProgress(props)
+  // const progress = createProgressContext(props)
+  const progressContext = useContext(
+    createContext(createProgressContext({ url: null, service: null }))
+  )
   return (
-    <ProgressContext.Provider value={progress}>
+    <Context.Provider value={progressContext}>
       {children}
       <UploadIndicatorNested />
-    </ProgressContext.Provider>
+    </Context.Provider>
   )
 }

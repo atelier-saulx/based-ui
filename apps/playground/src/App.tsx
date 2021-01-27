@@ -2,6 +2,7 @@ import React from 'react'
 import { useTheme } from '@based/theme'
 import categories from './categories'
 import { Overlay } from '@based/ui'
+import { UploadIndicator } from '@based/ui/Components/Upload/UploadIndicator'
 
 const Category = ({ category }) => {
   const Render = category.Render
@@ -20,7 +21,7 @@ const App = () => {
   console.log(hash)
 
   return (
-    <>
+    <UploadIndicator>
       <div
         style={{
           padding: '15px',
@@ -32,7 +33,7 @@ const App = () => {
         })}
       </div>
       <Overlay />
-    </>
+    </UploadIndicator>
   )
 }
 

@@ -11,7 +11,7 @@ import { Position, Align } from '../../hooks/overlay/useOverlayPosition'
 export const InnerShared = forwardRef<
   HTMLDivElement,
   PropsWithChildren<{
-    width: number | string
+    width?: number | string
     minWidth?: number | string
     style: CSSProperties
   }>
