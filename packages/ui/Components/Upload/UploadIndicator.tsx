@@ -24,6 +24,7 @@ const Inner = ({ visible, progress }) => {
     <div style={{ display: visible ? null : 'none' }}>
       <InnerShared
         style={{
+          overflowY: 'hidden',
           opacity: inProgress ? 1 : 0,
           transform: inProgress
             ? 'translate3d(0px,0px,0px)'
@@ -92,8 +93,6 @@ const Inner = ({ visible, progress }) => {
             </div>
           )
         })}
-
-        {/*  */}
       </InnerShared>
     </div>
   )

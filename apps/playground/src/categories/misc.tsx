@@ -68,6 +68,10 @@ export default {
           value: 'This is value',
           fake: true,
         },
+        {
+          value: 'This is also a value',
+          fake: true,
+        },
       ],
     },
   ],
