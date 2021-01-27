@@ -23,27 +23,30 @@ export default (
       clearTimeout(ctx.current.timer)
     }
   }, [])
-  return useCallback((e, extraProps) => {
-    e.preventDefault()
-    e.stopPropagation()
-    console.log('MODAL')
-    const modal = (
-      <OverlayContext.Provider value={ctx}>
-        <Modal
-          {...props}
-          {...extraProps}
-          onClose={() => {
-            removeOverlay(modal)
-            if (props.onClose) props.onClose()
-          }}
-        >
-          {children}
-        </Modal>
-      </OverlayContext.Provider>
-    )
-    addOverlay(modal, () => {
-      if (props.onClose) props.onClose()
-    })
-    return true
-  }, [])
+  return useCallback(
+    (e, extraProps) => {
+      e.preventDefault()
+      e.stopPropagation()
+      console.log('MODAL')
+      const modal = (
+        <OverlayContext.Provider value={ctx}>
+          <Modal
+            {...props}
+            {...extraProps}
+            onClose={() => {
+              removeOverlay(modal)
+              if (props.onClose) props.onClose()
+            }}
+          >
+            {children}
+          </Modal>
+        </OverlayContext.Provider>
+      )
+      addOverlay(modal, () => {
+        if (props.onClose) props.onClose()
+      })
+      return true
+    },
+    [ctx]
+  )
 }

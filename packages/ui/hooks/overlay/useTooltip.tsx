@@ -21,9 +21,9 @@ export type TooltipEvents = {
 
 export default function useTooltip(
   children: ReactChild | ReactChildren[],
-  props?: PropsWithChildren<
+  props: PropsWithChildren<
     TooltipProps & PositionProps & { initialTimer?: number }
-  >,
+  > = {},
   handler?: (selection: Event | any) => OnClose | undefined
 ): TooltipEvents {
   const ctx = createOverlayContextRef({ children, ...props })
@@ -73,7 +73,6 @@ export default function useTooltip(
           )
         }, props.initialTimer || 500)
       },
-
       [ctx]
     ),
   }

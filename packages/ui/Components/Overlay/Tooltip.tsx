@@ -59,66 +59,20 @@ export const Tooltip: FunctionComponent<TooltipProps> = (initialProps) => {
 
   const props = useOverlayProps(initialProps)
 
-  const {
-    align = 'center',
-    target,
-    selectTarget,
-    width = () => 'auto',
-    y,
-    x,
-    maxY = (y, elem, _align, rect) => {
-      const maxH = global.innerHeight - 30
-      if (
-        y + elem.height > maxH ||
-        (y < rect.height + rect.top + 10 && y > rect.top - 10)
-      ) {
-        return y + elem.height - rect.top
-      }
-      return y
-    },
-    maxX = (x, elem, align, rect, pos) => {
-      const maxW = global.innerWidth - 30
-      if (x + elem.width > maxW) {
-        const over = x + elem.width - maxW
-        return x - over / 2 + 7.5
-      }
-      delete pos.correctedX
-      if (align === 'center') {
-        const diff = pos.containerWidth - elem.width
-        if (x + diff < 15) {
-          pos.correctedX = diff
-          return (-1 * diff) / 2 + 15
-        }
-      }
-
-      if (x < 15) {
-        return 15
-      }
-      return x
-    },
-  } = props
-
-  const [elementRef, position] = useOverlayPosition({
-    y,
-    x,
-    align,
-    target,
-    selectTarget,
-    width,
-    maxY,
-    maxX,
-  })
+  const [elementRef, position] = useOverlayPosition(props)
 
   let arrowX = 0
 
-  if (position) {
-    const tX = position.targetRect.left + position.targetRect.width / 2
-    if (position.x + position.elementRect.width > global.innerWidth - 16) {
-      arrowX = (tX - position.x) / 2
-    } else if (position.correctedX) {
-      arrowX = position.correctedX + tX + 7.5
-    }
-  }
+  // if (position) {
+  //   const tX = position.targetRect.left + position.targetRect.width / 2
+  //   if (position.x + position.elementRect.width > global.innerWidth - 16) {
+  //     arrowX = (tX - position.x) / 2
+  //   } else if (position.correctedX) {
+  //     arrowX = position.correctedX + tX + 7.5
+  //   }
+
+  //   console.log(position, arrowX)
+  // }
 
   const type = typeof props.children
 
@@ -134,6 +88,8 @@ export const Tooltip: FunctionComponent<TooltipProps> = (initialProps) => {
 
   const spaceOnTop = position && position.spaceOnTop
 
+  console.log('???', position)
+
   return (
     <div
       style={{
@@ -144,13 +100,14 @@ export const Tooltip: FunctionComponent<TooltipProps> = (initialProps) => {
         left: position ? position.x : 0,
         bottom: position ? position.bottom : null,
         display: 'flex',
-        justifyContent: align,
+        // justifyContent: props.align,
         pointerEvents: 'none',
       }}
     >
       <div
         style={{
           display: 'flex',
+
           position: 'relative',
           flexDirection: 'column',
           justifyContent: spaceOnTop ? 'flex-end' : 'flex-start',
@@ -166,7 +123,7 @@ export const Tooltip: FunctionComponent<TooltipProps> = (initialProps) => {
             padding: 10,
             alignItems: 'center',
             display: 'flex',
-            justifyContent: 'center',
+            // justifyContent: 'center',
             minWidth: position ? position.minWidth : 200,
             maxHeight: 'calc(100vh-30px)',
             position: 'relative',

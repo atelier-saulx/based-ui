@@ -1,8 +1,7 @@
 import React, { CSSProperties } from 'react'
 import { useColor } from '@based/theme'
-import { SubText } from '@based/ui'
+import { SubText, useTooltip, Text } from '@based/ui'
 
-/*
 const parseProps = (p) => {
   let children = []
 
@@ -11,12 +10,23 @@ const parseProps = (p) => {
 
     children.push(
       <div
+        key={key}
         style={{
+          display: 'flex',
           marginRight: 15,
+          justifyContent: 'space-between',
+          border: '1px solid blue',
+          marginBottom: 10,
+          marginTop: 10,
         }}
       >
-        <Text style={{ opacity: 0.75 }}>{key}</Text>
-        <Text style={{ opacity: 0.3 }}>{JSON.stringify(value)}</Text>
+        <Text
+          style={{ minWidth: 100, maxWidth: 100 }}
+          color={{ color: 'background' }}
+        >
+          {key}
+        </Text>
+        <Text color={{ color: 'background' }}>{JSON.stringify(value)}</Text>
       </div>
     )
   }
@@ -24,7 +34,7 @@ const parseProps = (p) => {
   return (
     <div
       style={{
-        display: 'flex',
+        width: '100%',
         marginBottom: 15,
       }}
     >
@@ -32,7 +42,26 @@ const parseProps = (p) => {
     </div>
   )
 }
-*/
+
+const PropsInfo = ({ componentProps }) => {
+  return <div>{parseProps(componentProps)}</div>
+}
+
+const ComponentWrapper = ({ Component, grid, componentProps, children }) => {
+  return (
+    <div
+      style={{
+        marginBottom: '15px',
+        marginRight: grid ? '15px' : '0px',
+      }}
+      {...useTooltip(<PropsInfo componentProps={componentProps} />, {
+        width: 500,
+      })}
+    >
+      <Component {...componentProps}>{children || null}</Component>
+    </div>
+  )
+}
 
 const RenderComponents = ({ category, grid, bg = 'transparent' }) => {
   const s: CSSProperties = {
@@ -99,16 +128,13 @@ const RenderComponents = ({ category, grid, bg = 'transparent' }) => {
                   }
                   const { Component } = v
                   return (
-                    <Component
-                      style={{
-                        marginBottom: '15px',
-                        marginRight: grid ? '15px' : '0px',
-                      }}
+                    <ComponentWrapper
                       key={i}
-                      {...props}
-                    >
-                      {children || null}
-                    </Component>
+                      Component={Component}
+                      grid={grid}
+                      componentProps={p}
+                      children={children}
+                    />
                   )
                 })}
               </div>

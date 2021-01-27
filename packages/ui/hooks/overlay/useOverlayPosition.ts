@@ -70,13 +70,20 @@ const maxYCalculation: MaxMinCalculation = (y, elem) => {
 
 const maxXCalculation: MaxMinCalculation = (x, elem, align, _rect, pos) => {
   const maxW = global.innerWidth - 30
-  if (x + elem.width > maxW) {
-    const over = x + elem.width - maxW
+
+  console.log(x, elem.width, pos.width, maxW)
+
+  if (x + pos.width > maxW) {
+    console.log('hello')
+
+    const over = x + pos.width - maxW
     return x - over + 7.5
   }
   delete pos.correctedX
   if (align === 'center') {
-    const diff = pos.containerWidth - elem.width
+    console.log('hello xx')
+
+    const diff = pos.containerWidth - pos.width
     if (x + diff < 15) {
       pos.correctedX = diff
       return (-1 * diff) / 2 + 15
@@ -125,7 +132,7 @@ export default ({
       pos.width =
         typeof width === 'function' ? width(rect, elementRect, align) : width
 
-      pos.containerWidth = Math.max(
+      pos.containerWidth = Math.min(
         typeof pos.width === 'number' ? pos.width : 0,
         rect.width
       )
