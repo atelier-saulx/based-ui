@@ -23,8 +23,15 @@ const parseProps = (p) => {
         value = JSON.stringify(value, null, 2)
         body = <Code style={{ opacity: 0.5 }}>{value}</Code>
       } else {
-        value = JSON.stringify(value, null, 2)
-        body = <Text style={{ opacity: 0.5 }}>{value}</Text>
+        if (typeof value === 'string') {
+          if (value.length > 350) {
+            value = value.slice(0, 350) + '...'
+          }
+          body = <Text style={{ opacity: 0.5 }}>{value}</Text>
+        } else {
+          value = JSON.stringify(value, null, 2)
+          body = <Text style={{ opacity: 0.5 }}>{value}</Text>
+        }
       }
     }
 
