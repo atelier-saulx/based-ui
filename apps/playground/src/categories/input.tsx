@@ -4,6 +4,7 @@ import {
   CheckBox,
   MultilineTextInput,
   Select,
+  DateTimeInput,
   RadioButton,
 } from '@based/ui'
 import RenderComponents from '../RenderComponents'
@@ -11,8 +12,24 @@ import { randomText } from './util'
 
 export default {
   name: 'input',
-  Render: ({ category }) => <RenderComponents category={category} />,
+  Render: ({ category }) => (
+    <RenderComponents grid={false} category={category} />
+  ),
   components: [
+    {
+      name: 'DateTimeInput',
+      Component: DateTimeInput,
+      props: [
+        {
+          onChange: () => {},
+        },
+        {
+          onChange: () => {},
+          value: randomText,
+        },
+      ],
+    },
+
     {
       name: 'MultilineTextInput',
       Component: MultilineTextInput,

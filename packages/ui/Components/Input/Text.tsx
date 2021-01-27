@@ -60,6 +60,8 @@ export const Input: FunctionComponent<InputProps> = ({
   identifier,
   progress,
 }) => {
+  // add these identifier refs everywhere...
+
   const identifierRef = useRef(identifier)
   const initialValue = useRef(value)
   const [stateValue, setValue] = useState(value)

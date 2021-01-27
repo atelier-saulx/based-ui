@@ -39,9 +39,12 @@ export const Select: FunctionComponent<SelectInputProps> = ({
   color = { color: 'background', tone: 1 },
   multi,
   border,
+  identifier,
   value = multi ? [] : '',
   style,
 }) => {
+  // make identifier better
+
   const [stateValue, setValue] = useState<
     (string | number) | (string | number)[]
   >(value)

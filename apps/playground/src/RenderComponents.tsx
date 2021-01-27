@@ -104,6 +104,7 @@ const ComponentWrapper = ({ Component, grid, componentProps, children }) => {
       {...useMultipleEvents(
         useTooltip(<PropsInfo componentProps={componentProps} />, {
           width: 500,
+          initialTimer: 1e3,
         }),
         hover
       )}
