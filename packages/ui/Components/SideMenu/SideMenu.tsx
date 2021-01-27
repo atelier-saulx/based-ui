@@ -8,12 +8,12 @@ type FooterProps = {
   title: string
   type: string // ?
   label: string // ?
-  children?: FooterProps[]
+  items?: FooterProps[]
 }
 
 type SideMenuProps = {
   style: CSSProperties
-  children: SideMenuProps[]
+  items: SideMenuProps[]
   Logo: typeof React.Component
   footer: FooterProps[]
   type: string
@@ -21,13 +21,13 @@ type SideMenuProps = {
 }
 
 export const SideMenu: FunctionComponent<SideMenuProps> = ({
-  children,
+  items,
   style,
   Logo,
   footer,
 }) => {
-  const wrapChildren = children.map((child, index) => {
-    if (child.type === 'label') {
+  const wrapItems = items.map((item, index) => {
+    if (item.type === 'label') {
       return (
         <Title
           size="small"
@@ -38,11 +38,11 @@ export const SideMenu: FunctionComponent<SideMenuProps> = ({
           color={{ color: 'foreground' }}
           key={index}
         >
-          {child.label || child.children}
+          {item.label || item.items}
         </Title>
       )
     }
-    return <SideMenuItem key={index} {...child} />
+    return <SideMenuItem key={index} {...item} />
   })
 
   return (
@@ -73,7 +73,7 @@ export const SideMenu: FunctionComponent<SideMenuProps> = ({
           <Logo />
         </div>
       ) : null}
-      {children ? (
+      {items ? (
         footer ? (
           <div
             style={{
@@ -83,10 +83,10 @@ export const SideMenu: FunctionComponent<SideMenuProps> = ({
               flexDirection: 'column',
             }}
           >
-            {wrapChildren}
+            {wrapItems}
           </div>
         ) : (
-          wrapChildren
+          wrapItems
         )
       ) : null}
       {footer ? (
@@ -97,8 +97,8 @@ export const SideMenu: FunctionComponent<SideMenuProps> = ({
             flexGrow: 0,
           }}
         >
-          {footer.map((child, index) => {
-            if (child.type === 'label') {
+          {footer.map((item, index) => {
+            if (item.type === 'label') {
               return (
                 <Title
                   size="small"
@@ -109,11 +109,11 @@ export const SideMenu: FunctionComponent<SideMenuProps> = ({
                   color={{ color: 'foreground' }}
                   key={index}
                 >
-                  {child.label || child.children}
+                  {item.label || item.items}
                 </Title>
               )
             }
-            return <SideMenuItem key={index} {...child} />
+            return <SideMenuItem key={index} {...item} />
           })}
         </div>
       ) : null}

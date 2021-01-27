@@ -20,14 +20,14 @@ type SideMenuItemProps = {
   onClick?: (event: SyntheticEvent, meta: object) => {}
   active?: boolean
   data?: GenericEventHandler
-  children?: SideMenuItemProps[]
+  items?: SideMenuItemProps[]
 }
 
 export const SideMenuItem: FunctionComponent<SideMenuItemProps> = ({
   title,
   icon,
   style,
-  children,
+  items,
   onClick,
   active,
   data,
@@ -35,14 +35,14 @@ export const SideMenuItem: FunctionComponent<SideMenuItemProps> = ({
   const [hover, isHover] = useHover()
   const [expanded, toggleExpand] = useReducer((v) => !v, false)
 
-  const ItemIcon = children ? Expand : icon ? iconFromString(icon) : null
+  const ItemIcon = items ? Expand : icon ? iconFromString(icon) : null
 
   return (
     <>
       <div
         {...hover}
         onClick={useCallback((e) => {
-          if (children) {
+          if (items) {
             toggleExpand()
           }
           if (onClick) {
@@ -88,9 +88,9 @@ export const SideMenuItem: FunctionComponent<SideMenuItemProps> = ({
           {title}
         </Text>
       </div>
-      {expanded && children ? (
+      {expanded && items ? (
         <div style={{ marginLeft: 14 }}>
-          {children.map((v, i) => (
+          {items.map((v, i) => (
             <SideMenuItem key={i} {...v} />
           ))}
         </div>

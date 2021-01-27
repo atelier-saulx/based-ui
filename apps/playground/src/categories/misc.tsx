@@ -23,7 +23,7 @@ export default {
       Component: SideMenu,
       props: [
         {
-          children: [
+          items: [
             {
               title: 'Shows',
               icon: 'Shows',
@@ -39,7 +39,7 @@ export default {
             },
             {
               title: 'SubItems',
-              children: [
+              items: [
                 {
                   title: 'Subitem 1',
                   icon: 'Custom',

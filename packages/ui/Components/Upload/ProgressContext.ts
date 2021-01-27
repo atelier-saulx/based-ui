@@ -19,7 +19,7 @@ export type ProgressContextItem = {
   mime: string
   progress: number
   type: string
-  removed: boolean
+  removed?: boolean
 }
 
 export const createProgressContext = ({url, service}: ProgressContext): ProgressContext => {
