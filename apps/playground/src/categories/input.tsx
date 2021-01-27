@@ -5,6 +5,7 @@ import {
   MultilineTextInput,
   Select,
   DateTimeInput,
+  ColorInput,
   RadioButton,
 } from '@based/ui'
 import RenderComponents from '../RenderComponents'
@@ -16,6 +17,23 @@ export default {
     <RenderComponents grid={false} category={category} />
   ),
   components: [
+    {
+      name: 'Color',
+      Component: ColorInput,
+      props: [
+        {
+          border: true,
+          placeholder: 'Hello select color',
+          onChange: (v) => {
+            console.log(v)
+          },
+        },
+        {
+          value: '#ff0000',
+          onChange: () => {},
+        },
+      ],
+    },
     {
       name: 'DateTimeInput',
       Component: DateTimeInput,
