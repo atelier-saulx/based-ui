@@ -171,7 +171,7 @@ export const Input: FunctionComponent<InputProps> = ({
         ...style,
       }}
     >
-      {progress !== null ? (
+      {progress !== null && progress !== undefined ? (
         <div style={{ marginRight: 9 }}>
           <ProgressIndicator value={progress} />
         </div>
