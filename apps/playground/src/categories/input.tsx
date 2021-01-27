@@ -21,11 +21,15 @@ export default {
       Component: DateTimeInput,
       props: [
         {
-          onChange: () => {},
+          border: true,
+          onChange: (v) => {
+            console.log(v)
+          },
         },
         {
+          border: true,
+          value: Date.now(),
           onChange: () => {},
-          value: randomText,
         },
       ],
     },
