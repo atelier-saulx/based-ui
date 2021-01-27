@@ -11,14 +11,14 @@ import hexRgb from 'hex-rgb'
 import rgbHex from 'rgb-hex'
 import './style.css'
 
-const isHex = (value) =>
+const isHex = (value: string): boolean =>
   value && /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(value)
 
-const isRgb = (value) => {
-  value && /^rgb\((\d+),(\d+),(\d+)\)$/.test(value)
+const isRgb = (value: string): boolean => {
+  return value && /^rgb\((\d+),(\d+),(\d+)\)$/.test(value)
 }
 
-const toRgb = (value) => {
+const toRgb = (value: string): string => {
   if (value && isHex(value)) {
     const x = hexRgb(value)
     if (x) {
@@ -35,7 +35,7 @@ type ColorInputProps = {
   autoFocus?: boolean
   onChange: (value: string) => void
   identifier?: any
-  value?: string | number
+  value?: string
   color?: Color
 }
 
@@ -64,18 +64,19 @@ const Text = ({ onChange, value, placeholder, focus, blur, right }) => {
   )
 }
 
-export const ColorInput = ({
+export const ColorInput: FunctionComponent<ColorInputProps> = ({
   value = '',
   onChange,
   autoFocus,
   identifier,
   border,
   style,
+  placeholder,
   color = { color: 'background', tone: 1 },
 }) => {
   const identifierRef = useRef(identifier)
   const initialValue = useRef(value)
-  const [stateValue, setValue] = useState(value)
+  const [stateValue, setValue] = useState<string>(value)
   const [isFocus, setFocus] = useState(false)
   const [hover, isHover] = useHover()
 
@@ -160,7 +161,7 @@ export const ColorInput = ({
             isHex(stateValue)
               ? stateValue
               : isRgb(stateValue)
-              ? rgbHex(stateValue)
+              ? '#' + rgbHex(stateValue)
               : '#ffffff'
           }
           onChange={update}
@@ -197,13 +198,11 @@ export const ColorInput = ({
           }}
         >
           <Text
+            placeholder={placeholder}
             value={toRgb(stateValue)}
             onChange={update}
             blur={blur}
             focus={focus}
-            style={{
-              minWidth: '100%',
-            }}
           />
         </div>
       </div>

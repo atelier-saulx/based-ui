@@ -54,7 +54,8 @@ const DateTimeInput: FunctionComponent<DateTimeProps> = ({
     return state
   }, value && new Date(value))
 
-  const time = s && s.getHours() + ':' + s.getMinutes()
+  const time = s && addZero(s.getHours()) + ':' + addZero(s.getMinutes())
+
   const date =
     s &&
     s.getFullYear() +
