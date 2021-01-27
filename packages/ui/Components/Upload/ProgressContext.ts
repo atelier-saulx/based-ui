@@ -20,6 +20,7 @@ export type ProgressContextItem = {
   progress: number
   type: string
   removed?: boolean
+  isComplete?: boolean
 }
 
 export const createProgressContext = ({url, service}: ProgressContext): ProgressContext => {
