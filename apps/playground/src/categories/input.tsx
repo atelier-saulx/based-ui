@@ -66,6 +66,10 @@ export default {
                 identifier={s.id}
               />
               <Button
+                style={{
+                  marginTop: 15,
+                  marginLeft: 15,
+                }}
                 onClick={() => {
                   updateExternal({
                     id: ~~(Math.random() * 1000),
@@ -73,7 +77,7 @@ export default {
                   })
                 }}
               >
-                Update {s.value}
+                Update
               </Button>
             </>
           )

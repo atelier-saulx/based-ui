@@ -2,12 +2,14 @@ import React, { FunctionComponent, CSSProperties } from 'react'
 import { useColor } from '@based/theme'
 import { Title } from '../Text/Title'
 import { SideMenuItem } from './SideMenuItem'
+import { TextValue } from '@based/i18n'
+import { IconName } from '@based/icons'
 
 type FooterProps = {
-  icon: string
-  title: string
+  icon: IconName
+  title: TextValue
   type: string // ?
-  label: string // ?
+  label: TextValue // ?
   items?: FooterProps[]
 }
 
@@ -38,7 +40,7 @@ export const SideMenu: FunctionComponent<SideMenuProps> = ({
           color={{ color: 'foreground' }}
           key={index}
         >
-          {item.label || item.items}
+          {item.label}
         </Title>
       )
     }
@@ -109,7 +111,7 @@ export const SideMenu: FunctionComponent<SideMenuProps> = ({
                   color={{ color: 'foreground' }}
                   key={index}
                 >
-                  {item.label || item.items}
+                  {item.label}
                 </Title>
               )
             }

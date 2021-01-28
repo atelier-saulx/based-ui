@@ -113,9 +113,8 @@ export const MultilineTextInput: FunctionComponent<MultilineInputProps> = ({
               (isWrong
                 ? useColor({ color: 'error' })
                 : useColor({
-                    color: 'foreground',
-                    tone: 5,
-                    opacity: border ? 0.33 : 0,
+                    color: 'divider',
+                    opacity: border ? 1 : 0,
                   })),
           paddingLeft: isFocus ? 11 : 12,
           paddingRight: isFocus ? 11 : 12,

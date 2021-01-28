@@ -123,9 +123,8 @@ export const ColorInput: FunctionComponent<ColorInputProps> = ({
           ? '2px solid ' + useColor({ color: 'primary' })
           : '1px solid ' +
             useColor({
-              color: 'foreground',
-              tone: 5,
-              opacity: border ? 0.33 : 0,
+              color: 'divider',
+              opacity: border ? 1 : 0,
             }),
         ...style,
       }}
@@ -139,9 +138,7 @@ export const ColorInput: FunctionComponent<ColorInputProps> = ({
           border:
             '1px solid ' +
             useColor({
-              color: 'foreground',
-              tone: 5,
-              opacity: 0.33,
+              color: 'divider',
             }),
           background: stateValue,
         }}

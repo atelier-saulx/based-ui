@@ -151,9 +151,8 @@ export const Input: FunctionComponent<InputProps> = ({
             (isWrong
               ? useColor({ color: 'error' })
               : useColor({
-                  color: 'foreground',
-                  tone: 5,
-                  opacity: border ? 0.33 : 0,
+                  color: 'divider',
+                  opacity: border ? 1 : 0,
                 })),
         ...style,
       }}

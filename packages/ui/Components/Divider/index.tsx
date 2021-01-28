@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react'
 import { useColor, Color } from '@based/theme'
 
 const Divider: FunctionComponent<{ color?: Color }> = ({
-  color = { color: 'foreground', tone: 5, opacity: 0.33 },
+  color = { color: 'divider' },
 }) => {
   return (
     <div

@@ -11,10 +11,11 @@ import { Button } from '../Button'
 import useOverlayProps from '../../hooks/overlay/useOverlayProps'
 import { OnClose } from './'
 import { iconFromString } from '@based/icons'
+import { TextValue } from '@based/i18n'
 
 export type ModalHeaderProps = PropsWithChildren<{
   closeButton?: boolean
-  title?: string
+  title?: TextValue
   onClose?: OnClose
   icon?: IconName
   framed?: boolean
@@ -24,7 +25,7 @@ export type ModalProps = {
   onClose?: OnClose
   header?: ModalHeaderProps
   confirmButton?: {
-    label?: string
+    label?: TextValue
     color?: Color
     icon?: IconName
     onConfirm: EventHandler<SyntheticEvent>
@@ -49,9 +50,7 @@ export const ModalHeader: FunctionComponent<ModalHeaderProps> = ({
         alignItems: 'center',
         padding: '10px 25px 10px 25px',
         borderBottom: `1px solid ${useColor({
-          color: 'foreground',
-          tone: 5,
-          opacity: 0.33,
+          color: 'divider',
         })}`,
       }}
     >

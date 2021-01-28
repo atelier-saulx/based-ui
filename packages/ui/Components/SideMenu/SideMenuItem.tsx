@@ -10,11 +10,12 @@ import { useColor } from '@based/theme'
 import { Text } from '../Text'
 import { Expand, iconFromString, IconName } from '@based/icons'
 import useHover from '../../hooks/events/useHover'
+import { TextValue } from '@based/i18n'
 
 type GenericEventHandler = EventHandler<SyntheticEvent>
 
 type SideMenuItemProps = {
-  title?: string
+  title?: TextValue
   icon?: IconName
   style?: CSSProperties
   onClick?: (event: SyntheticEvent, meta: object) => {}
