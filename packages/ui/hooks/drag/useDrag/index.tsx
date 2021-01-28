@@ -37,7 +37,7 @@ export const isDragging = () => {
 }
 
 const useDrag = (
-  data,
+  data: any,
   index,
   ref,
   props = {

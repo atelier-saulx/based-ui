@@ -1,21 +1,22 @@
-import isSafari from '../util/isSafari'
+// import isSafari from '../util/isSafari'
+const isSafari = false // TODO: temp
 
-const setData = t => {
+const setData = (t) => {
   if (t) {
     t.setAttribute('data-dragscroll', true)
   }
 }
 
 export default isSafari
-  ? isReactWindow => {
+  ? (isReactWindow) => {
       if (isReactWindow) {
         return {
-          outerRef: setData
+          outerRef: setData,
         }
       }
 
       return {
-        dataDragscroll: true
+        dataDragscroll: true,
       }
     }
   : () => {}

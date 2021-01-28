@@ -1,20 +1,28 @@
-import React from 'react'
-import { S2 } from '../Text/Subtitle'
-import { useColor } from '@based/theme'
+import React, { CSSProperties, PropsWithChildren } from 'react'
+import { Title } from '../Text/Title'
+import { useColor, Color } from '@based/theme'
+import { Icon } from '@based/icons'
 
+type OrderLabelProps = {
+  style?: CSSProperties
+  index: number
+  children?: any
+  color?: Color
+  Icon: any
+}
 // Subtitle
 export const OrderLabel = ({
   style,
   index,
   children,
-  color = 'primary',
-  Icon
-}) => {
+  color = { color: 'primary' },
+  Icon,
+}: OrderLabelProps) => {
   return (
     <div
       style={{
         display: 'flex',
-        ...style
+        ...style,
       }}
     >
       <div
@@ -28,7 +36,7 @@ export const OrderLabel = ({
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'flex-end',
-          position: 'relative'
+          position: 'relative',
         }}
       >
         <div
@@ -40,13 +48,15 @@ export const OrderLabel = ({
             position: 'absolute',
             left: 7.5,
             top: 0,
-            bottom: 0
+            bottom: 0,
           }}
         >
-          <Icon color={{ on: color }} />
+          <Icon color={color} />
         </div>
         <div style={{ width: 23 }} />
-        <S2 color={{ on: color }}>{children || index + 1}</S2>
+        <Title size="small" color={color}>
+          {children || index + 1}
+        </Title>
       </div>
     </div>
   )

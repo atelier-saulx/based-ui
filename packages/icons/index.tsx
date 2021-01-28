@@ -65,10 +65,10 @@ import WelcomeScreenSvg from './Components/WelcomeScreen'
 import { Color } from '@based/theme'
 
 export type SvgProps = {
-  color: Color
-  framed: boolean
-  frameColor: Color
-  size: number
+  color?: Color
+  framed?: boolean
+  frameColor?: Color
+  size?: number
 }
 
 type GenericEventHandler = EventHandler<SyntheticEvent>
