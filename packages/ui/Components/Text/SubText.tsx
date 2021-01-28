@@ -1,12 +1,13 @@
 import React, { CSSProperties, FunctionComponent } from 'react'
 import { useColor, Color } from '@based/theme'
-import { getValue } from '@based/i18n'
+import { getTextValue, TextValue } from '@based/i18n'
 
 type TitleProps = {
   style?: CSSProperties
   color?: Color
   noSelect?: boolean
   singleLine?: boolean
+  children?: TextValue
 }
 
 export const SubText: FunctionComponent<TitleProps> = ({
@@ -31,7 +32,7 @@ export const SubText: FunctionComponent<TitleProps> = ({
         ...style,
       }}
     >
-      {getValue(children)}
+      {getTextValue(children)}
     </div>
   )
 }

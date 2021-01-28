@@ -21,7 +21,7 @@ import { emailValidator, Validator } from './validators'
 import { SubText } from '../Text/SubText'
 import useDropdown from '../../hooks/overlay/useDropdown'
 import './style.css'
-import { DropdownOptions } from '../Overlay/Dropdown'
+import { DropdownOption } from '../Overlay/Dropdown'
 import useHover from '../../hooks/events/useHover'
 import { ProgressIndicator } from '../ProgressIndicator/ProgressIndicator'
 
@@ -38,7 +38,7 @@ type InputProps = {
   errorText?: string
   helperText?: string
   value?: string | number
-  options?: DropdownOptions
+  dropdown?: DropdownOption[]
   color?: Color
   progress?: number
 }
@@ -54,7 +54,7 @@ export const Input: FunctionComponent<InputProps> = ({
   style,
   type = 'text',
   validator,
-  options,
+  dropdown,
   errorText,
   helperText,
   identifier,
@@ -220,21 +220,21 @@ export const Input: FunctionComponent<InputProps> = ({
         }}
       />
 
-      {options ? (
+      {dropdown ? (
         <Down
           onClick={useDropdown(
-            options,
-            (value, index) => {
-              if (index !== undefined) {
-                update(value === undefined ? '' : value)
+            dropdown,
+            (value) => {
+              if (!Array.isArray(value)) {
+                update(value.value === undefined ? '' : value.value)
               }
             },
-            stateValue,
+            { value: stateValue },
             {
               align: 'flex-end',
               x: ({ left }) => left - 15,
               y: ({ top }) => top + 15,
-              selectTarget: (target: Element) => {
+              selectTarget: (target) => {
                 return target.parentNode.parentNode
               },
             }

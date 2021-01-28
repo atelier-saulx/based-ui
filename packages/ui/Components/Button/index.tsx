@@ -8,7 +8,7 @@ import React, {
   useCallback,
 } from 'react'
 import { useColor, Color } from '@based/theme'
-import { getValue } from '@based/i18n'
+import { getTextValue } from '@based/i18n'
 import { iconFromString, IconName } from '@based/icons'
 import useHover from '../../hooks/events/useHover'
 import { Text } from '../Text'
@@ -133,7 +133,7 @@ export const Button: FunctionComponent<ButtonProps> = ({
       ) : null}
       {children ? (
         <Text noSelect singleLine weight="medium" color={foregroundColor}>
-          {getValue(children)}
+          {getTextValue(children)}
         </Text>
       ) : null}
     </div>

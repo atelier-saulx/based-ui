@@ -56,7 +56,7 @@ export const Preloader = ({ loading = false, children }) => {
             backgroundColor: useColor('background'),
             display: 'flex',
             justifyContent: 'center',
-            alignItems: 'center'
+            alignItems: 'center',
           }}
         >
           <Loader
@@ -65,7 +65,7 @@ export const Preloader = ({ loading = false, children }) => {
             size={24}
             style={{
               transform: fontLoaded && !loading ? 'scale(2)' : 'scale(1)',
-              transition: 'transform 0.5s'
+              transition: 'transform 0.5s',
             }}
           />
         </div>

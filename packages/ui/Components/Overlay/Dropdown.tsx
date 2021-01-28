@@ -1,4 +1,9 @@
-import React, { FunctionComponent } from 'react'
+import React, {
+  ComponentType,
+  FunctionComponent,
+  PropsWithChildren,
+  ReactNode,
+} from 'react'
 import useOverlayPosition, {
   PositionPropsFn,
 } from '../../hooks/overlay/useOverlayPosition'
@@ -8,47 +13,83 @@ import { Checked, iconFromString, IconName, IconProps } from '@based/icons'
 import { Text } from '../Text'
 import useHover from '../../hooks/events/useHover'
 import Shared from './Shared'
+import { TextValue, isTextValue } from '@based/i18n'
+import { Data, OnValueChange } from '../../types'
+import { deepEqual } from '@saulx/utils'
 
-export type DropdownOption =
-  | string
-  | number
-  | {
-      icon: IconName
-      label: string | number
-    }
-
-export type OnChange = (value: DropdownOption, index: number) => void
-
-export type DropdownOptions = DropdownOption[]
-
-export type OptionProps = {
-  value: DropdownOption
-  index: number
-  isActive: boolean
-  onChange: OnChange
+export type DropdownOption = {
+  icon?: IconName
+  value: TextValue
+  data?: Data
+  children?: TextValue | ComponentType<PropsWithChildren<OptionProps>>
 }
 
-const Option: FunctionComponent<OptionProps> = ({
-  value,
-  index,
-  isActive,
-  onChange,
-}) => {
-  const [hover, isHover] = useHover()
+export type OptionProps = {
+  option: DropdownOption
+  isActive: boolean
+  onChange: OnValueChange
+  index: number
+}
 
-  let Icon: FunctionComponent<IconProps>
-  let label: string | number
-  if (typeof value === 'object') {
-    label = value.label
-    Icon = iconFromString(value.icon)
-  } else {
-    label = value
+const Option: FunctionComponent<OptionProps> = (props) => {
+  let { option, isActive, onChange, index } = props
+  const [hover, isHover] = useHover()
+  let Icon: FunctionComponent<IconProps> = iconFromString(option.icon)
+  let isSelectNone: boolean
+
+  if (option.value === undefined) {
+    isActive = false
+    isSelectNone = true
+  }
+
+  let label = isSelectNone ? { en: 'Select none' } : option.value
+
+  let children = option.children
+  let body: ReactNode
+
+  if (children) {
+    if (isTextValue(children)) {
+      label = children
+    } else {
+      body = React.createElement(children, props)
+    }
+  }
+
+  if (!body) {
+    body = isActive ? (
+      <div>
+        <Text
+          singleLine
+          noSelect
+          weight="semibold"
+          style={{
+            position: 'absolute',
+          }}
+        >
+          {label}
+        </Text>
+        <Text
+          singleLine
+          noSelect
+          style={{
+            opacity: 0,
+          }}
+        >
+          {label}
+        </Text>
+      </div>
+    ) : (
+      <Text singleLine noSelect>
+        {label}
+      </Text>
+    )
   }
 
   return (
     <div
       {...hover}
       style={{
+        opacity: isSelectNone ? 0.5 : 1,
         width: '100%',
         paddingTop: 5,
         paddingBottom: 5,
@@ -61,7 +102,7 @@ const Option: FunctionComponent<OptionProps> = ({
           : null,
       }}
       onClick={() => {
-        onChange(value, index)
+        onChange(option, index)
       }}
     >
       {Icon ? <Icon style={{ marginRight: 8 }} /> : null}
@@ -73,33 +114,7 @@ const Option: FunctionComponent<OptionProps> = ({
           justifyContent: 'space-between',
         }}
       >
-        {isActive ? (
-          <div>
-            <Text
-              singleLine
-              noSelect
-              weight="semibold"
-              style={{
-                position: 'absolute',
-              }}
-            >
-              {label}
-            </Text>
-            <Text
-              singleLine
-              noSelect
-              style={{
-                opacity: 0,
-              }}
-            >
-              {label}
-            </Text>
-          </div>
-        ) : (
-          <Text singleLine noSelect>
-            {label}
-          </Text>
-        )}
+        {body}
         <Checked
           style={{ opacity: isActive ? 1 : 0, marginLeft: 8 }}
           color={{ color: isActive ? 'primary' : 'foreground' }}
@@ -110,18 +125,26 @@ const Option: FunctionComponent<OptionProps> = ({
 }
 
 export type DropdownProps = {
-  items: DropdownOptions
-  onChange: OnChange
-  multi?: boolean
-  value?: (string | number) | (string | number)[]
+  items: DropdownOption[]
+  onChange: OnValueChange<DropdownOption>
+  value?: DropdownOption | DropdownOption[]
+}
+
+export const dropdownOptionIsEqual = (
+  a: DropdownOption,
+  b: DropdownOption
+): boolean => {
+  return (
+    a.value === b.value ||
+    (typeof b.value === 'object' && deepEqual(b.value, a.value))
+  )
 }
 
 export const Dropdown: FunctionComponent<PositionPropsFn & DropdownProps> = (
   initialProps
 ) => {
   const props = useOverlayProps<PositionPropsFn & DropdownProps>(initialProps)
-  const { align, value, onChange, multi, items } = props
-
+  const { align, value, onChange, items } = props
   const [elementRef, position] = useOverlayPosition(props)
   return (
     <Shared
@@ -130,23 +153,17 @@ export const Dropdown: FunctionComponent<PositionPropsFn & DropdownProps> = (
       align={align}
       ref={elementRef}
     >
-      {items.map((v, index) => {
-        let label: string | number
-        if (typeof v === 'object') {
-          label = v.label
-        } else {
-          label = v
-        }
-
+      {items.map((option, index) => {
         return (
           <Option
-            value={v}
-            index={index}
             key={index}
+            option={option}
+            index={index}
             isActive={
-              multi && Array.isArray(value)
-                ? value.indexOf(label) !== -1
-                : label === value
+              Array.isArray(value)
+                ? value.findIndex((o) => dropdownOptionIsEqual(option, o)) !==
+                  -1
+                : value && dropdownOptionIsEqual(option, value)
             }
             onChange={onChange}
           />
