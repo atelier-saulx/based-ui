@@ -17,7 +17,6 @@ export const InnerShared = forwardRef<
         pointerEvents: 'all',
         borderRadius: 2,
         width: width,
-        // minWidth: 256,
         background: useColor({ color: 'background' }),
         overflowY: 'auto',
         overflowX: 'hidden',

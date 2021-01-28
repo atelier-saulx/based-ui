@@ -20,7 +20,7 @@ export type MaxMinCalculation<T = number> =
     ) => T)
   | T
 
-export type SelectTarget = (Target) => Target
+export type SelectTarget = (t: Target) => Target
 
 export type PositionProps = {
   selectTarget?: SelectTarget

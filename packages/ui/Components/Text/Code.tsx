@@ -16,46 +16,6 @@ export const Code: FunctionComponent<CodeProps> = ({
   color = { color: 'foreground' },
   noSelect,
 }) => {
-  const lines = typeof children === 'string' ? children.split('\n') : []
-
-  const parsedLines = []
-  for (let i = 0; i < lines.length; i++) {
-    parsedLines.push(
-      <div
-        key={i}
-        style={{
-          alignItems: 'center',
-          display: 'flex',
-        }}
-      >
-        <div
-          style={{
-            userSelect: 'none',
-            fontWeight: 'normal',
-            opacity: 0.5,
-            width: 30,
-            fontSize: 12,
-            marginRight: 24,
-          }}
-        >
-          {i + 1}
-        </div>
-        <pre
-          style={{
-            userSelect: 'all',
-            lineHeight: '24px',
-            fontSize: '15px',
-            margin: 0,
-            fontFamily:
-              'Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace',
-          }}
-        >
-          {lines[i] || ' '}
-        </pre>
-      </div>
-    )
-  }
-
   return (
     <div
       style={{
@@ -70,13 +30,13 @@ export const Code: FunctionComponent<CodeProps> = ({
           lineHeight: '24px',
           fontSize: '13px',
           margin: 0,
+          overflowX: 'hidden',
           fontFamily:
             'Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace',
         }}
       >
         {children}
       </pre>
-      {/* {parsedLines} */}
     </div>
   )
 }
