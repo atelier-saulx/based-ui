@@ -4,20 +4,23 @@ import React, {
   PropsWithChildren,
   ReactNode,
 } from 'react'
-import useOverlayPosition from '../../hooks/overlay/useOverlayPosition'
+import useOverlayPosition, {
+  PositionPropsFn,
+} from '../../hooks/overlay/useOverlayPosition'
 import useOverlayProps from '../../hooks/overlay/useOverlayProps'
 import Shared from './Shared'
 import { Text } from '../Text'
 
 export type GenericOverlayProps = {
   Component?: ComponentType
-} & PropsWithChildren<any>
+} & PropsWithChildren<any> &
+  PositionPropsFn
 
 export const GenericOverlay: FunctionComponent<GenericOverlayProps> = ({
   Component,
   ...selectionProps
 }) => {
-  const props = useOverlayProps(selectionProps)
+  const props = useOverlayProps<GenericOverlayProps>(selectionProps)
 
   const [elementRef, position, resize] = useOverlayPosition(props)
 
@@ -30,10 +33,8 @@ export const GenericOverlay: FunctionComponent<GenericOverlayProps> = ({
         <div
           style={{
             width: '100%',
-            // display: 'flex',
             paddingLeft: 15,
             paddingRight: 15,
-            // justifyContent: 'center',
           }}
         >
           <Text weight="medium" singleLine>
@@ -54,7 +55,7 @@ export const GenericOverlay: FunctionComponent<GenericOverlayProps> = ({
 
   return (
     <Shared
-      width={props.width}
+      width={typeof props.width !== 'function' ? props.width : null}
       ref={elementRef}
       position={position}
       align={props.align}

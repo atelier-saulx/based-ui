@@ -99,7 +99,7 @@ export const useClick = (
   }, refs)
 }
 
-export const useSelect = (data, index) => {
+export const useSelect = (data: any, index: number) => {
   const selectionContext = useContext(SelectionContext)
   let isSelected, setSelected
   if (selectionContext) {

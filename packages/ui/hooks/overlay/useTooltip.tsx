@@ -9,14 +9,14 @@ import React, {
   ReactChild,
   ReactChildren,
   ReactNode,
-  SyntheticEvent,
   useEffect,
 } from 'react'
 
 import { createOverlayContextRef } from './useOverlayProps'
+import { DataEventHandler } from '../../types'
 
 export type TooltipEvents = {
-  onMouseEnter: (e: SyntheticEvent, extraProps?: PropsWithChildren<any>) => void
+  onMouseEnter: DataEventHandler
 }
 
 export default function useTooltip(
@@ -36,7 +36,7 @@ export default function useTooltip(
 
   return {
     onMouseEnter: useCallback(
-      (e, extraProps) => {
+      (e, data) => {
         let cancel: OnClose
         let tooltip: ReactNode
         if (handler) {
@@ -58,7 +58,7 @@ export default function useTooltip(
         ctx.current.timer = setTimeout(() => {
           tooltip = (
             <OverlayContext.Provider value={ctx}>
-              <GenericOverlay target={target} {...props} {...extraProps}>
+              <GenericOverlay target={target} {...props} {...data}>
                 {children}
               </GenericOverlay>
             </OverlayContext.Provider>

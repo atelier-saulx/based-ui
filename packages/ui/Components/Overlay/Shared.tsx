@@ -1,10 +1,4 @@
-import React, {
-  CSSProperties,
-  forwardRef,
-  PropsWithChildren,
-  ReactChild,
-  ReactChildren,
-} from 'react'
+import React, { CSSProperties, forwardRef, PropsWithChildren } from 'react'
 import { useColor } from '@based/theme'
 import { Position, Align } from '../../hooks/overlay/useOverlayPosition'
 

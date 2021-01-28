@@ -8,7 +8,7 @@ import React, {
   useMemo,
 } from 'react'
 
-import { deepEqual, deepMerge } from '@saulx/utils'
+import { deepEqual } from '@saulx/utils'
 
 export class OverlayCtx<P> {
   public props: PropsWithChildren<P>

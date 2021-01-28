@@ -1,21 +1,15 @@
 import { addOverlay, removeOverlay } from '../../Components/Overlay'
-import {
-  Dropdown,
-  DropdownOption,
-  DropdownOptions,
-} from '../../Components/Overlay/Dropdown'
+import { Dropdown, DropdownOptions } from '../../Components/Overlay/Dropdown'
 import { PositionProps } from './useOverlayPosition'
-import React, { useCallback, SyntheticEvent, PropsWithChildren } from 'react'
+import React, { useCallback } from 'react'
 import { OverlayContext, createOverlayContextRef } from './useOverlayProps'
+
+import { DataEventHandler } from '../../types'
 
 export type SelectFn = (
   value?: (string | number) | (string | number)[],
   index?: number | number[]
 ) => void
-
-// make multi a bit nicer e.g. when you pass value as an array it means multi!
-
-// dont make the handler
 
 export default (
   options: DropdownOptions,
@@ -23,10 +17,7 @@ export default (
   value?: (string | number) | (string | number)[],
   props: PositionProps & { multi?: boolean } = {},
   handler?: () => () => void
-): ((
-  e: Event | SyntheticEvent,
-  selectionProps?: PropsWithChildren<any>
-) => void) => {
+): DataEventHandler => {
   const ctx = createOverlayContextRef({
     value,
     items: options,

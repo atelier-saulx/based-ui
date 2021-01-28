@@ -1,15 +1,14 @@
 import React from 'React'
 import { Text, useDrag, useSelect, useMultipleEvents } from '@based/ui'
 import RenderComponents from '../RenderComponents'
-import { randomLongText, randomTitle } from './util'
 import { useColor } from '@based/theme'
 
 const Dragger = ({ data, index }) => {
   const [drag] = useDrag(data, index)
-
+  const [select, isSelected] = useSelect(data, index)
   return (
     <div
-      {...drag}
+      {...useMultipleEvents(drag, select)}
       style={{
         padding: 25,
         borderRadius: 4,
@@ -17,12 +16,12 @@ const Dragger = ({ data, index }) => {
         border:
           '1px solid ' +
           useColor({
-            color: 'background',
+            color: isSelected ? 'primary' : 'background',
             tone: 3,
           }),
       }}
     >
-      <Text>Drag or drop?</Text>
+      <Text noSelect>Drag or drop?</Text>
     </div>
   )
 }

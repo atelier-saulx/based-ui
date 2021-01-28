@@ -1,5 +1,8 @@
 import { addOverlay, OnClose, OverlayOptions } from '../../Components/Overlay'
-import { GenericOverlay } from '../../Components/Overlay/GenericOverlay'
+import {
+  GenericOverlay,
+  GenericOverlayProps,
+} from '../../Components/Overlay/GenericOverlay'
 import { PositionProps } from './useOverlayPosition'
 import React, {
   ComponentType,
@@ -8,17 +11,15 @@ import React, {
   useCallback,
 } from 'react'
 import { OverlayContext, createOverlayContextRef } from './useOverlayProps'
+import { DataEventHandler } from '../../types'
 
-export default function useOverlay<P>(
+export default function useOverlay<P, T = PropsWithChildren<any>>(
   component: ComponentType<P>,
   props?: PropsWithChildren<P & PositionProps>,
   handler?: (selection: Event | any) => OnClose | undefined,
-  Overlay: ComponentType = GenericOverlay,
+  Overlay: ComponentType<GenericOverlayProps & T> = GenericOverlay,
   options: OverlayOptions = { transparent: true }
-): (
-  e: Event | SyntheticEvent,
-  selectionProps?: PropsWithChildren<any>
-) => void {
+): DataEventHandler {
   const ctx = createOverlayContextRef(props)
   return useCallback(
     (e: Event | SyntheticEvent, selectionProps) => {

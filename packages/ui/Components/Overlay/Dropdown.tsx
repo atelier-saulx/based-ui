@@ -125,7 +125,7 @@ export const Dropdown: FunctionComponent<PositionPropsFn & DropdownProps> = (
   const [elementRef, position] = useOverlayPosition(props)
   return (
     <Shared
-      width={props.width}
+      width={typeof props.width !== 'function' ? props.width : null}
       position={position}
       align={align}
       ref={elementRef}

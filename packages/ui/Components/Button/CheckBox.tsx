@@ -55,7 +55,6 @@ export const Check: FunctionComponent<CheckProps> = ({
       }, [onChange])}
     >
       <CheckIcon
-        // size=""
         style={{
           opacity: enabled ? 1 : 0,
           transition: 'opacity 0.2s',

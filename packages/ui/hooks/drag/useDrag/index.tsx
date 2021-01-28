@@ -2,7 +2,7 @@ import { useColor } from '@based/theme'
 import React, { useCallback, useState, useEffect, useRef } from 'react'
 import { getSelection } from '../../useSelect'
 import { Title } from '../../../Components/Text/Title'
-import { Graph as Plus } from '@based/icons'
+import { Add } from '@based/icons'
 import { render } from 'react-dom'
 import isSafari from '../../../util/isSafari'
 import dragScroll from './dragScroll'
@@ -20,11 +20,10 @@ const MultiDragInfo = () => {
         borderRadius: 8,
         padding: 25,
         display: 'flex',
-        backgroundColor: useColor({ color: 'background', tone: 2 }),
-        boxShadow: '0px 0px 20px ' + useColor({ color: 'foreground', tone: 5 }),
+        backgroundColor: useColor({ color: 'background', tone: 1 }),
       }}
     >
-      <Plus style={{ marginRight: 10 }} />
+      <Add style={{ marginRight: 10 }} />
       <Title>x</Title>
     </div>
   )
