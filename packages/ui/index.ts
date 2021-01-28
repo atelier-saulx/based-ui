@@ -17,6 +17,8 @@ import useContextualMenu from './hooks/events/useContextualMenu'
 import useMultipleEvents from './hooks/events/useMultipleEvents'
 import { useKeyDown, useKeyUp } from './hooks/events/useKeyboard'
 import useHover from './hooks/events/useHover'
+import useDrag from './hooks/drag/useDrag'
+
 export * from './hooks/useSelect'
 
 export {
@@ -33,6 +35,7 @@ export {
   useDropdown,
   useMenu,
   useMultipleEvents,
+  useDrag,
 }
 
 export { Code } from './Components/Text/Code'

@@ -20,9 +20,8 @@ const MultiDragInfo = () => {
         borderRadius: 8,
         padding: 25,
         display: 'flex',
-        backgroundColor: useColor({ color: 'background', intensity: 2 }),
-        boxShadow:
-          '0px 0px 20px ' + useColor({ color: 'foreground', intensity: 5 }),
+        backgroundColor: useColor({ color: 'background', tone: 2 }),
+        boxShadow: '0px 0px 20px ' + useColor({ color: 'foreground', tone: 5 }),
       }}
     >
       <Plus style={{ marginRight: 10 }} />
@@ -46,9 +45,11 @@ const useDrag = (
     modifyImageElement: undefined,
     style: {
       // transform does not work on drag image
-      backgroundColor: useColor('background'),
+      backgroundColor: useColor({ color: 'background' }),
       maxWidth: '550px',
-      border: '1px solid ' + useColor({ color: 'foreground', intensity: 3 }),
+      border:
+        '1px solid ' +
+        useColor({ color: 'foreground', tone: 5, opacity: 0.33 }),
     },
   }
 ) => {
