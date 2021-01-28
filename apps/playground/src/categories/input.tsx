@@ -1,4 +1,4 @@
-import React from 'React'
+import React, { useEffect, useState } from 'React'
 import {
   Input,
   CheckBox,
@@ -6,6 +6,7 @@ import {
   Select,
   DateTimeInput,
   ColorInput,
+  Button,
   RadioButton,
 } from '@based/ui'
 import RenderComponents from '../RenderComponents'
@@ -48,7 +49,34 @@ export default {
         {
           border: true,
           value: Date.now(),
-          onChange: () => {},
+          onChange: (v) => {
+            console.log(v)
+          },
+        },
+        () => {
+          const [s, updateExternal] = useState<any>({ value: Date.now() })
+
+          return (
+            <>
+              <DateTimeInput
+                value={s.value}
+                onChange={(v) => {
+                  console.log(v)
+                }}
+                identifier={s.id}
+              />
+              <Button
+                onClick={() => {
+                  updateExternal({
+                    id: ~~(Math.random() * 1000),
+                    value: Date.now() + 1e3 * 60 * ~~(10000 * Math.random()),
+                  })
+                }}
+              >
+                Update {s.value}
+              </Button>
+            </>
+          )
         },
       ],
     },

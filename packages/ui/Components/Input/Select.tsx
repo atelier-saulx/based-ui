@@ -13,6 +13,7 @@ import { getTextValue, TextValue } from '@based/i18n'
 import useHover from '../../hooks/events/useHover'
 import { Text } from '../Text'
 import useDropdown, { OnSelect } from '../../hooks/overlay/useDropdown'
+import useInputValue from '../../hooks/useInputValue'
 
 type SelectInputProps = {
   style?: CSSProperties
@@ -41,16 +42,12 @@ export const Select: FunctionComponent<SelectInputProps> = ({
   value = multi ? [] : undefined,
   style,
 }) => {
-  // make identifier better
-
-  const [stateValue, setValue] = useState<DropdownOption | DropdownOption[]>(
-    value
-  )
   const [isFocus, setFocus] = useState(false)
+  const [stateValue, setValue] = useInputValue<
+    DropdownOption | DropdownOption[]
+  >(value, identifier, isFocus)
   const [hover, isHover] = useHover()
-
   const Icon = icon ? iconFromString(icon) : ''
-
   const update = useCallback(
     (value, index) => {
       setValue(value)

@@ -1,7 +1,6 @@
 import React, {
   useState,
   useCallback,
-  useRef,
   CSSProperties,
   FunctionComponent,
 } from 'react'
@@ -20,12 +19,13 @@ import {
 import { emailValidator, Validator } from './validators'
 import { SubText } from '../Text/SubText'
 import useDropdown from '../../hooks/overlay/useDropdown'
-import './style.css'
 import { DropdownOption } from '../Overlay/Dropdown'
 import useHover from '../../hooks/events/useHover'
 import { ProgressIndicator } from '../ProgressIndicator/ProgressIndicator'
 import { TextValue, getTextValue } from '@based/i18n'
 import { OnValueChange } from '../../types'
+import useInputValue from '../../hooks/useInputValue'
+import './style.css'
 
 type InputProps = {
   style?: CSSProperties
@@ -62,28 +62,10 @@ export const Input: FunctionComponent<InputProps> = ({
   identifier,
   progress,
 }) => {
-  // add these identifier refs everywhere...
-
-  const identifierRef = useRef(identifier)
-  const initialValue = useRef(value)
-  const [stateValue, setValue] = useState(value)
   const [isFocus, setFocus] = useState(false)
   const [isWrong, setWrong] = useState(false)
   const [hover, isHover] = useHover()
-
-  if (value !== stateValue && value !== initialValue.current && !isFocus) {
-    initialValue.current = value
-    setValue(value)
-  } else if (identifierRef.current !== identifier) {
-    identifierRef.current = identifier
-    initialValue.current = value
-    setValue(value)
-  } else if (!initialValue.current) {
-    initialValue.current = value
-    if (!stateValue && value) {
-      setValue(value)
-    }
-  }
+  const [stateValue, setValue] = useInputValue(value, identifier, isFocus)
 
   const update = useCallback(
     (e) => {

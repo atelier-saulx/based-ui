@@ -1,8 +1,8 @@
 import React, {
   useState,
   useCallback,
-  useRef,
   useEffect,
+  useRef,
   FunctionComponent,
   CSSProperties,
 } from 'react'
@@ -13,6 +13,7 @@ import { Validator } from './validators'
 import { OnValueChange } from '../../types'
 import { SubText } from '../Text/SubText'
 import { TextValue, getTextValue } from '@based/i18n'
+import useInputValue from '../../hooks/useInputValue'
 
 type MultilineInputProps = {
   style?: CSSProperties
@@ -42,27 +43,11 @@ export const MultilineTextInput: FunctionComponent<MultilineInputProps> = ({
   border,
   identifier,
 }) => {
-  const identifierRef = useRef(identifier)
-  const initialValue = useRef(value)
   const ref = useRef()
-  const [stateValue, setValue] = useState(value)
   const [isFocus, setFocus] = useState(false)
   const [isWrong, setWrong] = useState(false)
   const [hover, isHover] = useHover()
-
-  if (value !== stateValue && value !== initialValue.current && !isFocus) {
-    initialValue.current = value
-    setValue(value)
-  } else if (identifierRef.current !== identifier) {
-    identifierRef.current = identifier
-    initialValue.current = value
-    setValue(value)
-  } else if (!initialValue.current) {
-    initialValue.current = value
-    if (!stateValue && value) {
-      setValue(value)
-    }
-  }
+  const [stateValue, setValue] = useInputValue(value, identifier, isFocus)
 
   useEffect(() => {
     if (ref.current) {

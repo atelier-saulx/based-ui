@@ -1,7 +1,6 @@
 import React, {
   useState,
   useCallback,
-  useRef,
   CSSProperties,
   FunctionComponent,
 } from 'react'
@@ -9,9 +8,10 @@ import { useColor, Color } from '@based/theme'
 import useHover from '../../hooks/events/useHover'
 import hexRgb from 'hex-rgb'
 import rgbHex from 'rgb-hex'
-import './style.css'
 import { OnValueChange } from '../../types'
 import { TextValue, getTextValue } from '@based/i18n'
+import useInputValue from '../../hooks/useInputValue'
+import './style.css'
 
 const isHex = (value: string): boolean =>
   value && /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(value)
@@ -76,25 +76,14 @@ export const ColorInput: FunctionComponent<ColorInputProps> = ({
   placeholder,
   color = { color: 'background', tone: 1 },
 }) => {
-  const identifierRef = useRef(identifier)
-  const initialValue = useRef(value)
-  const [stateValue, setValue] = useState<string>(value)
   const [isFocus, setFocus] = useState(false)
   const [hover, isHover] = useHover()
 
-  if (value !== stateValue && value !== initialValue.current && !isFocus) {
-    initialValue.current = value
-    setValue(value)
-  } else if (identifierRef.current !== identifier) {
-    identifierRef.current = identifier
-    initialValue.current = value
-    setValue(value)
-  } else if (!initialValue.current) {
-    initialValue.current = value
-    if (!stateValue && value) {
-      setValue(value)
-    }
-  }
+  const [stateValue, setValue] = useInputValue<string | undefined>(
+    value,
+    identifier,
+    isFocus
+  )
 
   const update = useCallback(
     (e) => {

@@ -1,14 +1,10 @@
-import React, {
-  useState,
-  useCallback,
-  FunctionComponent,
-  CSSProperties,
-} from 'react'
+import React, { useCallback, FunctionComponent, CSSProperties } from 'react'
 import { Check } from '../Button/CheckBox'
 import { Radio } from '../Button/Radio'
 import { Text } from '../Text'
 import { TextValue } from '@based/i18n'
 import { OnValueChange } from '../../types'
+import useInputValue from '../../hooks/useInputValue'
 
 export type ToggleInputProps = {
   style?: CSSProperties
@@ -22,10 +18,16 @@ export const CheckBox: FunctionComponent<ToggleInputProps> = ({
   style,
   children,
   onChange,
+  identifier,
   value = false,
   ...rest
 }) => {
-  const [enabled, update] = useState(value)
+  const [stateValue, setValue] = useInputValue<boolean>(
+    value,
+    identifier,
+    false
+  )
+
   return (
     <div
       style={{
@@ -35,14 +37,14 @@ export const CheckBox: FunctionComponent<ToggleInputProps> = ({
         ...style,
       }}
       onClick={useCallback(() => {
-        let v = !enabled
+        let v = !stateValue
         if (onChange) {
           onChange(v)
         }
-        update(v)
-      }, [onChange, enabled])}
+        setValue(v)
+      }, [onChange, stateValue])}
     >
-      <Check {...rest} overrideValue={enabled} />
+      <Check {...rest} overrideValue={stateValue} />
       <Text
         noSelect
         style={{
@@ -59,10 +61,16 @@ export const RadioButton: FunctionComponent<ToggleInputProps> = ({
   style,
   children,
   onChange,
+  identifier,
   value = false,
   ...rest
 }) => {
-  const [enabled, update] = useState(value)
+  const [stateValue, setValue] = useInputValue<boolean>(
+    value,
+    identifier,
+    false
+  )
+
   return (
     <div
       style={{
@@ -72,14 +80,14 @@ export const RadioButton: FunctionComponent<ToggleInputProps> = ({
         ...style,
       }}
       onClick={useCallback(() => {
-        let v = !enabled
+        let v = !stateValue
         if (onChange) {
           onChange(v)
         }
-        update(v)
-      }, [onChange, enabled])}
+        setValue(v)
+      }, [onChange, stateValue])}
     >
-      <Radio overrideValue={enabled} {...rest} />
+      <Radio overrideValue={stateValue} {...rest} />
       <Text
         noSelect
         style={{

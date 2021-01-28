@@ -8,7 +8,7 @@ import React, {
   useCallback,
 } from 'react'
 import { useColor, Color } from '@based/theme'
-import { getTextValue } from '@based/i18n'
+import { getTextValue, TextValue } from '@based/i18n'
 import { iconFromString, IconName } from '@based/icons'
 import useHover from '../../hooks/events/useHover'
 import { Text } from '../Text'
@@ -22,6 +22,7 @@ type ButtonProps = {
   foregroundColor?: Color
   actionKeys?: Key[] // adds a key event
   icon?: IconName
+  children?: TextValue
   onClick?: GenericEventHandler
   onHover?: GenericEventHandler
   onMouseEnter?: GenericEventHandler
@@ -101,41 +102,42 @@ export const Button: FunctionComponent<ButtonProps> = ({
 
   const Icon = icon && iconFromString(icon)
   return (
-    <div
-      ref={ref}
-      style={{
-        display: 'flex',
-        flexDirection: 'row',
-        cursor: 'pointer',
-        alignItems: 'flex-start',
-        padding: children && icon ? '4px 8px 4px 4px' : '4px 8px',
-        borderRadius: '4px',
-        backgroundColor: useColor({
-          color: color.color,
-          opacity: color.opacity,
-          tone: isActive
-            ? color.tone + 2
-            : isHover
-            ? color.tone + 1
-            : color.tone,
-        }),
-        ...style,
-      }}
-      onClick={onClick}
-      {...hover}
-      onContextMenu={onContextMenu}
-    >
-      {Icon ? (
-        <Icon
-          style={{ marginRight: !children ? 0 : 4 }}
-          color={foregroundColor}
-        />
-      ) : null}
-      {children ? (
-        <Text noSelect singleLine weight="medium" color={foregroundColor}>
-          {getTextValue(children)}
-        </Text>
-      ) : null}
+    <div style={{ display: 'flex', ...style }}>
+      <div
+        ref={ref}
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          cursor: 'pointer',
+          alignItems: 'flex-start',
+          padding: children && icon ? '4px 8px 4px 4px' : '4px 8px',
+          borderRadius: '4px',
+          backgroundColor: useColor({
+            color: color.color,
+            opacity: color.opacity,
+            tone: isActive
+              ? color.tone + 2
+              : isHover
+              ? color.tone + 1
+              : color.tone,
+          }),
+        }}
+        onClick={onClick}
+        {...hover}
+        onContextMenu={onContextMenu}
+      >
+        {Icon ? (
+          <Icon
+            style={{ marginRight: !children ? 0 : 4 }}
+            color={foregroundColor}
+          />
+        ) : null}
+        {children ? (
+          <Text noSelect singleLine weight="medium" color={foregroundColor}>
+            {getTextValue(children)}
+          </Text>
+        ) : null}
+      </div>
     </div>
   )
 }
