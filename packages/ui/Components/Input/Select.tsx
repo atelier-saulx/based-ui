@@ -145,7 +145,13 @@ export const Select: FunctionComponent<SelectInputProps> = ({
             <div style={{ width: 24 }} />
           </>
         ) : null}
-        <Text singleLine style={{ userSelect: 'none' }}>
+        <Text
+          singleLine
+          style={{
+            userSelect: 'none',
+            opacity: displayValue === placeholder ? 0.6 : 1,
+          }}
+        >
           {displayValue}
         </Text>
       </div>

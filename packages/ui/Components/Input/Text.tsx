@@ -24,19 +24,21 @@ import './style.css'
 import { DropdownOption } from '../Overlay/Dropdown'
 import useHover from '../../hooks/events/useHover'
 import { ProgressIndicator } from '../ProgressIndicator/ProgressIndicator'
+import { TextValue, getTextValue } from '@based/i18n'
+import { OnValueChange } from '../../types'
 
 type InputProps = {
   style?: CSSProperties
   icon?: IconName
-  placeholder?: string
+  placeholder?: TextValue
+  errorText?: TextValue
+  helperText?: TextValue
   border?: boolean
   autoFocus?: boolean
-  onChange: (value: string | number | undefined) => void
+  onChange: OnValueChange<string | number | undefined>
   type?: 'text' | 'email' | 'number' | 'date' | 'time' | 'search'
   validator?: Validator
   identifier?: any
-  errorText?: string
-  helperText?: string
   value?: string | number
   dropdown?: DropdownOption[]
   color?: Color
@@ -138,7 +140,7 @@ export const Input: FunctionComponent<InputProps> = ({
       validator = emailValidator
     }
     if (!errorText) {
-      errorText = 'Please enter a valid email adress'
+      errorText = { en: 'Please enter a valid email adress' }
     }
   }
 
@@ -203,7 +205,7 @@ export const Input: FunctionComponent<InputProps> = ({
         onFocus={focus}
         onBlur={blur}
         autoFocus={autoFocus}
-        placeholder={placeholder}
+        placeholder={String(getTextValue(placeholder))}
         style={{
           width: '100%',
           paddingLeft: Icon ? 6.5 : 0,
