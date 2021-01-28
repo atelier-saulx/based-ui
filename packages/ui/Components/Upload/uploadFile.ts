@@ -65,12 +65,14 @@ export const uploadFile:UploadFileScript = async (files, progressContext, progre
             item.url = 'http://fake.'+ item.name
             clearInterval(fakeProgressInterval)
             item.isComplete = true
+            if (Object.keys(progressContext.items).every(key => progressContext.items[key].isComplete)) {
               progressContext.inProgress = false
-              delete progressContext.items[progressId].gettingRemoved
-              delete progressContext.items[progressId]
-              progressContext.listeners.forEach((update) =>
-                update({ progressId, removed: true, progress: 100 })
-              )
+            }
+            delete progressContext.items[progressId].gettingRemoved
+            delete progressContext.items[progressId]
+            progressContext.listeners.forEach((update) =>
+              update({ progressId, removed: true, progress: 100 })
+            )
           }
           progressContext.listeners.forEach((update) => update({ ...item }))
         }
