@@ -179,6 +179,7 @@ export default {
             {
               icon: 'date',
               value: 'too late',
+              children: { en: 'too late!!!' },
             },
           ],
         },
