@@ -8,9 +8,7 @@ import React, {
 } from 'react'
 import { Color } from '@based/theme'
 import { Input } from './Text'
-import { OnValueChange } from '../../types'
-
-type Timestamp = number
+import { OnValueChange, Timestamp } from '../../types'
 
 type DateTimeProps = {
   style?: CSSProperties
