@@ -10,7 +10,7 @@ import { Checked as CheckIcon } from '@based/icons'
 export type CheckProps = {
   onChange?: (value: boolean | void) => void
   value?: boolean
-  overRideValue?: boolean
+  overrideValue?: boolean
   style?: CSSProperties
   color?: Color
 }
@@ -19,12 +19,12 @@ export const Check: FunctionComponent<CheckProps> = ({
   onChange = () => {},
   color = { color: 'primary' },
   value = false,
-  overRideValue,
+  overrideValue,
   style,
 }) => {
   let [enabled, update] = useReducer((x) => !x, value)
-  if (overRideValue !== undefined) {
-    enabled = overRideValue
+  if (overrideValue !== undefined) {
+    enabled = overrideValue
   }
   return (
     <div
@@ -47,8 +47,8 @@ export const Check: FunctionComponent<CheckProps> = ({
         ...style,
       }}
       onClick={useCallback(() => {
-        if (overRideValue !== undefined) {
-          onChange(!overRideValue)
+        if (overrideValue !== undefined) {
+          onChange(!overrideValue)
         } else {
           onChange(update())
         }

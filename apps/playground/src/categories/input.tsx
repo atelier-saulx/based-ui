@@ -24,7 +24,7 @@ export default {
       props: [
         {
           border: true,
-          placeholder: 'Hello select color',
+          placeholder: { en: 'Hello select color' },
           onChange: (v) => {
             console.log(v)
           },
@@ -58,12 +58,17 @@ export default {
       Component: MultilineTextInput,
       props: [
         {
-          children: 'Hello',
           onChange: () => {},
           placeholder: 'Put text',
         },
         {
-          children: 'Hello Checked',
+          onChange: () => {},
+          placeholder: 'Put text',
+          validator: (s) => s.length > 100,
+          errorText: 'Make more then 100',
+          helperText: 'Put text',
+        },
+        {
           onChange: () => {},
           value: randomText,
           placeholder: 'Put text',

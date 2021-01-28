@@ -10,6 +10,8 @@ import useHover from '../../hooks/events/useHover'
 import hexRgb from 'hex-rgb'
 import rgbHex from 'rgb-hex'
 import './style.css'
+import { OnValueChange } from '../../types'
+import { TextValue, getTextValue } from '@based/i18n'
 
 const isHex = (value: string): boolean =>
   value && /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(value)
@@ -30,16 +32,16 @@ const toRgb = (value: string): string => {
 
 type ColorInputProps = {
   style?: CSSProperties
-  placeholder?: string
+  placeholder?: TextValue
   border?: boolean
   autoFocus?: boolean
-  onChange: (value: string) => void
+  onChange: OnValueChange
   identifier?: any
   value?: string
   color?: Color
 }
 
-const Text = ({ onChange, value, placeholder, focus, blur, right }) => {
+const Text = ({ onChange, value, placeholder, focus, blur }) => {
   return (
     <input
       type="text"
@@ -47,10 +49,10 @@ const Text = ({ onChange, value, placeholder, focus, blur, right }) => {
       onChange={onChange}
       onFocus={focus}
       onBlur={blur}
-      placeholder={placeholder}
+      placeholder={String(getTextValue(placeholder))}
       style={{
         width: '100%',
-        textAlign: right ? 'right' : 'left',
+        textAlign: 'left',
         appearance: 'none',
         fontSize: '15px',
         lineHeight: '24px',
