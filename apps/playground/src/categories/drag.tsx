@@ -7,8 +7,6 @@ import jsonexport from 'jsonexport/dist'
 
 import csvtojson from 'csvtojson'
 
-console.log(jsonexport)
-
 const isBinary = (str) => /(image)|(video)|(bin)/.test(str)
 
 function readFile(file) {

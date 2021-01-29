@@ -2,7 +2,7 @@ import isSafari from '../../util/isSafari'
 
 const setData = (t?: Element) => {
   if (t) {
-    t.setAttribute('data-dragscroll', 'true')
+    t.setAttribute('data-dragscroll', true)
   }
 }
 

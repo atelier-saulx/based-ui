@@ -48,11 +48,18 @@ const animateScroll = (animation, el, p, x, y) => {
   }
 }
 
-const dragScroll = t => {
-  const animation = {
+const dragScroll = (t) => {
+  const animation: {
+    loop?: any
+    animating?: boolean
+    frames?: number
+    elem?: Element
+    amount?: number
+    start?: Function
+    stop?: Function
+  } = {
     animating: false,
     loop: false,
-    animating: false
   }
   // easiest way of doing it for now
   const dragScrollers = document.querySelectorAll('[data-dragscroll="true"]')
@@ -86,7 +93,8 @@ const dragScroll = t => {
     global.cancelAnimationFrame(animation.loop)
   }
 
-  const dragListener = e => {
+  const dragListener = (e) => {
+    console.log('draggy time')
     const el = t
     let p = el.tmpp || el
     const y = e.pageY
@@ -108,6 +116,7 @@ const dragScroll = t => {
 
   document.body.addEventListener('drag', dragListener)
   return () => {
+    console.log('STOP')
     animation.stop()
     document.body.removeEventListener('drag', dragListener)
   }
