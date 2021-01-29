@@ -1,9 +1,6 @@
-import { createContext } from 'react'
-
-
 const cache = {}
 
-export type ProgressContext= {
+export type ProgressContext = {
   service: string
   url: string
   listeners?: Set<any> // Needs type
@@ -23,7 +20,10 @@ export type ProgressContextItem = {
   isComplete?: boolean
 }
 
-export const createProgressContext = ({url, service}: ProgressContext): ProgressContext => {
+export const createProgressContext = ({
+  url,
+  service,
+}: ProgressContext): ProgressContext => {
   const key = `${url}-${service}`
   if (!(key in cache)) {
     cache[key] = {
@@ -31,9 +31,8 @@ export const createProgressContext = ({url, service}: ProgressContext): Progress
       url,
       listeners: new Set(),
       items: {},
-      inProgress: false
+      inProgress: false,
     }
   }
   return cache[key]
 }
-

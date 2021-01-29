@@ -64,7 +64,7 @@ export const uploadFile: UploadFileScript = async (
 
       if (fake) {
         const item = progressContext.items[progressId]
-        let fakeProgressInterval: any
+
         const fakeProgress = () => {
           item.progress = Math.min(
             (item.progress || 0) + Math.ceil(Math.random() * (10 - 4) + 4),
@@ -89,7 +89,8 @@ export const uploadFile: UploadFileScript = async (
           }
           progressContext.listeners.forEach((update) => update({ ...item }))
         }
-        fakeProgressInterval = setInterval(fakeProgress, 500)
+
+        const fakeProgressInterval = setInterval(fakeProgress, 500)
       } else {
         xhr.upload.onprogress = (p: ProgressEvent) => {
           const item = progressContext.items[progressId]

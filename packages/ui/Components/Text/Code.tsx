@@ -1,6 +1,5 @@
-import React, { CSSProperties, FunctionComponent, ReactNode } from 'react'
+import React, { CSSProperties, FunctionComponent } from 'react'
 import { useColor, Color } from '@based/theme'
-import escape from 'escape-html'
 
 type CodeProps = {
   style?: CSSProperties

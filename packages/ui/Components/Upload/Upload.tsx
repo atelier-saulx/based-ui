@@ -84,7 +84,7 @@ export const FileUpload: FunctionComponent<FileUploadProps> = ({
   }, [updateStatus, onChange, setValue, progressId])
 
   // TODO: drop not triggereing
-  const [drop, isDrop] = useDrop(
+  const [, isDrop] = useDrop(
     useCallback((e) => {
       uploadFile(
         e.dataTransfer.files,

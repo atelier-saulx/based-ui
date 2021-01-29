@@ -1,9 +1,5 @@
 import React, { useState, useContext, useEffect, createContext } from 'react'
-import {
-  ProgressContext,
-  createProgressContext,
-  ProgressContextItem,
-} from './ProgressContext'
+import { createProgressContext, ProgressContextItem } from './ProgressContext'
 import { ProgressIndicator } from '../ProgressIndicator/ProgressIndicator'
 import { InnerShared } from '../Overlay/Shared'
 import { Title } from '../Text/Title'

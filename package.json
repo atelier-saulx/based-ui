@@ -5,7 +5,7 @@
   "scripts": {
     "start": "cd apps/playground && yarn start",
     "format": "prettier --write --ignore-path .gitignore '**/*.{ts,tsx,json}'",
-    "lint": "eslint --ignore-path .gitignore '**/*.{ts,tsx}' --fix"
+    "lint": "eslint --ignore-path .gitignore 'packages/**/*.{ts,tsx}' --fix"
   },
   "workspaces": [
     "apps/*",

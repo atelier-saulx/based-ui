@@ -102,7 +102,11 @@ const Overlay = () => {
       }}
     >
       {overlays.map((c, i) => {
-        return <OverlayItem key={i} children={c[0]} options={c[2]} />
+        return (
+          <OverlayItem key={i} options={c[2]}>
+            {c[0]}
+          </OverlayItem>
+        )
       })}
     </div>
   )

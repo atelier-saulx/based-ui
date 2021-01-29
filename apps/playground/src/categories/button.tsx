@@ -30,7 +30,7 @@ const genButtonProps = () => {
       children: 'Button with actionKeys!',
       actionKeys: ['Enter', 'ArrowDown'],
       onClick: () => {
-        console.log('Key is pressed!')
+        console.info('Key is pressed!')
       },
     }
   )
