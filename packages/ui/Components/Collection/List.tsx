@@ -9,7 +9,7 @@ import { FixedSizeList } from 'react-window'
 import AutoSizer from 'react-virtualized-auto-sizer'
 import { Title } from '../Text/Title'
 import useHover from '../../hooks/events/useHover'
-import useMultiple from '../../hooks/events/useMultipleEvents'
+import useMultipleEvents from '../../hooks/events/useMultipleEvents'
 import { OrderLabel } from '../Label/Order'
 import {
   MultipleChoice,
@@ -20,7 +20,7 @@ import {
   Icon,
 } from '@based/icons'
 import selectData from '../../util/selectData'
-import { useColor, getTone } from '@based/theme'
+import { useColor } from '@based/theme'
 import { SubText } from '../Text/SubText'
 import useDrag from '../../hooks/drag/useDrag'
 import useDrop from '../../hooks/drag/useDrop'
@@ -32,7 +32,7 @@ import {
 } from '../../hooks/useSelect'
 import useDragScroll from '../../hooks/drag/useDragScroll'
 import useOptions from '../../hooks/events/useContextualMenu'
-import { DataEventHandler } from '../../types'
+import { DataEventHandler, Data } from '../../types'
 
 const OrderedListContext = createContext(null)
 OrderedListContext.displayName = 'OrderedListContext'
@@ -66,7 +66,14 @@ const OrderedListItem = ({
   x.top = `${parseFloat(x.top) + paddingTop}px`
 
   const ref = useRef<any>()
+
   const itemData = data[index]
+
+  const wrappedData: Data = {
+    data: itemData,
+    index,
+  }
+
   const disabled = itemData && itemData.disabled
   const isActive = selectData(fields.active, itemData) === active
   const [hover, isHover] = useHover()
@@ -76,7 +83,7 @@ const OrderedListItem = ({
         if (onChange) {
           const oldIndex = JSON.parse(
             payload.dataTransfer.getData('application/json')
-          )[1]
+          ).index
           const itemData = data[oldIndex]
           const newIndex = index > oldIndex ? index - 1 : index
           onChange(newIndex, { data: itemData, index: oldIndex })
@@ -85,8 +92,8 @@ const OrderedListItem = ({
       [index, data]
     )
   )
-  const [drag] = useDrag(itemData.id || itemData, index, ref)
-  const [select, isSelected] = useSelect(itemData, index)
+  const [drag] = useDrag(wrappedData, ref)
+  const [select, isSelected] = useSelect(wrappedData)
 
   useEffect(() => {
     if (isDragOver) {
@@ -171,8 +178,8 @@ const OrderedListItem = ({
             ? useColor({ color: 'background', tone: 2 })
             : null,
         }}
-        {...useMultiple(
-          drag as any, // TODO: why is it complaining
+        {...useMultipleEvents(
+          drag,
           select,
           hover,
           onClick
@@ -273,7 +280,7 @@ type OrderedListProps = {
 
 // make it variableSizeList
 // drop indexes
-export const OrderedList = ({
+export const List = ({
   header,
   data = [],
   onClick,

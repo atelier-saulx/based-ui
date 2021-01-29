@@ -1,6 +1,6 @@
 import React from 'React'
 import RenderComponents from '../RenderComponents'
-import { OrderedList } from '@based/ui/Components/Collection/OrderedList'
+import { List } from '@based/ui'
 import { useColor } from '@based/theme'
 
 const getRandomText = () => {
@@ -95,7 +95,7 @@ export default {
     {
       name: 'OrderedList',
       category: 'misc',
-      Component: OrderedList,
+      Component: List,
       props: [
         () => {
           return (
@@ -104,7 +104,7 @@ export default {
                 height: 400,
               }}
             >
-              <OrderedList
+              <List
                 onChange={(tab) => {
                   console.info(tab)
                 }}
@@ -119,7 +119,7 @@ export default {
                 onClick={(data, index) => {
                   console.info(data, index)
                 }}
-              ></OrderedList>
+              />
             </div>
           )
         },

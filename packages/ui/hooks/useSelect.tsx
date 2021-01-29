@@ -100,7 +100,11 @@ export const useClick = (
   }, refs)
 }
 
-export const useSelect = ({ data, index }: Data) => {
+type SelectEvents = {
+  onMouseDown: EventHandler<SyntheticEvent>
+}
+
+export const useSelect = ({ data, index }: Data): [SelectEvents, boolean] => {
   const selectionContext = useContext(SelectionContext)
   let isSelected, setSelected
   if (selectionContext) {
@@ -119,6 +123,7 @@ export const useSelect = ({ data, index }: Data) => {
     {
       onMouseDown: useCallback(
         (e) => {
+          //@ts-ignore
           if (e.shiftKey) {
             const s = selection.get(data)
             if (isSelected) {
