@@ -18,6 +18,7 @@ import useMultipleEvents from './hooks/events/useMultipleEvents'
 import { useKeyDown, useKeyUp } from './hooks/events/useKeyboard'
 import useHover from './hooks/events/useHover'
 import useDrag from './hooks/drag/useDrag'
+import useDrop from './hooks/drag/useDrop'
 import useInputValue from './hooks/useInputValue'
 
 export * from './hooks/useSelect'
@@ -37,6 +38,7 @@ export {
   useMenu,
   useMultipleEvents,
   useDrag,
+  useDrop,
   useInputValue,
 }
 

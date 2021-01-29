@@ -10,7 +10,8 @@
     "@based/theme": "*",
     "@based/ui": "*",
     "@based/icons": "*",
-    "lorem-ipsum": "^2.0.3"
+    "lorem-ipsum": "^2.0.3",
+    "jsonexport": "^3.2.0"
   },
   "scripts": {
     "start": "aristotle watch -t src/index.ts"
