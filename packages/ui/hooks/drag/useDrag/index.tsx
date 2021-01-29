@@ -6,6 +6,8 @@ import React, {
   useRef,
   RefObject,
   CSSProperties,
+  DragEventHandler,
+  DragEvent,
 } from 'react'
 import { getSelection } from '../../useSelect'
 import { Title } from '../../../Components/Text/Title'
@@ -42,28 +44,50 @@ export const isDragging = () => {
   return false
 }
 
+// file by default
+
+// export type Mime =
+//   | 'application/json'
+//   | 'text/plain'
+//   | 'text/uri-list'
+//   | 'text/html'
+
+//   | string
+
+type DragEvents = {
+  draggable: true
+  onDragStart: DragEventHandler
+  current?: true
+  ref?: RefObject<HTMLElement>
+}
+
+export type Drag = [DragEvents, boolean]
+
 export type DragProps = {
   modifyImageElement?: (el: HTMLElement) => void
-  style: CSSProperties
+  setDragData?: (data: Data, e: DragEvent) => Promise<void>
+  style?: CSSProperties
 }
 
 const useDrag = (
   data: Data,
   ref?: RefObject<HTMLElement>,
-  props: DragProps = {
-    style: {
+  props: DragProps = {}
+): Drag => {
+  const [isDrag, setDrag] = useState(false)
+  const endListener = useRef<boolean>()
+  const isRemoved = useRef<HTMLElement>()
+
+  if (!props.style) {
+    props.style = {
       // transform does not work on drag image
       backgroundColor: useColor({ color: 'background' }),
       maxWidth: '550px',
       border:
         '1px solid ' +
         useColor({ color: 'foreground', tone: 5, opacity: 0.33 }),
-    },
+    }
   }
-) => {
-  const [isDrag, setDrag] = useState(false)
-  const endListener = useRef<boolean>()
-  const isRemoved = useRef<HTMLElement>()
 
   let addRef: boolean = false
 
@@ -86,7 +110,7 @@ const useDrag = (
     }
   }, [])
 
-  const events = {
+  const events: DragEvents = {
     draggable: true,
     current: null,
     ref: undefined,
@@ -97,9 +121,6 @@ const useDrag = (
       drag.cnt++
 
       const s = getSelection()
-
-      // if selection is large add all of theme to data transfer items
-      // make this nice
 
       const holder = document.createElement('div')
       holder.style.position = 'fixed'
@@ -133,19 +154,14 @@ const useDrag = (
         document.body.removeChild(holder)
       })
 
-      /*
-      e.dataTransfer.getData('text/plain'), 
-      e.dataTransfer.getData('text/uri-list'), 
-      e.dataTransfer.getData('text/html'));
-      e.dataTransfer.setData('text/plain', 'FLAP')
-      */
-
-      // maybe more browsers
-
       // allow adding file data for example for images
       e.dataTransfer.setDragImage(cp, 0, 0)
 
       e.dataTransfer.setData('application/json', JSON.stringify(data))
+
+      if (props.setDragData) {
+        props.setDragData(data, e)
+      }
 
       let cancelDragScroll
       if (isSafari()) {
