@@ -2,7 +2,7 @@ import React from 'react'
 import { Circle } from '@based/icons'
 import selectData from '../../util/selectData'
 import graphicString from '../../util/graphicString'
-import { getValue } from '@based/i18n'
+import { getTextValue } from '@based/i18n'
 import { useColor } from '@based/theme'
 import { S2 } from '../Text/Subtitle'
 import { H3, H4 } from '../Text/Header'
@@ -29,7 +29,7 @@ export const GraphicLabel = ({ style, data, fields = [], size = 40 }) => {
         selectedValue =
           typeof selectedValue === 'number'
             ? selectedValue
-            : graphicString(getValue(selectedValue))
+            : graphicString(getTextValue(selectedValue))
         children = (
           <div
             style={{
@@ -40,7 +40,7 @@ export const GraphicLabel = ({ style, data, fields = [], size = 40 }) => {
               height: isLarge ? size - 10 : size,
               backgroundColor: useColor(color),
               borderRadius: '50%',
-              backgroundSize: 'cover'
+              backgroundSize: 'cover',
             }}
           >
             {size > 125 ? (
@@ -71,7 +71,7 @@ export const GraphicLabel = ({ style, data, fields = [], size = 40 }) => {
               borderRadius: '50%',
               backgroundSize: 'cover',
               boxShadow: `0px 0px 3px ${useColor('shadow')} inset`,
-              backgroundImage: `url(${selectedValue})`
+              backgroundImage: `url(${selectedValue})`,
             }}
           />
         )
@@ -91,7 +91,7 @@ export const GraphicLabel = ({ style, data, fields = [], size = 40 }) => {
         display: 'flex',
         alignItems: 'center',
         // justifyContent: 'center',
-        ...style
+        ...style,
       }}
     >
       {children}

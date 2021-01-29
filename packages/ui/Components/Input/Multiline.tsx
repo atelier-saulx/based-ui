@@ -1,8 +1,8 @@
 import React, {
   useState,
   useCallback,
-  useRef,
   useEffect,
+  useRef,
   FunctionComponent,
   CSSProperties,
 } from 'react'
@@ -10,17 +10,20 @@ import { useColor, Color } from '@based/theme'
 import './style.css'
 import useHover from '../../hooks/events/useHover'
 import { Validator } from './validators'
+import { OnValueChange } from '../../types'
+import { SubText } from '../Text/SubText'
+import { TextValue, getTextValue } from '@based/i18n'
+import useInputValue from '../../hooks/useInputValue'
 
 type MultilineInputProps = {
   style?: CSSProperties
-  placeholder?: string
+  placeholder?: TextValue
   border?: boolean
   autoFocus?: boolean
-  onChange: (value: string | number | undefined) => void
-  type?: 'text' | 'email' | 'number' | 'date' | 'time' | 'search'
+  onChange: OnValueChange<string | undefined>
   identifier?: any
-  errorText?: string
-  helperText?: string
+  errorText?: TextValue
+  helperText?: TextValue
   value?: string | number
   color?: Color
   validator?: Validator
@@ -32,32 +35,19 @@ export const MultilineTextInput: FunctionComponent<MultilineInputProps> = ({
   value = '',
   onChange,
   autoFocus,
+  style,
   validator,
+  errorText,
+  helperText,
   color = { color: 'background', tone: 1 },
   border,
   identifier,
 }) => {
-  const identifierRef = useRef(identifier)
-  const initialValue = useRef(value)
   const ref = useRef()
-  const [stateValue, setValue] = useState(value)
   const [isFocus, setFocus] = useState(false)
   const [isWrong, setWrong] = useState(false)
   const [hover, isHover] = useHover()
-
-  if (value !== stateValue && value !== initialValue.current && !isFocus) {
-    initialValue.current = value
-    setValue(value)
-  } else if (identifierRef.current !== identifier) {
-    identifierRef.current = identifier
-    initialValue.current = value
-    setValue(value)
-  } else if (!initialValue.current) {
-    initialValue.current = value
-    if (!stateValue && value) {
-      setValue(value)
-    }
-  }
+  const [stateValue, setValue] = useInputValue(value, identifier, isFocus)
 
   useEffect(() => {
     if (ref.current) {
@@ -95,49 +85,71 @@ export const MultilineTextInput: FunctionComponent<MultilineInputProps> = ({
   }, [setFocus])
 
   return (
-    <textarea
-      {...hover}
-      onChange={update}
-      onFocus={focus}
-      onBlur={blur}
-      ref={ref}
-      autoFocus={autoFocus}
+    <div
       style={{
-        borderRadius: 4,
-        background: useColor({
-          color: color.color,
-          tone: isFocus || isHover ? color.tone + 1 : 1,
-        }),
-        border: isFocus
-          ? '2px solid ' +
-            (isWrong
-              ? useColor({ color: 'error' })
-              : useColor({ color: 'primary' }))
-          : '1px solid ' +
-            (isWrong
-              ? useColor({ color: 'error' })
-              : useColor({
-                  color: 'foreground',
-                  tone: 5,
-                  opacity: border ? 0.33 : 0,
-                })),
-        paddingLeft: isFocus ? 11 : 12,
-        paddingRight: isFocus ? 11 : 12,
-        paddingTop: isFocus ? 6.5 : 7.5,
-        paddingBottom: isFocus ? 6.5 : 7.5,
-        resize: 'none',
-        height: 'auto',
-        width: '100%',
-        appearance: 'none',
-        fontFamily: 'Font',
-        color: useColor({ color: 'foreground' }),
-        fontWeight: 'normal',
-        fontSize: '15px',
-        lineHeight: '24px',
-        letterSpacing: '-0.015em',
+        position: 'relative',
+        ...style,
       }}
-      placeholder={placeholder}
-      value={stateValue}
-    />
+    >
+      <textarea
+        {...hover}
+        onChange={update}
+        onFocus={focus}
+        onBlur={blur}
+        ref={ref}
+        autoFocus={autoFocus}
+        style={{
+          borderRadius: 4,
+          background: useColor({
+            color: color.color,
+            tone: isFocus || isHover ? color.tone + 1 : 1,
+          }),
+          border: isFocus
+            ? '2px solid ' +
+              (isWrong
+                ? useColor({ color: 'error' })
+                : useColor({ color: 'primary' }))
+            : '1px solid ' +
+              (isWrong
+                ? useColor({ color: 'error' })
+                : useColor({
+                    color: 'divider',
+                    opacity: border ? 1 : 0,
+                  })),
+          paddingLeft: isFocus ? 11 : 12,
+          paddingRight: isFocus ? 11 : 12,
+          paddingTop: isFocus ? 6.5 : 7.5,
+          paddingBottom: isFocus ? 6.5 : 7.5,
+          resize: 'none',
+          height: 'auto',
+          width: '100%',
+          appearance: 'none',
+          fontFamily: 'Font',
+          color: useColor({ color: 'foreground' }),
+          fontWeight: 'normal',
+          fontSize: '15px',
+          lineHeight: '24px',
+          letterSpacing: '-0.015em',
+        }}
+        placeholder={String(getTextValue(placeholder))}
+        value={stateValue}
+      />
+      {isFocus && (errorText || helperText) ? (
+        <SubText
+          color={{
+            color: isWrong ? 'error' : 'foreground',
+            tone: isWrong ? 1 : 3,
+          }}
+          style={{
+            marginLeft: 4,
+            position: 'absolute',
+            bottom: -25,
+            left: 0,
+          }}
+        >
+          {isWrong ? errorText : helperText || ''}
+        </SubText>
+      ) : null}
+    </div>
   )
 }

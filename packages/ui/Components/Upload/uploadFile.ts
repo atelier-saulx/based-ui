@@ -1,5 +1,5 @@
-import getService from '@saulx/get-service'
-import {ProgressContext, ProgressContextItem} from "./ProgressContext"
+import getService from '@saulx/get-service' // will be replaced at some point
+import { ProgressContext, ProgressContextItem } from './ProgressContext'
 
 // TODO: This should be moved to the actual uploadFileScript
 export type UploadFileScript = (
@@ -10,12 +10,18 @@ export type UploadFileScript = (
   fake?: boolean
 ) => Promise<void>
 
-export const uploadFile:UploadFileScript = async (files, progressContext, progressId, type = 'file', fake) => {
+export const uploadFile: UploadFileScript = async (
+  files,
+  progressContext,
+  progressId,
+  type = 'file',
+  fake
+) => {
   console.log({
     files,
     progressContext,
     progressId,
-    type
+    type,
   })
 
   let url
@@ -30,7 +36,7 @@ export const uploadFile:UploadFileScript = async (files, progressContext, progre
 
   if (files.length) {
     try {
-        const xhr = new global.XMLHttpRequest()
+      const xhr = new global.XMLHttpRequest()
       if (progressContext.items[progressId]) {
         if (progressContext.items[progressId].gettingRemoved) {
           clearTimeout(progressContext.items[progressId].gettingRemoved)
@@ -44,7 +50,7 @@ export const uploadFile:UploadFileScript = async (files, progressContext, progre
 
       const file = files[0]
 
-      const item:ProgressContextItem = {
+      const item: ProgressContextItem = {
         xhr: fake ? null : xhr,
         size: file.size,
         id: progressId,
@@ -58,14 +64,21 @@ export const uploadFile:UploadFileScript = async (files, progressContext, progre
 
       if (fake) {
         const item = progressContext.items[progressId]
-        let fakeProgressInterval:any
+        let fakeProgressInterval: any
         const fakeProgress = () => {
-          item.progress = Math.min((item.progress || 0) + (Math.ceil(Math.random() * (10 - 4) + 4)), 100)
+          item.progress = Math.min(
+            (item.progress || 0) + Math.ceil(Math.random() * (10 - 4) + 4),
+            100
+          )
           if (item.progress >= 100) {
-            item.url = 'http://fake.'+ item.name
+            item.url = 'http://fake.' + item.name
             clearInterval(fakeProgressInterval)
             item.isComplete = true
-            if (Object.keys(progressContext.items).every(key => progressContext.items[key].isComplete)) {
+            if (
+              Object.keys(progressContext.items).every(
+                (key) => progressContext.items[key].isComplete
+              )
+            ) {
               progressContext.inProgress = false
             }
             delete progressContext.items[progressId].gettingRemoved
@@ -78,11 +91,11 @@ export const uploadFile:UploadFileScript = async (files, progressContext, progre
         }
         fakeProgressInterval = setInterval(fakeProgress, 500)
       } else {
-
-        xhr.upload.onprogress = (p:ProgressEvent) => {
+        xhr.upload.onprogress = (p: ProgressEvent) => {
           const item = progressContext.items[progressId]
           // @ts-ignore
-          item.progress = (100 * (p.loaded || p.position)) / (p.totalSize || p.total)
+          item.progress =
+            (100 * (p.loaded || p.position)) / (p.totalSize || p.total)
           progressContext.listeners.forEach((update) => update({ ...item }))
         }
 
@@ -106,7 +119,7 @@ export const uploadFile:UploadFileScript = async (files, progressContext, progre
           item.progress = 100
 
           // TODO: res needs type from service
-          let res:any = {}
+          let res: any = {}
           try {
             res = JSON.parse(xhr.response)
           } catch (err) {
@@ -124,13 +137,17 @@ export const uploadFile:UploadFileScript = async (files, progressContext, progre
                 item.isComplete = false
                 item.transcoding = true
                 item.progress = status.progress
-                progressContext.listeners.forEach((update) => update({ ...item }))
+                progressContext.listeners.forEach((update) =>
+                  update({ ...item })
+                )
                 setTimeout(checkStatus, 1e3)
               } else {
                 item.url = status.url
                 item.isComplete = true
 
-                progressContext.listeners.forEach((update) => update({ ...item }))
+                progressContext.listeners.forEach((update) =>
+                  update({ ...item })
+                )
                 clearTimeout(item.gettingRemoved)
                 xhr.abort()
                 delete item.xhr
@@ -172,7 +189,7 @@ export const uploadFile:UploadFileScript = async (files, progressContext, progre
       progressContext.listeners.forEach((update) => update({ ...item }))
 
       if (progressContext.service) {
-        console.error("Implement get service")
+        console.error('Implement get service')
         url = (
           await getService({
             serviceName: progressContext.service,

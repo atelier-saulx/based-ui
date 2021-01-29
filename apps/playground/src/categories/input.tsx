@@ -1,4 +1,4 @@
-import React from 'React'
+import React, { useEffect, useState } from 'React'
 import {
   Input,
   CheckBox,
@@ -6,10 +6,12 @@ import {
   Select,
   DateTimeInput,
   ColorInput,
+  Button,
   RadioButton,
 } from '@based/ui'
 import RenderComponents from '../RenderComponents'
 import { randomText } from './util'
+import { useColor } from '@based/theme'
 
 export default {
   name: 'input',
@@ -23,7 +25,7 @@ export default {
       props: [
         {
           border: true,
-          placeholder: 'Hello select color',
+          placeholder: { en: 'Hello select color' },
           onChange: (v) => {
             console.log(v)
           },
@@ -47,7 +49,38 @@ export default {
         {
           border: true,
           value: Date.now(),
-          onChange: () => {},
+          onChange: (v) => {
+            console.log(v)
+          },
+        },
+        () => {
+          const [s, updateExternal] = useState<any>({ value: Date.now() })
+
+          return (
+            <>
+              <DateTimeInput
+                value={s.value}
+                onChange={(v) => {
+                  console.log(v)
+                }}
+                identifier={s.id}
+              />
+              <Button
+                style={{
+                  marginTop: 15,
+                  marginLeft: 15,
+                }}
+                onClick={() => {
+                  updateExternal({
+                    id: ~~(Math.random() * 1000),
+                    value: Date.now() + 1e3 * 60 * ~~(10000 * Math.random()),
+                  })
+                }}
+              >
+                Update
+              </Button>
+            </>
+          )
         },
       ],
     },
@@ -57,12 +90,17 @@ export default {
       Component: MultilineTextInput,
       props: [
         {
-          children: 'Hello',
           onChange: () => {},
           placeholder: 'Put text',
         },
         {
-          children: 'Hello Checked',
+          onChange: () => {},
+          placeholder: 'Put text',
+          validator: (s) => s.length > 100,
+          errorText: 'Make more then 100',
+          helperText: 'Put text',
+        },
+        {
           onChange: () => {},
           value: randomText,
           placeholder: 'Put text',
@@ -75,29 +113,50 @@ export default {
       props: [
         {
           onChange: () => {},
-          placeholder: 'Select greeting',
-          options: ['Hello', 'Bye'],
-        },
-        {
-          onChange: () => {},
-          border: true,
-          multi: true,
-          placeholder: 'Select multiple greetings',
-          options: ['Hello', 'Bye', 'For You'],
-        },
-        {
-          onChange: () => {},
           border: true,
           multi: true,
           placeholder: 'Select some things',
-          options: [
+          items: [
             {
               icon: 'time',
-              label: 'on time',
+              value: 'on time',
             },
             {
               icon: 'date',
-              label: 'too late',
+              value: 'too late',
+            },
+          ],
+          value: [{ value: 'too late' }],
+        },
+        {
+          onChange: () => {},
+          border: true,
+          placeholder: { en: 'Select some things' },
+          items: [
+            {
+              value: undefined,
+              children: 'Clear!',
+            },
+            {
+              value: 'on time',
+            },
+            {
+              value: 'too late',
+            },
+            {
+              value: 'punana',
+              children: ({ isActive }) => (
+                <div
+                  style={{
+                    borderRadius: '50%',
+                    width: 20,
+                    height: 20,
+                    background: useColor({
+                      color: isActive ? 'primary' : 'primaryAccent',
+                    }),
+                  }}
+                ></div>
+              ),
             },
           ],
         },
@@ -145,14 +204,19 @@ export default {
         {
           placeholder: 'Put some text',
           onChange: () => {},
-          options: [
+          dropdown: [
+            {
+              icon: 'close',
+              value: undefined,
+            },
             {
               icon: 'time',
-              label: 'on time',
+              value: 'on time',
             },
             {
               icon: 'date',
-              label: 'too late',
+              value: 'too late',
+              children: { en: 'too late!!!' },
             },
           ],
         },

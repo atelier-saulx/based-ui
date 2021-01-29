@@ -8,51 +8,46 @@ import { useColor, Color } from '@based/theme'
 import { Down, IconName, iconFromString } from '@based/icons'
 import { Validator } from './validators'
 import './style.css'
-import { DropdownOptions, DropdownOption } from '../Overlay/Dropdown'
-
+import { DropdownOption } from '../Overlay/Dropdown'
+import { getTextValue, TextValue } from '@based/i18n'
 import useHover from '../../hooks/events/useHover'
 import { Text } from '../Text'
-import useDropdown from '../../hooks/overlay/useDropdown'
+import useDropdown, { OnSelect } from '../../hooks/overlay/useDropdown'
+import useInputValue from '../../hooks/useInputValue'
 
 type SelectInputProps = {
   style?: CSSProperties
-  placeholder?: string
+  placeholder?: TextValue
   border?: boolean
   autoFocus?: boolean
-  onChange: (value: DropdownOption, index?: number | number[]) => void
-  type?: 'text' | 'email' | 'number' | 'date' | 'time' | 'search'
+  onChange: OnSelect
   validator?: Validator
   icon?: IconName
   identifier?: any
   multi?: boolean
-  value?: (string | number) | (string | number)[]
-  options?: DropdownOptions
+  value?: DropdownOption | DropdownOption[]
+  items?: DropdownOption[]
   color?: Color
-  progress?: number
 }
 
 export const Select: FunctionComponent<SelectInputProps> = ({
   placeholder = '',
   onChange,
-  options = [],
+  items = [],
   icon,
   color = { color: 'background', tone: 1 },
   multi,
   border,
   identifier,
-  value = multi ? [] : '',
+  value = multi ? [] : undefined,
   style,
 }) => {
-  // make identifier better
-
-  const [stateValue, setValue] = useState<
-    (string | number) | (string | number)[]
-  >(value)
   const [isFocus, setFocus] = useState(false)
+  const [stateValue, setValue] = useInputValue<
+    DropdownOption | DropdownOption[]
+  >(value, identifier, isFocus)
   const [hover, isHover] = useHover()
-
   const Icon = icon ? iconFromString(icon) : ''
-
   const update = useCallback(
     (value, index) => {
       setValue(value)
@@ -61,21 +56,21 @@ export const Select: FunctionComponent<SelectInputProps> = ({
     [setValue, onChange]
   )
 
-  const displayValue =
-    Array.isArray(stateValue) && multi
-      ? stateValue.length === 0
-        ? placeholder
-        : stateValue.join(', ')
-      : stateValue === ''
+  const displayValue = Array.isArray(stateValue)
+    ? stateValue.filter((v) => v.value !== undefined).length === 0
       ? placeholder
-      : stateValue
+      : stateValue.map((v) => getTextValue(v.value)).join(', ')
+    : !stateValue || stateValue.value === undefined
+    ? placeholder
+    : getTextValue(stateValue.value)
 
   return (
     <div
       {...hover}
       onClick={useDropdown(
-        options,
+        items,
         (value, index) => {
+          console.log(index)
           if (multi) {
             if (index !== undefined) {
               update(value, index)
@@ -118,9 +113,8 @@ export const Select: FunctionComponent<SelectInputProps> = ({
           ? '2px solid ' + useColor({ color: 'primary' })
           : '1px solid ' +
             useColor({
-              color: 'foreground',
-              tone: 5,
-              opacity: border ? 0.33 : 0,
+              color: 'divider',
+              opacity: border ? 1 : 0,
             }),
         ...style,
       }}
@@ -147,7 +141,13 @@ export const Select: FunctionComponent<SelectInputProps> = ({
             <div style={{ width: 24 }} />
           </>
         ) : null}
-        <Text singleLine style={{ userSelect: 'none' }}>
+        <Text
+          singleLine
+          style={{
+            userSelect: 'none',
+            opacity: displayValue === placeholder ? 0.6 : 1,
+          }}
+        >
           {displayValue}
         </Text>
       </div>

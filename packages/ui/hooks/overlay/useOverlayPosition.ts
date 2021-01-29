@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, useReducer, RefObject } from 'react'
 
 export type Align = 'flex-start' | 'center' | 'flex-end'
 
-export type Target = (HTMLElement | Element | EventTarget) & {
+export type Target = (Element | Node) & {
   rect?: ClientRect
 }
 

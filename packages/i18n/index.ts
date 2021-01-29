@@ -4,17 +4,29 @@ export { Language }
 
 let lang: Language = 'en'
 
-type Value = any
+type Value = undefined | (string | number) | (string | number)[]
 
-export function getValue(
-  value: Value | Value[],
-  langauge: Language = lang
-): any {
+export type TextValueSingle = Value | Partial<Record<Language, Value>>
+
+export type TextValue = TextValueSingle | (string | number)[]
+
+export function getTextValue(
+  value: TextValue,
+  language: Language = lang
+): Value {
   if (Array.isArray(value)) {
-    return value.map((v) => getValue(v))
+    return value
   }
-  if (typeof value === 'object' && !('$$typeof' in value)) {
-    return value[langauge] || value.en
+  if (typeof value === 'object') {
+    return value[language] || value.en
   }
   return value
+}
+
+export function isTextValue(value: any): value is TextValue {
+  return (
+    typeof value === 'string' ||
+    typeof value === 'number' ||
+    (typeof value === 'object' && value !== null)
+  )
 }

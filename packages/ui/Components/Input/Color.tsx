@@ -1,7 +1,6 @@
 import React, {
   useState,
   useCallback,
-  useRef,
   CSSProperties,
   FunctionComponent,
 } from 'react'
@@ -9,6 +8,9 @@ import { useColor, Color } from '@based/theme'
 import useHover from '../../hooks/events/useHover'
 import hexRgb from 'hex-rgb'
 import rgbHex from 'rgb-hex'
+import { OnValueChange } from '../../types'
+import { TextValue, getTextValue } from '@based/i18n'
+import useInputValue from '../../hooks/useInputValue'
 import './style.css'
 
 const isHex = (value: string): boolean =>
@@ -30,16 +32,16 @@ const toRgb = (value: string): string => {
 
 type ColorInputProps = {
   style?: CSSProperties
-  placeholder?: string
+  placeholder?: TextValue
   border?: boolean
   autoFocus?: boolean
-  onChange: (value: string) => void
+  onChange: OnValueChange
   identifier?: any
   value?: string
   color?: Color
 }
 
-const Text = ({ onChange, value, placeholder, focus, blur, right }) => {
+const Text = ({ onChange, value, placeholder, focus, blur }) => {
   return (
     <input
       type="text"
@@ -47,10 +49,10 @@ const Text = ({ onChange, value, placeholder, focus, blur, right }) => {
       onChange={onChange}
       onFocus={focus}
       onBlur={blur}
-      placeholder={placeholder}
+      placeholder={String(getTextValue(placeholder))}
       style={{
         width: '100%',
-        textAlign: right ? 'right' : 'left',
+        textAlign: 'left',
         appearance: 'none',
         fontSize: '15px',
         lineHeight: '24px',
@@ -74,25 +76,14 @@ export const ColorInput: FunctionComponent<ColorInputProps> = ({
   placeholder,
   color = { color: 'background', tone: 1 },
 }) => {
-  const identifierRef = useRef(identifier)
-  const initialValue = useRef(value)
-  const [stateValue, setValue] = useState<string>(value)
   const [isFocus, setFocus] = useState(false)
   const [hover, isHover] = useHover()
 
-  if (value !== stateValue && value !== initialValue.current && !isFocus) {
-    initialValue.current = value
-    setValue(value)
-  } else if (identifierRef.current !== identifier) {
-    identifierRef.current = identifier
-    initialValue.current = value
-    setValue(value)
-  } else if (!initialValue.current) {
-    initialValue.current = value
-    if (!stateValue && value) {
-      setValue(value)
-    }
-  }
+  const [stateValue, setValue] = useInputValue<string | undefined>(
+    value,
+    identifier,
+    isFocus
+  )
 
   const update = useCallback(
     (e) => {
@@ -132,9 +123,8 @@ export const ColorInput: FunctionComponent<ColorInputProps> = ({
           ? '2px solid ' + useColor({ color: 'primary' })
           : '1px solid ' +
             useColor({
-              color: 'foreground',
-              tone: 5,
-              opacity: border ? 0.33 : 0,
+              color: 'divider',
+              opacity: border ? 1 : 0,
             }),
         ...style,
       }}
@@ -148,9 +138,7 @@ export const ColorInput: FunctionComponent<ColorInputProps> = ({
           border:
             '1px solid ' +
             useColor({
-              color: 'foreground',
-              tone: 5,
-              opacity: 0.33,
+              color: 'divider',
             }),
           background: stateValue,
         }}

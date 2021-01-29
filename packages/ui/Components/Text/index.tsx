@@ -1,17 +1,18 @@
 import React, { CSSProperties, FunctionComponent } from 'react'
 import { useColor, Color } from '@based/theme'
-import { getValue } from '@based/i18n'
+import { getTextValue, TextValue } from '@based/i18n'
 
-type BodyProps = {
+type TextProps = {
   style?: CSSProperties
   color?: Color
+  children?: TextValue
   noSelect?: boolean
   singleLine?: boolean
   overflow?: boolean
   weight?: 'regular' | 'medium' | 'semibold'
 }
 
-export const Text: FunctionComponent<BodyProps> = ({
+export const Text: FunctionComponent<TextProps> = ({
   children,
   style,
   color = { color: 'foreground' },
@@ -35,7 +36,7 @@ export const Text: FunctionComponent<BodyProps> = ({
         ...style,
       }}
     >
-      {getValue(children)}
+      {getTextValue(children)}
     </div>
   )
 }

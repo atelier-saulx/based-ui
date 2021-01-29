@@ -9,7 +9,7 @@ import { useColor, Color } from '@based/theme'
 export type RadioProps = {
   onChange?: (value: boolean | void) => void
   value?: boolean
-  overRideValue?: boolean
+  overrideValue?: boolean
   style?: CSSProperties
   color?: Color
 }
@@ -18,12 +18,12 @@ export const Radio: FunctionComponent<RadioProps> = ({
   onChange = () => {},
   color = { color: 'primary' },
   value = false,
-  overRideValue,
+  overrideValue,
   style,
 }) => {
   let [enabled, update] = useReducer((x) => !x, value)
-  if (overRideValue !== undefined) {
-    enabled = overRideValue
+  if (overrideValue !== undefined) {
+    enabled = overrideValue
   }
   return (
     <div
@@ -41,8 +41,8 @@ export const Radio: FunctionComponent<RadioProps> = ({
         ...style,
       }}
       onClick={useCallback(() => {
-        if (overRideValue !== undefined) {
-          onChange(!overRideValue)
+        if (overrideValue !== undefined) {
+          onChange(!overrideValue)
         } else {
           onChange(update())
         }

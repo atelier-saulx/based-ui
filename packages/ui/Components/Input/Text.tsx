@@ -1,7 +1,6 @@
 import React, {
   useState,
   useCallback,
-  useRef,
   CSSProperties,
   FunctionComponent,
 } from 'react'
@@ -20,25 +19,28 @@ import {
 import { emailValidator, Validator } from './validators'
 import { SubText } from '../Text/SubText'
 import useDropdown from '../../hooks/overlay/useDropdown'
-import './style.css'
-import { DropdownOptions } from '../Overlay/Dropdown'
+import { DropdownOption } from '../Overlay/Dropdown'
 import useHover from '../../hooks/events/useHover'
 import { ProgressIndicator } from '../ProgressIndicator/ProgressIndicator'
+import { TextValue, getTextValue } from '@based/i18n'
+import { OnValueChange } from '../../types'
+import useInputValue from '../../hooks/useInputValue'
+import './style.css'
 
 type InputProps = {
   style?: CSSProperties
   icon?: IconName
-  placeholder?: string
+  placeholder?: TextValue
+  errorText?: TextValue
+  helperText?: TextValue
   border?: boolean
   autoFocus?: boolean
-  onChange: (value: string | number | undefined) => void
+  onChange: OnValueChange<string | number | undefined>
   type?: 'text' | 'email' | 'number' | 'date' | 'time' | 'search'
   validator?: Validator
   identifier?: any
-  errorText?: string
-  helperText?: string
   value?: string | number
-  options?: DropdownOptions
+  dropdown?: DropdownOption[]
   color?: Color
   progress?: number
 }
@@ -54,34 +56,16 @@ export const Input: FunctionComponent<InputProps> = ({
   style,
   type = 'text',
   validator,
-  options,
+  dropdown,
   errorText,
   helperText,
   identifier,
   progress,
 }) => {
-  // add these identifier refs everywhere...
-
-  const identifierRef = useRef(identifier)
-  const initialValue = useRef(value)
-  const [stateValue, setValue] = useState(value)
   const [isFocus, setFocus] = useState(false)
   const [isWrong, setWrong] = useState(false)
   const [hover, isHover] = useHover()
-
-  if (value !== stateValue && value !== initialValue.current && !isFocus) {
-    initialValue.current = value
-    setValue(value)
-  } else if (identifierRef.current !== identifier) {
-    identifierRef.current = identifier
-    initialValue.current = value
-    setValue(value)
-  } else if (!initialValue.current) {
-    initialValue.current = value
-    if (!stateValue && value) {
-      setValue(value)
-    }
-  }
+  const [stateValue, setValue] = useInputValue(value, identifier, isFocus)
 
   const update = useCallback(
     (e) => {
@@ -138,7 +122,7 @@ export const Input: FunctionComponent<InputProps> = ({
       validator = emailValidator
     }
     if (!errorText) {
-      errorText = 'Please enter a valid email adress'
+      errorText = { en: 'Please enter a valid email adress' }
     }
   }
 
@@ -167,9 +151,8 @@ export const Input: FunctionComponent<InputProps> = ({
             (isWrong
               ? useColor({ color: 'error' })
               : useColor({
-                  color: 'foreground',
-                  tone: 5,
-                  opacity: border ? 0.33 : 0,
+                  color: 'divider',
+                  opacity: border ? 1 : 0,
                 })),
         ...style,
       }}
@@ -203,7 +186,7 @@ export const Input: FunctionComponent<InputProps> = ({
         onFocus={focus}
         onBlur={blur}
         autoFocus={autoFocus}
-        placeholder={placeholder}
+        placeholder={String(getTextValue(placeholder))}
         style={{
           width: '100%',
           paddingLeft: Icon ? 6.5 : 0,
@@ -220,21 +203,21 @@ export const Input: FunctionComponent<InputProps> = ({
         }}
       />
 
-      {options ? (
+      {dropdown ? (
         <Down
           onClick={useDropdown(
-            options,
-            (value, index) => {
-              if (index !== undefined) {
-                update(value === undefined ? '' : value)
+            dropdown,
+            (value) => {
+              if (!Array.isArray(value)) {
+                update(value.value === undefined ? '' : value.value)
               }
             },
-            stateValue,
+            { value: stateValue },
             {
               align: 'flex-end',
               x: ({ left }) => left - 15,
               y: ({ top }) => top + 15,
-              selectTarget: (target: Element) => {
+              selectTarget: (target) => {
                 return target.parentNode.parentNode
               },
             }

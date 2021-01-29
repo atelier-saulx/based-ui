@@ -18,6 +18,8 @@ import useMultipleEvents from './hooks/events/useMultipleEvents'
 import { useKeyDown, useKeyUp } from './hooks/events/useKeyboard'
 import useHover from './hooks/events/useHover'
 import useDrag from './hooks/drag/useDrag'
+import useDrop from './hooks/drag/useDrop'
+import useInputValue from './hooks/useInputValue'
 
 export * from './hooks/useSelect'
 
@@ -36,6 +38,8 @@ export {
   useMenu,
   useMultipleEvents,
   useDrag,
+  useDrop,
+  useInputValue,
 }
 
 export { Code } from './Components/Text/Code'
@@ -51,8 +55,9 @@ export { FileUpload } from './Components/Upload/Upload'
 export { ContextualMenuItem } from './Components/Overlay/Menu'
 export { Input } from './Components/Input/Text'
 export { Select } from './Components/Input/Select'
-export { CheckBox, RadioButton } from './Components/Input/Enable'
+export { CheckBox, RadioButton } from './Components/Input/Toggle'
 export { MultilineTextInput } from './Components/Input/Multiline'
 export { UploadIndicator } from './Components/Upload/UploadIndicator'
 export { DateTimeInput } from './Components/Input/DateTime'
 export { ColorInput } from './Components/Input/Color'
+export { Divider } from './Components/Divider'

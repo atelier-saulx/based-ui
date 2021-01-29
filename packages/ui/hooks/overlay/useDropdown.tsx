@@ -1,26 +1,38 @@
 import { addOverlay, removeOverlay } from '../../Components/Overlay'
-import { Dropdown, DropdownOptions } from '../../Components/Overlay/Dropdown'
+import {
+  Dropdown,
+  DropdownOption,
+  dropdownOptionIsEqual,
+} from '../../Components/Overlay/Dropdown'
 import { PositionProps } from './useOverlayPosition'
 import React, { useCallback } from 'react'
 import { OverlayContext, createOverlayContextRef } from './useOverlayProps'
-
 import { DataEventHandler } from '../../types'
 
-export type SelectFn = (
-  value?: (string | number) | (string | number)[],
-  index?: number | number[]
+export type OnSelect = (
+  value: DropdownOption | DropdownOption[],
+  index: number | number[]
 ) => void
 
+const findOptionIndex = (
+  options: DropdownOption[],
+  option: DropdownOption
+): number => {
+  return options.findIndex((o) => {
+    return dropdownOptionIsEqual(option, o)
+  })
+}
+
 export default (
-  options: DropdownOptions,
-  select: SelectFn,
-  value?: (string | number) | (string | number)[],
+  items: DropdownOption[],
+  onSelect: OnSelect,
+  value?: DropdownOption | DropdownOption[] | undefined,
   props: PositionProps & { multi?: boolean } = {},
   handler?: () => () => void
 ): DataEventHandler => {
   const ctx = createOverlayContextRef({
     value,
-    items: options,
+    items,
     ...props,
   })
 
@@ -34,29 +46,28 @@ export default (
           <Dropdown
             value={value}
             target={e.currentTarget}
-            items={options}
-            onChange={(v, index) => {
-              let label = typeof v === 'object' ? v.label : v
+            items={items}
+            onChange={(option, index) => {
               if (ctx.current.props.multi) {
                 let value = ctx.current.props.value
                 if (!Array.isArray(value)) {
                   value = []
                 }
-                const index = value.indexOf(label)
+                const index = findOptionIndex(value, option)
                 value = [...value]
                 if (index !== -1) {
                   value.splice(index, 1)
                 } else {
-                  value.push(label)
+                  value.push(option)
                 }
-                select(
+                onSelect(
                   value,
-                  value.map((v) => ctx.current.props.items.indexOf(v))
+                  value.map((v) => findOptionIndex(ctx.current.props.items, v))
                 )
                 ctx.current.update({ ...ctx.current.props, value })
               } else {
-                select(label, index)
-                ctx.current.update({ ...ctx.current.props, value: label })
+                onSelect(option, index)
+                ctx.current.update({ ...ctx.current.props, value: option })
                 ctx.current.timer = setTimeout(() => {
                   removeOverlay(dropdown)
                 }, 200)

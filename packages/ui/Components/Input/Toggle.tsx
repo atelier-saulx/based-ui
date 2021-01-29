@@ -1,27 +1,33 @@
-import React, {
-  useReducer,
-  useCallback,
-  FunctionComponent,
-  CSSProperties,
-} from 'react'
+import React, { useCallback, FunctionComponent, CSSProperties } from 'react'
 import { Check } from '../Button/CheckBox'
 import { Radio } from '../Button/Radio'
 import { Text } from '../Text'
+import { TextValue } from '@based/i18n'
+import { OnValueChange } from '../../types'
+import useInputValue from '../../hooks/useInputValue'
 
-export type EnableInputProps = {
+export type ToggleInputProps = {
   style?: CSSProperties
-  onChange: (value: boolean | void) => void
+  onChange: OnValueChange<boolean>
   value?: boolean
+  identifier?: any
+  children?: TextValue
 }
 
-export const CheckBox: FunctionComponent<EnableInputProps> = ({
+export const CheckBox: FunctionComponent<ToggleInputProps> = ({
   style,
   children,
   onChange,
+  identifier,
   value = false,
   ...rest
 }) => {
-  const [enabled, update] = useReducer((x) => !x, value)
+  const [stateValue, setValue] = useInputValue<boolean>(
+    value,
+    identifier,
+    false
+  )
+
   return (
     <div
       style={{
@@ -31,14 +37,14 @@ export const CheckBox: FunctionComponent<EnableInputProps> = ({
         ...style,
       }}
       onClick={useCallback(() => {
+        let v = !stateValue
         if (onChange) {
-          onChange(update())
-        } else {
-          update()
+          onChange(v)
         }
-      }, [onChange])}
+        setValue(v)
+      }, [onChange, stateValue])}
     >
-      <Check {...rest} overRideValue={enabled} />
+      <Check {...rest} overrideValue={stateValue} />
       <Text
         noSelect
         style={{
@@ -51,14 +57,19 @@ export const CheckBox: FunctionComponent<EnableInputProps> = ({
   )
 }
 
-export const RadioButton: FunctionComponent<EnableInputProps> = ({
+export const RadioButton: FunctionComponent<ToggleInputProps> = ({
   style,
   children,
   onChange,
+  identifier,
   value = false,
   ...rest
 }) => {
-  const [enabled, update] = useReducer((x) => !x, value)
+  const [stateValue, setValue] = useInputValue<boolean>(
+    value,
+    identifier,
+    false
+  )
 
   return (
     <div
@@ -69,14 +80,14 @@ export const RadioButton: FunctionComponent<EnableInputProps> = ({
         ...style,
       }}
       onClick={useCallback(() => {
+        let v = !stateValue
         if (onChange) {
-          onChange(update())
-        } else {
-          update()
+          onChange(v)
         }
-      }, [onChange])}
+        setValue(v)
+      }, [onChange, stateValue])}
     >
-      <Radio overRideValue={enabled} {...rest} />
+      <Radio overrideValue={stateValue} {...rest} />
       <Text
         noSelect
         style={{

@@ -251,44 +251,9 @@ export default {
             <Button
               color={{ color: 'foreground', tone: 2 }}
               onClick={useDropdown(
-                ['hello', 'bye!', 'snurky pants for you'],
-                (value, index) => {
-                  console.log('-->', value, index)
-                },
-                'hello'
-              )}
-            >
-              Simple dropdown
-            </Button>
-          )
-        },
-        () => {
-          return (
-            <Button
-              color={{ color: 'foreground', tone: 2 }}
-              onClick={useDropdown(
-                ['hello', 'bye!', 'snurky pants for you'],
-                (value, index) => {
-                  console.log('-->', value, index)
-                },
-                undefined,
-                {
-                  multi: true,
-                }
-              )}
-            >
-              Multi dropdown
-            </Button>
-          )
-        },
-        () => {
-          return (
-            <Button
-              color={{ color: 'foreground', tone: 2 }}
-              onClick={useDropdown(
                 [
-                  { label: 'hello', icon: 'skip' },
-                  { label: 'bye', icon: 'smartCopy' },
+                  { value: 'hello', icon: 'skip' },
+                  { value: 'bye', icon: 'smartCopy' },
                 ],
                 (value, index) => {
                   console.log('-->', value, index)
@@ -298,6 +263,21 @@ export default {
               )}
             >
               Multi icon dropdown
+            </Button>
+          )
+        },
+        () => {
+          return (
+            <Button
+              color={{ color: 'foreground', tone: 2 }}
+              onClick={useDropdown(
+                [{ value: { en: 'hello', de: 'x' } }, { value: 'bye' }],
+                (value, index) => {
+                  console.log('-->', value, index)
+                }
+              )}
+            >
+              Single dropdown
             </Button>
           )
         },
