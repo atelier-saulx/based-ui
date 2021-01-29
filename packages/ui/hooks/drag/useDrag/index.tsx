@@ -1,11 +1,19 @@
 import { useColor } from '@based/theme'
-import React, { useCallback, useState, useEffect, useRef } from 'react'
+import React, {
+  useCallback,
+  useState,
+  useEffect,
+  useRef,
+  RefObject,
+  CSSProperties,
+} from 'react'
 import { getSelection } from '../../useSelect'
 import { Title } from '../../../Components/Text/Title'
 import { Add } from '@based/icons'
 import { render } from 'react-dom'
 import isSafari from '../../../util/isSafari'
 import dragScroll from './dragScroll'
+import { Data } from '../../../types'
 
 const drag = {
   cnt: 0,
@@ -34,12 +42,15 @@ export const isDragging = () => {
   return false
 }
 
+export type DragProps = {
+  modifyImageElement?: (el: HTMLElement) => void
+  style: CSSProperties
+}
+
 const useDrag = (
-  data,
-  index,
-  ref,
-  props = {
-    modifyImageElement: undefined,
+  data: Data,
+  ref?: RefObject<HTMLElement>,
+  props: DragProps = {
     style: {
       // transform does not work on drag image
       backgroundColor: useColor({ color: 'background' }),
@@ -51,10 +62,10 @@ const useDrag = (
   }
 ) => {
   const [isDrag, setDrag] = useState(false)
-  const endListener = useRef()
-  const isRemoved = useRef()
+  const endListener = useRef<boolean>()
+  const isRemoved = useRef<HTMLElement>()
 
-  let addRef
+  let addRef: boolean = false
 
   if (!ref) {
     addRef = true
@@ -64,7 +75,7 @@ const useDrag = (
   useEffect(() => {
     return () => {
       if (endListener.current) {
-        // nessecary when an item gets removed (else the grag even stop working)
+        // nessecary when an item gets removed (else the drag event stops working)
         const el = ref.current
         isRemoved.current = el
         global.requestAnimationFrame(() => {
@@ -77,7 +88,7 @@ const useDrag = (
 
   const events = {
     draggable: true,
-    current: false,
+    current: null,
     ref: undefined,
     onDragStart: useCallback((e) => {
       setDrag(true)
@@ -98,7 +109,6 @@ const useDrag = (
       if (s.length > 1) {
         render(<MultiDragInfo />, holder)
         cp = holder.firstChild
-        //
         cp.children[1].innerHTML = `${s.length} items`
       } else {
         cp = t.cloneNode(true)
@@ -127,6 +137,7 @@ const useDrag = (
       e.dataTransfer.getData('text/plain'), 
       e.dataTransfer.getData('text/uri-list'), 
       e.dataTransfer.getData('text/html'));
+      e.dataTransfer.setData('text/plain', 'FLAP')
       */
 
       // maybe more browsers
@@ -134,25 +145,7 @@ const useDrag = (
       // allow adding file data for example for images
       e.dataTransfer.setDragImage(cp, 0, 0)
 
-      e.dataTransfer.setData('text/plain', 'FLAP')
-
-      if (typeof data === 'string' || typeof data === 'number') {
-        e.dataTransfer.setData('text/plain', data)
-        e.dataTransfer.setData(
-          'application/json',
-          JSON.stringify([data, index])
-        )
-      } else if (typeof data === 'object') {
-        if (data.id || data.name) {
-          e.dataTransfer.setData('text/plain', data.id || data.name)
-        }
-        e.dataTransfer.setData(
-          'application/json',
-          JSON.stringify([data, index])
-        )
-      } else {
-        console.info('Unhandled data type in drag', data)
-      }
+      e.dataTransfer.setData('application/json', JSON.stringify(data))
 
       let cancelDragScroll
       if (isSafari()) {
@@ -173,7 +166,6 @@ const useDrag = (
         }
       }
 
-      // @ts-ignore
       endListener.current = true
       document.body.addEventListener('dragend', end)
     }, []),

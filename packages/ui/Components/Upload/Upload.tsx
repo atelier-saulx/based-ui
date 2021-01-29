@@ -5,8 +5,6 @@ import React, {
   useContext,
   useEffect,
   FunctionComponent,
-  EventHandler,
-  SyntheticEvent,
   createContext,
 } from 'react'
 import '../Input/style.css'
@@ -14,19 +12,19 @@ import useDrop from '../../hooks/drag/useDrop'
 import { createProgressContext } from './ProgressContext'
 import { uploadFile } from './uploadFile'
 import { Input } from '../Input/Text'
-
-type GenericEventHandler = EventHandler<SyntheticEvent>
+import { TextValue, getTextValue } from '@based/i18n'
+import { OnValueChange } from '../../types'
 
 type FileUploadProps = {
-  value: string
-  onChange: GenericEventHandler
-  identifier: string
-  placeholder: string
-  progressId: string
-  video: boolean
+  value?: string
+  onChange: OnValueChange<string>
+  identifier?: any
+  placeholder?: TextValue
+  progressId?: string
+  video?: boolean
   fake?: boolean
-  url: string
-  service: string
+  url?: string
+  service?: string
 }
 
 export const FileUpload: FunctionComponent<FileUploadProps> = ({
@@ -126,7 +124,7 @@ export const FileUpload: FunctionComponent<FileUploadProps> = ({
       }}
     >
       <Input
-        placeholder={placeholder}
+        placeholder={String(getTextValue(placeholder))}
         icon={inProgress ? null : 'upload'}
         progress={inProgress ? status.progress : null}
         value={
@@ -142,7 +140,6 @@ export const FileUpload: FunctionComponent<FileUploadProps> = ({
       />
       <input
         type="file"
-        // {...useTooltip('Upload a file')}
         onChange={useCallback(async (e) => {
           const files = e.target.files
           uploadFile(

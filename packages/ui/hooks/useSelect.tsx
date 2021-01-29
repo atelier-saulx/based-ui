@@ -7,6 +7,7 @@ import React, {
   EventHandler,
   SyntheticEvent,
 } from 'react'
+import { Data } from '../types'
 
 const addListeners = () => {
   document.addEventListener('click', (e) => {
@@ -99,7 +100,7 @@ export const useClick = (
   }, refs)
 }
 
-export const useSelect = (data: any, index: number) => {
+export const useSelect = ({ data, index }: Data) => {
   const selectionContext = useContext(SelectionContext)
   let isSelected, setSelected
   if (selectionContext) {
