@@ -1,16 +1,77 @@
-import React from 'React'
+import React, { useState } from 'React'
 import { Text, useDrag, useSelect, useMultipleEvents, useDrop } from '@based/ui'
 import RenderComponents from '../RenderComponents'
 import { useColor } from '@based/theme'
 
 import jsonexport from 'jsonexport/dist'
 
+import csvtojson from 'csvtojson'
+
 console.log(jsonexport)
 
-const Dragger = ({ data, index }) => {
-  const [drop, isDragOver] = useDrop((transfer) => {
-    console.log(transfer)
+const isBinary = (str) => /(image)|(video)|(bin)/.test(str)
+
+function readFile(file) {
+  return new Promise((r) => {
+    // Check if the file is an image.
+    const reader = new FileReader()
+
+    if (file.type === 'application/gzip') {
+      // extract and show!
+      console.log('GZIP GO EXTRACT!')
+    }
+
+    reader.addEventListener('load', (event) => {
+      console.log('DONE', event.target.result)
+
+      console.log(file)
+      //
+
+      if (!isBinary(file.type)) {
+        const parsed = atob(event.target.result.split('base64,')[1])
+        if (file.type === 'text/csv') {
+          csvtojson()
+            .fromString(parsed)
+            .then((v) => {
+              r(v)
+            })
+        } else {
+          r(parsed)
+        }
+      } else {
+        r(event.target.result)
+      }
+    })
+    reader.readAsDataURL(file)
   })
+}
+
+const Dragger = ({ data, index }) => {
+  const [things, setThings] = useState()
+
+  const [drop, isDragOver] = useDrop(async (transfer) => {
+    const fileList = transfer.dataTransfer.files
+
+    console.log(
+      'x',
+      JSON.parse(transfer.dataTransfer.getData('application/json'))
+    )
+
+    for (const file of fileList) {
+      // Not supported in Safari for iOS.
+      const name = file.name ? file.name : 'NOT SUPPORTED'
+      // Not supported in Firefox for Android or Opera for Android.
+      const type = file.type ? file.type : 'NOT SUPPORTED'
+      // Unknown cross-browser support.
+      const size = file.size ? file.size : 'NOT SUPPORTED'
+      console.log({ file, name, type, size })
+
+      const x = await readFile(file)
+
+      console.log(x)
+    }
+  })
+
   const [drag] = useDrag({ data, index }, undefined, {
     setDragData: async (data, e) => {
       // lets make some helpers
