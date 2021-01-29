@@ -167,7 +167,7 @@ export default {
           return (
             <div>
               {items.map((data, i) => {
-                return <Dragger key={i} index={i} data={data}></Dragger>
+                return <Dragger key={i} index={i} data={data} />
               })}
             </div>
           )

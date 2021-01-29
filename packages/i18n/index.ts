@@ -2,7 +2,7 @@ import { Language } from './types'
 
 export { Language }
 
-let lang: Language = 'en'
+const lang: Language = 'en'
 
 type Value = undefined | (string | number) | (string | number)[]
 

@@ -34,7 +34,7 @@ export type OptionProps = {
 const Option: FunctionComponent<OptionProps> = (props) => {
   let { option, isActive, onChange, index } = props
   const [hover, isHover] = useHover()
-  let Icon: FunctionComponent<IconProps> = iconFromString(option.icon)
+  const Icon: FunctionComponent<IconProps> = iconFromString(option.icon)
   let isSelectNone: boolean
 
   if (option.value === undefined) {
@@ -44,7 +44,7 @@ const Option: FunctionComponent<OptionProps> = (props) => {
 
   let label = isSelectNone ? { en: 'Select none' } : option.value
 
-  let children = option.children
+  const children = option.children
   let body: ReactNode
 
   if (children) {

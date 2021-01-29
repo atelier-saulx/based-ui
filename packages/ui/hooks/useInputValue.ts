@@ -1,4 +1,4 @@
-import { useState, useReducer, useRef, Reducer, useEffect } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { deepEqual } from '@saulx/utils'
 
 export default function useInputValue<T = string | number | undefined>(

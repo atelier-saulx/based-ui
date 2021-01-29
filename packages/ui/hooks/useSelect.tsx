@@ -123,7 +123,7 @@ export const useSelect = ({ data, index }: Data): [SelectEvents, boolean] => {
     {
       onMouseDown: useCallback(
         (e) => {
-          //@ts-ignore
+          // @ts-ignore
           if (e.shiftKey) {
             const s = selection.get(data)
             if (isSelected) {

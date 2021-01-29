@@ -4,7 +4,7 @@ import { List } from '@based/ui'
 import { useColor } from '@based/theme'
 
 const getRandomText = () => {
-  var words = [
+  const words = [
     'the sky',
     'above',
     'the port',
@@ -34,8 +34,8 @@ const getRandomText = () => {
     'to',
     'burn',
   ]
-  var text = []
-  var x = 1000
+  const text = []
+  let x = 1000
   while (--x) text.push(words[Math.floor(Math.random() * words.length)])
   return text.join(' ').toLowerCase()
 }

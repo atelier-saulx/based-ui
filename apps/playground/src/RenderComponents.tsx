@@ -10,9 +10,9 @@ import {
 } from '@based/ui'
 
 const parseProps = (p) => {
-  let children = []
+  const children = []
 
-  for (let key in p) {
+  for (const key in p) {
     let value = p[key]
 
     let body
@@ -171,9 +171,9 @@ const RenderComponents = ({ category, grid, bg = 'transparent' }) => {
                     )
                   }
 
-                  let { children, ...props } = p
-                  if (p.children) {
-                    if (typeof p.children === 'function') {
+                  let { children } = p
+                  if (children) {
+                    if (typeof children === 'function') {
                       children = children()
                     }
                   }
@@ -184,8 +184,9 @@ const RenderComponents = ({ category, grid, bg = 'transparent' }) => {
                       Component={Component}
                       grid={grid}
                       componentProps={p}
-                      children={children}
-                    />
+                    >
+                      {children}
+                    </ComponentWrapper>
                   )
                 })}
               </div>

@@ -1,7 +1,6 @@
-import React, { CSSProperties, PropsWithChildren } from 'react'
+import React, { CSSProperties } from 'react'
 import { Title } from '../Text/Title'
 import { useColor, Color } from '@based/theme'
-import { Icon } from '@based/icons'
 
 type OrderLabelProps = {
   style?: CSSProperties

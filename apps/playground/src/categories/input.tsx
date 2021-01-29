@@ -155,7 +155,7 @@ export default {
                       color: isActive ? 'primary' : 'primaryAccent',
                     }),
                   }}
-                ></div>
+                />
               ),
             },
           ],

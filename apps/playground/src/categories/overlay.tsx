@@ -300,7 +300,7 @@ export default {
                   return (
                     <>
                       <ContextualMenuItem
-                        label={`Flur`}
+                        label="Flur"
                         onClick={useDropdown(
                           [
                             { label: 'hello', icon: 'skip' },
