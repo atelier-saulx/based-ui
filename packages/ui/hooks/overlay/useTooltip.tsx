@@ -1,6 +1,6 @@
 import { addOverlay, OnClose, removeOverlay } from '../../Components/Overlay'
 import { PositionPropsFnOptional } from './useOverlayPosition'
-import { OverlayContext } from './useOverlayProps'
+import { OverlayContext , createOverlayContextRef } from './useOverlayProps'
 import { GenericOverlay } from '../../Components/Overlay/GenericOverlay'
 
 import React, {
@@ -12,7 +12,7 @@ import React, {
   useEffect,
 } from 'react'
 
-import { createOverlayContextRef } from './useOverlayProps'
+
 import { DataEventHandler } from '../../types'
 
 export type TooltipEvents = {

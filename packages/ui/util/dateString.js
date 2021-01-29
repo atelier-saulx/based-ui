@@ -1,6 +1,7 @@
-import { getLanguage } from '@based/i18n'
+// import { getLanguage } from '@based/i18n'
+const getLanguage = () => 'en' // TODO: temp
 
-const addZero = d => {
+const addZero = (d) => {
   const s = d + ''
   if (s.length === 1) {
     return '0' + s
@@ -45,7 +46,7 @@ export default (nr, format = 'date') => {
         ['getDate', 'day', 'days'],
         ['getHours', 'hour', 'hours'],
         ['getMinutes', 'minute', 'minutes'],
-        ['getSeconds', 'second', 'seconds']
+        ['getSeconds', 'second', 'seconds'],
       ]
 
       if (now.getTime() > d.getTime()) {

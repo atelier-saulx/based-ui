@@ -10,9 +10,9 @@ import {
 } from '@based/ui'
 
 const parseProps = (p) => {
-  let children = []
+  const children = []
 
-  for (let key in p) {
+  for (const key in p) {
     let value = p[key]
 
     let body

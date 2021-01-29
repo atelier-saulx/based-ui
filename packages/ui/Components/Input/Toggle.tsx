@@ -37,7 +37,7 @@ export const CheckBox: FunctionComponent<ToggleInputProps> = ({
         ...style,
       }}
       onClick={useCallback(() => {
-        let v = !stateValue
+        const v = !stateValue
         if (onChange) {
           onChange(v)
         }
@@ -80,7 +80,7 @@ export const RadioButton: FunctionComponent<ToggleInputProps> = ({
         ...style,
       }}
       onClick={useCallback(() => {
-        let v = !stateValue
+        const v = !stateValue
         if (onChange) {
           onChange(v)
         }

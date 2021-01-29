@@ -6,11 +6,11 @@ import React, {
 } from 'react'
 import { useColor, Color } from '@based/theme'
 import { Text } from '../Text'
-import { Close, IconName } from '@based/icons'
+import { Close, IconName , iconFromString } from '@based/icons'
 import { Button } from '../Button'
 import useOverlayProps from '../../hooks/overlay/useOverlayProps'
 import { OnClose } from './'
-import { iconFromString } from '@based/icons'
+
 import { TextValue } from '@based/i18n'
 
 export type ModalHeaderProps = PropsWithChildren<{

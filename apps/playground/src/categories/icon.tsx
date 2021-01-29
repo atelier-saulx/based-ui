@@ -21,7 +21,7 @@ const iconProps = [
   },
 ]
 
-for (let key in icons) {
+for (const key in icons) {
   iconsArray.push({
     Component: icons[key],
     name: key,

@@ -14,7 +14,7 @@ const Inner = ({ visible, progress }) => {
   const [inProgress, update] = useState(false)
 
   useEffect(() => {
-    var t = setTimeout(() => {
+    const t = setTimeout(() => {
       update(progress.inProgress)
     }, 0)
     return () => clearTimeout(t)

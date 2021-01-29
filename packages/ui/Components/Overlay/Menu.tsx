@@ -198,7 +198,7 @@ export const Menu: FunctionComponent<GenericOverlayProps> = (initialProps) => {
     }
   }, [ctx, resize])
 
-  let content = props.content
+  const content = props.content
 
   return (
     <Shared

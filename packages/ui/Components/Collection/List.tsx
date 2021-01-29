@@ -3,39 +3,45 @@ import React, {
   useCallback,
   createContext,
   useEffect,
-  useRef
+  useRef,
 } from 'react'
 import { FixedSizeList } from 'react-window'
 import AutoSizer from 'react-virtualized-auto-sizer'
-import { H4 } from '../Text/Header'
-import useHover from '../../hooks/useHover'
-import useMultiple from '../../hooks/useMultiple'
+import { Title } from '../Text/Title'
+import useHover from '../../hooks/events/useHover'
+import useMultipleEvents from '../../hooks/events/useMultipleEvents'
 import { OrderLabel } from '../Label/Order'
 import {
-  PageCheck,
-  Options,
-  PageIntro,
+  MultipleChoice,
+  Settings,
+  WelcomeScreen,
   Drag,
-  iconFromString
+  iconFromString,
+  Icon,
 } from '@based/icons'
 import selectData from '../../util/selectData'
-import { useColor, getTone } from '@based/theme'
-import { Subtitle } from '../Text/Subtitle'
-import useDrag from '../../hooks/useDrag'
-import useDrop from '../../hooks/useDrop'
+import { useColor } from '@based/theme'
+import { SubText } from '../Text/SubText'
+import useDrag from '../../hooks/drag/useDrag'
+import useDrop from '../../hooks/drag/useDrop'
 import Info from './Info'
 import {
   useSelect,
   useClick,
-  SelectableCollection
+  SelectableCollection,
 } from '../../hooks/useSelect'
-import useDragScroll from '../../hooks/useDragScroll'
-import useOptions from '../../hooks/useContextualMenu'
+import useDragScroll from '../../hooks/drag/useDragScroll'
+import useOptions from '../../hooks/events/useContextualMenu'
+import { DataEventHandler, Data } from '../../types'
 
-const FlowContext = createContext()
-FlowContext.displayName = 'FlowContext'
+const OrderedListContext = createContext(null)
+OrderedListContext.displayName = 'OrderedListContext'
 
-const FlowItem = ({ index, data: { data, context }, style: itemStyle }) => {
+const OrderedListItem = ({
+  index,
+  data: { data, context },
+  style: itemStyle,
+}) => {
   const {
     selectIcon,
     onClick,
@@ -47,31 +53,37 @@ const FlowItem = ({ index, data: { data, context }, style: itemStyle }) => {
     onChange,
     paddingRight,
     paddingLeft,
-    paddingTop
+    paddingTop,
   } = context
 
   const style = {
     height: fields.info ? 90 : 70,
     paddingLeft: paddingLeft,
-    paddingRight: paddingRight
+    paddingRight: paddingRight,
   }
 
   const x = Object.assign(style, itemStyle)
   x.top = `${parseFloat(x.top) + paddingTop}px`
 
-  const ref = useRef()
-  const isDark = getTone() === 'dark'
+  const ref = useRef<any>()
+
   const itemData = data[index]
+
+  const wrappedData: Data = {
+    data: itemData,
+    index,
+  }
+
   const disabled = itemData && itemData.disabled
   const isActive = selectData(fields.active, itemData) === active
   const [hover, isHover] = useHover()
   const [drop, isDragOver] = useDrop(
     useCallback(
-      payload => {
+      (payload: any) => {
         if (onChange) {
           const oldIndex = JSON.parse(
             payload.dataTransfer.getData('application/json')
-          )[1]
+          ).index
           const itemData = data[oldIndex]
           const newIndex = index > oldIndex ? index - 1 : index
           onChange(newIndex, { data: itemData, index: oldIndex })
@@ -80,12 +92,12 @@ const FlowItem = ({ index, data: { data, context }, style: itemStyle }) => {
       [index, data]
     )
   )
-  const [drag] = useDrag(itemData.id || itemData, index, ref)
-  const [select, isSelected] = useSelect(itemData, index)
+  const [drag] = useDrag(wrappedData, ref)
+  const [select, isSelected] = useSelect(wrappedData)
 
   useEffect(() => {
     if (isDragOver) {
-      if (!ref.current.dragLayerActive) {
+      if (!ref.current || !ref.current.dragLayerActive) {
         const el = ref.current
         const p = el.parentNode
         const holder = p.parentNode
@@ -104,7 +116,7 @@ const FlowItem = ({ index, data: { data, context }, style: itemStyle }) => {
         }
         ref.current.dragLayerActive = true
       }
-    } else if (ref.current.dragLayerActive) {
+    } else if (ref.current && ref.current.dragLayerActive) {
       ref.current.dragLayerActive = false
       const el = ref.current
       const p = el.parentNode
@@ -119,7 +131,7 @@ const FlowItem = ({ index, data: { data, context }, style: itemStyle }) => {
     }
   }, [isDragOver])
 
-  const OptionsIcon = optionsIcon ? iconFromString(optionsIcon) : Options
+  const OptionsIcon = optionsIcon ? iconFromString(optionsIcon) : Settings
 
   return (
     <div style={x} {...drop}>
@@ -132,7 +144,9 @@ const FlowItem = ({ index, data: { data, context }, style: itemStyle }) => {
           opacity: isDragOver ? 1 : 0,
           transition: 'opacity 0.2s',
           width: '100%',
-          borderTop: '2px solid ' + useColor('primary', 0.5)
+          borderTop:
+            // TODO: should be tone instead of opacityu?
+            '2px solid ' + useColor({ color: 'primary', opacity: 0.5 }),
         }}
       />
       <div
@@ -146,38 +160,47 @@ const FlowItem = ({ index, data: { data, context }, style: itemStyle }) => {
           opacity: disabled ? 0.6 : 1,
           transition: 'border 0.1s, background-color 0.15s, transform 0.2s',
           border: isActive
-            ? `2px solid ` + useColor(isDark ? 'default' : 'primary')
+            ? `2px solid ` + useColor({ color: 'primary' })
             : isSelected
-            ? `1px solid ` + useColor(isDark ? 'default' : 'primary')
+            ? // TODO: should be tone instead of opacityu?
+              `1px solid ` + useColor({ color: 'primary' })
             : `1px solid ` +
-              (isHover ? useColor('default', 0.2) : useColor('outline')),
+              (isHover
+                ? useColor({ color: 'background', tone: 2 })
+                : useColor({ color: 'divider' })),
           padding: 15,
           backgroundColor: isSelected
-            ? useColor(isDark ? 'default' : 'primary', 0.05)
+            ? useColor({
+                color: 'background',
+                tone: 3,
+              })
             : isHover
-            ? useColor('light')
-            : null
+            ? useColor({ color: 'background', tone: 2 })
+            : null,
         }}
-        {...useMultiple(
+        {...useMultipleEvents(
           drag,
           select,
           hover,
           onClick
             ? {
                 onClick: useClick(
-                  e => {
+                  (e) => {
                     onClick(e, { data: itemData, index })
                   },
                   [onClick, itemData, index]
-                )
+                ),
               }
             : undefined,
           contextualMenu
             ? useOptions(
-                useCallback(e => {
-                  onOptions(e, { data: itemData, index })
-                }),
-                [onOptions, itemData, index]
+                useCallback(
+                  (e) => {
+                    onOptions(e, { data: itemData, index })
+                  },
+                  [onOptions, itemData, index]
+                )
+                // [onOptions, itemData, index]
               )
             : undefined
         )}
@@ -188,18 +211,18 @@ const FlowItem = ({ index, data: { data, context }, style: itemStyle }) => {
             marginLeft: -7.5,
             opacity: isHover ? 0.4 : 0,
             transition: 'opacity 0.15s',
-            cursor: 'grab'
+            cursor: 'grab',
           }}
-          color="default"
+          color={{ color: 'foreground' }}
         />
         <OrderLabel index={index} Icon={selectIcon(fields.icon, itemData)} />
         <div
           style={{
             overflow: 'hidden',
-            marginLeft: 15
+            marginLeft: 15,
           }}
         >
-          <Subtitle>{selectData(fields.title, itemData)}</Subtitle>
+          <SubText>{selectData(fields.title, itemData)}</SubText>
           {fields.info ? <Info data={itemData} info={fields.info} /> : null}
         </div>
         {onOptions ? (
@@ -207,12 +230,13 @@ const FlowItem = ({ index, data: { data, context }, style: itemStyle }) => {
             style={{
               flex: 1,
               display: 'flex',
-              justifyContent: 'flex-end'
+              justifyContent: 'flex-end',
             }}
           >
             <OptionsIcon
+              color={{ color: 'foreground' }}
               onClick={useCallback(
-                e => onOptions(e, { data: itemData, index }),
+                (e) => onOptions(e, { data: itemData, index }),
                 [itemData]
               )}
               style={{ width: 35, paddingLeft: 7.5 }}
@@ -225,12 +249,38 @@ const FlowItem = ({ index, data: { data, context }, style: itemStyle }) => {
 }
 
 const selectIconDefault = (field, data) =>
-  selectData(field, data) === 'intro' ? PageIntro : PageCheck
+  selectData(field, data) === 'intro' ? WelcomeScreen : MultipleChoice
 // can use selectIconFromString
+
+type OrderedListProps = {
+  header?: any // TODO: type
+  data?: any[] // TODO: type
+  onClick?: DataEventHandler
+  paddingRight?: number
+  paddingLeft?: number
+  paddingTop?: number
+  paddingBottom?: number
+  onChange?: DataEventHandler
+  active?: boolean
+  contextualMenu?: any // TODO: type
+  onOptions?: DataEventHandler
+  optionsIcon?: Icon
+  forceActive?: boolean
+  fields: {
+    title: string
+    icon: string
+    active: string
+    sort?: string
+    info?: string
+  }
+  selectIcon?: any // TODO: type
+  Item?: any // TODO: type
+  hasHeader?: boolean
+}
 
 // make it variableSizeList
 // drop indexes
-export const Flow = ({
+export const List = ({
   header,
   data = [],
   onClick,
@@ -247,11 +297,11 @@ export const Flow = ({
   fields = {
     title: 'title',
     icon: 'page',
-    active: 'id'
+    active: 'id',
   },
   selectIcon = selectIconDefault,
-  Item = FlowItem
-}) => {
+  Item = OrderedListItem,
+}: OrderedListProps) => {
   if (forceActive) {
     forceActive = !active && data[0]
   }
@@ -270,8 +320,9 @@ export const Flow = ({
   return (
     <AutoSizer>
       {({ height, width }) => {
+        console.log({ height, width })
         const hasHeader = !!header
-        const context = {
+        const context: OrderedListProps = {
           active,
           fields,
           selectIcon,
@@ -283,7 +334,8 @@ export const Flow = ({
           paddingLeft,
           paddingTop,
           paddingBottom,
-          hasHeader
+          hasHeader,
+          Item,
         }
 
         if (onClick) {
@@ -292,21 +344,22 @@ export const Flow = ({
 
         return (
           <SelectableCollection data={data}>
-            <FlowContext.Provider value={context}>
+            <OrderedListContext.Provider value={context}>
               <>
                 {hasHeader ? (
-                  <H4
+                  <Title
+                    size="small"
                     style={{
                       width,
                       marginBottom: 20,
                       paddingRight,
                       paddingLeft,
-                      paddingTop
+                      paddingTop,
                     }}
                     singleLine
                   >
                     {header}
-                  </H4>
+                  </Title>
                 ) : null}
                 <FixedSizeList
                   width={width}
@@ -330,7 +383,7 @@ export const Flow = ({
                   {Item}
                 </FixedSizeList>
               </>
-            </FlowContext.Provider>
+            </OrderedListContext.Provider>
           </SelectableCollection>
         )
       }}
@@ -340,16 +393,16 @@ export const Flow = ({
 
 const mem = {}
 
-const getElementType = (paddingTop, paddingBottom) => {
+const getElementType = (paddingTop: number, paddingBottom: number) => {
   const padding = paddingTop + paddingBottom
   if (!(padding in mem)) {
-    mem[padding] = forwardRef(({ style, ...rest }, ref) => {
+    mem[padding] = forwardRef<any>(({ style, ...rest }: any, ref) => {
       return (
         <div
           ref={ref}
           style={{
             ...style,
-            height: `${parseFloat(style.height) + padding}px`
+            height: `${parseFloat(style.height) + padding}px`,
           }}
           {...rest}
         />

@@ -91,7 +91,7 @@ const dragScroll = t => {
     let p = el.tmpp || el
     const y = e.pageY
     const x = e.pageX
-    for (let p of dragScrollers) {
+    for (const p of dragScrollers) {
       const el = t
       if (animateScroll(animation, el, p, x, y)) {
         return

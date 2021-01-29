@@ -1,6 +1,6 @@
 import React from 'react'
 // import { Body } from '../Text/Body'
-import { Caption } from '../Text/Caption'
+import { Text } from '../Text'
 
 import dateString from '../../util/dateString'
 import selectData from '../../util/selectData'
@@ -11,15 +11,15 @@ export default ({ info, data }) => {
       {info.map(({ type, value, field, format }, index) => {
         const children = value || selectData(field, data)
         return (
-          <Caption
+          <Text
             key={index}
             singleLine
             style={{
-              marginRight: 5
+              marginRight: 5,
             }}
           >
             {type === 'date' ? dateString(children, format) : children}
-          </Caption>
+          </Text>
         )
       })}
     </div>
