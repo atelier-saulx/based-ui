@@ -1,3 +1,4 @@
+import React from 'React'
 import RenderComponents from '../RenderComponents'
 import { OrderedList } from '@based/ui/Components/Collection/OrderedList'
 import { useColor } from '@based/theme'
@@ -50,7 +51,7 @@ const day = x.getDate()
 const y = x.getFullYear()
 
 const listData = []
-for (let i = 0; i < 1e3; i++) {
+for (let i = 0; i < 50; i++) {
   listData.push({
     text: 'Item ' + i,
     type: getRandomText(),
@@ -96,22 +97,31 @@ export default {
       category: 'misc',
       Component: OrderedList,
       props: [
-        {
-          onChange: (tab) => {
-            console.info(tab)
-          },
-          header: 'My flow',
-          data: listData,
-          Wrapper: ListWrapper,
-          active: 1,
-          fields: {
-            title: 'text',
-            icon: 'type',
-            active: 'index',
-          },
-          onClick: (data, index) => {
-            console.info(data, index)
-          },
+        () => {
+          return (
+            <div
+              style={{
+                height: 400,
+              }}
+            >
+              <OrderedList
+                onChange={(tab) => {
+                  console.info(tab)
+                }}
+                header="My OrderedList"
+                data={listData}
+                active
+                fields={{
+                  title: 'text',
+                  icon: 'type',
+                  active: 'index',
+                }}
+                onClick={(data, index) => {
+                  console.info(data, index)
+                }}
+              ></OrderedList>
+            </div>
+          )
         },
       ],
     },

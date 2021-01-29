@@ -66,7 +66,6 @@ const OrderedListItem = ({
   x.top = `${parseFloat(x.top) + paddingTop}px`
 
   const ref = useRef<any>()
-  const isDark = getTone() === 'dark'
   const itemData = data[index]
   const disabled = itemData && itemData.disabled
   const isActive = selectData(fields.active, itemData) === active
@@ -91,7 +90,7 @@ const OrderedListItem = ({
 
   useEffect(() => {
     if (isDragOver) {
-      if (!ref.current.dragLayerActive) {
+      if (!ref.current || !ref.current.dragLayerActive) {
         const el = ref.current
         const p = el.parentNode
         const holder = p.parentNode
@@ -154,25 +153,22 @@ const OrderedListItem = ({
           opacity: disabled ? 0.6 : 1,
           transition: 'border 0.1s, background-color 0.15s, transform 0.2s',
           border: isActive
-            ? `2px solid ` +
-              useColor({ color: isDark ? 'foreground' : 'primary' })
+            ? `2px solid ` + useColor({ color: 'primary' })
             : isSelected
             ? // TODO: should be tone instead of opacityu?
-              `1px solid ` +
-              useColor({ color: isDark ? 'foreground' : 'primary' })
+              `1px solid ` + useColor({ color: 'primary' })
             : `1px solid ` +
               (isHover
-                ? useColor({ color: 'foreground', opacity: 0.2 })
+                ? useColor({ color: 'background', tone: 2 })
                 : useColor({ color: 'divider' })),
           padding: 15,
           backgroundColor: isSelected
-            ? // TODO: should be tone instead of opacityu?
-              useColor({
-                color: isDark ? 'foreground' : 'primary',
-                opacity: 0.05,
+            ? useColor({
+                color: 'background',
+                tone: 3,
               })
             : isHover
-            ? useColor({ color: 'foreground' }) // TODO: tone 3 or 2?
+            ? useColor({ color: 'background', tone: 2 })
             : null,
         }}
         {...useMultiple(
@@ -231,6 +227,7 @@ const OrderedListItem = ({
             }}
           >
             <OptionsIcon
+              color={{ color: 'foreground' }}
               onClick={useCallback(
                 (e) => onOptions(e, { data: itemData, index }),
                 [itemData]
@@ -256,11 +253,11 @@ type OrderedListProps = {
   paddingLeft?: number
   paddingTop?: number
   paddingBottom?: number
-  onChange: DataEventHandler
-  active: boolean
-  contextualMenu: any // TODO: type
-  onOptions: DataEventHandler
-  optionsIcon: Icon
+  onChange?: DataEventHandler
+  active?: boolean
+  contextualMenu?: any // TODO: type
+  onOptions?: DataEventHandler
+  optionsIcon?: Icon
   forceActive?: boolean
   fields: {
     title: string
@@ -269,8 +266,8 @@ type OrderedListProps = {
     sort?: string
     info?: string
   }
-  selectIcon: any // TODO: type
-  Item: any // TODO: type
+  selectIcon?: any // TODO: type
+  Item?: any // TODO: type
   hasHeader?: boolean
 }
 
@@ -316,6 +313,7 @@ export const OrderedList = ({
   return (
     <AutoSizer>
       {({ height, width }) => {
+        console.log({ height, width })
         const hasHeader = !!header
         const context: OrderedListProps = {
           active,
