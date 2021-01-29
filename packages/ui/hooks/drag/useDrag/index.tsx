@@ -103,8 +103,10 @@ const useDrag = (
         const el = ref.current
         isRemoved.current = el
         global.requestAnimationFrame(() => {
-          el.style.display = 'none'
-          document.body.appendChild(el)
+          if (el && el.style) {
+            el.style.display = 'none'
+            document.body.appendChild(el)
+          }
         })
       }
     }
