@@ -1,5 +1,5 @@
-// import { getLanguage } from '@based/i18n'
-const getLanguage = ():string => 'en' // TODO: temp
+// import { getLanguage } from '@based/text'
+const getLanguage = (): string => 'en' // TODO: temp
 
 const addZero = (d: number): string => {
   const s = d + ''

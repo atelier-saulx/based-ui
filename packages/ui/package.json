@@ -2,7 +2,7 @@
   "name": "@based/ui",
   "version": "0.0.1",
   "dependencies": {
-    "@based/i18n": "*",
+    "@based/text": "*",
     "@based/icons": "*",
     "@based/theme": "*",
     "hex-rgb": "^4.2.0",

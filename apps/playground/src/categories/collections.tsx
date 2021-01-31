@@ -48,7 +48,13 @@ export default {
               }}
             >
               <List
-                onExport={(data) => {}}
+                exportData={async (data) => {
+                  // make a little bit better signature
+                  // could also add the event (bit useless but ok)
+                  return {
+                    files: {},
+                  }
+                }}
                 onDrop={(e, data) => {
                   // or add it in the object
                   console.info(e, data)
