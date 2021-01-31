@@ -1,7 +1,7 @@
 // import { getLanguage } from '@based/i18n'
-const getLanguage = () => 'en' // TODO: temp
+const getLanguage = ():string => 'en' // TODO: temp
 
-const addZero = (d) => {
+const addZero = (d: number): string => {
   const s = d + ''
   if (s.length === 1) {
     return '0' + s
@@ -9,7 +9,7 @@ const addZero = (d) => {
   return s
 }
 
-export default (nr, format = 'date') => {
+export default (nr: number | string, format: string = 'date'): string => {
   if (typeof nr === 'number') {
     const d = new Date(nr)
     if (format === 'date') {
@@ -52,7 +52,7 @@ export default (nr, format = 'date') => {
       if (now.getTime() > d.getTime()) {
         for (let i = 0; i < timeTable.length; i++) {
           const [m, single, plural] = timeTable[i]
-          const lang = getLanguage()
+          // const lang = getLanguage()
           const a = now[m]()
           const b = d[m]()
           if (a > b) {
@@ -65,7 +65,7 @@ export default (nr, format = 'date') => {
       } else {
         for (let i = 0; i < timeTable.length; i++) {
           const [m, single, plural] = timeTable[i]
-          const lang = getLanguage()
+          // const lang = getLanguage()
           const a = d[m]()
           const b = now[m]()
           if (a > b) {
@@ -77,7 +77,7 @@ export default (nr, format = 'date') => {
         return 'Now'
       }
     }
-    return nr
+    return String(nr)
   } else {
     return nr
   }

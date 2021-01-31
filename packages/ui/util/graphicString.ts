@@ -1,6 +1,6 @@
-const isCapital = str => /[A-Z]/.test(str[0])
+const isCapital = (str:string) => /[A-Z]/.test(str[0])
 
-const graphicString = name => {
+const graphicString = (name: string):string => {
   if (/ /.test(name)) {
     const x = name.split(' ')
     let y = ''
