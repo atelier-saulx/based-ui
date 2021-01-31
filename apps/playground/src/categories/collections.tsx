@@ -48,8 +48,10 @@ export default {
               }}
             >
               <List
-                onDrop={(newIndex, data) => {
-                  console.info(newIndex, data)
+                onExport={(data) => {}}
+                onDrop={(e, data) => {
+                  // or add it in the object
+                  console.info(e, data)
                 }}
                 header="My OrderedList"
                 items={listData}

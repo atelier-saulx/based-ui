@@ -7,8 +7,20 @@ export type Data<T = {}> = T & {
   internalId?: number
 }
 
-export type DataEventHandler = (e: Event | SyntheticEvent, data?: Data) => void
+export type DataEventHandler<T = {}> = (
+  e: Event | SyntheticEvent,
+  data?: Data<T>
+) => void
 
 export type OnValueChange<T = any> = (value: T, index?: number) => void
 
 export type Timestamp = number
+
+export type ExportedData = {
+  files: {
+    [mime: string]: { value: string; name: string }
+  }
+  text?: string
+}
+
+export type ExportData<T = any> = (data: Data<T>) => Promise<ExportedData>

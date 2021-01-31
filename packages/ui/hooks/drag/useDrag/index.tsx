@@ -63,17 +63,17 @@ type DragEvents = {
 
 export type Drag = [DragEvents, boolean]
 
-export type DragProps = {
+export type DragProps<T> = {
   modifyImageElement?: (el: HTMLElement) => void
-  setDragData?: (data: Data, e: DragEvent) => Promise<void>
+  setDragData?: (data: Data<T>, e: DragEvent) => Promise<void>
   style?: CSSProperties
 }
 
-const useDrag = (
-  data: Data,
+function useDrag<T>(
+  data: Data<T>,
   ref?: RefObject<HTMLElement>,
-  props: DragProps = {}
-): Drag => {
+  props: DragProps<T> = {}
+): Drag {
   const [isDrag, setDrag] = useState(false)
   const endListener = useRef<boolean>()
   const isRemoved = useRef<HTMLElement>()
@@ -92,7 +92,8 @@ const useDrag = (
   let addRef: boolean = false
 
   // need this else the ref is removed in this use effect...
-  let extraRef = useRef<any>()
+
+  const extraRef = useRef<any>()
 
   if (!ref) {
     addRef = true
@@ -161,9 +162,10 @@ const useDrag = (
       // allow adding file data for example for images
       e.dataTransfer.setDragImage(cp, 0, 0)
 
-      e.dataTransfer.setData('application/json', JSON.stringify(data))
+      e.dataTransfer.setData('application/based', JSON.stringify(data))
 
       if (props.setDragData) {
+        // make a wrapper for this that just receives a mime type
         props.setDragData(data, e)
       }
 

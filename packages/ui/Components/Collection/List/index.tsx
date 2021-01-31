@@ -5,36 +5,43 @@ import React, {
   useEffect,
   useRef,
 } from 'react'
-import { Text } from '../Text'
+import { Text } from '../../Text'
 import { FixedSizeList } from 'react-window'
 import AutoSizer from 'react-virtualized-auto-sizer'
-import { Title } from '../Text/Title'
-import useHover from '../../hooks/events/useHover'
-import useMultipleEvents from '../../hooks/events/useMultipleEvents'
+import { Title } from '../../Text/Title'
+import useHover from '../../../hooks/events/useHover'
+import useMultipleEvents from '../../../hooks/events/useMultipleEvents'
 import {
   Settings,
   Drag,
   iconFromString,
-  Icon,
   IconName,
   IconStyleProps,
 } from '@based/icons'
 import { useColor } from '@based/theme'
-import { SubText } from '../Text/SubText'
-import useDrag from '../../hooks/drag/useDrag'
-import useDrop from '../../hooks/drag/useDrop'
+import useDrag from '../../../hooks/drag/useDrag'
+import useDrop from '../../../hooks/drag/useDrop'
 import {
   useSelect,
   useClick,
   SelectableCollection,
-} from '../../hooks/useSelect'
-import useDragScroll from '../../hooks/drag/useDragScroll'
-import useOptions from '../../hooks/events/useContextualMenu'
-import { DataEventHandler, Data } from '../../types'
+} from '../../../hooks/useSelect'
+import useDragScroll from '../../../hooks/drag/useDragScroll'
+import useOptions from '../../../hooks/events/useContextualMenu'
+import { DataEventHandler, Data, ExportData } from '../../../types'
 import { TextValue } from '@based/i18n'
 
 const OrderedListContext = createContext(null)
 OrderedListContext.displayName = 'OrderedListContext'
+
+export type ListDataProps = {
+  icon?: IconStyleProps & { name: IconName }
+  img?: Img
+  info?: TextValue
+  title: TextValue
+  id: string | number
+  previousIndex?: number
+}
 
 const ListItem = ({ index, data: { items, context }, style: itemStyle }) => {
   const {
@@ -44,9 +51,9 @@ const ListItem = ({ index, data: { items, context }, style: itemStyle }) => {
     optionsIcon,
     contextualMenu,
     onDrop,
-    paddingRight,
-    paddingLeft,
-    paddingTop,
+    paddingRight = 0,
+    paddingLeft = 0,
+    paddingTop = 0,
   } = context
 
   const style = {
@@ -70,20 +77,20 @@ const ListItem = ({ index, data: { items, context }, style: itemStyle }) => {
   const [hover, isHover] = useHover()
   const [drop, isDragOver] = useDrop(
     useCallback(
-      (payload: any) => {
+      (e: any) => {
         if (onDrop) {
           const oldIndex = JSON.parse(
-            payload.dataTransfer.getData('application/json')
+            e.dataTransfer.getData('application/json')
           ).index
           const itemData = items[oldIndex]
           const newIndex = index > oldIndex ? index - 1 : index
-          onDrop(newIndex, { ...itemData, index: oldIndex })
+          onDrop(e, { ...itemData, index: newIndex, previousIndex: oldIndex })
         }
       },
       [index, items]
     )
   )
-  const [drag, isDragging] = useDrag(itemData, ref)
+  const [drag, isDragging] = useDrag<ListDataProps>(itemData, ref)
   const [select, isSelected] = useSelect(itemData)
 
   if (onDrop) {
@@ -233,69 +240,61 @@ const ListItem = ({ index, data: { items, context }, style: itemStyle }) => {
   )
 }
 
-// img | icon
-// title
-// metadata
-// contextual menu
-// active
-
-// add this in text
-
-// to date string
-// to time
-// to until now
-// to upperCate
-// capitilize
-// template .e.g add a number
-// show index (from data)
 export type Field = string[]
 
 export type Img = string
 
+const mem = {}
+
+const getElementType = (paddingTop: number, paddingBottom: number) => {
+  const padding = paddingTop + paddingBottom
+  if (!(padding in mem)) {
+    mem[padding] = forwardRef<any>(({ style, ...rest }: any, ref) => {
+      return (
+        <div
+          ref={ref}
+          style={{
+            ...style,
+            height: `${parseFloat(style.height) + padding}px`,
+          }}
+          {...rest}
+        />
+      )
+    })
+  }
+  return mem[padding]
+}
+
 export type ListProps = {
   header?: TextValue // TODO: type
-  items?: Data<{
-    icon?: IconStyleProps & { name: IconName }
-    img?: Img
-    info?: TextValue
-    title: TextValue
-    id: string | number
-  }>[]
+  items?: Data<ListDataProps>[]
   forceActive?: boolean // what is this?
-
-  onDrop?: DataEventHandler // i think this is an order change - if this is not there dont allow order change
-
-  onClick?: DataEventHandler // on click on the item
-
+  exportData?: ExportData<ListDataProps>
+  onOptions?: DataEventHandler<ListDataProps> // select options
+  onDrop?: DataEventHandler<ListDataProps> // i think this is an order change - if this is not there dont allow order change
+  onClick?: DataEventHandler<ListDataProps> // on click on the item
   paddingRight?: number
   paddingLeft?: number
   paddingTop?: number
   paddingBottom?: number
-
   activeId?: string | number
-
-  contextualMenu?: any // TODO: type a function to pass to useMenu
-  onOptions?: DataEventHandler // select options
+  contextualMenu?: any // TODO: type a function to pass to useMenu - make this better
   optionsIcon?: IconName
 }
 
-// make it variableSizeList
-// drop indexes
-export const List = ({
-  header,
-  items = [],
-  onClick,
-  paddingRight = 0,
-  paddingLeft = 0,
-  paddingTop = 0,
-  paddingBottom = 0,
-  onDrop,
-  activeId,
-  contextualMenu,
-  onOptions,
-  optionsIcon,
-  forceActive,
-}: ListProps) => {
+export const List = (props: ListProps) => {
+  let {
+    header,
+    items = [],
+    onClick,
+    paddingRight = 0,
+    paddingLeft = 0,
+    paddingTop = 0,
+    paddingBottom = 0,
+    activeId,
+    forceActive,
+  } = props
+
   if (forceActive) {
     forceActive = !activeId && !!items[0]
   }
@@ -311,15 +310,7 @@ export const List = ({
       {({ height, width }) => {
         const hasHeader = !!header
         const context: ListProps & { hasHeader: boolean } = {
-          activeId,
-          onDrop,
-          onOptions,
-          optionsIcon,
-          contextualMenu,
-          paddingRight,
-          paddingLeft,
-          paddingTop,
-          paddingBottom,
+          ...props,
           hasHeader,
         }
 
@@ -369,25 +360,4 @@ export const List = ({
       }}
     </AutoSizer>
   )
-}
-
-const mem = {}
-
-const getElementType = (paddingTop: number, paddingBottom: number) => {
-  const padding = paddingTop + paddingBottom
-  if (!(padding in mem)) {
-    mem[padding] = forwardRef<any>(({ style, ...rest }: any, ref) => {
-      return (
-        <div
-          ref={ref}
-          style={{
-            ...style,
-            height: `${parseFloat(style.height) + padding}px`,
-          }}
-          {...rest}
-        />
-      )
-    })
-  }
-  return mem[padding]
 }
