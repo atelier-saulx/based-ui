@@ -1,5 +1,4 @@
 import React from 'react'
-// import { Body } from '../Text/Body'
 import { Text } from '../Text'
 
 import dateString from '../../util/dateString'

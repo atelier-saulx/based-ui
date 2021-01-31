@@ -2,43 +2,8 @@ import React from 'React'
 import RenderComponents from '../RenderComponents'
 import { List } from '@based/ui'
 import { useColor } from '@based/theme'
+import { randomText, randomIcon } from './util'
 
-const getRandomText = () => {
-  const words = [
-    'the sky',
-    'above',
-    'the port',
-    'was',
-    'the color of television',
-    'tuned',
-    'to',
-    'a dead channel',
-    'all',
-    'this happened',
-    'I',
-    'had',
-    'the story',
-    'bit by bit',
-    'from various people',
-    'and',
-    'as generally',
-    'happens',
-    'in such cases',
-    'each time',
-    'it',
-    'was',
-    'a different story',
-    'It',
-    'was',
-    'a pleasure',
-    'to',
-    'burn',
-  ]
-  const text = []
-  let x = 1000
-  while (--x) text.push(words[Math.floor(Math.random() * words.length)])
-  return text.join(' ').toLowerCase()
-}
 const profilePic = 'https://scx2.b-cdn.net/gfx/news/hires/2019/2-forest.jpg'
 const randomDate = (start, end) => {
   return new Date(
@@ -53,39 +18,17 @@ const y = x.getFullYear()
 const listData = []
 for (let i = 0; i < 50; i++) {
   listData.push({
-    text: 'Item ' + i,
-    type: getRandomText(),
-    index: i,
-    img: profilePic,
-    flapimg: Math.random() * 10 > 5 ? profilePic : '',
-    cover:
-      Math.random() * 10 > 5
-        ? 'https://img4.wikia.nocookie.net/__cb20120730200249/ipod/images/6/65/Earth_and_Moon.jpg'
-        : '',
-    snurfels: {
-      flapper: randomDate(
-        new Date(y, month, day - 1),
-        new Date(y, month, day + 1)
-      ),
-      flurp: randomDate(new Date(2018, 0, 1), new Date()),
-      flap: randomDate(new Date(), new Date(2022, 0, 1)),
-      shurk: 'Shurk it good!',
+    data: {
+      text: 'Item ' + i,
+      type: randomIcon(),
     },
+    title: 'Item ' + i,
+    icon: {
+      name: randomIcon(),
+      framed: true,
+    },
+    id: i,
   })
-}
-
-const ListWrapper = ({ children }) => {
-  return (
-    <div
-      style={{
-        height: 500,
-        width: '100%',
-        borderBottom: '1px solid ' + useColor({ color: 'foreground' }),
-      }}
-    >
-      {children}
-    </div>
-  )
 }
 
 export default {
@@ -101,21 +44,34 @@ export default {
           return (
             <div
               style={{
-                height: 1000,
+                height: 400,
               }}
             >
               <List
-                onChange={(tab) => {
-                  console.info(tab)
+                onDrop={(newIndex, data) => {
+                  console.info(newIndex, data)
                 }}
                 header="My OrderedList"
-                data={listData}
-                active
-                fields={{
-                  title: 'text',
-                  icon: 'type',
-                  active: 'index',
+                items={listData}
+                activeId={2}
+                onClick={(data, index) => {
+                  console.info(data, index)
                 }}
+              />
+            </div>
+          )
+        },
+        () => {
+          return (
+            <div
+              style={{
+                height: 400,
+              }}
+            >
+              <List
+                header="List"
+                items={listData}
+                activeId={0}
                 onClick={(data, index) => {
                   console.info(data, index)
                 }}

@@ -34,7 +34,7 @@ export type SelectableContext = {
 }
 
 const defCtx = {
-  data: [],
+  items: [],
   children: {},
   selection: new Set(),
 }
@@ -42,11 +42,11 @@ const defCtx = {
 export const SelectionContext = createContext(defCtx)
 SelectionContext.displayName = 'SelectionContext'
 
-export const SelectableCollection = ({ children, data }) => {
+export const SelectableCollection = ({ children, items }) => {
   return (
     <SelectionContext.Provider
       value={{
-        data,
+        items,
         children: {},
         selection: new Set(),
       }}
@@ -164,7 +164,7 @@ export const useSelect = ({ data, index }: Data): [SelectEvents, boolean] => {
                   const nIndex = s[1]
                   if (nIndex > index) {
                     for (let i = index + 1; i < nIndex; i++) {
-                      const newItemData = selectionContext.data[i]
+                      const newItemData = selectionContext.items[i]
                       selectionContext.selection.add(newItemData)
                       selection.set(newItemData, [selectionContext, i])
                       if (selectionContext.children[i]) {
@@ -173,7 +173,7 @@ export const useSelect = ({ data, index }: Data): [SelectEvents, boolean] => {
                     }
                   } else if (nIndex < index) {
                     for (let i = index - 1; i > nIndex; i--) {
-                      const newItemData = selectionContext.data[i]
+                      const newItemData = selectionContext.items[i]
                       selectionContext.selection.add(newItemData)
                       selection.set(newItemData, [selectionContext, i])
                       if (selectionContext.children[i]) {

@@ -77,11 +77,15 @@ export type Icon = FunctionComponent<
   IconProps & { Svg: FunctionComponent<SvgProps> }
 >
 
-export type IconProps = {
+export type IconStyleProps = {
   color?: Color
-  style?: CSSProperties
   framed?: boolean
   frameColor?: Color
+  size?: number
+}
+
+export type IconProps = IconStyleProps & {
+  style?: CSSProperties
   onDown?: GenericEventHandler
   onHover?: GenericEventHandler
   onMouseEnter?: GenericEventHandler
@@ -90,7 +94,6 @@ export type IconProps = {
   onDragEnd?: GenericEventHandler
   onDrag?: GenericEventHandler
   onDragStart?: GenericEventHandler
-  size?: number
 }
 
 const Icon: Icon = ({

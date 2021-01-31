@@ -5,26 +5,24 @@ import React, {
   useEffect,
   useRef,
 } from 'react'
+import { Text } from '../Text'
 import { FixedSizeList } from 'react-window'
 import AutoSizer from 'react-virtualized-auto-sizer'
 import { Title } from '../Text/Title'
 import useHover from '../../hooks/events/useHover'
 import useMultipleEvents from '../../hooks/events/useMultipleEvents'
-import { OrderLabel } from '../Label/Order'
 import {
-  MultipleChoice,
   Settings,
-  WelcomeScreen,
   Drag,
   iconFromString,
   Icon,
+  IconName,
+  IconStyleProps,
 } from '@based/icons'
-import selectData from '../../util/selectData'
 import { useColor } from '@based/theme'
 import { SubText } from '../Text/SubText'
 import useDrag from '../../hooks/drag/useDrag'
 import useDrop from '../../hooks/drag/useDrop'
-import Info from './Info'
 import {
   useSelect,
   useClick,
@@ -33,31 +31,26 @@ import {
 import useDragScroll from '../../hooks/drag/useDragScroll'
 import useOptions from '../../hooks/events/useContextualMenu'
 import { DataEventHandler, Data } from '../../types'
+import { TextValue } from '@based/i18n'
 
 const OrderedListContext = createContext(null)
 OrderedListContext.displayName = 'OrderedListContext'
 
-const OrderedListItem = ({
-  index,
-  data: { data, context },
-  style: itemStyle,
-}) => {
+const ListItem = ({ index, data: { items, context }, style: itemStyle }) => {
   const {
-    selectIcon,
     onClick,
-    fields,
-    active,
+    activeId,
     onOptions,
     optionsIcon,
     contextualMenu,
-    onChange,
+    onDrop,
     paddingRight,
     paddingLeft,
     paddingTop,
   } = context
 
   const style = {
-    height: fields.info ? 90 : 70,
+    height: 48,
     paddingLeft: paddingLeft,
     paddingRight: paddingRight,
   }
@@ -67,107 +60,106 @@ const OrderedListItem = ({
 
   const ref = useRef<any>()
 
-  const itemData = data[index]
+  const itemData = items[index]
 
-  const wrappedData: Data = {
-    data: itemData,
-    index,
+  if (!itemData.index) {
+    itemData.index = index
   }
 
-  const disabled = itemData && itemData.disabled
-  const isActive = selectData(fields.active, itemData) === active
+  const isActive = activeId === itemData.id
   const [hover, isHover] = useHover()
   const [drop, isDragOver] = useDrop(
     useCallback(
       (payload: any) => {
-        if (onChange) {
+        if (onDrop) {
           const oldIndex = JSON.parse(
             payload.dataTransfer.getData('application/json')
           ).index
-          const itemData = data[oldIndex]
+          const itemData = items[oldIndex]
           const newIndex = index > oldIndex ? index - 1 : index
-          onChange(newIndex, { data: itemData, index: oldIndex })
+          onDrop(newIndex, { ...itemData, index: oldIndex })
         }
       },
-      [index, data]
+      [index, items]
     )
   )
-  const [drag] = useDrag(wrappedData, ref)
-  const [select, isSelected] = useSelect(wrappedData)
+  const [drag, isDragging] = useDrag(itemData, ref)
+  const [select, isSelected] = useSelect(itemData)
 
-  useEffect(() => {
-    if (isDragOver) {
-      if (!ref.current || !ref.current.dragLayerActive) {
+  if (onDrop) {
+    useEffect(() => {
+      // match if it is itself..?
+      if (isDragOver) {
+        if (!ref.current || !ref.current.dragLayerActive) {
+          const el = ref.current
+          const p = el.parentNode
+          const holder = p.parentNode
+          let foundP = false
+          holder.isDrop = el
+          for (let i = 0; i < holder.children.length; i++) {
+            const c = holder.children[i]
+            if (c === p) {
+              foundP = true
+            }
+            if (!foundP) {
+              c.children[1].style.transform = 'translate3d(0px, 0px, 0px)'
+            } else {
+              c.children[1].style.transform = 'translate3d(0px, 40px, 0px)'
+            }
+          }
+          ref.current.dragLayerActive = true
+        }
+      } else if (ref.current && ref.current.dragLayerActive) {
+        ref.current.dragLayerActive = false
         const el = ref.current
         const p = el.parentNode
         const holder = p.parentNode
-        let foundP = false
-        holder.isDrop = el
-        for (let i = 0; i < holder.children.length; i++) {
-          const c = holder.children[i]
-          if (c === p) {
-            foundP = true
-          }
-          if (!foundP) {
+        if (holder.isDrop === el) {
+          for (let i = 0; i < holder.children.length; i++) {
+            const c = holder.children[i]
             c.children[1].style.transform = 'translate3d(0px, 0px, 0px)'
-          } else {
-            c.children[1].style.transform = 'translate3d(0px, 40px, 0px)'
           }
+          holder.isDrop = false
         }
-        ref.current.dragLayerActive = true
       }
-    } else if (ref.current && ref.current.dragLayerActive) {
-      ref.current.dragLayerActive = false
-      const el = ref.current
-      const p = el.parentNode
-      const holder = p.parentNode
-      if (holder.isDrop === el) {
-        for (let i = 0; i < holder.children.length; i++) {
-          const c = holder.children[i]
-          c.children[1].style.transform = 'translate3d(0px, 0px, 0px)'
-        }
-        holder.isDrop = false
-      }
-    }
-  }, [isDragOver])
+    }, [isDragOver, onDrop])
+  }
 
   const OptionsIcon = optionsIcon ? iconFromString(optionsIcon) : Settings
 
+  const Icon = itemData.icon ? iconFromString(itemData.icon.name) : null
+
   return (
     <div style={x} {...drop}>
-      <div
-        style={{
-          position: 'absolute',
-          left: 0,
-          top: 15,
-          pointerEvents: 'none',
-          opacity: isDragOver ? 1 : 0,
-          transition: 'opacity 0.2s',
-          width: '100%',
-          borderTop:
-            // TODO: should be tone instead of opacityu?
-            '2px solid ' + useColor({ color: 'primary', opacity: 0.5 }),
-        }}
-      />
+      {onDrop ? (
+        <div
+          style={{
+            position: 'absolute',
+            left: 0,
+            top: 23,
+            pointerEvents: 'none',
+            opacity: isDragOver ? 1 : 0,
+            transition: 'opacity 0.2s',
+            width: '100%',
+            borderTop:
+              // TODO: should be tone instead of opacity?
+              '2px solid ' + useColor({ color: 'primary' }),
+          }}
+        />
+      ) : null}
       <div
         ref={ref}
         style={{
-          height: fields.info ? 80 : 60,
-          borderRadius: 4,
+          height: 48,
+          opacity: isDragging ? 0.5 : 1,
           alignItems: 'center',
           display: 'flex',
           cursor: 'pointer',
-          opacity: disabled ? 0.6 : 1,
           transition: 'border 0.1s, background-color 0.15s, transform 0.2s',
-          border: isActive
+          borderLeft: isActive
             ? `2px solid ` + useColor({ color: 'primary' })
-            : isSelected
-            ? // TODO: should be tone instead of opacityu?
-              `1px solid ` + useColor({ color: 'primary' })
-            : `1px solid ` +
-              (isHover
-                ? useColor({ color: 'background', tone: 2 })
-                : useColor({ color: 'divider' })),
+            : null,
+          borderBottom: '1px solid ' + useColor({ color: 'divider' }),
           padding: 15,
           backgroundColor: isSelected
             ? useColor({
@@ -186,9 +178,9 @@ const OrderedListItem = ({
             ? {
                 onClick: useClick(
                   (e) => {
-                    onClick(e, { data: itemData, index })
+                    onClick(e, itemData)
                   },
-                  [onClick, itemData, index]
+                  [onClick, itemData]
                 ),
               }
             : undefined,
@@ -196,138 +188,131 @@ const OrderedListItem = ({
             ? useOptions(
                 useCallback(
                   (e) => {
-                    onOptions(e, { data: itemData, index })
+                    onOptions(e, itemData)
                   },
-                  [onOptions, itemData, index]
+                  [onOptions, itemData]
                 )
-                // [onOptions, itemData, index]
               )
             : undefined
         )}
       >
-        <Drag
-          style={{
-            marginRight: 5,
-            marginLeft: -7.5,
-            opacity: isHover ? 0.4 : 0,
-            transition: 'opacity 0.15s',
-            cursor: 'grab',
-          }}
-          color={{ color: 'foreground' }}
-        />
-        <OrderLabel index={index} Icon={selectIcon(fields.icon, itemData)} />
+        {Icon ? <Icon {...itemData.icon} /> : null}
         <div
           style={{
             overflow: 'hidden',
             marginLeft: 15,
           }}
         >
-          <SubText>{selectData(fields.title, itemData)}</SubText>
-          {fields.info ? <Info data={itemData} info={fields.info} /> : null}
+          <Text weight="medium">{itemData.title}</Text>
         </div>
-        {onOptions ? (
-          <div
+        <div
+          style={{
+            flexGrow: 1,
+            display: 'flex',
+            justifyContent: 'flex-end',
+          }}
+        >
+          <Drag
             style={{
-              flex: 1,
-              display: 'flex',
-              justifyContent: 'flex-end',
+              opacity: isHover ? 0.4 : 0,
+              transition: 'opacity 0.15s',
+              cursor: 'grab',
             }}
-          >
+            color={{ color: 'foreground' }}
+          />
+          {onOptions ? (
             <OptionsIcon
               color={{ color: 'foreground' }}
-              onClick={useCallback(
-                (e) => onOptions(e, { data: itemData, index }),
-                [itemData]
-              )}
+              onClick={useCallback((e) => onOptions(e, itemData), [itemData])}
               style={{ width: 35, paddingLeft: 7.5 }}
             />
-          </div>
-        ) : null}
+          ) : null}
+        </div>
       </div>
     </div>
   )
 }
 
-// will be very different
-const selectIconDefault = (field, data) =>
-  selectData(field, data) === 'intro' ? WelcomeScreen : MultipleChoice
-// can use selectIconFromString
+// img | icon
+// title
+// metadata
+// contextual menu
+// active
 
-type OrderedListProps = {
-  header?: any // TODO: type
-  data?: any[] // TODO: type
-  onClick?: DataEventHandler
+// add this in text
+
+// to date string
+// to time
+// to until now
+// to upperCate
+// capitilize
+// template .e.g add a number
+// show index (from data)
+export type Field = string[]
+
+export type Img = string
+
+export type ListProps = {
+  header?: TextValue // TODO: type
+  items?: Data<{
+    icon?: IconStyleProps & { name: IconName }
+    img?: Img
+    info?: TextValue
+    title: TextValue
+    id: string | number
+  }>[]
+  forceActive?: boolean // what is this?
+
+  onDrop?: DataEventHandler // i think this is an order change - if this is not there dont allow order change
+
+  onClick?: DataEventHandler // on click on the item
+
   paddingRight?: number
   paddingLeft?: number
   paddingTop?: number
   paddingBottom?: number
-  onChange?: DataEventHandler
-  active?: boolean
-  contextualMenu?: any // TODO: type
-  onOptions?: DataEventHandler
-  optionsIcon?: Icon
-  forceActive?: boolean
-  fields: {
-    title: string
-    icon: string
-    active: string
-    sort?: string
-    info?: string
-  }
-  selectIcon?: any // TODO: type
-  Item?: any // TODO: type
-  hasHeader?: boolean
+
+  activeId?: string | number
+
+  contextualMenu?: any // TODO: type a function to pass to useMenu
+  onOptions?: DataEventHandler // select options
+  optionsIcon?: IconName
 }
 
 // make it variableSizeList
 // drop indexes
 export const List = ({
   header,
-  data = [],
+  items = [],
   onClick,
   paddingRight = 0,
   paddingLeft = 0,
   paddingTop = 0,
   paddingBottom = 0,
-  onChange,
-  active,
+  onDrop,
+  activeId,
   contextualMenu,
   onOptions,
   optionsIcon,
   forceActive,
-  fields = {
-    title: 'title',
-    icon: 'page',
-    active: 'id',
-  },
-  selectIcon = selectIconDefault,
-  Item = OrderedListItem,
-}: OrderedListProps) => {
+}: ListProps) => {
   if (forceActive) {
-    forceActive = !active && data[0]
-  }
-
-  if (fields.sort) {
-    data = Array.from(data)
-    data.sort((a, b) => (a[fields.sort] < b[fields.sort] ? -1 : 1))
+    forceActive = !activeId && !!items[0]
   }
 
   useEffect(() => {
     if (forceActive) {
-      onClick(null, { data: data[0] })
+      onClick(null, items[0])
     }
   }, [forceActive])
 
   return (
     <AutoSizer>
       {({ height, width }) => {
-        console.log({ height, width })
         const hasHeader = !!header
-        const context: OrderedListProps = {
-          active,
-          fields,
-          selectIcon,
-          onChange,
+        const context: ListProps & { hasHeader: boolean } = {
+          activeId,
+          onDrop,
           onOptions,
           optionsIcon,
           contextualMenu,
@@ -336,7 +321,6 @@ export const List = ({
           paddingTop,
           paddingBottom,
           hasHeader,
-          Item,
         }
 
         if (onClick) {
@@ -344,7 +328,7 @@ export const List = ({
         }
 
         return (
-          <SelectableCollection data={data}>
+          <SelectableCollection items={items}>
             <OrderedListContext.Provider value={context}>
               <>
                 {hasHeader ? (
@@ -370,18 +354,13 @@ export const List = ({
                       ? getElementType(paddingTop, paddingBottom)
                       : null
                   }
-                  itemCount={data.length}
-                  height={
-                    height -
-                    // paddingTop +
-                    // paddingBottom +
-                    (hasHeader ? 27 + 20 : 0)
-                  }
-                  itemData={{ data, context }}
-                  itemSize={fields.info ? 90 : 70}
+                  itemCount={items.length}
+                  height={height - (hasHeader ? 27 + 20 : 0)}
+                  itemData={{ items, context }}
+                  itemSize={48}
                   {...useDragScroll(true)}
                 >
-                  {Item}
+                  {ListItem}
                 </FixedSizeList>
               </>
             </OrderedListContext.Provider>

@@ -1,7 +1,11 @@
 import { SyntheticEvent } from 'react'
 
 // _id is used internaly
-export type Data = { data: any; index?: number; _id?: number }
+export type Data<T = {}> = T & {
+  data: any
+  index?: number
+  internalId?: number
+}
 
 export type DataEventHandler = (e: Event | SyntheticEvent, data?: Data) => void
 

@@ -173,7 +173,6 @@ const useDrag = (
       }
 
       const end = () => {
-        console.log('DRAG END')
         drag.cnt--
         delete endListener.current
         document.body.removeEventListener('dragend', end)
@@ -183,7 +182,6 @@ const useDrag = (
           document.body.removeChild(isRemoved.current)
         }
         if (cancelDragScroll) {
-          console.log('STOP')
           cancelDragScroll()
         }
       }

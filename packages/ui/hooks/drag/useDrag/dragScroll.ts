@@ -94,7 +94,6 @@ const dragScroll = (t) => {
   }
 
   const dragListener = (e) => {
-    console.log('draggy time')
     const el = t
     let p = el.tmpp || el
     const y = e.pageY
@@ -116,7 +115,6 @@ const dragScroll = (t) => {
 
   document.body.addEventListener('drag', dragListener)
   return () => {
-    console.log('STOP')
     animation.stop()
     document.body.removeEventListener('drag', dragListener)
   }
