@@ -23,6 +23,10 @@ export function getTextValue(
   return value
 }
 
+// so what we do it allow an array to be returned by do parse it
+
+// text value will also allow an array
+
 export function isTextValue(value: any): value is TextValue {
   return (
     typeof value === 'string' ||
