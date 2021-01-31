@@ -1,5 +1,11 @@
 // import { getLanguage } from '@based/text'
-const getLanguage = (): string => 'en' // TODO: temp
+
+export type DateFormat =
+  | 'date'
+  | 'date-time'
+  | 'date-time-human'
+  | 'time'
+  | 'time-precise'
 
 const addZero = (d: number): string => {
   const s = d + ''
@@ -9,7 +15,7 @@ const addZero = (d: number): string => {
   return s
 }
 
-export default (nr: number | string, format: string = 'date'): string => {
+export default (nr: number | string, format: DateFormat = 'date'): string => {
   if (typeof nr === 'number') {
     const d = new Date(nr)
     if (format === 'date') {
@@ -36,7 +42,7 @@ export default (nr: number | string, format: string = 'date'): string => {
         '/' +
         d.getFullYear()
       )
-    } else if (format === 'human') {
+    } else if (format === 'date-time-human') {
       const now = new Date()
 
       //
