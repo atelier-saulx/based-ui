@@ -3,6 +3,7 @@ import RenderComponents from '../RenderComponents'
 import { List } from '@based/ui'
 import { useColor } from '@based/theme'
 import { randomText, randomIcon } from './util'
+import WaitingScreen from '@based/icons/Components/WaitingScreen'
 
 const profilePic = 'https://scx2.b-cdn.net/gfx/news/hires/2019/2-forest.jpg'
 const randomDate = (start, end) => {
@@ -31,6 +32,11 @@ for (let i = 0; i < 50; i++) {
   })
 }
 
+const wait = () =>
+  new Promise((r) => {
+    setTimeout(r, 100)
+  })
+
 export default {
   name: 'collections',
   Render: RenderComponents,
@@ -49,14 +55,16 @@ export default {
             >
               <List
                 exportData={async (data) => {
-                  // make a little bit better signature
-                  // could also add the event (bit useless but ok)
                   return {
-                    files: {},
+                    file: {
+                      name: `snurpel-index-${data.index}.csv`,
+                      mime: 'text/csv',
+                      value: data.data,
+                    },
+                    text: data.title,
                   }
                 }}
                 onDrop={(e, data) => {
-                  // or add it in the object
                   console.info(e, data)
                 }}
                 header="My OrderedList"

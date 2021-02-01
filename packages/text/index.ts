@@ -81,6 +81,20 @@ export function getTextValue(
   return value
 }
 
+export function getStringValue(
+  value: TextValue,
+  language: Language = lang
+): string {
+  const x = getTextValue(value, language)
+  if (Array.isArray(x)) {
+    return x.join('')
+  }
+  if (typeof x === 'number') {
+    return String(x)
+  }
+  return x
+}
+
 export function isTextValue(value: any): value is TextValue {
   return (
     typeof value === 'string' ||

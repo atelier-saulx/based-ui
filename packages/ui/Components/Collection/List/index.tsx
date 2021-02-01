@@ -54,6 +54,7 @@ const ListItem = ({ index, data: { items, context }, style: itemStyle }) => {
     paddingRight = 0,
     paddingLeft = 0,
     paddingTop = 0,
+    exportData,
   } = context
 
   const style = {
@@ -69,6 +70,10 @@ const ListItem = ({ index, data: { items, context }, style: itemStyle }) => {
 
   const itemData = items[index]
 
+  if (exportData) {
+    itemData.exportData = exportData
+  }
+
   if (!itemData.index) {
     itemData.index = index
   }
@@ -79,8 +84,9 @@ const ListItem = ({ index, data: { items, context }, style: itemStyle }) => {
     useCallback(
       (e: any) => {
         if (onDrop) {
+          // add import as well....
           const oldIndex = JSON.parse(
-            e.dataTransfer.getData('application/json')
+            e.dataTransfer.getData('application/based')
           ).index
           const itemData = items[oldIndex]
           const newIndex = index > oldIndex ? index - 1 : index

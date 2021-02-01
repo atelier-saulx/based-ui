@@ -7,7 +7,7 @@ import React, {
   EventHandler,
   SyntheticEvent,
 } from 'react'
-import { Data } from '../types'
+import { Data, ExportData } from '../types'
 
 const addListeners = () => {
   document.addEventListener('click', (e) => {
@@ -15,7 +15,6 @@ const addListeners = () => {
       clearSelection()
     }
   })
-
   document.addEventListener('keyup', (e) => {
     if (e.code === 'Esc' || e.keyCode === 27) {
       clearSelection()
@@ -27,14 +26,14 @@ if (typeof window !== 'undefined') {
   addListeners()
 }
 
-export type SelectableContext = {
-  data: any
+export type SelectableContext<T> = {
+  data: Data<T>[]
   children: { [key: string]: (...args: any[]) => void }
-  selection: Set<any>
+  selection: Set<Data<T>>
 }
 
-const defCtx = {
-  items: [],
+const defCtx: SelectableContext<{}> = {
+  data: [],
   children: {},
   selection: new Set(),
 }
@@ -46,7 +45,7 @@ export const SelectableCollection = ({ children, items }) => {
   return (
     <SelectionContext.Provider
       value={{
-        items,
+        data: items,
         children: {},
         selection: new Set(),
       }}
@@ -56,7 +55,7 @@ export const SelectableCollection = ({ children, items }) => {
   )
 }
 
-export const selection = new Map()
+export const selection: Map<Data, any[]> = new Map()
 
 export const getSelection = () => {
   return [...selection.keys()]
@@ -79,7 +78,6 @@ export const clearSelection = () => {
       const selectionContext = s[0]
       const index = s[1]
       if (selectionContext) {
-        selectionContext.selection.delete(data)
         if (selectionContext.children[index]) {
           selectionContext.children[index](false)
         }
@@ -104,15 +102,15 @@ type SelectEvents = {
   onMouseDown: EventHandler<SyntheticEvent>
 }
 
-export const useSelect = ({ data, index }: Data): [SelectEvents, boolean] => {
+export function useSelect<T = any>(data: Data<T>): [SelectEvents, boolean] {
   const selectionContext = useContext(SelectionContext)
   let isSelected, setSelected
   if (selectionContext) {
     ;[isSelected, setSelected] = useState(selectionContext.selection.has(data))
-    selectionContext.children[index] = setSelected
+    selectionContext.children[data.index] = setSelected
     useEffect(() => {
       return () => {
-        delete selectionContext.children[index]
+        delete selectionContext.children[data.index]
       }
     }, [])
   } else {
@@ -137,17 +135,16 @@ export const useSelect = ({ data, index }: Data): [SelectEvents, boolean] => {
               } else {
                 selection.delete(data)
               }
-              // need more
               if (selectionContext) {
                 selectionContext.selection.delete(data)
               }
             } else {
               if (s) {
                 if (!s.find((v) => v === selectionContext)) {
-                  s.push(selectionContext, index)
+                  s.push(selectionContext, data.index)
                 }
               } else {
-                selection.set(data, [selectionContext, index])
+                selection.set(data, [selectionContext, data.index])
               }
 
               if (selectionContext) {
@@ -162,18 +159,18 @@ export const useSelect = ({ data, index }: Data): [SelectEvents, boolean] => {
                     return
                   }
                   const nIndex = s[1]
-                  if (nIndex > index) {
-                    for (let i = index + 1; i < nIndex; i++) {
-                      const newItemData = selectionContext.items[i]
+                  if (nIndex > data.index) {
+                    for (let i = data.index + 1; i < nIndex; i++) {
+                      const newItemData = selectionContext.data[i]
                       selectionContext.selection.add(newItemData)
                       selection.set(newItemData, [selectionContext, i])
                       if (selectionContext.children[i]) {
                         selectionContext.children[i](true)
                       }
                     }
-                  } else if (nIndex < index) {
-                    for (let i = index - 1; i > nIndex; i--) {
-                      const newItemData = selectionContext.items[i]
+                  } else if (nIndex < data.index) {
+                    for (let i = data.index - 1; i > nIndex; i--) {
+                      const newItemData = selectionContext.data[i]
                       selectionContext.selection.add(newItemData)
                       selection.set(newItemData, [selectionContext, i])
                       if (selectionContext.children[i]) {

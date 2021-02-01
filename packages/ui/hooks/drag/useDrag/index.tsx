@@ -7,7 +7,6 @@ import React, {
   RefObject,
   CSSProperties,
   DragEventHandler,
-  DragEvent,
 } from 'react'
 import { getSelection } from '../../useSelect'
 import { Title } from '../../../Components/Text/Title'
@@ -16,6 +15,7 @@ import { render } from 'react-dom'
 import isSafari from '../../../util/isSafari'
 import dragScroll from './dragScroll'
 import { Data } from '../../../types'
+import setData from './setData'
 
 const drag = {
   cnt: 0,
@@ -63,16 +63,15 @@ type DragEvents = {
 
 export type Drag = [DragEvents, boolean]
 
-export type DragProps<T> = {
+export type DragProps = {
   modifyImageElement?: (el: HTMLElement) => void
-  setDragData?: (data: Data<T>, e: DragEvent) => Promise<void>
   style?: CSSProperties
 }
 
 function useDrag<T>(
   data: Data<T>,
   ref?: RefObject<HTMLElement>,
-  props: DragProps<T> = {}
+  props: DragProps = {}
 ): Drag {
   const [isDrag, setDrag] = useState(false)
   const endListener = useRef<boolean>()
@@ -164,10 +163,21 @@ function useDrag<T>(
 
       e.dataTransfer.setData('application/based', JSON.stringify(data))
 
-      if (props.setDragData) {
-        // make a wrapper for this that just receives a mime type
-        props.setDragData(data, e)
-      }
+      // need to check to use selection or not
+
+      const useSelection = s.find((d) => d === data)
+
+      Promise.all(
+        useSelection
+          ? s.filter((s) => !!s.exportData).map((s) => s.exportData(s))
+          : [
+              data.exportData
+                ? data.exportData(data)
+                : { text: JSON.stringify(data.data) },
+            ]
+      ).then(async (v) => {
+        await setData(e.dataTransfer, v)
+      })
 
       let cancelDragScroll
       if (isSafari()) {

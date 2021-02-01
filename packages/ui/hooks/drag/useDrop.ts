@@ -26,6 +26,7 @@ type DropEvents = {
 // add import resolve etc
 type DropProps = {
   validate?: (e?: DragEvent) => boolean
+  readFiles?: boolean
 }
 
 const defValidate = () => true
