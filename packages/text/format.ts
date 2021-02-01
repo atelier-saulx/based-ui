@@ -1,5 +1,6 @@
-import toDateString, { DateFormat } from './dateString'
-import toNumberString, { NumberFormat } from './numberString'
+import { DateFormat } from './dateString'
+import { NumberFormat } from './numberString'
+import { TextValueSingle } from '@based/text'
 
 export type TextValueFormat = {
   value?: TextValueSingle

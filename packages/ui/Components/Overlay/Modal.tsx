@@ -6,12 +6,12 @@ import React, {
 } from 'react'
 import { useColor, Color } from '@based/theme'
 import { Text } from '../Text'
-import { Close, IconName , iconFromString } from '@based/icons'
+import { Close, IconName, iconFromString } from '@based/icons'
 import { Button } from '../Button'
 import useOverlayProps from '../../hooks/overlay/useOverlayProps'
 import { OnClose } from './'
 
-import { TextValue } from '@based/i18n'
+import { TextValue } from '@based/text'
 
 export type ModalHeaderProps = PropsWithChildren<{
   closeButton?: boolean

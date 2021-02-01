@@ -22,4 +22,3 @@ const Shows: FunctionComponent<SvgProps> = ({
 }
 
 export default Shows
-

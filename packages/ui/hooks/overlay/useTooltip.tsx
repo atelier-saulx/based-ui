@@ -1,6 +1,6 @@
 import { addOverlay, OnClose, removeOverlay } from '../../Components/Overlay'
 import { PositionPropsFnOptional } from './useOverlayPosition'
-import { OverlayContext , createOverlayContextRef } from './useOverlayProps'
+import { OverlayContext, createOverlayContextRef } from './useOverlayProps'
 import { GenericOverlay } from '../../Components/Overlay/GenericOverlay'
 
 import React, {
@@ -11,7 +11,6 @@ import React, {
   ReactNode,
   useEffect,
 } from 'react'
-
 
 import { DataEventHandler } from '../../types'
 

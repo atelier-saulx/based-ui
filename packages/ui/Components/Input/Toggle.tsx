@@ -2,7 +2,7 @@ import React, { useCallback, FunctionComponent, CSSProperties } from 'react'
 import { Check } from '../Button/CheckBox'
 import { Radio } from '../Button/Radio'
 import { Text } from '../Text'
-import { TextValue } from '@based/i18n'
+import { TextValue } from '@based/text'
 import { OnValueChange } from '../../types'
 import useInputValue from '../../hooks/useInputValue'
 

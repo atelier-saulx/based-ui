@@ -12,7 +12,7 @@ import useDrop from '../../hooks/drag/useDrop'
 import { createProgressContext } from './ProgressContext'
 import { uploadFile } from './uploadFile'
 import { Input } from '../Input/Text'
-import { TextValue, getTextValue } from '@based/i18n'
+import { TextValue, getTextValue } from '@based/text'
 import { OnValueChange } from '../../types'
 
 type FileUploadProps = {

@@ -10,7 +10,7 @@ import { useColor } from '@based/theme'
 import { Text } from '../Text'
 import { Expand, iconFromString, IconName } from '@based/icons'
 import useHover from '../../hooks/events/useHover'
-import { TextValue } from '@based/i18n'
+import { TextValue } from '@based/text'
 
 type GenericEventHandler = EventHandler<SyntheticEvent>
 

@@ -1,6 +1,6 @@
 import React, { CSSProperties, FunctionComponent } from 'react'
 import { useColor, Color } from '@based/theme'
-import { getTextValue, TextValue } from '@based/i18n'
+import { getTextValue, TextValue } from '@based/text'
 
 type TitleProps = {
   style?: CSSProperties

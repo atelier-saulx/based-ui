@@ -2,7 +2,7 @@ import React, { FunctionComponent, CSSProperties } from 'react'
 import { useColor } from '@based/theme'
 import { Title } from '../Text/Title'
 import { SideMenuItem } from './SideMenuItem'
-import { TextValue } from '@based/i18n'
+import { TextValue } from '@based/text'
 import { IconName } from '@based/icons'
 
 type FooterProps = {

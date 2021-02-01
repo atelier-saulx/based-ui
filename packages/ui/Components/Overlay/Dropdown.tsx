@@ -13,7 +13,7 @@ import { Checked, iconFromString, IconName, IconProps } from '@based/icons'
 import { Text } from '../Text'
 import useHover from '../../hooks/events/useHover'
 import Shared from './Shared'
-import { TextValue, isTextValue } from '@based/i18n'
+import { TextValue, isTextValue } from '@based/text'
 import { Data, OnValueChange } from '../../types'
 import { deepEqual } from '@saulx/utils'
 

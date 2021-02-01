@@ -29,7 +29,7 @@ import {
 import useDragScroll from '../../../hooks/drag/useDragScroll'
 import useOptions from '../../../hooks/events/useContextualMenu'
 import { DataEventHandler, Data, ExportData } from '../../../types'
-import { TextValue } from '@based/i18n'
+import { TextValue } from '@based/text'
 
 const OrderedListContext = createContext(null)
 OrderedListContext.displayName = 'OrderedListContext'

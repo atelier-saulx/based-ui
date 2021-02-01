@@ -23,4 +23,3 @@ const Search: FunctionComponent<SvgProps> = ({
 }
 
 export default Search
-

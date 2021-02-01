@@ -8,7 +8,7 @@ import React, {
   useCallback,
 } from 'react'
 import { useColor, Color } from '@based/theme'
-import { getTextValue, TextValue } from '@based/i18n'
+import { getTextValue, TextValue } from '@based/text'
 import { iconFromString, IconName } from '@based/icons'
 import useHover from '../../hooks/events/useHover'
 import { Text } from '../Text'

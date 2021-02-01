@@ -23,4 +23,3 @@ const Settings: FunctionComponent<SvgProps> = ({
 }
 
 export default Settings
-
