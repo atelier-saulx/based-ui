@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useColor } from '@based/theme'
-import Loader from '../Loader/Circle'
+import { Loader } from '../Loader/Loader'
 
 export const Preloader = ({ loading = false, children }) => {
   const [fontLoaded, setFontLoaded] = useState(false)
@@ -25,7 +25,7 @@ export const Preloader = ({ loading = false, children }) => {
   })
 
   useEffect(() => {
-    let timer
+    let timer: ReturnType<typeof setTimeout>
     if (fontLoaded && loading === false) {
       timer = setTimeout(() => {
         setRemove(true)
@@ -53,7 +53,7 @@ export const Preloader = ({ loading = false, children }) => {
             //   'default',
             //   0.05
             // )} 0%,${useColor('background2', 0.1)} 100%)`,
-            backgroundColor: useColor('background'),
+            backgroundColor: useColor({ color: 'background' }),
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',

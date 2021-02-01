@@ -34,7 +34,22 @@ export const Loader: FunctionComponent<LoaderProps> = ({
   }, [])
 
   const svg = (
-    <svg viewBox="0 0 32 32" width={size} height={size}>
+    <svg
+      style={{
+        transform: 'rotate(-90deg)',
+        animationDuration: '1s',
+        animationTimingFunction: 'linear',
+        animationIterationCount: 'infinite',
+        // @ts-ignore
+        '@keyframes': {
+          '0%': { transform: 'rotate(0deg)' },
+          '100%': { transform: 'rotate(360deg)' },
+        },
+      }}
+      viewBox="0 0 32 32"
+      width={size}
+      height={size}
+    >
       <circle
         cx="16"
         cy="16"
@@ -69,18 +84,6 @@ export const Loader: FunctionComponent<LoaderProps> = ({
         minWidth: size,
         width: size,
         height: size,
-        animationDuration: '1s',
-        animationTimingFunction: 'linear',
-        animationIterationCount: 'infinite',
-        // animationName: 'rotate',
-        // TODO: Needs @keyframes to be added
-        // @ts-ignore
-        '@keyframes': {
-          //  rotate: {
-          '0%': { transform: 'rotate(0deg)' },
-          '100%': { transform: 'rotate(360deg)' },
-          //  },
-        },
         ...style,
       }}
     >
