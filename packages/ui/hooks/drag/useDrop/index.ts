@@ -5,10 +5,15 @@ import {
   DragEventHandler,
   DragEvent,
 } from 'react'
-import { OnValueChange } from '../../../types'
-import readFiles from './readFiles'
+import readFiles, { File } from './readFiles'
+import { Data } from '../../../types'
 
 const preventDefault = (e) => e.preventDefault()
+
+type DropEventHandler = (
+  e: DragEvent,
+  parsedData: { files: File[]; data?: Data }
+) => void
 
 type DropEvents = {
   onDragEnter: DragEventHandler
@@ -26,7 +31,7 @@ type DropProps = {
 const defValidate = () => true
 
 const useDrop = (
-  onDrop: OnValueChange<{ dataTransfer: DataTransfer }>,
+  onDrop: DropEventHandler,
   props: DropProps = {}
 ): [DropEvents, boolean] => {
   const [isDragOver, setDragOver] = useState(false)
@@ -63,9 +68,9 @@ const useDrop = (
             setDragOver(false)
 
             if (props.readFiles) {
-              const files = []
-
-              onDrop(e)
+              readFiles(e.dataTransfer).then((files) => {
+                onDrop(e, { files })
+              })
             } else {
               onDrop(e)
             }
