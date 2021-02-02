@@ -93,6 +93,7 @@ export default {
             >
               <List
                 framed
+                footer={{ onClick: () => {} }}
                 header={{ label: 'List', icon: 'NewFlow' }}
                 Options={({ isHover }) => {
                   return (

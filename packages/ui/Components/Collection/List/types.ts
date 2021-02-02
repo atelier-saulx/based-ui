@@ -1,5 +1,11 @@
 import { IconName, IconStyleProps } from '@based/icons'
-import { DataEventHandler, Data, ExportData, File } from '../../../types'
+import {
+  DataEventHandler,
+  MultiDataEventHandler,
+  Data,
+  ExportData,
+  File,
+} from '../../../types'
 import { TextValue } from '@based/text'
 import { Img } from '../types'
 import { ComponentType } from 'react'
@@ -67,5 +73,5 @@ export type FooterProps<T = ListDataProps> = {
   icon?: IconName
   paddingLeft?: number
   items?: Data<T>[]
-  onClick: DataEventHandler<ListDataProps>
+  onClick: MultiDataEventHandler<ListDataProps>
 }

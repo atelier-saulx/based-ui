@@ -7,6 +7,7 @@ import useDragScroll from '../../../hooks/drag/useDragScroll'
 import { ListItem } from './ListItem'
 import { ListProps } from './types'
 import { useColor } from '@based/theme'
+import { Footer } from './Footer'
 
 const ListContext = createContext(null)
 ListContext.displayName = 'ListContext'
@@ -35,6 +36,7 @@ const getElementType = (paddingTop: number, paddingBottom: number) => {
 export const List = (props: ListProps) => {
   let {
     header,
+    footer,
     framed,
     items = [],
     onClick,
@@ -88,17 +90,18 @@ export const List = (props: ListProps) => {
                   style={{
                     paddingTop,
                     paddingBottom,
-                    borderBottomLeftRadius: framed ? 4 : null,
-                    borderBottomRightRadius: framed ? 4 : null,
+                    borderBottomLeftRadius: framed && !footer ? 4 : null,
+                    borderBottomRightRadius: framed && !footer ? 4 : null,
                     borderLeft: framed
                       ? '1px solid ' + useColor({ color: 'divider' })
                       : null,
                     borderRight: framed
                       ? '1px solid ' + useColor({ color: 'divider' })
                       : null,
-                    borderBottom: framed
-                      ? '1px solid ' + useColor({ color: 'divider' })
-                      : null,
+                    borderBottom:
+                      framed && !footer
+                        ? '1px solid ' + useColor({ color: 'divider' })
+                        : null,
                   }}
                   innerElementType={
                     paddingTop || paddingBottom
@@ -106,13 +109,21 @@ export const List = (props: ListProps) => {
                       : null
                   }
                   itemCount={items.length}
-                  height={height - (hasHeader ? 48 : 0)}
+                  height={height - (hasHeader ? 48 : 0) - (footer ? 48 : 0)}
                   itemData={{ items, context }}
                   itemSize={48 + (items[0] && 'info' in items[0] ? 15 : 0)}
                   {...useDragScroll(true)}
                 >
                   {ListItem}
                 </FixedSizeList>
+                {footer ? (
+                  <Footer
+                    {...footer}
+                    items={items}
+                    width={width}
+                    framed={framed}
+                  />
+                ) : null}
               </>
             </ListContext.Provider>
           </SelectableCollection>
