@@ -3,6 +3,7 @@ import RenderComponents from '../RenderComponents'
 import { ContextualMenuItem, List, useMenu, Text } from '@based/ui'
 import { randomText, randomIcon } from './util'
 import { Grid } from '@based/ui/Components/Collection/Grid'
+import { Image } from '@based/ui/Components/Collection/Grid/Image'
 
 const profilePic = 'https://scx2.b-cdn.net/gfx/news/hires/2019/2-forest.jpg'
 const randomDate = () => {
@@ -40,6 +41,21 @@ for (let i = 0; i < 50; i++) {
     },
     title: 'Item ' + i,
     img: profilePic,
+    info: { value: randomDate(), format: 'date-time-human' },
+    id: i,
+  })
+}
+
+const gridData = []
+for (let i = 0; i < 50; i++) {
+  gridData.push({
+    data: {
+      id: i,
+      text: 'Item ' + i,
+      flurpen: randomText(),
+    },
+    title: 'Item ' + i,
+    graphic: <Image href={profilePic} />,
     info: { value: randomDate(), format: 'date-time-human' },
     id: i,
   })
@@ -175,6 +191,18 @@ export default {
               }}
             >
               <Grid
+                optionsIcon="More"
+                onOptions={useMenu((props) => {
+                  return (
+                    <ContextualMenuItem
+                      label="Yesh"
+                      icon="NewFlow"
+                      onClick={() => {
+                        console.info(props)
+                      }}
+                    />
+                  )
+                })}
                 exportData={async (data) => {
                   return {
                     file: {
@@ -185,12 +213,13 @@ export default {
                     text: data.title,
                   }
                 }}
+                draggable
                 onDrop={(e, data) => {
                   // data will get a files field if its external
                   console.info(e, data)
                 }}
                 header="My Grid"
-                items={listData}
+                items={gridData}
                 activeId={2}
                 onClick={(data, index) => {
                   console.info(data, index)

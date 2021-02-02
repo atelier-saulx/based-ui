@@ -1,103 +1,173 @@
-import React, { createContext, useEffect, forwardRef } from 'react'
-import { GridProps } from './types'
+import React, { createContext, useRef, useCallback } from 'react'
 import { FixedSizeGrid } from 'react-window'
 import AutoSizer from 'react-virtualized-auto-sizer'
-// import { useColor } from '@based/theme'
-// import { Text } from '../../Text'
-// import useHover from '../../../hooks/events/useHover'
-// import selectData from '../../util/selectData'
+import { useColor } from '@based/theme'
+import { Text } from '../../Text'
+import useHover from '../../../hooks/events/useHover'
+// import selectData from '../../../hooks/
 // import { GraphicLabel } from '../Label/Graphic'
-// import Info from './Info'
-// import { Options, iconFromString } from '@based/icons'
-// import useDrag from '../../hooks/useDrag'
+import Info from './Info'
+import { Settings, iconFromString } from '@based/icons'
+import useDrag from '../../../hooks/drag/useDrag'
 import {
-  // useSelect,
-  // useClick,
+  useSelect,
+  useClick,
   SelectableCollection,
 } from '../../../hooks/useSelect'
-import { GridItem } from './GridItem'
-import { Title } from '../../Text/Title'
-// import useMultiple from '../../hooks/useMultiple'
+import useMultipleEvents from '../../../hooks/events/useMultipleEvents'
 import useDragScroll from '../../../hooks/drag/useDragScroll'
-// import useOptions from '../../hooks/useContextualMenu'
+import useOptions from '../../../hooks/events/useContextualMenu'
+import { GridDataProps, GridProps } from './types'
 
-export const GridContext = createContext(null)
+const GridContext = createContext(null)
 GridContext.displayName = 'GridContext'
 
-const mem = {}
-
-const getElementType = (paddingTop: number, paddingBottom: number) => {
-  const padding = paddingTop + paddingBottom
-  if (!(padding in mem)) {
-    mem[padding] = forwardRef<any>(({ style, ...rest }: any, ref) => {
-      return (
-        <div
-          ref={ref}
-          style={{
-            ...style,
-            height: `${parseFloat(style.height) + padding}px`,
-          }}
-          {...rest}
-        />
-      )
-    })
-  }
-  return mem[padding]
-}
-//
-// const Image = ({ data, field }) => {
-//   // editable as option!
-//   const val = selectData(field, data)
-//
-//   return (
-//     <div
-//       style={{
-//         // weird behaviour with 100% height in safari
-//         position: 'absolute',
-//         top: 0,
-//         borderTopLeftRadius: 8,
-//         borderTopRightRadius: 8,
-//         left: 0,
-//         bottom: 0,
-//         right: 0,
-//         backgroundImage: val
-//           ? `url(${val})`
-//           : `linear-gradient(135deg,${useColor('default', 0.1)} 0%,${useColor(
-//               'background',
-//               0.2
-//             )} 100%)`,
-//         backgroundSize: 'cover',
-//         backgroundPosition: 'center'
-//       }}
-//     />
-//   )
-// }
-//
-//
-// // add load more later
-// // figure out usememeo useage
-export const Grid = (props: GridProps) => {
-  let {
-    header,
-    items = [],
-    onClick,
-    paddingRight = 0,
-    paddingLeft = 0,
-    paddingTop = 0,
-    paddingBottom = 0,
-    activeId,
-    forceActive,
+const GridItem = (props: any) => {
+  const {
+    columnIndex,
+    rowIndex,
+    data: { items, context },
   } = props
-
-  if (forceActive) {
-    forceActive = !activeId && !!items[0]
+  const { columnCount } = context
+  const index = columnIndex + rowIndex * columnCount
+  const itemData: GridDataProps = items[index]
+  if (!itemData) {
+    return null
   }
+  return <GridItemWrapped {...props} />
+}
 
-  useEffect(() => {
-    if (forceActive) {
-      onClick(null, items[0])
-    }
-  }, [forceActive])
+const GridItemWrapped = ({
+  style,
+  columnIndex,
+  rowIndex,
+  data: { items, context },
+}) => {
+  const {
+    columnCount,
+    onClick,
+    height,
+    optionsIcon,
+    width,
+    draggable,
+    onOptions,
+  } = context
+  const index = columnIndex + rowIndex * columnCount
+  const itemData = items[index]
+  const [hover, isHover] = useHover()
+  const ref = useRef()
+  const [drag] = draggable ? useDrag(itemData, ref) : [{}]
+  const [select, isSelected] = useSelect(itemData)
+
+  const OptionsIcon = optionsIcon ? iconFromString(optionsIcon) : Settings
+
+  return (
+    <div
+      ref={ref}
+      style={{
+        padding: 8,
+        ...style,
+      }}
+    >
+      <div
+        style={{
+          height,
+          width,
+          display: 'flex',
+          flexDirection: 'column',
+          cursor: 'pointer',
+          transition: 'background-color 0.15s, border 0.15s',
+          border:
+            (isSelected ? '2px solid ' : '1px solid ') +
+            (isHover && !isSelected
+              ? useColor({ color: 'foreground', tone: 2 })
+              : useColor({
+                  color: isSelected || isHover ? 'foreground' : 'divider',
+                })),
+          borderRadius: 8,
+        }}
+        {...useMultipleEvents(
+          hover,
+          drag,
+          select,
+          onClick
+            ? {
+                onClick: useClick(
+                  (e) => {
+                    onClick(e, { data: itemData, index })
+                  },
+                  [onClick, itemData, index]
+                ),
+              }
+            : undefined,
+          onOptions
+            ? useOptions(
+                useCallback((e) => {
+                  onOptions(e, { data: itemData, index })
+                }, [])
+              )
+            : undefined
+        )}
+      >
+        <>
+          <div
+            style={{
+              flex: 1,
+              display: 'flex',
+              position: 'relative',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            {itemData.graphic || null}
+
+            {onOptions ? (
+              <OptionsIcon
+                color={{
+                  color: 'foreground',
+                }}
+                onClick={useCallback(
+                  (e) => onOptions(e, { data: itemData, index }),
+                  [itemData]
+                )}
+                style={{
+                  opacity: isHover ? 1 : 0,
+                  transition: 'opacity 0.15s',
+                  position: 'absolute',
+                  top: 10,
+                  right: 15,
+                }}
+              />
+            ) : null}
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'flex-end',
+              padding: 16,
+            }}
+          >
+            <Text>{itemData.title}</Text>
+            {itemData.info ? <Info data={itemData.info} /> : null}
+          </div>
+        </>
+      </div>
+    </div>
+  )
+}
+
+// add load more later
+// figure out usememeo useage
+export const Grid = (props: GridProps) => {
+  const {
+    items = [],
+    large,
+    onClick,
+    onOptions,
+    draggable = false,
+    optionsIcon,
+  } = props
   return (
     <div
       style={{
@@ -105,66 +175,43 @@ export const Grid = (props: GridProps) => {
         height: '100%',
         marginLeft: -8,
         marginRight: -8,
-        border: '1px solid red',
         borderRadius: 8,
       }}
     >
       <AutoSizer>
         {({ height, width }) => {
-          const hasHeader = !!header
-          const context: GridProps & { hasHeader: boolean } = {
-            ...props,
-            hasHeader,
+          const ratio = 220 / 232
+          let w = (large ? 440 : 220) + 16
+          const columnCount = Math.floor(width / w)
+          // - 4 for scrollbar
+          w = Math.floor(width / columnCount) - 4 / columnCount
+          const h = w * ratio + 16
+          const context = {
+            draggable,
+            onOptions,
+            optionsIcon,
+            onClick,
+            large,
+            width: w - 16,
+            height: h - 16,
+            // Menu,
+            columnCount,
           }
-
-          if (onClick) {
-            context.onClick = onClick
-          }
-
           return (
             <SelectableCollection items={items}>
               <GridContext.Provider value={context}>
-                <>
-                  {hasHeader ? (
-                    <Title
-                      size="small"
-                      style={{
-                        width,
-                        marginBottom: 20,
-                        paddingRight,
-                        paddingLeft,
-                        paddingTop,
-                      }}
-                      singleLine
-                    >
-                      {header}
-                    </Title>
-                  ) : null}
-                  <FixedSizeGrid
-                    columnCount={1}
-                    columnWidth={100}
-                    height={height}
-                    rowCount={items.length}
-                    rowHeight={35}
-                    width={width}
-                    // width={width}
-                    // style={{ paddingTop, paddingBottom }}
-                    innerElementType={
-                      paddingTop || paddingBottom
-                        ? getElementType(paddingTop, paddingBottom)
-                        : null
-                    }
-                    itemCount={items.length}
-                    // height={height - (hasHeader ? 27 + 20 : 0)}
-                    itemData={{ items, context }}
-                    // itemSize={48}
-                    // columnWidth={100}
-                    // rowHeight={40}
-                    {...useDragScroll(true)}
-                  >
-                    {GridItem}
-                  </FixedSizeGrid>
-                </>
+                <FixedSizeGrid
+                  width={width}
+                  columnCount={context.columnCount}
+                  rowCount={Math.ceil(items.length / context.columnCount)}
+                  height={height}
+                  itemData={{ items, context }}
+                  rowHeight={h}
+                  columnWidth={w}
+                  {...useDragScroll(true)}
+                >
+                  {GridItem}
+                </FixedSizeGrid>
               </GridContext.Provider>
             </SelectableCollection>
           )
