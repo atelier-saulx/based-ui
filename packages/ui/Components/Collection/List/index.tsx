@@ -82,15 +82,15 @@ const ListItem = ({ index, data: { items, context }, style: itemStyle }) => {
   const [hover, isHover] = useHover()
   const [drop, isDragOver] = useDrop(
     useCallback(
-      (e: any, files) => {
+      (e, { files, data }) => {
         if (onDrop) {
-          const fromBased = e.dataTransfer.getData('application/based')
-          if (fromBased) {
-            const oldIndex = JSON.parse(fromBased).index
+          if (data) {
+            const oldIndex = data.index
             const itemData = items[oldIndex]
             const newIndex = index > oldIndex ? index - 1 : index
             onDrop(e, { ...itemData, index: newIndex, previousIndex: oldIndex })
           } else if (files) {
+            // and add an import
             console.log(files)
           }
         }

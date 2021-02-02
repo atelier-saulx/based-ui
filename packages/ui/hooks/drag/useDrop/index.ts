@@ -66,13 +66,26 @@ const useDrop = (
           if (props.validate(e)) {
             ref.current = 0
             setDragOver(false)
-
+            let data = e.dataTransfer.getData('application/based')
+            if (data) {
+              data = JSON.parse(data)
+            }
             if (props.readFiles) {
               readFiles(e.dataTransfer).then((files) => {
-                onDrop(e, { files })
+                if (data) {
+                  // @ts-ignore
+                  onDrop(e, { files, data })
+                } else {
+                  onDrop(e, { files })
+                }
               })
             } else {
-              onDrop(e)
+              if (data) {
+                // @ts-ignore
+                onDrop(e, { data, files: [] })
+              } else {
+                onDrop(e, { files: [] })
+              }
             }
           }
         },

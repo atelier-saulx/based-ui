@@ -5,9 +5,9 @@ const isBinary = (str) => /(image)|(video)|(bin)/.test(str)
 async function readFile(file): Promise<File> {
   return new Promise((resolve) => {
     const reader = new FileReader()
-    if (file.type === 'application/gzip') {
+    if (file.type === 'application/gzip' || file.type === 'application/tar') {
       // extract and show!
-      console.info('GZIP GO EXTRACT!')
+      console.warn('TODO: gzip or tar - not extracted yet')
     }
     reader.addEventListener('load', (event) => {
       if (!isBinary(file.type) && typeof event.target.result === 'string') {
@@ -19,18 +19,21 @@ async function readFile(file): Promise<File> {
               resolve({
                 content: parsed,
                 name: file.name,
+                mime: file.type,
               })
             })
         } else {
           resolve({
             content: parsed,
             name: file.name,
+            mime: file.type,
           })
         }
       } else {
         resolve({
           content: event.target.result,
           name: file.name,
+          mime: file.type,
         })
       }
     })
@@ -40,10 +43,10 @@ async function readFile(file): Promise<File> {
 
 export type File = {
   content: any
+  mime: string
   name: string
 }
 
 export default async (dataTransfer: DataTransfer): Promise<File[]> => {
-  console.log(dataTransfer)
-  return []
+  return await Promise.all([...dataTransfer.files].map(readFile))
 }
