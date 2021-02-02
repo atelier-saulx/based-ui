@@ -2,7 +2,7 @@ import { IconName, IconStyleProps } from '@based/icons'
 import { DataEventHandler, Data, ExportData, File } from '../../../types'
 import { TextValue } from '@based/text'
 import { Img } from '../types'
-import { ComponentType, ReactChildren, ReactNode } from 'react'
+import { ComponentType } from 'react'
 
 export type ListDataProps = {
   icon?: IconStyleProps & { name: IconName }
@@ -14,6 +14,7 @@ export type ListDataProps = {
 
 export type ListProps = {
   header?: HeaderProps
+  footer?: FooterProps
   items?: Data<ListDataProps>[]
   forceActive?: boolean
   exportData?: ExportData<ListDataProps>
@@ -56,4 +57,15 @@ export type HeaderProps<T = ListDataProps> = {
   icon?: IconName
   paddingLeft?: number
   items?: Data<T>[]
+}
+
+export type FooterProps<T = ListDataProps> = {
+  label?: TextValue
+  framed?: boolean
+  paddingRight?: number
+  width?: number
+  icon?: IconName
+  paddingLeft?: number
+  items?: Data<T>[]
+  onClick: DataEventHandler<ListDataProps>
 }

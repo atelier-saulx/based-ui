@@ -11,11 +11,15 @@ const Header: FunctionComponent<HeaderProps> = ({
   framed,
   icon,
   items,
+  paddingLeft,
+  paddingRight,
 }) => {
   const Icon = icon ? iconFromString(icon) : null
   return (
     <div
       style={{
+        marginLeft: paddingLeft || 0,
+        marginRight: paddingRight || 0,
         padding: 15,
         display: 'flex',
         alignItems: 'center',
