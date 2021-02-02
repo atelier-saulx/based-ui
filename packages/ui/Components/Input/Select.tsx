@@ -83,7 +83,7 @@ export const Select: FunctionComponent<SelectInputProps> = ({
         stateValue,
         {
           multi,
-          // align: 'flex-end',
+          align: 'flex-end',
           x: ({ left }) => left - 15,
           y: ({ top }) => top + 15,
         },
