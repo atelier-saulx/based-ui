@@ -133,7 +133,9 @@ if (isTouch) {
   updateBg()
 }
 
-export const useTheme = (active?: 'light' | 'dark') => {
+let firstSet = false
+
+export const useTheme = (active?: 'light' | 'dark'): string => {
   if (active === undefined) {
     if (typeof window !== 'undefined') {
       const isDark = global.matchMedia('(prefers-color-scheme: dark)').matches
@@ -145,7 +147,10 @@ export const useTheme = (active?: 'light' | 'dark') => {
 
   const [, update] = useReducer((x: number) => x + 1, 0)
 
-  theme.active = active
+  if (!firstSet) {
+    theme.active = active
+    firstSet = true
+  }
 
   useEffect(() => {
     theme.listeners.push(update)
@@ -154,7 +159,11 @@ export const useTheme = (active?: 'light' | 'dark') => {
     }
   }, [])
 
-  return theme[active]
+  if (typeof window !== undefined) {
+    document.body.style.background = useColor({ color: 'background' })
+  }
+
+  return themeVersion
 }
 
 export type Color = {
@@ -174,8 +183,8 @@ export const useColor = (color: Color): string => {
   }
 }
 
-export const getTheme = (label: string) => {
-  return (label ? theme[label] : theme[theme.active]) || {}
+export const getTheme = (label?: string): Colors => {
+  return (label ? theme.theme[label] : theme.theme[theme.active]) || {}
 }
 
 export const getTone = (): string => {
@@ -187,6 +196,7 @@ export const updateTheme = (update: { dark?: Colors; light?: Colors }) => {
     theme.theme[key] = update[key]
   }
   const newVersion = hashTheme(theme)
+
   if (newVersion !== themeVersion) {
     themeVersion = newVersion
     theme.listeners.forEach((update) => {

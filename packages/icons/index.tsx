@@ -124,13 +124,7 @@ const Icon: Icon = ({
     <div
       draggable={draggable}
       style={{
-        opacity: 1,
-        transition: 'opacity 0.15s',
         cursor: (onDragStart || onDrag) && !onClick ? 'grab' : 'pointer',
-        // @ts-ignore
-        ':hover': {
-          opacity: 0.5,
-        },
         ...style,
       }}
       onDrag={onDrag}

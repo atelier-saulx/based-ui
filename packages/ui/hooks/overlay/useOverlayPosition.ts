@@ -55,9 +55,12 @@ export type Position = {
 
 const selectSelf: SelectTarget = (t) => t
 
-const xCalculation: PosCalculation = ({ left }) => left
+const xCalculation: PosCalculation = ({ left, x }) => {
+  return left || x
+}
 
-const yCalculation: PosCalculation = ({ top, height }) => top + height + 10
+const yCalculation: PosCalculation = ({ top, height, y }) =>
+  (top || y) + height + 10
 
 const maxYCalculation: MaxMinCalculation = (y, elem) => {
   const maxH = global.innerHeight - 30

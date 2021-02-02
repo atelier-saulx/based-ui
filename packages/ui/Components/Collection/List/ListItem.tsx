@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { Text } from '../../Text'
 import useHover from '../../../hooks/events/useHover'
 import useMultipleEvents from '../../../hooks/events/useMultipleEvents'
@@ -7,14 +7,62 @@ import { useColor } from '@based/theme'
 import useDrag from '../../../hooks/drag/useDrag'
 import useDrop from '../../../hooks/drag/useDrop'
 import { useSelect, useClick } from '../../../hooks/useSelect'
-import useOptions from '../../../hooks/events/useContextualMenu'
+import useContextualMenu from '../../../hooks/events/useContextualMenu'
 import { ListDataProps } from './types'
+
+const Img = ({ src, size }) => {
+  return (
+    <div
+      style={{
+        width: size,
+        height: size,
+        backgroundImage: `url(${src})`,
+        backgroundSize: 'cover',
+        borderRadius: 4,
+        border: '1px solid ' + useColor({ color: 'divider' }),
+      }}
+    />
+  )
+}
+
+const Action = ({ icon, onClick, isHover }) => {
+  const [clicky, setClicky] = useState(false)
+  const ref = useRef<any>()
+  useEffect(() => {
+    return () => {
+      clearTimeout(ref.current)
+    }
+  }, [])
+  const ActionIcon = iconFromString(icon)
+  return (
+    <div
+      style={{
+        marginLeft: 16,
+        opacity: isHover ? 0.75 : 0,
+        transition: 'transform 0.15s',
+        transform: clicky ? 'scale(1.3)' : 'scale(1)',
+      }}
+      onClick={(e) => {
+        setClicky(true)
+        ref.current = setTimeout(() => {
+          setClicky(false)
+        }, 150)
+        onClick(e)
+      }}
+    >
+      <ActionIcon />
+    </div>
+  )
+}
 
 const ListItem = ({ index, data: { items, context }, style: itemStyle }) => {
   const {
     onClick,
     activeId,
     onOptions,
+    Options,
+    actionIcon,
+    onAction,
     optionsIcon,
     contextualMenu,
     onDrop,
@@ -125,16 +173,14 @@ const ListItem = ({ index, data: { items, context }, style: itemStyle }) => {
             opacity: isDragOver ? 1 : 0,
             transition: 'opacity 0.2s',
             width: '100%',
-            borderTop:
-              // TODO: should be tone instead of opacity?
-              '2px solid ' + useColor({ color: 'primary' }),
+            borderTop: '2px solid ' + useColor({ color: 'primary' }),
           }}
         />
       ) : null}
       <div
         ref={ref}
         style={{
-          height: 48,
+          height: 48 + (itemData.info ? 15 : 0),
           opacity: isDragging ? 0.5 : 1,
           alignItems: 'center',
           display: 'flex',
@@ -143,7 +189,10 @@ const ListItem = ({ index, data: { items, context }, style: itemStyle }) => {
           borderLeft: isActive
             ? `2px solid ` + useColor({ color: 'primary' })
             : null,
-          borderBottom: '1px solid ' + useColor({ color: 'divider' }),
+          borderBottom:
+            index !== items.length - 1
+              ? '1px solid ' + useColor({ color: 'divider' })
+              : null,
           padding: 15,
           backgroundColor: isSelected
             ? useColor({
@@ -169,7 +218,7 @@ const ListItem = ({ index, data: { items, context }, style: itemStyle }) => {
               }
             : undefined,
           contextualMenu
-            ? useOptions(
+            ? useContextualMenu(
                 useCallback(
                   (e) => {
                     onOptions(e, itemData)
@@ -180,15 +229,48 @@ const ListItem = ({ index, data: { items, context }, style: itemStyle }) => {
             : undefined
         )}
       >
-        {Icon ? <Icon {...itemData.icon} /> : null}
+        {itemData.img ? (
+          <Img src={itemData.img} size={24 + (itemData.info ? 15 : 0)} />
+        ) : Icon ? (
+          <Icon {...itemData.icon} />
+        ) : null}
         <div
           style={{
             overflow: 'hidden',
             marginLeft: 15,
           }}
         >
-          <Text weight="medium">{itemData.title}</Text>
+          <Text weight="medium" singleLine>
+            {itemData.title}
+          </Text>
+          {itemData.info ? (
+            <Text
+              singleLine
+              weight="regular"
+              color={{ color: 'foreground', tone: 3 }}
+              style={{
+                marginTop: -4,
+              }}
+            >
+              {itemData.info}
+            </Text>
+          ) : null}
         </div>
+        {actionIcon ? (
+          <Action
+            isHover={isHover}
+            icon={actionIcon}
+            onClick={useCallback(
+              (e) => {
+                e.stopPropagation()
+                if (onAction) {
+                  onAction(e, itemData)
+                }
+              },
+              [itemData]
+            )}
+          />
+        ) : null}
         <div
           style={{
             flexGrow: 1,
@@ -196,19 +278,43 @@ const ListItem = ({ index, data: { items, context }, style: itemStyle }) => {
             justifyContent: 'flex-end',
           }}
         >
-          <Drag
-            style={{
-              opacity: isHover ? 0.4 : 0,
-              transition: 'opacity 0.15s',
-              cursor: 'grab',
-            }}
-            color={{ color: 'foreground' }}
-          />
+          {onOptions || Options ? null : (
+            <Drag
+              style={{
+                opacity: isHover ? 0.4 : 0,
+                transition: 'opacity 0.15s',
+                cursor: 'grab',
+              }}
+              color={{ color: 'foreground' }}
+            />
+          )}
           {onOptions ? (
             <OptionsIcon
-              color={{ color: 'foreground' }}
-              onClick={useCallback((e) => onOptions(e, itemData), [itemData])}
-              style={{ width: 35, paddingLeft: 7.5 }}
+              color={{ color: 'foreground', opacity: isHover ? 0.5 : 0 }}
+              onClick={useCallback(
+                (e) => {
+                  e.stopPropagation()
+                  onOptions(e, itemData)
+                },
+                [itemData]
+              )}
+              style={{
+                width: 35,
+                paddingLeft: 7.5,
+              }}
+            />
+          ) : null}
+          {Options ? (
+            <Options
+              isHover={isHover}
+              isDragging={isDragging}
+              isDragOver={isDragOver}
+              isSelected={isSelected}
+              isActive={isActive}
+              onOptions={onOptions}
+              onClick={onClick}
+              data={itemData}
+              items={items}
             />
           ) : null}
         </div>

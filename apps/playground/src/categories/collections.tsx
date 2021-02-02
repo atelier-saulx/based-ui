@@ -1,17 +1,20 @@
 import React from 'React'
 import RenderComponents from '../RenderComponents'
-import { List } from '@based/ui'
+import { ContextualMenuItem, List, useMenu, Text } from '@based/ui'
 import { randomText, randomIcon } from './util'
 import { Grid } from '@based/ui/Components/Collection/Grid'
 
 const profilePic = 'https://scx2.b-cdn.net/gfx/news/hires/2019/2-forest.jpg'
-const randomDate = (start, end) => {
+const randomDate = () => {
+  const start = new Date()
+  const end = new Date()
   return new Date(
     start.getTime() + Math.random() * (end.getTime() - start.getTime())
   ).getTime()
 }
 
 const listData = []
+const listDataWithImg = []
 for (let i = 0; i < 50; i++) {
   listData.push({
     data: {
@@ -24,6 +27,20 @@ for (let i = 0; i < 50; i++) {
       name: randomIcon(),
       framed: true,
     },
+    id: i,
+  })
+}
+
+for (let i = 0; i < 50; i++) {
+  listDataWithImg.push({
+    data: {
+      id: i,
+      text: 'Item ' + i,
+      flurpen: randomText(),
+    },
+    title: 'Item ' + i,
+    img: profilePic,
+    info: { value: randomDate(), format: 'date-time-human' },
     id: i,
   })
 }
@@ -41,7 +58,7 @@ export default {
           return (
             <div
               style={{
-                height: 400,
+                height: 200,
               }}
             >
               <List
@@ -59,7 +76,6 @@ export default {
                   // data will get a files field if its external
                   console.info(e, data)
                 }}
-                header="My OrderedList"
                 items={listData}
                 activeId={2}
                 onClick={(data, index) => {
@@ -77,9 +93,66 @@ export default {
               }}
             >
               <List
-                header="List"
+                framed
+                footer={{ onClick: () => {} }}
+                header={{ label: 'List', icon: 'NewFlow' }}
+                Options={({ isHover }) => {
+                  return (
+                    <div
+                      style={{
+                        width: 20,
+                        background: isHover ? 'red' : 'yellow',
+                        borderRadius: 20,
+                        height: 20,
+                      }}
+                    />
+                  )
+                }}
                 items={listData}
                 activeId={0}
+                onClick={(data, index) => {
+                  console.info(data, index)
+                }}
+              />
+            </div>
+          )
+        },
+        () => {
+          return (
+            <div
+              style={{
+                height: 400,
+              }}
+            >
+              <List
+                actionIcon="logic"
+                onAction={() => {
+                  console.info('x')
+                }}
+                onOptions={useMenu((props) => {
+                  return (
+                    <ContextualMenuItem
+                      label="Yesh"
+                      icon="NewFlow"
+                      onClick={() => {
+                        console.info(props)
+                      }}
+                    />
+                  )
+                })}
+                framed
+                optionsIcon="More"
+                contextualMenu
+                header={{
+                  label: 'List with img',
+                  icon: 'NewFlow',
+                  Actions: () => <Text weight="medium">Action</Text>,
+                }}
+                onDrop={(e, data) => {
+                  // data will get a files field if its external
+                  console.info(e, data)
+                }}
+                items={listDataWithImg}
                 onClick={(data, index) => {
                   console.info(data, index)
                 }}

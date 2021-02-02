@@ -80,8 +80,7 @@ const useDrop = (
               const useSelection = s.find((ds) => deepEqual(ds.data, d.data))
 
               if (useSelection) {
-                // @ts-ignore
-                data = [s]
+                data = s
               } else {
                 data = [d]
               }

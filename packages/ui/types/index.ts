@@ -18,6 +18,11 @@ export type DataEventHandler<T = {}> = (
   data?: Data<T>
 ) => void
 
+export type MultiDataEventHandler<T = {}> = (
+  e: Event | SyntheticEvent,
+  data?: Data<T>[]
+) => void
+
 export type OnValueChange<T = any> = (value: T, index?: number) => void
 
 export type Timestamp = number
