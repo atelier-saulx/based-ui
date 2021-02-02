@@ -1,8 +1,8 @@
-import { Icon, IconName, IconStyleProps } from '@based/icons'
+import { IconName, IconStyleProps } from '@based/icons'
 import { DataEventHandler, Data, ExportData, File } from '../../../types'
 import { TextValue } from '@based/text'
 import { Img } from '../types'
-import { ComponentType } from 'react'
+import { ComponentType, ReactChildren, ReactNode } from 'react'
 
 export type ListDataProps = {
   icon?: IconStyleProps & { name: IconName }
@@ -13,7 +13,7 @@ export type ListDataProps = {
 }
 
 export type ListProps = {
-  header?: TextValue // TODO: type will become different
+  header?: HeaderProps
   items?: Data<ListDataProps>[]
   forceActive?: boolean
   exportData?: ExportData<ListDataProps>
@@ -26,8 +26,34 @@ export type ListProps = {
   paddingBottom?: number
   activeId?: string | number
   contextualMenu?: boolean
+  framed?: boolean
   optionsIcon?: IconName
-  Options?: ComponentType
+  Options?: ComponentType<{
+    onClick?: DataEventHandler<ListDataProps>
+    isHover: boolean
+    isActive: boolean
+    isDragging: boolean
+    isDragOver: boolean
+    isSelected: boolean
+    items: Data<ListDataProps>[]
+    data: Data<ListDataProps>
+    onOptions?: DataEventHandler<ListDataProps>
+  }>
   actionIcon?: IconName
   onAction?: DataEventHandler<ListDataProps>
+}
+
+export type ActionProps<T = ListDataProps> = {
+  items: Data<T>[]
+}
+
+export type HeaderProps<T = ListDataProps> = {
+  label?: TextValue
+  Actions?: ComponentType<ActionProps<T>>
+  framed?: boolean
+  paddingRight?: number
+  width?: number
+  icon?: IconName
+  paddingLeft?: number
+  items?: Data<T>[]
 }

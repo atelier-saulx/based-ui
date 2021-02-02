@@ -64,6 +64,7 @@ const ListItem = ({ index, data: { items, context }, style: itemStyle }) => {
     actionIcon,
     onAction,
     optionsIcon,
+    framed,
     contextualMenu,
     onDrop,
     paddingRight = 0,
@@ -173,9 +174,7 @@ const ListItem = ({ index, data: { items, context }, style: itemStyle }) => {
             opacity: isDragOver ? 1 : 0,
             transition: 'opacity 0.2s',
             width: '100%',
-            borderTop:
-              // TODO: should be tone instead of opacity?
-              '2px solid ' + useColor({ color: 'primary' }),
+            borderTop: '2px solid ' + useColor({ color: 'primary' }),
           }}
         />
       ) : null}
@@ -191,7 +190,10 @@ const ListItem = ({ index, data: { items, context }, style: itemStyle }) => {
           borderLeft: isActive
             ? `2px solid ` + useColor({ color: 'primary' })
             : null,
-          borderBottom: '1px solid ' + useColor({ color: 'divider' }),
+          borderBottom:
+            index !== items.length - 1
+              ? '1px solid ' + useColor({ color: 'divider' })
+              : null,
           padding: 15,
           backgroundColor: isSelected
             ? useColor({

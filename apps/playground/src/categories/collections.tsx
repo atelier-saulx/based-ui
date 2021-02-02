@@ -1,6 +1,6 @@
 import React from 'React'
 import RenderComponents from '../RenderComponents'
-import { ContextualMenuItem, List, useMenu } from '@based/ui'
+import { ContextualMenuItem, List, useMenu, Text } from '@based/ui'
 import { randomText, randomIcon } from './util'
 
 const profilePic = 'https://scx2.b-cdn.net/gfx/news/hires/2019/2-forest.jpg'
@@ -75,7 +75,6 @@ export default {
                   // data will get a files field if its external
                   console.info(e, data)
                 }}
-                header="My OrderedList"
                 items={listData}
                 activeId={2}
                 onClick={(data, index) => {
@@ -93,7 +92,8 @@ export default {
               }}
             >
               <List
-                header="List"
+                framed
+                header={{ label: 'List', icon: 'NewFlow' }}
                 Options={({ isHover }) => {
                   return (
                     <div
@@ -125,7 +125,7 @@ export default {
               <List
                 actionIcon="logic"
                 onAction={() => {
-                  console.log('x')
+                  console.info('x')
                 }}
                 onOptions={useMenu((props) => {
                   return (
@@ -138,9 +138,14 @@ export default {
                     />
                   )
                 })}
+                framed
                 optionsIcon="More"
                 contextualMenu
-                header="List with img"
+                header={{
+                  label: 'List with img',
+                  icon: 'NewFlow',
+                  Actions: () => <Text>Hello</Text>,
+                }}
                 onDrop={(e, data) => {
                   // data will get a files field if its external
                   console.info(e, data)
