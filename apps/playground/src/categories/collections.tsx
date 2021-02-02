@@ -4,6 +4,7 @@ import { ContextualMenuItem, List, useMenu, Text } from '@based/ui'
 import { randomText, randomIcon } from './util'
 import { Grid } from '@based/ui/Components/Collection/Grid'
 import { Image } from '@based/ui/Components/Collection/Grid/Image'
+import { Tabs } from '@based/ui/Components/Collection/Tabs'
 
 const profilePic = 'https://scx2.b-cdn.net/gfx/news/hires/2019/2-forest.jpg'
 const randomDate = () => {
@@ -227,6 +228,42 @@ export default {
               />
             </div>
           )
+        },
+      ],
+    },
+    {
+      name: 'Tabs',
+      category: 'misc',
+      Component: Tabs,
+      props: [
+        {
+          active: 6,
+          tabs: [
+            {
+              title: { en: 'Fun' },
+            },
+            {
+              title: { en: 'Snurfels' },
+            },
+            {
+              title: { en: 'Flurp' },
+            },
+            {
+              title: { en: 'Schlomodomo' },
+            },
+            {
+              title: { en: 'Setturs' },
+            },
+            {
+              title: { en: 'SchlomoSnur' },
+            },
+            {
+              title: { en: 'Plappa' },
+            },
+          ],
+          onChange: (tab) => {
+            console.info(tab)
+          },
         },
       ],
     },
