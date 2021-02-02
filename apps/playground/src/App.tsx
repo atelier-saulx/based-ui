@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useColor, useTheme } from '@based/theme'
 import categories from './categories'
-import { Overlay, UploadIndicator, Input, ForceUpdater } from '@based/ui'
+import { Overlay, UploadIndicator, Input } from '@based/ui'
 import { Preloader } from '@based/ui/Components/Preloader'
 import { useLanguage } from '@based/text'
 import Actions from './Actions'
@@ -25,52 +25,49 @@ const App = () => {
   if (!loaded) {
     setTimeout(() => {
       setLoaded(true)
-    }, 2e3)
+    }, 200)
   }
 
   return (
-    <ForceUpdater refs={[lang, themeid]}>
-      <Preloader loading={!loaded}>
-        <UploadIndicator>
+    <Preloader refs={[lang, themeid]} loading={!loaded}>
+      <UploadIndicator>
+        <div
+          style={{
+            padding: '15px',
+            marginBottom: '15px',
+          }}
+        >
           <div
             style={{
-              padding: '15px',
-              marginBottom: '15px',
+              paddingBottom: 20,
+              marginBottom: 20,
+              borderBottom:
+                '1px solid ' + useColor({ color: 'foreground', opacity: 0.15 }),
             }}
           >
-            <div
-              style={{
-                paddingBottom: 20,
-                marginBottom: 20,
-                borderBottom:
-                  '1px solid ' +
-                  useColor({ color: 'foreground', opacity: 0.15 }),
+            <Input
+              type="search"
+              placeholder="Filter categories"
+              border
+              value={window.location.hash.slice(1)}
+              onChange={(value) => {
+                window.location.hash = String(value)
+                setFilter(String(value))
               }}
-            >
-              <Input
-                type="search"
-                placeholder="Filter categories"
-                border
-                value={window.location.hash.slice(1)}
-                onChange={(value) => {
-                  window.location.hash = String(value)
-                  setFilter(String(value))
-                }}
-              />
-              <Actions />
-            </div>
-            {categories
-              .filter((c) => {
-                return !filter || c.name.indexOf(filter) !== -1
-              })
-              .map((c) => {
-                return <Category key={c.name} category={c} />
-              })}
+            />
+            <Actions />
           </div>
-          <Overlay />
-        </UploadIndicator>
-      </Preloader>
-    </ForceUpdater>
+          {categories
+            .filter((c) => {
+              return !filter || c.name.indexOf(filter) !== -1
+            })
+            .map((c) => {
+              return <Category key={c.name} category={c} />
+            })}
+        </div>
+        <Overlay />
+      </UploadIndicator>
+    </Preloader>
   )
 }
 

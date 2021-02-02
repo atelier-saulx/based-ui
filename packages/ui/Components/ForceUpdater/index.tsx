@@ -15,7 +15,6 @@ const ForceUpdater: FunctionComponent<ForceUpdateProps> = ({
     toggle()
     global.requestAnimationFrame(toggle)
   }, refs)
-
   return <>{v ? null : children}</>
 }
 

@@ -1,10 +1,45 @@
-import React, { useState, useEffect } from 'react'
+import React, {
+  useState,
+  useEffect,
+  FunctionComponent,
+  useReducer,
+} from 'react'
 import { useColor } from '@based/theme'
 import { Loader } from '../Loader/Loader'
 
-export const Preloader = ({ loading = false, children }) => {
+export type PreloadProps = {
+  refs?: any[]
+  loading: boolean
+}
+const reducer = (x) => !x
+
+export const Preloader: FunctionComponent<PreloadProps> = ({
+  loading = false,
+  refs = [],
+  children,
+}) => {
+  const [sw, setSw] = useState(false)
   const [fontLoaded, setFontLoaded] = useState(false)
   const [remove, setRemove] = useState(false)
+  const [v, toggle] = useReducer(reducer, null)
+
+  if (refs.length) {
+    useEffect(() => {
+      setRemove(false)
+      setSw(true)
+      toggle()
+      global.requestAnimationFrame(toggle)
+      setTimeout(() => {
+        setSw(false)
+      }, 10)
+      const timer = setTimeout(() => {
+        setRemove(true)
+      }, 750)
+      return () => {
+        clearTimeout(timer)
+      }
+    }, refs)
+  }
 
   useEffect(() => {
     let frame = global.requestAnimationFrame(() => {
@@ -22,14 +57,14 @@ export const Preloader = ({ loading = false, children }) => {
     return () => {
       global.cancelAnimationFrame(frame)
     }
-  })
+  }, [])
 
   useEffect(() => {
     let timer: ReturnType<typeof setTimeout>
     if (fontLoaded && loading === false) {
       timer = setTimeout(() => {
         setRemove(true)
-      }, 500)
+      }, 750)
     }
     return () => {
       clearTimeout(timer)
@@ -38,7 +73,7 @@ export const Preloader = ({ loading = false, children }) => {
 
   return (
     <>
-      {children}
+      {v ? null : children}
       {remove ? null : (
         <div
           style={{
@@ -46,7 +81,7 @@ export const Preloader = ({ loading = false, children }) => {
             top: 0,
             bottom: 0,
             left: 0,
-            opacity: fontLoaded && !loading ? 0 : 1,
+            opacity: fontLoaded && !loading && !sw ? 0 : 1,
             transition: 'opacity 0.75s',
             right: 0,
             backgroundColor: useColor({ color: 'background' }),
