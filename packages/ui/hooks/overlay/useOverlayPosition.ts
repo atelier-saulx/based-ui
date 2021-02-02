@@ -79,21 +79,11 @@ const maxXCalculation: MaxMinCalculation = (x, elem, align, _rect, pos) => {
     w = pos.width
   }
   const maxW = global.innerWidth - 30
-
   if (align === 'flex-end') {
     const diff = pos.containerWidth - w
-
-    console.log(diff, x)
-
     if (x + diff < 15) {
       x = -1 * diff + 15
     }
-
-    // const actualW = -1 * diff + pos.containerWidth
-    // if (x + actualW > maxW) {
-    //   const over = x + actualW - maxW
-    //   x = x - over + 12.5
-    // }
   } else if (align === 'center') {
     const diff = pos.containerWidth - w
     if (x + diff < 15) {
