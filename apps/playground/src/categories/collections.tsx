@@ -144,7 +144,7 @@ export default {
                 header={{
                   label: 'List with img',
                   icon: 'NewFlow',
-                  Actions: () => <Text>Hello</Text>,
+                  Actions: () => <Text weight="medium">Action</Text>,
                 }}
                 onDrop={(e, data) => {
                   // data will get a files field if its external
