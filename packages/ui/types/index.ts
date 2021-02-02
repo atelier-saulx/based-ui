@@ -1,6 +1,12 @@
 import { TextValue } from '@based/text'
 import { SyntheticEvent } from 'react'
 
+export type File = {
+  content: any
+  mime: string
+  name: string
+}
+
 export type Data<T = {}> = T & {
   data: any
   index?: number

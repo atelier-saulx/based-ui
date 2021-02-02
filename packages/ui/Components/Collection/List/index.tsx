@@ -28,7 +28,7 @@ import {
 } from '../../../hooks/useSelect'
 import useDragScroll from '../../../hooks/drag/useDragScroll'
 import useOptions from '../../../hooks/events/useContextualMenu'
-import { DataEventHandler, Data, ExportData } from '../../../types'
+import { DataEventHandler, Data, ExportData, File } from '../../../types'
 import { TextValue } from '@based/text'
 
 const OrderedListContext = createContext(null)
@@ -84,14 +84,15 @@ const ListItem = ({ index, data: { items, context }, style: itemStyle }) => {
     useCallback(
       (e, { files, data }) => {
         if (onDrop) {
-          if (data) {
-            const oldIndex = data.index
-            const itemData = items[oldIndex]
+          if (data && data.length) {
+            const oldIndex = data[0].index
             const newIndex = index > oldIndex ? index - 1 : index
-            onDrop(e, { ...itemData, index: newIndex, previousIndex: oldIndex })
+            onDrop(e, {
+              targetIndex: newIndex || index,
+              data,
+            })
           } else if (files) {
-            // and add an import
-            console.log(files)
+            onDrop(e, { files, targetIndex: index })
           }
         }
       },
@@ -280,7 +281,7 @@ export type ListProps = {
   forceActive?: boolean // what is this?
   exportData?: ExportData<ListDataProps>
   onOptions?: DataEventHandler<ListDataProps> // select options
-  onDrop?: DataEventHandler<ListDataProps> // i think this is an order change - if this is not there dont allow order change
+  onDrop?: DataEventHandler<ListDataProps | { files: File[] }> // i think this is an order change - if this is not there dont allow order change
   onClick?: DataEventHandler<ListDataProps> // on click on the item
   paddingRight?: number
   paddingLeft?: number

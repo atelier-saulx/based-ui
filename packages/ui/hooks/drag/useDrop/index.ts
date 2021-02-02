@@ -5,14 +5,16 @@ import {
   DragEventHandler,
   DragEvent,
 } from 'react'
-import readFiles, { File } from './readFiles'
-import { Data } from '../../../types'
+import { getSelection } from '../../useSelect'
+import readFiles from './readFiles'
+import { Data, File } from '../../../types'
+import { deepEqual } from '@saulx/utils'
 
 const preventDefault = (e) => e.preventDefault()
 
 type DropEventHandler = (
   e: DragEvent,
-  parsedData: { files: File[]; data?: Data }
+  parsedData: { files?: File[]; data?: Data[] }
 ) => void
 
 type DropEvents = {
@@ -66,14 +68,27 @@ const useDrop = (
           if (props.validate(e)) {
             ref.current = 0
             setDragOver(false)
-            let data = e.dataTransfer.getData('application/based')
-            if (data) {
-              data = JSON.parse(data)
+
+            const dx = e.dataTransfer.getData('application/based')
+            let d: Data
+            let data: Data[]
+
+            if (dx) {
+              d = JSON.parse(dx)
+              const s = getSelection()
+
+              const useSelection = s.find((ds) => deepEqual(ds.data, d.data))
+
+              if (useSelection) {
+                // @ts-ignore
+                data = [s]
+              } else {
+                data = [d]
+              }
             }
             if (props.readFiles) {
               readFiles(e.dataTransfer).then((files) => {
                 if (data) {
-                  // @ts-ignore
                   onDrop(e, { files, data })
                 } else {
                   onDrop(e, { files })
@@ -81,7 +96,6 @@ const useDrop = (
               })
             } else {
               if (data) {
-                // @ts-ignore
                 onDrop(e, { data, files: [] })
               } else {
                 onDrop(e, { files: [] })

@@ -1,4 +1,5 @@
 import csvtojson from 'csvtojson'
+import { File } from '../../../types'
 
 const isBinary = (str) => /(image)|(video)|(bin)/.test(str)
 
@@ -39,12 +40,6 @@ async function readFile(file): Promise<File> {
     })
     reader.readAsDataURL(file)
   })
-}
-
-export type File = {
-  content: any
-  mime: string
-  name: string
 }
 
 export default async (dataTransfer: DataTransfer): Promise<File[]> => {
