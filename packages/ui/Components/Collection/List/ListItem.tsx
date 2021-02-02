@@ -7,8 +7,23 @@ import { useColor } from '@based/theme'
 import useDrag from '../../../hooks/drag/useDrag'
 import useDrop from '../../../hooks/drag/useDrop'
 import { useSelect, useClick } from '../../../hooks/useSelect'
-import useOptions from '../../../hooks/events/useContextualMenu'
+import useContextualMenu from '../../../hooks/events/useContextualMenu'
 import { ListDataProps } from './types'
+
+const Img = ({ src, size }) => {
+  return (
+    <div
+      style={{
+        width: size,
+        height: size,
+        backgroundImage: `url(${src})`,
+        backgroundSize: 'cover',
+        borderRadius: 4,
+        border: '1px solid ' + useColor({ color: 'divider' }),
+      }}
+    />
+  )
+}
 
 const ListItem = ({ index, data: { items, context }, style: itemStyle }) => {
   const {
@@ -134,7 +149,7 @@ const ListItem = ({ index, data: { items, context }, style: itemStyle }) => {
       <div
         ref={ref}
         style={{
-          height: 48,
+          height: 48 + (itemData.info ? 15 : 0),
           opacity: isDragging ? 0.5 : 1,
           alignItems: 'center',
           display: 'flex',
@@ -169,7 +184,7 @@ const ListItem = ({ index, data: { items, context }, style: itemStyle }) => {
               }
             : undefined,
           contextualMenu
-            ? useOptions(
+            ? useContextualMenu(
                 useCallback(
                   (e) => {
                     onOptions(e, itemData)
@@ -180,14 +195,32 @@ const ListItem = ({ index, data: { items, context }, style: itemStyle }) => {
             : undefined
         )}
       >
-        {Icon ? <Icon {...itemData.icon} /> : null}
+        {itemData.img ? (
+          <Img src={itemData.img} size={24 + (itemData.info ? 15 : 0)} />
+        ) : Icon ? (
+          <Icon {...itemData.icon} />
+        ) : null}
         <div
           style={{
             overflow: 'hidden',
             marginLeft: 15,
           }}
         >
-          <Text weight="medium">{itemData.title}</Text>
+          <Text weight="medium" singleLine>
+            {itemData.title}
+          </Text>
+          {itemData.info ? (
+            <Text
+              singleLine
+              weight="regular"
+              color={{ color: 'foreground', tone: 3 }}
+              style={{
+                marginTop: -4,
+              }}
+            >
+              {itemData.info}
+            </Text>
+          ) : null}
         </div>
         <div
           style={{
@@ -196,19 +229,25 @@ const ListItem = ({ index, data: { items, context }, style: itemStyle }) => {
             justifyContent: 'flex-end',
           }}
         >
-          <Drag
-            style={{
-              opacity: isHover ? 0.4 : 0,
-              transition: 'opacity 0.15s',
-              cursor: 'grab',
-            }}
-            color={{ color: 'foreground' }}
-          />
+          {onOptions ? null : (
+            <Drag
+              style={{
+                opacity: isHover ? 0.4 : 0,
+                transition: 'opacity 0.15s',
+                cursor: 'grab',
+              }}
+              color={{ color: 'foreground' }}
+            />
+          )}
           {onOptions ? (
             <OptionsIcon
               color={{ color: 'foreground' }}
               onClick={useCallback((e) => onOptions(e, itemData), [itemData])}
-              style={{ width: 35, paddingLeft: 7.5 }}
+              style={{
+                width: 35,
+                paddingLeft: 7.5,
+                opacity: isHover ? 0.5 : 0,
+              }}
             />
           ) : null}
         </div>

@@ -24,9 +24,10 @@ import useHover from '../../hooks/events/useHover'
 import Shared from './Shared'
 import { removeOverlay } from './index'
 import { GenericOverlayProps } from './GenericOverlay'
+import { TextValue } from '@based/text'
 
 export type NextProps = {
-  label?: string
+  label?: TextValue
 }
 
 const Next: FunctionComponent<NextProps> = ({ label, children }) => {
@@ -73,7 +74,7 @@ const Next: FunctionComponent<NextProps> = ({ label, children }) => {
 
 export type ContextualMenuItemProps = {
   icon?: IconName
-  label?: string
+  label?: TextValue
   onClick?: (
     e: Event | SyntheticEvent,
     selectionProps?: PropsWithChildren<any>
@@ -185,6 +186,7 @@ export const Menu: FunctionComponent<GenericOverlayProps> = (initialProps) => {
     maxY,
     maxX,
   })
+
   const ctx = useContext(OverlayContext)
 
   useEffect(() => {

@@ -24,6 +24,6 @@ export type ListProps = {
   paddingTop?: number
   paddingBottom?: number
   activeId?: string | number
-  contextualMenu?: any // TODO: type a function to pass to useMenu - make this better
+  contextualMenu?: boolean
   optionsIcon?: IconName
 }

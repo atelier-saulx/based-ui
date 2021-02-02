@@ -29,7 +29,7 @@ export const Preloader = ({ loading = false, children }) => {
     if (fontLoaded && loading === false) {
       timer = setTimeout(() => {
         setRemove(true)
-      }, 1e3)
+      }, 500)
     }
     return () => {
       clearTimeout(timer)

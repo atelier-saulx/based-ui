@@ -97,7 +97,7 @@ export const List = (props: ListProps) => {
                   itemCount={items.length}
                   height={height - (hasHeader ? 27 + 20 : 0)}
                   itemData={{ items, context }}
-                  itemSize={48}
+                  itemSize={48 + (items[0] && 'info' in items[0] ? 15 : 0)}
                   {...useDragScroll(true)}
                 >
                   {ListItem}
