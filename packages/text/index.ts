@@ -1,5 +1,18 @@
 import { Language } from './types'
 import { useReducer, useEffect } from 'react'
+import parseDate, { DateFormat } from './dateString'
+import parseNumber, { NumberFormat } from './numberString'
+
+export type TextValueFormat = {
+  value: TextValueSingle
+  format:
+    | DateFormat
+    | NumberFormat
+    | 'capitalize'
+    | 'uppercase'
+    | 'lowercase'
+    | 'first-word'
+}
 
 export { Language }
 
@@ -10,7 +23,9 @@ type Value = undefined | (string | number) | (string | number)[]
 
 export type TextValueSingle = Value | Partial<Record<Language, Value>>
 
-export type TextValue = TextValueSingle | TextValueSingle[]
+export type TextValue =
+  | (TextValueFormat | TextValueSingle)
+  | (TextValueFormat | TextValueSingle)[]
 
 const listeners: Set<(lang: Language) => void> = new Set()
 
@@ -39,12 +54,6 @@ export const updateLanguage = (language: Language) => {
   })
 }
 
-// my need to swap the app against deeper contexts...
-// make a util for that (force update component)
-
-// for example
-// useForceUpdate(App, [lang, theme])
-
 export const useLanguage = (language?: Language) => {
   if (fromDefault) {
     if (language) {
@@ -63,6 +72,57 @@ export const useLanguage = (language?: Language) => {
   }, [])
 }
 
+function isFormat(value: any): value is TextValueFormat {
+  return (
+    typeof value === 'string' ||
+    typeof value === 'number' ||
+    (typeof value === 'object' &&
+      !('$$typeof' in value) &&
+      'format' in value &&
+      'value' in value)
+  )
+}
+
+const formatText = (
+  { format, value }: TextValueFormat,
+  language: Language = lang
+): string | number => {
+  let str: string | number = ''
+  if (typeof value === 'object') {
+    // @ts-ignore
+    str = getTextValue(value, language)
+  } else {
+    str = value
+  }
+
+  if (typeof str === 'string') {
+    if (format === 'capitalize') {
+      return str[0].toUpperCase() + str.slice(1)
+    } else if (format === 'uppercase') {
+      return str.toUpperCase()
+    } else if (format === 'lowercase') {
+      return str.toLowerCase()
+    } else if (format === 'first-word') {
+      return str.split(' ')[0]
+    }
+  }
+
+  if (
+    format === 'date' ||
+    format === 'date-time' ||
+    format === 'date-time-human' ||
+    format === 'time' ||
+    format === 'time-precise'
+  ) {
+    return parseDate(str, format)
+  } else if (format === 'number-human' || format === 'number-short') {
+    return parseNumber(str, format)
+  }
+
+  // @ts-ignore
+  return str
+}
+
 export function getTextValue(
   value: TextValue,
   language: Language = lang
@@ -74,9 +134,11 @@ export function getTextValue(
     })
   }
   if (typeof value === 'object' && !('$$typeof' in value)) {
-    // dont include react children
-
-    return value[language] || value.en
+    if (isFormat(value)) {
+      return formatText(value, language)
+    } else {
+      return value[language] || value.en
+    }
   }
   return value
 }

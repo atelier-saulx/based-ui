@@ -75,6 +75,16 @@ export default {
           weight: 'semibold',
           children: randomText,
         },
+        {
+          weight: 'semibold',
+          children: [
+            'hello',
+            { en: ' snurk' },
+            { format: 'date-time-human', value: Date.now() },
+            ' ',
+            { format: 'uppercase', value: { en: 'drol' } },
+          ],
+        },
       ],
     },
     {
