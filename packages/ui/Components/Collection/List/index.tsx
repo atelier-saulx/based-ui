@@ -1,4 +1,4 @@
-import React, { forwardRef, createContext, useEffect } from 'react'
+import React, { forwardRef, useEffect } from 'react'
 import { FixedSizeList } from 'react-window'
 import AutoSizer from 'react-virtualized-auto-sizer'
 import { Header } from './Header'
@@ -8,9 +8,6 @@ import { ListItem } from './ListItem'
 import { ListProps } from './types'
 import { useColor } from '@based/theme'
 import { Footer } from './Footer'
-
-const ListContext = createContext(null)
-ListContext.displayName = 'ListContext'
 
 const mem = {}
 
@@ -73,59 +70,57 @@ export const List = (props: ListProps) => {
 
         return (
           <SelectableCollection items={items}>
-            <ListContext.Provider value={context}>
-              <>
-                {hasHeader ? (
-                  <Header
-                    framed={framed}
-                    width={width}
-                    {...header}
-                    paddingRight={paddingRight}
-                    paddingLeft={paddingLeft}
-                    items={items}
-                  />
-                ) : null}
-                <FixedSizeList
+            <>
+              {hasHeader ? (
+                <Header
+                  framed={framed}
                   width={width}
-                  style={{
-                    paddingTop,
-                    paddingBottom,
-                    borderBottomLeftRadius: framed && !footer ? 4 : null,
-                    borderBottomRightRadius: framed && !footer ? 4 : null,
-                    borderLeft: framed
+                  {...header}
+                  paddingRight={paddingRight}
+                  paddingLeft={paddingLeft}
+                  items={items}
+                />
+              ) : null}
+              <FixedSizeList
+                width={width}
+                style={{
+                  paddingTop,
+                  paddingBottom,
+                  borderBottomLeftRadius: framed && !footer ? 4 : null,
+                  borderBottomRightRadius: framed && !footer ? 4 : null,
+                  borderLeft: framed
+                    ? '1px solid ' + useColor({ color: 'divider' })
+                    : null,
+                  borderRight: framed
+                    ? '1px solid ' + useColor({ color: 'divider' })
+                    : null,
+                  borderBottom:
+                    framed && !footer
                       ? '1px solid ' + useColor({ color: 'divider' })
                       : null,
-                    borderRight: framed
-                      ? '1px solid ' + useColor({ color: 'divider' })
-                      : null,
-                    borderBottom:
-                      framed && !footer
-                        ? '1px solid ' + useColor({ color: 'divider' })
-                        : null,
-                  }}
-                  innerElementType={
-                    paddingTop || paddingBottom
-                      ? getElementType(paddingTop, paddingBottom)
-                      : null
-                  }
-                  itemCount={items.length}
-                  height={height - (hasHeader ? 48 : 0) - (footer ? 48 : 0)}
-                  itemData={{ items, context }}
-                  itemSize={48 + (items[0] && 'info' in items[0] ? 15 : 0)}
-                  {...useDragScroll(true)}
-                >
-                  {ListItem}
-                </FixedSizeList>
-                {footer ? (
-                  <Footer
-                    {...footer}
-                    items={items}
-                    width={width}
-                    framed={framed}
-                  />
-                ) : null}
-              </>
-            </ListContext.Provider>
+                }}
+                innerElementType={
+                  paddingTop || paddingBottom
+                    ? getElementType(paddingTop, paddingBottom)
+                    : null
+                }
+                itemCount={items.length}
+                height={height - (hasHeader ? 48 : 0) - (footer ? 48 : 0)}
+                itemData={{ items, context }}
+                itemSize={48 + (items[0] && 'info' in items[0] ? 15 : 0)}
+                {...useDragScroll(true)}
+              >
+                {ListItem}
+              </FixedSizeList>
+              {footer ? (
+                <Footer
+                  {...footer}
+                  items={items}
+                  width={width}
+                  framed={framed}
+                />
+              ) : null}
+            </>
           </SelectableCollection>
         )
       }}

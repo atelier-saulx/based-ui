@@ -64,7 +64,6 @@ const ListItem = ({ index, data: { items, context }, style: itemStyle }) => {
     actionIcon,
     onAction,
     optionsIcon,
-    framed,
     contextualMenu,
     onDrop,
     paddingRight = 0,
