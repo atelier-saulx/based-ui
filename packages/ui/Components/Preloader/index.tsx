@@ -31,10 +31,10 @@ export const Preloader: FunctionComponent<PreloadProps> = ({
       global.requestAnimationFrame(toggle)
       setTimeout(() => {
         setSw(false)
-      }, 10)
+      }, 200)
       const timer = setTimeout(() => {
         setRemove(true)
-      }, 750)
+      }, 1050)
       return () => {
         clearTimeout(timer)
       }

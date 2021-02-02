@@ -45,6 +45,7 @@ export default (
         <OverlayContext.Provider value={ctx}>
           <Dropdown
             value={value}
+            // @ts-ignore
             target={e.currentTarget}
             items={items}
             onChange={(option, index) => {
@@ -66,10 +67,10 @@ export default (
                 )
                 ctx.current.update({ ...ctx.current.props, value })
               } else {
-                onSelect(option, index)
-                ctx.current.update({ ...ctx.current.props, value: option })
                 ctx.current.timer = setTimeout(() => {
                   removeOverlay(dropdown)
+                  ctx.current.update({ ...ctx.current.props, value: option })
+                  onSelect(option, index)
                 }, 200)
               }
             }}
