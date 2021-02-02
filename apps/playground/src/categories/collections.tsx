@@ -94,6 +94,18 @@ export default {
             >
               <List
                 header="List"
+                Options={({ isHover }) => {
+                  return (
+                    <div
+                      style={{
+                        width: 20,
+                        background: isHover ? 'red' : 'yellow',
+                        borderRadius: 20,
+                        height: 20,
+                      }}
+                    />
+                  )
+                }}
                 items={listData}
                 activeId={0}
                 onClick={(data, index) => {
@@ -111,18 +123,22 @@ export default {
               }}
             >
               <List
-                optionsIcon="logic"
-                onOptions={useMenu((e, data) => {
+                actionIcon="logic"
+                onAction={() => {
+                  console.log('x')
+                }}
+                onOptions={useMenu((props) => {
                   return (
                     <ContextualMenuItem
                       label="Yesh"
                       icon="NewFlow"
                       onClick={() => {
-                        global.alert('ok')
+                        console.info(props)
                       }}
                     />
                   )
                 })}
+                optionsIcon="More"
                 contextualMenu
                 header="List with img"
                 onDrop={(e, data) => {

@@ -1,7 +1,8 @@
-import { IconName, IconStyleProps } from '@based/icons'
+import { Icon, IconName, IconStyleProps } from '@based/icons'
 import { DataEventHandler, Data, ExportData, File } from '../../../types'
 import { TextValue } from '@based/text'
 import { Img } from '../types'
+import { ComponentType } from 'react'
 
 export type ListDataProps = {
   icon?: IconStyleProps & { name: IconName }
@@ -26,4 +27,7 @@ export type ListProps = {
   activeId?: string | number
   contextualMenu?: boolean
   optionsIcon?: IconName
+  Options?: ComponentType
+  actionIcon?: IconName
+  onAction?: DataEventHandler<ListDataProps>
 }

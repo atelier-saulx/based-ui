@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { Text } from '../../Text'
 import useHover from '../../../hooks/events/useHover'
 import useMultipleEvents from '../../../hooks/events/useMultipleEvents'
@@ -25,11 +25,44 @@ const Img = ({ src, size }) => {
   )
 }
 
+const Action = ({ icon, onClick, isHover }) => {
+  const [clicky, setClicky] = useState(false)
+  const ref = useRef<any>()
+  useEffect(() => {
+    return () => {
+      clearTimeout(ref.current)
+    }
+  }, [])
+  const ActionIcon = iconFromString(icon)
+  return (
+    <div
+      style={{
+        marginLeft: 16,
+        opacity: isHover ? 0.75 : 0,
+        transition: 'transform 0.15s',
+        transform: clicky ? 'scale(1.3)' : 'scale(1)',
+      }}
+      onClick={(e) => {
+        setClicky(true)
+        ref.current = setTimeout(() => {
+          setClicky(false)
+        }, 150)
+        onClick(e)
+      }}
+    >
+      <ActionIcon />
+    </div>
+  )
+}
+
 const ListItem = ({ index, data: { items, context }, style: itemStyle }) => {
   const {
     onClick,
     activeId,
     onOptions,
+    Options,
+    actionIcon,
+    onAction,
     optionsIcon,
     contextualMenu,
     onDrop,
@@ -222,6 +255,21 @@ const ListItem = ({ index, data: { items, context }, style: itemStyle }) => {
             </Text>
           ) : null}
         </div>
+        {actionIcon ? (
+          <Action
+            isHover={isHover}
+            icon={actionIcon}
+            onClick={useCallback(
+              (e) => {
+                e.stopPropagation()
+                if (onAction) {
+                  onAction(e, itemData)
+                }
+              },
+              [itemData]
+            )}
+          />
+        ) : null}
         <div
           style={{
             flexGrow: 1,
@@ -229,7 +277,7 @@ const ListItem = ({ index, data: { items, context }, style: itemStyle }) => {
             justifyContent: 'flex-end',
           }}
         >
-          {onOptions ? null : (
+          {onOptions || Options ? null : (
             <Drag
               style={{
                 opacity: isHover ? 0.4 : 0,
@@ -241,13 +289,31 @@ const ListItem = ({ index, data: { items, context }, style: itemStyle }) => {
           )}
           {onOptions ? (
             <OptionsIcon
-              color={{ color: 'foreground' }}
-              onClick={useCallback((e) => onOptions(e, itemData), [itemData])}
+              color={{ color: 'foreground', opacity: isHover ? 0.5 : 0 }}
+              onClick={useCallback(
+                (e) => {
+                  e.stopPropagation()
+                  onOptions(e, itemData)
+                },
+                [itemData]
+              )}
               style={{
                 width: 35,
                 paddingLeft: 7.5,
-                opacity: isHover ? 0.5 : 0,
               }}
+            />
+          ) : null}
+          {Options ? (
+            <Options
+              isHover={isHover}
+              isDragging={isDragging}
+              isDragOver={isDragOver}
+              isSelected={isSelected}
+              isActive={isActive}
+              onOptions={onOptions}
+              onClick={onClick}
+              data={itemData}
+              items={items}
             />
           ) : null}
         </div>
