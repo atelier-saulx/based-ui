@@ -73,6 +73,7 @@ export default () => {
             updateLanguage(v.value)
           }
         }}
+        filter
         value={{ value: getLanguage() }}
         items={langs.map((v) => {
           return { children: v.name, value: v.code }

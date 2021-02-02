@@ -3,6 +3,7 @@ import React, {
   FunctionComponent,
   PropsWithChildren,
   ReactNode,
+  useState,
 } from 'react'
 import useOverlayPosition, {
   PositionPropsFn,
@@ -13,9 +14,11 @@ import { Checked, iconFromString, IconName, IconProps } from '@based/icons'
 import { Text } from '../Text'
 import useHover from '../../hooks/events/useHover'
 import Shared from './Shared'
-import { TextValue, isTextValue } from '@based/text'
+import { TextValue, isTextValue, getStringValue } from '@based/text'
 import { Data, OnValueChange } from '../../types'
 import { deepEqual } from '@saulx/utils'
+import { Input } from '../Input/Text'
+import { getSelection } from '../../hooks/useSelect'
 
 export type DropdownOption = {
   icon?: IconName
@@ -130,6 +133,7 @@ export type DropdownProps = {
   items: DropdownOption[]
   onChange: OnValueChange<DropdownOption>
   value?: DropdownOption | DropdownOption[]
+  filter?: boolean
 }
 
 export const dropdownOptionIsEqual = (
@@ -142,20 +146,55 @@ export const dropdownOptionIsEqual = (
   )
 }
 
+const filterFunction = (v: DropdownOption, filterValue: string): boolean => {
+  if (getStringValue(v.value).toLowerCase().indexOf(filterValue) !== -1) {
+    return true
+  }
+  if (
+    isTextValue(v.children) &&
+    getStringValue(v.children).toLowerCase().indexOf(filterValue) !== -1
+  ) {
+    return true
+  }
+  return false
+}
+
 export const Dropdown: FunctionComponent<PositionPropsFn & DropdownProps> = (
   initialProps
 ) => {
   const props = useOverlayProps<PositionPropsFn & DropdownProps>(initialProps)
-  const { align, value, onChange, items } = props
+  const { align, value, onChange, items, filter } = props
+  const [filterValue, setFilter] = useState<string>()
   const [elementRef, position] = useOverlayPosition(props)
+
+  const minWidth =
+    position && position.elementRect && position.elementRect.width
+
   return (
     <Shared
       width={typeof props.width !== 'function' ? props.width : null}
       position={position}
       align={align}
       ref={elementRef}
+      style={{
+        minWidth: filterValue ? minWidth : null,
+      }}
     >
-      {items.map((option, index) => {
+      {filter ? (
+        <Input
+          type="search"
+          onChange={(v) => {
+            setFilter(v ? String(v) : '')
+          }}
+          noBorder
+          placeholder="Filter"
+        />
+      ) : null}
+
+      {(filterValue
+        ? items.filter((v) => filterFunction(v, filterValue))
+        : items
+      ).map((option, index) => {
         return (
           <Option
             key={index}

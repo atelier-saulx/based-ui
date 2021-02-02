@@ -27,7 +27,7 @@ export default (
   items: DropdownOption[],
   onSelect: OnSelect,
   value?: DropdownOption | DropdownOption[] | undefined,
-  props: PositionProps & { multi?: boolean } = {},
+  props: PositionProps & { multi?: boolean; filter?: boolean } = {},
   handler?: () => () => void
 ): DataEventHandler => {
   const ctx = createOverlayContextRef({
@@ -44,6 +44,7 @@ export default (
       const dropdown = (
         <OverlayContext.Provider value={ctx}>
           <Dropdown
+            filter={props.filter}
             value={value}
             // @ts-ignore
             target={e.currentTarget}
@@ -67,11 +68,9 @@ export default (
                 )
                 ctx.current.update({ ...ctx.current.props, value })
               } else {
-                ctx.current.timer = setTimeout(() => {
-                  removeOverlay(dropdown)
-                  ctx.current.update({ ...ctx.current.props, value: option })
-                  onSelect(option, index)
-                }, 200)
+                removeOverlay(dropdown)
+                ctx.current.update({ ...ctx.current.props, value: option })
+                onSelect(option, index)
               }
             }}
             {...props}
