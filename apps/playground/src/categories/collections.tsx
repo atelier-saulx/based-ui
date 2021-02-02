@@ -2,6 +2,7 @@ import React from 'React'
 import RenderComponents from '../RenderComponents'
 import { List } from '@based/ui'
 import { randomText, randomIcon } from './util'
+import { Grid } from '@based/ui/Components/Collection/Grid'
 
 const profilePic = 'https://scx2.b-cdn.net/gfx/news/hires/2019/2-forest.jpg'
 const randomDate = (start, end) => {
@@ -79,6 +80,45 @@ export default {
                 header="List"
                 items={listData}
                 activeId={0}
+                onClick={(data, index) => {
+                  console.info(data, index)
+                }}
+              />
+            </div>
+          )
+        },
+      ],
+    },
+    {
+      name: 'Grid',
+      category: 'misc',
+      Component: Grid,
+      props: [
+        () => {
+          return (
+            <div
+              style={{
+                height: 400,
+              }}
+            >
+              <Grid
+                exportData={async (data) => {
+                  return {
+                    file: {
+                      name: `snurpel-index-${data.index}.csv`,
+                      mime: 'text/csv',
+                      value: data.data,
+                    },
+                    text: data.title,
+                  }
+                }}
+                onDrop={(e, data) => {
+                  // data will get a files field if its external
+                  console.info(e, data)
+                }}
+                header="My Grid"
+                items={listData}
+                activeId={2}
                 onClick={(data, index) => {
                   console.info(data, index)
                 }}

@@ -1,0 +1,222 @@
+import React, { useCallback, useEffect, useRef } from 'react'
+import { Text } from '../../Text'
+import useHover from '../../../hooks/events/useHover'
+import useMultipleEvents from '../../../hooks/events/useMultipleEvents'
+import { Settings, Drag, iconFromString } from '@based/icons'
+import { useColor } from '@based/theme'
+import useDrag from '../../../hooks/drag/useDrag'
+import useDrop from '../../../hooks/drag/useDrop'
+import { useSelect, useClick } from '../../../hooks/useSelect'
+import useOptions from '../../../hooks/events/useContextualMenu'
+import { GridDataProps } from './types'
+
+export const GridItem = ({
+  index: rowIndex,
+  data: { items, context },
+  style: itemStyle,
+}) => {
+  const {
+    onClick,
+    activeId,
+    onOptions,
+    optionsIcon,
+    contextualMenu,
+    onDrop,
+    paddingRight = 0,
+    paddingLeft = 0,
+    paddingTop = 0,
+    exportData,
+  } = context
+
+  const style = {
+    height: 48,
+    paddingLeft: paddingLeft,
+    paddingRight: paddingRight,
+  }
+
+  const x = Object.assign(style, itemStyle)
+  x.top = `${parseFloat(x.top) + paddingTop}px`
+
+  const ref = useRef<any>()
+
+  const itemData = items[rowIndex]
+
+  if (exportData && itemData) {
+    itemData.exportData = exportData
+  }
+
+  if (!itemData.index) {
+    itemData.index = rowIndex
+  }
+
+  const isActive = activeId === itemData.id
+  const [hover, isHover] = useHover()
+  const [drop, isDragOver] = useDrop(
+    useCallback(
+      (e, { files, data }) => {
+        if (onDrop) {
+          if (data && data.length) {
+            const oldIndex = data[0].index
+            const newIndex = rowIndex > oldIndex ? rowIndex - 1 : rowIndex
+            onDrop(e, {
+              targetIndex: newIndex || rowIndex,
+              data,
+            })
+          } else if (files) {
+            onDrop(e, { files, targetIndex: rowIndex })
+          }
+        }
+      },
+      [rowIndex, items]
+    ),
+    { readFiles: true }
+  )
+  const [drag, isDragging] = useDrag<GridDataProps>(itemData, ref)
+  const [select, isSelected] = useSelect(itemData)
+
+  if (onDrop) {
+    useEffect(() => {
+      // match if it is itself..?
+      if (isDragOver) {
+        if (!ref.current || !ref.current.dragLayerActive) {
+          const el = ref.current
+          const p = el.parentNode
+          const holder = p.parentNode
+          let foundP = false
+          holder.isDrop = el
+          for (let i = 0; i < holder.children.length; i++) {
+            const c = holder.children[i]
+            if (c === p) {
+              foundP = true
+            }
+            if (!foundP) {
+              c.children[1].style.transform = 'translate3d(0px, 0px, 0px)'
+            } else {
+              c.children[1].style.transform = 'translate3d(0px, 40px, 0px)'
+            }
+          }
+          ref.current.dragLayerActive = true
+        }
+      } else if (ref.current && ref.current.dragLayerActive) {
+        ref.current.dragLayerActive = false
+        const el = ref.current
+        const p = el.parentNode
+        const holder = p.parentNode
+        if (holder.isDrop === el) {
+          for (let i = 0; i < holder.children.length; i++) {
+            const c = holder.children[i]
+            c.children[1].style.transform = 'translate3d(0px, 0px, 0px)'
+          }
+          holder.isDrop = false
+        }
+      }
+    }, [isDragOver, onDrop])
+  }
+
+  const OptionsIcon = optionsIcon ? iconFromString(optionsIcon) : Settings
+
+  const Icon = itemData.icon ? iconFromString(itemData.icon.name) : null
+
+  return (
+    <div style={x} {...drop}>
+      {onDrop ? (
+        <div
+          style={{
+            position: 'absolute',
+            left: 0,
+            top: 23,
+            pointerEvents: 'none',
+            opacity: isDragOver ? 1 : 0,
+            transition: 'opacity 0.2s',
+            width: '100%',
+            borderTop:
+              // TODO: should be tone instead of opacity?
+              '2px solid ' + useColor({ color: 'primary' }),
+          }}
+        />
+      ) : null}
+      <div
+        ref={ref}
+        style={{
+          height: 48,
+          opacity: isDragging ? 0.5 : 1,
+          alignItems: 'center',
+          display: 'flex',
+          cursor: 'pointer',
+          transition: 'border 0.1s, background-color 0.15s, transform 0.2s',
+          borderLeft: isActive
+            ? `2px solid ` + useColor({ color: 'primary' })
+            : null,
+          borderBottom: '1px solid ' + useColor({ color: 'divider' }),
+          padding: 15,
+          backgroundColor: isSelected
+            ? useColor({
+                color: 'background',
+                tone: 3,
+              })
+            : isHover
+            ? useColor({ color: 'background', tone: 2 })
+            : null,
+        }}
+        {...useMultipleEvents(
+          drag,
+          select,
+          hover,
+          onClick
+            ? {
+                onClick: useClick(
+                  (e) => {
+                    onClick(e, itemData)
+                  },
+                  [onClick, itemData]
+                ),
+              }
+            : undefined,
+          contextualMenu
+            ? useOptions(
+                useCallback(
+                  (e) => {
+                    onOptions(e, itemData)
+                  },
+                  [onOptions, itemData]
+                )
+              )
+            : undefined
+        )}
+      >
+        {Icon ? <Icon {...itemData.icon} /> : null}
+        <div
+          style={{
+            overflow: 'hidden',
+            marginLeft: 15,
+          }}
+        >
+          <Text weight="medium">{itemData.title}</Text>
+        </div>
+        <div
+          style={{
+            flexGrow: 1,
+            display: 'flex',
+            justifyContent: 'flex-end',
+          }}
+        >
+          <Drag
+            style={{
+              opacity: isHover ? 0.4 : 0,
+              transition: 'opacity 0.15s',
+              cursor: 'grab',
+            }}
+            color={{ color: 'foreground' }}
+          />
+          {onOptions ? (
+            <OptionsIcon
+              color={{ color: 'foreground' }}
+              onClick={useCallback((e) => onOptions(e, itemData), [itemData])}
+              style={{ width: 35, paddingLeft: 7.5 }}
+            />
+          ) : null}
+        </div>
+      </div>
+    </div>
+  )
+}

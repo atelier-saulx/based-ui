@@ -18,12 +18,14 @@ const App = () => {
 
   const [filter, setFilter] = useState(window.location.hash.slice(1))
 
-  const [loaded, setLoaded] = useState(false)
-  if (!loaded) {
-    setTimeout(() => {
-      setLoaded(true)
-    }, 2e3)
-  }
+  const loaded = true
+  // TODO: Should it keep the fake preload?
+  // const [loaded, setLoaded] = useState(false)
+  // if (!loaded) {
+  //   setTimeout(() => {
+  //     setLoaded(true)
+  //   }, 2e3)
+  // }
 
   return (
     <Preloader loading={!loaded}>
