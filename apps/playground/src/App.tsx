@@ -29,8 +29,8 @@ const App = () => {
   }
 
   return (
-    <Preloader loading={!loaded}>
-      <ForceUpdater refs={[lang, themeid]}>
+    <ForceUpdater refs={[lang, themeid]}>
+      <Preloader loading={!loaded}>
         <UploadIndicator>
           <div
             style={{
@@ -69,8 +69,8 @@ const App = () => {
           </div>
           <Overlay />
         </UploadIndicator>
-      </ForceUpdater>
-    </Preloader>
+      </Preloader>
+    </ForceUpdater>
   )
 }
 

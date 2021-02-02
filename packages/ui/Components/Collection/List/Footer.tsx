@@ -54,6 +54,8 @@ const Footer: FunctionComponent<FooterProps> = ({
           />
         ) : null}
         <Text
+          singleLine
+          noSelect
           color={{ color: 'foreground', tone: isHover ? 1 : 3 }}
           weight="semibold"
         >

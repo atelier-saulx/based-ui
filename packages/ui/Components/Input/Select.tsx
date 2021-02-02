@@ -70,7 +70,6 @@ export const Select: FunctionComponent<SelectInputProps> = ({
       onClick={useDropdown(
         items,
         (value, index) => {
-          console.log(index)
           if (multi) {
             if (index !== undefined) {
               update(value, index)
@@ -84,7 +83,7 @@ export const Select: FunctionComponent<SelectInputProps> = ({
         stateValue,
         {
           multi,
-          align: 'flex-end',
+          // align: 'flex-end',
           x: ({ left }) => left - 15,
           y: ({ top }) => top + 15,
         },

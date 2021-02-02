@@ -57,7 +57,11 @@ const Option: FunctionComponent<OptionProps> = (props) => {
 
   if (!body) {
     body = isActive ? (
-      <div>
+      <div
+        style={{
+          position: 'relative',
+        }}
+      >
         <Text
           singleLine
           noSelect
