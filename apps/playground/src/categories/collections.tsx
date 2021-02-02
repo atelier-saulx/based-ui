@@ -88,7 +88,7 @@ export default {
           return (
             <div
               style={{
-                height: 200,
+                height: 400,
               }}
             >
               <List

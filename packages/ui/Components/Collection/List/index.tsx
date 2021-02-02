@@ -58,20 +58,12 @@ export const List = (props: ListProps) => {
   return (
     <AutoSizer>
       {({ height, width }) => {
-        const hasHeader = !!header
-        const context: ListProps & { hasHeader: boolean } = {
-          ...props,
-          hasHeader,
-        }
-
-        if (onClick) {
-          context.onClick = onClick
-        }
+        const context = props
 
         return (
           <SelectableCollection items={items}>
             <>
-              {hasHeader ? (
+              {header ? (
                 <Header
                   framed={framed}
                   width={width}
@@ -105,7 +97,7 @@ export const List = (props: ListProps) => {
                     : null
                 }
                 itemCount={items.length}
-                height={height - (hasHeader ? 48 : 0) - (footer ? 48 : 0)}
+                height={height - (header ? 48 : 0) - (footer ? 48 : 0)}
                 itemData={{ items, context }}
                 itemSize={48 + (items[0] && 'info' in items[0] ? 15 : 0)}
                 {...useDragScroll(true)}
