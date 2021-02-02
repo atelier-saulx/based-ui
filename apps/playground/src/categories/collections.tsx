@@ -20,8 +20,10 @@ const listData = []
 for (let i = 0; i < 50; i++) {
   listData.push({
     data: {
+      id: i,
       text: 'Item ' + i,
       type: randomIcon(),
+      flurpen: randomText(),
     },
     title: 'Item ' + i,
     icon: {
@@ -31,11 +33,6 @@ for (let i = 0; i < 50; i++) {
     id: i,
   })
 }
-
-const wait = () =>
-  new Promise((r) => {
-    setTimeout(r, 100)
-  })
 
 export default {
   name: 'collections',
@@ -65,6 +62,7 @@ export default {
                   }
                 }}
                 onDrop={(e, data) => {
+                  // data will get a files field if its external
                   console.info(e, data)
                 }}
                 header="My OrderedList"

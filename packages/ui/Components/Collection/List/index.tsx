@@ -82,19 +82,22 @@ const ListItem = ({ index, data: { items, context }, style: itemStyle }) => {
   const [hover, isHover] = useHover()
   const [drop, isDragOver] = useDrop(
     useCallback(
-      (e: any) => {
+      (e: any, files) => {
         if (onDrop) {
-          // add import as well....
-          const oldIndex = JSON.parse(
-            e.dataTransfer.getData('application/based')
-          ).index
-          const itemData = items[oldIndex]
-          const newIndex = index > oldIndex ? index - 1 : index
-          onDrop(e, { ...itemData, index: newIndex, previousIndex: oldIndex })
+          const fromBased = e.dataTransfer.getData('application/based')
+          if (fromBased) {
+            const oldIndex = JSON.parse(fromBased).index
+            const itemData = items[oldIndex]
+            const newIndex = index > oldIndex ? index - 1 : index
+            onDrop(e, { ...itemData, index: newIndex, previousIndex: oldIndex })
+          } else if (files) {
+            console.log(files)
+          }
         }
       },
       [index, items]
-    )
+    ),
+    { readFiles: true }
   )
   const [drag, isDragging] = useDrag<ListDataProps>(itemData, ref)
   const [select, isSelected] = useSelect(itemData)
