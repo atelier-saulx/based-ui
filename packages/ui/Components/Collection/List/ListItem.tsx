@@ -8,6 +8,7 @@ import useDrag from '../../../hooks/drag/useDrag'
 import useDrop from '../../../hooks/drag/useDrop'
 import { useSelect, useClick } from '../../../hooks/useSelect'
 import useOptions from '../../../hooks/events/useContextualMenu'
+import { ListDataProps } from './types'
 
 const ListItem = ({ index, data: { items, context }, style: itemStyle }) => {
   const {
