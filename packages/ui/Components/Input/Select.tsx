@@ -21,6 +21,7 @@ type SelectInputProps = {
   border?: boolean
   autoFocus?: boolean
   onChange: OnSelect
+  filter?: boolean
   validator?: Validator
   icon?: IconName
   identifier?: any
@@ -35,6 +36,7 @@ export const Select: FunctionComponent<SelectInputProps> = ({
   onChange,
   items = [],
   icon,
+  filter,
   color = { color: 'background', tone: 1 },
   multi,
   border,
@@ -70,7 +72,6 @@ export const Select: FunctionComponent<SelectInputProps> = ({
       onClick={useDropdown(
         items,
         (value, index) => {
-          console.log(index)
           if (multi) {
             if (index !== undefined) {
               update(value, index)
@@ -84,6 +85,7 @@ export const Select: FunctionComponent<SelectInputProps> = ({
         stateValue,
         {
           multi,
+          filter,
           align: 'flex-end',
           x: ({ left }) => left - 15,
           y: ({ top }) => top + 15,

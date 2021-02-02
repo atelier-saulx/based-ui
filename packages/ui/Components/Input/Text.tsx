@@ -33,6 +33,7 @@ type InputProps = {
   placeholder?: TextValue
   errorText?: TextValue
   helperText?: TextValue
+  noBorder?: boolean
   border?: boolean
   autoFocus?: boolean
   onChange: OnValueChange<string | number | undefined>
@@ -50,6 +51,7 @@ export const Input: FunctionComponent<InputProps> = ({
   value = '',
   onChange,
   autoFocus,
+  noBorder,
   border,
   icon,
   color = { color: 'background', tone: 1 },
@@ -132,8 +134,8 @@ export const Input: FunctionComponent<InputProps> = ({
       style={{
         position: 'relative',
 
-        paddingLeft: isFocus ? 11 : 12,
-        paddingRight: isFocus ? 11 : 12,
+        paddingLeft: !noBorder && isFocus ? 11 : 12,
+        paddingRight: !noBorder && isFocus ? 11 : 12,
         display: 'flex',
         alignItems: 'center',
         borderRadius: '4px',
@@ -142,7 +144,9 @@ export const Input: FunctionComponent<InputProps> = ({
           color: color.color,
           tone: isFocus || isHover ? color.tone + 1 : 1,
         }),
-        border: isFocus
+        border: noBorder
+          ? null
+          : isFocus
           ? '2px solid ' +
             (isWrong
               ? useColor({ color: 'error' })
@@ -190,8 +194,8 @@ export const Input: FunctionComponent<InputProps> = ({
         style={{
           width: '100%',
           paddingLeft: Icon ? 6.5 : 0,
-          paddingTop: isFocus ? 6.5 : 7.5,
-          paddingBottom: isFocus ? 6.5 : 7.5,
+          paddingTop: isFocus && !noBorder ? 6.5 : 7.5,
+          paddingBottom: isFocus && !noBorder ? 6.5 : 7.5,
           appearance: 'none',
           fontSize: '15px',
           lineHeight: '24px',

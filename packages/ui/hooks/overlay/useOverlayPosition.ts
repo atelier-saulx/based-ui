@@ -55,12 +55,14 @@ export type Position = {
 
 const selectSelf: SelectTarget = (t) => t
 
+// @ts-ignore
 const xCalculation: PosCalculation = ({ left, x }) => {
-  return left || x
+  return left === undefined ? x : left
 }
 
+// @ts-ignore
 const yCalculation: PosCalculation = ({ top, height, y }) =>
-  (top || y) + height + 10
+  (top === undefined ? y : top) + height + 10
 
 const maxYCalculation: MaxMinCalculation = (y, elem) => {
   const maxH = global.innerHeight - 30
@@ -77,8 +79,12 @@ const maxXCalculation: MaxMinCalculation = (x, elem, align, _rect, pos) => {
     w = pos.width
   }
   const maxW = global.innerWidth - 30
-
-  if (align === 'center') {
+  if (align === 'flex-end') {
+    const diff = pos.containerWidth - w
+    if (x + diff < 15) {
+      x = -1 * diff + 15
+    }
+  } else if (align === 'center') {
     const diff = pos.containerWidth - w
     if (x + diff < 15) {
       x = (-1 * diff) / 2 + 15

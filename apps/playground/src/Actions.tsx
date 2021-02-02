@@ -1,16 +1,18 @@
 import React from 'react'
-import { Button } from '@based/ui'
+import { Button, Select } from '@based/ui'
 import { updateTheme, Colors, getTheme } from '@based/theme'
+import { getLanguage, updateLanguage } from '@based/text'
+import langs from '@based/text/languages'
 
 const original = getTheme()
 const differentTheme: Colors = {
   error: [[255, 0, 0]],
   primary: [
-    [198, 0, 238],
-    [87, 60, 210],
-    [66, 100, 160],
+    [248, 142, 255],
+    [230, 214, 252],
+    [191, 149, 251],
   ],
-  divider: [[238, 236, 241]],
+  divider: [[50, 56, 41]],
   primaryAccent: [
     [248, 242, 255],
     [230, 214, 252],
@@ -19,13 +21,13 @@ const differentTheme: Colors = {
   secondary: [[217, 19, 174]],
   secondaryAccent: [[200, 200, 255]],
   background: [
-    [155, 100, 255],
+    [20, 20, 25],
     [246, 246, 246],
     [233, 233, 231],
     [228, 228, 228],
   ],
   foreground: [
-    [5, 24, 41],
+    [245, 244, 241],
     [92, 104, 115],
     [143, 142, 155],
     [163, 168, 172],
@@ -40,9 +42,11 @@ export default () => {
       style={{
         marginTop: 20,
         display: 'flex',
+        alignItems: 'center',
       }}
     >
       <Button
+        style={{ marginRight: 15 }}
         onClick={() => {
           if (x) {
             x = false
@@ -61,6 +65,20 @@ export default () => {
       >
         Switch Theme
       </Button>
+      <Select
+        border
+        onChange={(v) => {
+          if (!Array.isArray(v)) {
+            // @ts-ignore
+            updateLanguage(v.value)
+          }
+        }}
+        filter
+        value={{ value: getLanguage() }}
+        items={langs.map((v) => {
+          return { children: v.name, value: v.code }
+        })}
+      />
     </div>
   )
 }

@@ -46,6 +46,10 @@ const readLang = (lang: string): Language => {
   return language
 }
 
+export const getLanguage = (): Language => {
+  return lang
+}
+
 export const updateLanguage = (language: Language) => {
   fromDefault = false
   lang = language
@@ -70,6 +74,7 @@ export const useLanguage = (language?: Language) => {
       listeners.delete(update)
     }
   }, [])
+  return lang
 }
 
 function isFormat(value: any): value is TextValueFormat {
