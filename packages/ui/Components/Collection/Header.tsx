@@ -1,8 +1,21 @@
-import React, { FunctionComponent } from 'react'
-import { Text } from '../../Text'
-import { HeaderProps } from './types'
+import React, { ComponentType, FunctionComponent } from 'react'
+import { Text } from '../Text'
+import { ActionProps, ListDataProps } from './List/types'
 import { useColor } from '@based/theme'
-import { iconFromString } from '@based/icons'
+import { iconFromString, IconName } from '@based/icons'
+import { TextValue } from '@based/text'
+import { Data } from '../../types'
+
+export type HeaderProps<T = ListDataProps> = {
+  label?: TextValue
+  Actions?: ComponentType<ActionProps<T>>
+  framed?: boolean
+  paddingRight?: number
+  width?: number
+  icon?: IconName
+  paddingLeft?: number
+  items?: Data<T>[]
+}
 
 const Header: FunctionComponent<HeaderProps> = ({
   label,

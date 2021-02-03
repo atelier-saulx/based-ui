@@ -9,6 +9,7 @@ import {
 import { TextValue } from '@based/text'
 import { Img } from '../types'
 import { ComponentType } from 'react'
+import {HeaderProps} from './../Header'
 
 export type ListDataProps = {
   icon?: IconStyleProps & { name: IconName }
@@ -52,17 +53,6 @@ export type ListProps = {
 
 export type ActionProps<T = ListDataProps> = {
   items: Data<T>[]
-}
-
-export type HeaderProps<T = ListDataProps> = {
-  label?: TextValue
-  Actions?: ComponentType<ActionProps<T>>
-  framed?: boolean
-  paddingRight?: number
-  width?: number
-  icon?: IconName
-  paddingLeft?: number
-  items?: Data<T>[]
 }
 
 export type FooterProps<T = ListDataProps> = {

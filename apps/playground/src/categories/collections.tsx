@@ -263,7 +263,10 @@ export default {
                   // data will get a files field if its external
                   console.info(e, data)
                 }}
-                header="My Grid"
+                header={{
+                  label: 'My Grid',
+                  Actions: () => <Text weight="medium">Action</Text>,
+                }}
                 items={gridData}
                 activeId={2}
                 onClick={(data, index) => {

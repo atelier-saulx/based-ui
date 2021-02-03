@@ -18,6 +18,7 @@ import useMultipleEvents from '../../../hooks/events/useMultipleEvents'
 import useDragScroll from '../../../hooks/drag/useDragScroll'
 import useOptions from '../../../hooks/events/useContextualMenu'
 import { GridDataProps, GridProps } from './types'
+import { Header } from '../Header'
 
 const GridContext = createContext(null)
 GridContext.displayName = 'GridContext'
@@ -167,6 +168,10 @@ export const Grid = (props: GridProps) => {
     onOptions,
     draggable = false,
     optionsIcon,
+    header,
+    framed,
+    paddingRight,
+    paddingLeft,
   } = props
   return (
     <div
@@ -200,6 +205,16 @@ export const Grid = (props: GridProps) => {
           return (
             <SelectableCollection items={items}>
               <GridContext.Provider value={context}>
+                {header ? (
+                  <Header
+                    framed={framed}
+                    width={width}
+                    {...header}
+                    paddingRight={paddingRight}
+                    paddingLeft={paddingLeft}
+                    items={items}
+                  />
+                ) : null}
                 <FixedSizeGrid
                   width={width}
                   columnCount={context.columnCount}
