@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, forwardRef } from 'react'
 import { VariableSizeList } from 'react-window'
 import AutoSizer from 'react-virtualized-auto-sizer'
 import useDragScroll from '../../../hooks/drag/useDragScroll'
@@ -12,34 +12,72 @@ import useMultipleEvents from '../../../hooks/events/useMultipleEvents'
 import { FlowProps } from './types'
 import { useColor } from '@based/theme'
 
-const DragSeqLine = ({ index, width }) => {
-  const [dropSeq, isDragOverSeq] = useDrop(
-    useCallback((e, { files, data }) => {}, [index])
-  )
-  return (
-    <div
-      style={{
-        top: 0,
-        left: 0,
-        width,
-        position: 'absolute',
-        height: 35,
-      }}
-      // @ts-ignore
-      {...dropSeq}
-    >
+const mem = {}
+
+const getElementType = (paddingTop: number, paddingBottom: number) => {
+  const padding = paddingTop + paddingBottom
+  if (!(padding in mem)) {
+    mem[padding] = forwardRef<any>(({ style, ...rest }: any, ref) => {
+      return (
+        <div
+          ref={ref}
+          style={{
+            ...style,
+            height: `${parseFloat(style.height) + padding}px`,
+          }}
+          {...rest}
+        />
+      )
+    })
+  }
+  return mem[padding]
+}
+
+const DragSeqLine = ({ index, width, onDropSequence, context }) => {
+  if (onDropSequence) {
+    const [dropSeq, isDragOverSeq] = useDrop(
+      useCallback(
+        (e, { files, data }) => {
+          onDropSequence(e, {
+            targetIndex: index,
+            data,
+            files,
+          })
+        },
+        [index, onDropSequence]
+      )
+    )
+    return (
       <div
         style={{
-          pointerEvents: 'none',
-          marginTop: 16.5,
-          opacity: isDragOverSeq ? 1 : 0,
-          transition: 'opacity 0.2s',
-          width: '100%',
-          borderTop: '2px solid ' + useColor({ color: 'primary' }),
+          top: 0,
+          left: 0,
+          paddingLeft: context.paddingLeft || 5,
+          paddingRight: context.paddingRight || 5,
+          width:
+            width -
+            5 -
+            (context.paddingLeft || 5) -
+            (context.paddingRight || 5),
+          position: 'absolute',
+          height: 35,
         }}
-      />
-    </div>
-  )
+        // @ts-ignore
+        {...dropSeq}
+      >
+        <div
+          style={{
+            pointerEvents: 'none',
+            marginTop: 16.5,
+            opacity: isDragOverSeq ? 1 : 0,
+            transition: 'opacity 0.2s',
+            width: '100%',
+            borderTop: '2px solid ' + useColor({ color: 'primary' }),
+          }}
+        />
+      </div>
+    )
+  }
 }
 
 const Sequence = ({ style, data: { items, context, width }, index }) => {
@@ -50,6 +88,8 @@ const Sequence = ({ style, data: { items, context, width }, index }) => {
       <div
         style={{
           ...style,
+          paddingLeft: context.paddingLeft,
+          paddingRight: context.paddingRight,
           paddingBottom: 35,
         }}
       >
@@ -61,9 +101,18 @@ const Sequence = ({ style, data: { items, context, width }, index }) => {
     const [drop, isDragOver] = useDrop()
 
     let dropSeq, isDragOverSeq
-    if (index === 0) {
+    if (index === 0 && context.onDropSequence) {
       ;[dropSeq, isDragOverSeq] = useDrop(
-        useCallback((e, { files, data }) => {}, [index])
+        useCallback(
+          (e, { files, data }) => {
+            context.onDropSequence(e, {
+              targetIndex: -1,
+              data,
+              files,
+            })
+          },
+          [index, context.onDropSequence]
+        )
       )
     }
 
@@ -71,6 +120,8 @@ const Sequence = ({ style, data: { items, context, width }, index }) => {
       <div
         style={{
           ...style,
+          paddingLeft: context.paddingLeft,
+          paddingRight: context.paddingRight,
         }}
       >
         <div
@@ -88,14 +139,22 @@ const Sequence = ({ style, data: { items, context, width }, index }) => {
             {dropSeq ? (
               <div
                 style={{
-                  position: 'absolute',
-                  pointerEvents: 'none',
-                  opacity: isDragOverSeq ? 1 : 0,
-                  transition: 'opacity 0.2s',
-                  width: '100%',
-                  borderTop: '2px solid ' + useColor({ color: 'primary' }),
+                  position: 'relative',
+                  paddingLeft: context.paddingLeft || 5,
+                  paddingRight: context.paddingRight || 5,
                 }}
-              />
+              >
+                <div
+                  style={{
+                    position: 'absolute',
+                    pointerEvents: 'none',
+                    opacity: isDragOverSeq ? 1 : 0,
+                    transition: 'opacity 0.2s',
+                    width: '100%',
+                    borderTop: '2px solid ' + useColor({ color: 'primary' }),
+                  }}
+                />
+              </div>
             ) : null}
             <div
               style={{
@@ -162,7 +221,12 @@ const Sequence = ({ style, data: { items, context, width }, index }) => {
             position: 'relative',
           }}
         >
-          <DragSeqLine index={index} width={width} />
+          <DragSeqLine
+            onDropSequence={context.onDropSequence}
+            index={index}
+            context={context}
+            width={width}
+          />
         </div>
       </div>
     )
@@ -201,6 +265,11 @@ export const Flow = (props: FlowProps) => {
               paddingTop,
               paddingBottom,
             }}
+            innerElementType={
+              paddingTop || paddingBottom
+                ? getElementType(paddingTop, paddingBottom)
+                : null
+            }
             itemCount={itemsWithNew.length}
             height={height}
             itemData={{ items: itemsWithNew, context, width }}

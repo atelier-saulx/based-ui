@@ -5,6 +5,7 @@ import { randomText, randomIcon } from './util'
 import { Grid } from '@based/ui/Components/Collection/Grid'
 import { Image } from '@based/ui/Components/Collection/Grid/Image'
 import { Tabs } from '@based/ui/Components/Collection/Tabs'
+import { useColor } from '@based/theme'
 
 const profilePic = 'https://scx2.b-cdn.net/gfx/news/hires/2019/2-forest.jpg'
 const randomDate = () => {
@@ -96,14 +97,38 @@ export default {
                     id: 2,
                     items: listData.slice(0, 10),
                   },
+                  {
+                    title: 'my seq3',
+                    id: 3,
+                    items: listData.slice(10, 40),
+                  },
                 ]}
+                Options={({ isHover }) => {
+                  // with has logic
+                  return (
+                    <div
+                      style={{
+                        width: 20,
+                        background: isHover
+                          ? useColor({ color: 'primary' })
+                          : useColor({ color: 'background', tone: 4 }),
+                        borderRadius: 20,
+                        height: 20,
+                      }}
+                    />
+                  )
+                }}
+                paddingLeft={15}
+                paddingTop={15}
+                paddingBottom={15}
+                paddingRight={15}
                 onDrop={(e, data) => {
                   // data will get a files field if its external
-                  console.info(e, data)
+                  console.info('NORMAL', data)
                 }}
                 onDropSequence={(e, data) => {
                   // data will get a files field if its external
-                  console.info(e, data)
+                  console.info('SEQ', data)
                 }}
                 footer={{
                   label: 'New sequence',

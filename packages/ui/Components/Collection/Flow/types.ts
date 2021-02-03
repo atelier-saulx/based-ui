@@ -36,4 +36,20 @@ export type FlowProps = {
   onAction?: DataEventHandler<StepDataProps>
   footer: FooterProps
   stepFooter: FooterProps
+  exportData?: ExportData<ListDataProps>
+  exportDataSequence?: ExportData<ListDataProps>
+  onOptions?: DataEventHandler<ListDataProps> // select options
+  optionsIcon?: IconName
+  contextualMenu?: boolean
+  Options?: ComponentType<{
+    onClick?: DataEventHandler<ListDataProps>
+    isHover: boolean
+    isActive: boolean
+    isDragging: boolean
+    isDragOver: boolean
+    isSelected: boolean
+    items: Data<ListDataProps>[]
+    data: Data<ListDataProps>
+    onOptions?: DataEventHandler<ListDataProps>
+  }>
 }

@@ -33,9 +33,9 @@ export type ListProps = {
   paddingTop?: number
   paddingBottom?: number
   activeId?: string | number
-  contextualMenu?: boolean
   framed?: boolean
   optionsIcon?: IconName
+  contextualMenu?: boolean
   Options?: ComponentType<{
     onClick?: DataEventHandler<ListDataProps>
     isHover: boolean
