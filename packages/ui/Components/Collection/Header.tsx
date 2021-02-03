@@ -59,7 +59,9 @@ const Header: FunctionComponent<HeaderProps> = ({
             color={{ color: 'foreground' }}
           />
         ) : null}
-        <Text weight="semibold">{label}</Text>
+        <Text singleLine noSelect weight="semibold">
+          {label}
+        </Text>
       </div>
 
       <div

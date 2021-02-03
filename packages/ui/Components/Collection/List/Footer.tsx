@@ -16,6 +16,7 @@ const Footer: FunctionComponent<FooterProps> = ({
   label = { en: 'Add item' },
   onClick,
   items,
+  style,
 }) => {
   const Icon = icon ? iconFromString(icon) : null
   const [hover, isHover, isActive] = useHover()
@@ -41,7 +42,9 @@ const Footer: FunctionComponent<FooterProps> = ({
           ? useColor({ color: 'background', tone: 2 })
           : null,
         justifyContent: 'space-between',
+        ...style,
       }}
+      // @ts-ignore
       onClick={(e) => onClick(e, data || items)}
       {...hover}
     >

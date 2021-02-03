@@ -8,8 +8,8 @@ import {
 } from '../../../types'
 import { TextValue } from '@based/text'
 import { Img } from '../types'
-import { ComponentType } from 'react'
-import {HeaderProps} from './../Header'
+import { ComponentType, CSSProperties } from 'react'
+import { HeaderProps } from './../Header'
 
 export type ListDataProps = {
   icon?: IconStyleProps & { name: IconName }
@@ -61,9 +61,10 @@ export type FooterProps<T = ListDataProps> = {
   framed?: boolean
   data?: Data<T>
   paddingRight?: number
+  style?: CSSProperties
   width?: number
   icon?: IconName
   paddingLeft?: number
   items?: Data<T>[]
-  onClick: MultiDataEventHandler<ListDataProps>
+  onClick: MultiDataEventHandler<Data<T>> | DataEventHandler<Data<T>>
 }

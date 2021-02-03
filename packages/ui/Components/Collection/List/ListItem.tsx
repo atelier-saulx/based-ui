@@ -55,7 +55,12 @@ const Action = ({ icon, onClick, isHover }) => {
   )
 }
 
-const ListItem = ({ index, data: { items, context }, style: itemStyle }) => {
+const ListItem = ({
+  index,
+  data: { items, context },
+  style: itemStyle = undefined,
+  styleOverride,
+}) => {
   const {
     onClick,
     activeId,
@@ -120,7 +125,6 @@ const ListItem = ({ index, data: { items, context }, style: itemStyle }) => {
 
   if (onDrop) {
     useEffect(() => {
-      // match if it is itself..?
       if (isDragOver) {
         if (!ref.current || !ref.current.dragLayerActive) {
           const el = ref.current
@@ -162,7 +166,7 @@ const ListItem = ({ index, data: { items, context }, style: itemStyle }) => {
   const Icon = itemData.icon ? iconFromString(itemData.icon.name) : null
 
   return (
-    <div style={x} {...drop}>
+    <div style={styleOverride || x} {...drop}>
       {onDrop ? (
         <div
           style={{

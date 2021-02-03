@@ -57,7 +57,6 @@ const GridItemWrapped = ({
   const index = columnIndex + rowIndex * columnCount
   const itemData = items[index]
   const isActive = activeId === itemData.id
-  console.log({ isActive, activeId })
   const [hover, isHover] = useHover()
   const ref = useRef()
   const [drag] = draggable ? useDrag(itemData, ref) : [{}]
