@@ -342,6 +342,7 @@ export {
   icons,
   iconFromString,
   Add,
+  Up,
   Checked,
   ChevronLeft,
   ChevronRight,
