@@ -16,6 +16,7 @@ import DashboardSvg from './Components/Dashboard'
 import DateSvg from './Components/Date'
 import DeleteSvg from './Components/Delete'
 import DesktopSvg from './Components/Desktop'
+import UpSvg from './Components/Up'
 import DownSvg from './Components/Down'
 import DownThickSvg from './Components/DownThick'
 import DragSvg from './Components/Drag'
@@ -151,6 +152,7 @@ const wrapIcon = (
   }
 }
 
+const Up = wrapIcon(UpSvg)
 const Add = wrapIcon(AddSvg)
 const Checked = wrapIcon(CheckedSvg)
 const ChevronLeft = wrapIcon(ChevronLeftSvg)
@@ -214,6 +216,7 @@ const icons = {
   ChevronLeft,
   ChevronRight,
   Close,
+  Up,
   Collapse,
   Custom,
   Dashboard,
@@ -270,6 +273,7 @@ const icons = {
 export type IconName =
   | keyof typeof icons
   | 'add'
+  | 'up'
   | 'checked'
   | 'chevronLeft'
   | 'chevronRight'
