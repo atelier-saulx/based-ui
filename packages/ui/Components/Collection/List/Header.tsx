@@ -13,6 +13,7 @@ const Header: FunctionComponent<HeaderProps> = ({
   items,
   paddingLeft,
   paddingRight,
+  ...props
 }) => {
   const Icon = icon ? iconFromString(icon) : null
   return (
@@ -31,6 +32,7 @@ const Header: FunctionComponent<HeaderProps> = ({
         width,
         justifyContent: 'space-between',
       }}
+      {...props}
     >
       <div
         style={{
