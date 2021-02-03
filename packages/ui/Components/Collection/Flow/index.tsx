@@ -75,19 +75,21 @@ const Sequence = ({ style, data: { items, context }, index }) => {
               borderRight: '1px solid ' + useColor({ color: 'divider' }),
             }}
           >
-            {itemData.items.map((_data, index) => {
-              const s = {
-                position: 'relative',
-              }
-              return (
-                <ListItem
-                  key={index}
-                  data={{ items: itemData.items, context }}
-                  index={index}
-                  styleOverride={s}
-                />
-              )
-            })}
+            <SelectableCollection items={itemData.items}>
+              {itemData.items.map((_data, index) => {
+                const s = {
+                  position: 'relative',
+                }
+                return (
+                  <ListItem
+                    key={index}
+                    data={{ items: itemData.items, context }}
+                    index={index}
+                    styleOverride={s}
+                  />
+                )
+              })}
+            </SelectableCollection>
           </div>
           <Footer
             framed
@@ -134,31 +136,30 @@ export const Flow = (props: FlowProps) => {
       {({ height, width }) => {
         const context = props
         return (
-          <SelectableCollection items={itemsWithNew}>
-            <VariableSizeList
-              width={width}
-              style={{
-                paddingTop,
-                paddingBottom,
-              }}
-              itemCount={itemsWithNew.length}
-              height={height}
-              itemData={{ items: itemsWithNew, context }}
-              itemSize={(index) => {
-                const data = itemsWithNew[index]
-                if (data.newSequence) {
-                  return 48 + 35
-                }
-                const items = data.items
-                // need to correct for header and footer
-                // and margin
-                return items.length * 48 + 2 * 48 + 35
-              }}
-              {...useDragScroll(true)}
-            >
-              {Sequence}
-            </VariableSizeList>
-          </SelectableCollection>
+          <VariableSizeList
+            width={width}
+            style={{
+              paddingTop,
+              paddingBottom,
+            }}
+            itemCount={itemsWithNew.length}
+            height={height}
+            itemData={{ items: itemsWithNew, context }}
+            itemSize={(index) => {
+              const data = itemsWithNew[index]
+              if (data.newSequence) {
+                return 48 + 35
+              }
+              const items = data.items
+              // need to correct for header and footer
+              // and margin
+              // with img
+              return items.length * 48 + 2 * 48 + 35
+            }}
+            {...useDragScroll(true)}
+          >
+            {Sequence}
+          </VariableSizeList>
         )
       }}
     </AutoSizer>
