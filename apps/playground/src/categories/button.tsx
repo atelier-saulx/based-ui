@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'React'
-import { Title, Button, useOverlay } from '@based/ui'
+import React from 'React'
+import { Button, Switch } from '@based/ui'
 import RenderComponents from '../RenderComponents'
 import { randomIcon, randomTitle } from './util'
 
@@ -66,6 +66,20 @@ export default {
       category: 'button',
       Component: Button,
       props: genButtonProps(),
+    },
+    {
+      name: 'Switch',
+      Component: Switch,
+      props: [
+        {
+          value: true,
+          onChange: () => {},
+        },
+        {
+          value: false,
+          onChange: () => {},
+        },
+      ],
     },
   ],
 }

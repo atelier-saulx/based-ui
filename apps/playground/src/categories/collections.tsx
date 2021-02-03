@@ -120,7 +120,11 @@ export default {
                             top: 0,
                           }}
                         >
-                          <Jump items={[items[1], items[2]]} data={data} />
+                          <Jump
+                            isHover={isHover}
+                            items={[items[1], items[2]]}
+                            data={data}
+                          />
                         </div>
                       ) : null}
                     </div>
