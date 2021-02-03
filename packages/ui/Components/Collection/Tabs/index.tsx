@@ -63,18 +63,22 @@ export const Tabs = ({
 
   useEffect(() => {
     global.requestAnimationFrame(() => {
-      // TODO: ugly
-      const children = (ref.current || ({} as any)).childNodes
-      const tabSizes: TabSizes = []
-      const xTop = (ref.current || ({} as any)).getBoundingClientRect().x
-      for (let i = 0; i < children.length - 1; i++) {
-        const { x, width } = children[i].getBoundingClientRect()
-        tabSizes.push({
-          width,
-          x: x - xTop,
-        })
+      if (ref.current) {
+        const current = ref.current || ({} as any)
+        const children = current.childNodes
+        const tabSizes: TabSizes = []
+        const xTop =
+          current.getBoundingClientRect && current.getBoundingClientRect().x
+        for (let i = 0; i < children.length - 1; i++) {
+          const { x, width } = children[i].getBoundingClientRect()
+          tabSizes.push({
+            width,
+            x: x - xTop,
+          })
+        }
+        setTabsizes(tabSizes)
       }
-      setTabsizes(tabSizes)
+      // TODO: ugly
     })
   }, [tabs, ref.current])
 
