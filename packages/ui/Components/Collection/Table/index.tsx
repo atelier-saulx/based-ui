@@ -8,6 +8,14 @@ import TableRow from './TableRow'
 import Fields from './Fields'
 // make nice props
 
+// fields
+
+// data (format)
+
+// TextValue for parsing
+
+// many things the same as list
+
 export const Table = ({
   fields,
   data = [],
