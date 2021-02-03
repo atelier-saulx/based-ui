@@ -1,7 +1,7 @@
 import React, { forwardRef, useEffect } from 'react'
 import { FixedSizeList } from 'react-window'
 import AutoSizer from 'react-virtualized-auto-sizer'
-import { Header } from './Header'
+import { Header } from './../Header'
 import { SelectableCollection } from '../../../hooks/useSelect'
 import useDragScroll from '../../../hooks/drag/useDragScroll'
 import { ListItem } from './ListItem'

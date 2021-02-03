@@ -78,7 +78,6 @@ export const Tabs = ({
         }
         setTabsizes(tabSizes)
       }
-      // TODO: ugly
     })
   }, [tabs, ref.current])
 
