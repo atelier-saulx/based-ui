@@ -31,13 +31,9 @@ const DragSeqLine = ({ index, width, onDropSequence, context }) => {
         style={{
           top: 0,
           left: 0,
-          paddingLeft: context.paddingLeft || 5,
-          paddingRight: context.paddingRight || 5,
-          width:
-            width -
-            5 -
-            (context.paddingLeft || 5) -
-            (context.paddingRight || 5),
+          paddingLeft: 10,
+          paddingRight: 15,
+          width: width - context.paddingLeft - context.paddingRight,
           position: 'absolute',
           height: 35,
         }}

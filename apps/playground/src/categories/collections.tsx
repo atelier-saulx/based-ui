@@ -103,25 +103,43 @@ export default {
                     items: listData.slice(10, 40),
                   },
                 ]}
-                Options={({ isHover }) => {
-                  // with has logic
+                Options={({ isHover, data }) => {
                   return (
                     <div
                       style={{
-                        width: 20,
-                        background: isHover
-                          ? useColor({ color: 'primary' })
-                          : useColor({ color: 'background', tone: 4 }),
-                        borderRadius: 20,
-                        height: 20,
+                        width: 24,
+                        height: 24,
+                        position: 'relative',
                       }}
-                    />
+                    >
+                      <div
+                        style={{
+                          width: 24,
+                          background: isHover
+                            ? useColor({ color: 'primary' })
+                            : useColor({ color: 'background', tone: 4 }),
+                          borderRadius: 20,
+                          height: 24,
+                        }}
+                      />
+                      {data.id === 2 ? (
+                        <div
+                          style={{
+                            position: 'absolute',
+                            left: 50,
+                            top: 0,
+                          }}
+                        >
+                          <Text singleLine>YESH !</Text>
+                        </div>
+                      ) : null}
+                    </div>
                   )
                 }}
                 paddingLeft={30}
                 paddingTop={30}
                 paddingBottom={30}
-                paddingRight={30}
+                paddingRight={130}
                 onDrop={(e, data) => {
                   // data will get a files field if its external
                   console.info('NORMAL', data)
