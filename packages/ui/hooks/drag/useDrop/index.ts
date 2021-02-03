@@ -69,7 +69,6 @@ const useDrop = (
           if (ref2.current === e.nativeEvent) {
             // do nothing
           } else {
-            e.stopPropagation()
             e.preventDefault()
 
             const ev = e.nativeEvent
@@ -102,6 +101,7 @@ const useDrop = (
 
                 setDropLoading(true)
                 if (props.readFiles) {
+                  e.stopPropagation()
                   readFiles(e.dataTransfer).then((files) => {
                     if (data) {
                       p = onDrop(e, { files, data })
@@ -125,13 +125,14 @@ const useDrop = (
                     p = onDrop(e, { files: [] })
                   }
                   if (p instanceof Promise) {
+                    e.stopPropagation()
                     p.then((v) => {
                       setDropLoading(false)
                       t.dispatchEvent(ev)
                     })
                   } else {
                     setDropLoading(false)
-                    t.dispatchEvent(ev)
+                    // t.dispatchEvent(ev)
                   }
                 }
               }

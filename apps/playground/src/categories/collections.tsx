@@ -144,11 +144,8 @@ export default {
                 paddingBottom={30}
                 paddingRight={140}
                 onDrop={async (e, data) => {
-                  // data will get a files field if its external
-                  console.info('NORMAL', data)
-
+                  console.info(data)
                   await wait(1e3)
-                  console.log('yes')
                 }}
                 header={{
                   Actions: () => {
@@ -162,17 +159,21 @@ export default {
                     )
                   },
                 }}
-                onDropSequence={(e, data) => {
-                  // data will get a files field if its external
-                  console.info('SEQ', data)
+                onDropSequence={async (e, data) => {
+                  console.info('SEQ AREA', data)
+                  await wait(1e3)
                 }}
                 footer={{
                   label: 'New sequence',
-                  onClick: () => {},
+                  onClick: async (e, data) => {
+                    await wait(1e3)
+                  },
                 }}
                 stepFooter={{
                   label: 'New step',
-                  onClick: () => {},
+                  onClick: async (e, data) => {
+                    await wait(1e3)
+                  },
                 }}
                 onClick={(data, index) => {
                   console.info(data, index)

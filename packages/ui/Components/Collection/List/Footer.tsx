@@ -1,9 +1,10 @@
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, useCallback, useState } from 'react'
 import { Text } from '../../Text'
 import { FooterProps } from './types'
 import { useColor } from '@based/theme'
 import { iconFromString } from '@based/icons'
 import useHover from '../../../hooks/events/useHover'
+import { Loader } from '../../Loader/Loader'
 
 const Footer: FunctionComponent<FooterProps> = ({
   width,
@@ -20,7 +21,7 @@ const Footer: FunctionComponent<FooterProps> = ({
 }) => {
   const Icon = icon ? iconFromString(icon) : null
   const [hover, isHover, isActive] = useHover()
-
+  const [loading, setLoading] = useState(false)
   return (
     <div
       style={{
@@ -44,8 +45,21 @@ const Footer: FunctionComponent<FooterProps> = ({
         justifyContent: 'space-between',
         ...style,
       }}
-      // @ts-ignore
-      onClick={(e) => onClick(e, data || items)}
+      onClick={useCallback(
+        (e) => {
+          setLoading(true)
+          // @ts-ignore
+          const p = onClick(e, data || items)
+          if (p instanceof Promise) {
+            p.then((v) => {
+              setLoading(false)
+            })
+          } else {
+            setLoading(false)
+          }
+        },
+        [data, items, onClick]
+      )}
       {...hover}
     >
       <div
@@ -69,6 +83,7 @@ const Footer: FunctionComponent<FooterProps> = ({
           {label}
         </Text>
       </div>
+      {loading ? <Loader color={{ color: 'foreground', tone: 3 }} /> : null}
     </div>
   )
 }

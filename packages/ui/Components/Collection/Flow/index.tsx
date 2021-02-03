@@ -11,13 +11,14 @@ import useDrag from '../../../hooks/drag/useDrag'
 import useMultipleEvents from '../../../hooks/events/useMultipleEvents'
 import { FlowProps } from './types'
 import { useColor } from '@based/theme'
+import { Loader } from '../../Loader/Loader'
 
 const DragSeqLine = ({ index, width, onDropSequence, context }) => {
   if (onDropSequence) {
-    const [dropSeq, isDragOverSeq] = useDrop(
+    const [dropSeq, isDragOverSeq, isDropLoading] = useDrop(
       useCallback(
         (e, { files, data }) => {
-          onDropSequence(e, {
+          return onDropSequence(e, {
             targetIndex: index,
             data,
             files,
@@ -50,6 +51,22 @@ const DragSeqLine = ({ index, width, onDropSequence, context }) => {
             borderTop: '2px solid ' + useColor({ color: 'primary' }),
           }}
         />
+        {isDropLoading ? (
+          <div
+            style={{
+              position: 'absolute',
+              height: 0,
+              left: 0,
+              width: '100%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              top: 16,
+            }}
+          >
+            <Loader size={18} color={{ color: 'primary' }} />
+          </div>
+        ) : null}
       </div>
     )
   }
@@ -75,12 +92,12 @@ const Sequence = ({ style, data: { items, context, width }, index }) => {
     const [drag, isDragging] = useDrag<any>(itemData)
     const [drop, isDragOver] = useDrop()
 
-    let dropSeq, isDragOverSeq
+    let dropSeq, isDragOverSeq, isDropLoading
     if (index === 0 && context.onDropSequence) {
-      ;[dropSeq, isDragOverSeq] = useDrop(
+      ;[dropSeq, isDragOverSeq, isDropLoading] = useDrop(
         useCallback(
           (e, { files, data }) => {
-            context.onDropSequence(e, {
+            return context.onDropSequence(e, {
               targetIndex: -1,
               data,
               files,
@@ -130,6 +147,22 @@ const Sequence = ({ style, data: { items, context, width }, index }) => {
                     borderTop: '2px solid ' + useColor({ color: 'primary' }),
                   }}
                 />
+                {isDropLoading ? (
+                  <div
+                    style={{
+                      position: 'absolute',
+                      height: 0,
+                      left: 0,
+                      width: '100%',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      top: 0,
+                    }}
+                  >
+                    <Loader size={18} color={{ color: 'primary' }} />
+                  </div>
+                ) : null}
               </div>
             ) : null}
             <div
@@ -137,9 +170,10 @@ const Sequence = ({ style, data: { items, context, width }, index }) => {
                 opacity: isDragging ? 0.5 : 1,
                 height: 48,
                 transition: 'opacity 0.15s, transform 0.2s',
-                transform: isDragOverSeq
-                  ? 'translate3d(0px, 20px, 0px)'
-                  : 'translate3d(0px, 0px, 0px)',
+                transform:
+                  isDragOverSeq || isDropLoading
+                    ? 'translate3d(0px, 20px, 0px)'
+                    : 'translate3d(0px, 0px, 0px)',
               }}
             >
               <Header
@@ -152,9 +186,10 @@ const Sequence = ({ style, data: { items, context, width }, index }) => {
           </div>
           <div
             style={{
-              transform: isDragOverSeq
-                ? 'translate3d(0px, 20px, 0px)'
-                : 'translate3d(0px, 0px, 0px)',
+              transform:
+                isDragOverSeq || isDropLoading
+                  ? 'translate3d(0px, 20px, 0px)'
+                  : 'translate3d(0px, 0px, 0px)',
               transition: 'opacity 0.15s, transform 0.2s',
               borderLeft: '1px solid ' + useColor({ color: 'divider' }),
               borderRight: '1px solid ' + useColor({ color: 'divider' }),
@@ -186,11 +221,12 @@ const Sequence = ({ style, data: { items, context, width }, index }) => {
           style={{
             opacity: isDragOver ? 0 : 1,
             transition: 'opacity 0.15s, transform 0.2s',
-            transform: isDragOverSeq
-              ? 'translate3d(0px, 20px, 0px)'
-              : isDragOver
-              ? 'translate3d(0px, 40px, 0px)'
-              : 'translate3d(0px, 0px, 0px)',
+            transform:
+              isDragOverSeq || isDropLoading
+                ? 'translate3d(0px, 20px, 0px)'
+                : isDragOver
+                ? 'translate3d(0px, 40px, 0px)'
+                : 'translate3d(0px, 0px, 0px)',
           }}
         />
         <div
