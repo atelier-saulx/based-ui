@@ -16,12 +16,12 @@ export type Data<T = {}> = T & {
 export type DataEventHandler<T = {}> = (
   e: Event | SyntheticEvent,
   data?: Data<T>
-) => void
+) => void | Promise<void>
 
 export type MultiDataEventHandler<T = {}> = (
   e: Event | SyntheticEvent,
   data?: Data<T>[]
-) => void
+) => void | Promise<void>
 
 export type OnValueChange<T = any> = (value: T, index?: number) => void
 

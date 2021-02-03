@@ -12,6 +12,7 @@
     "@based/icons": "*",
     "lorem-ipsum": "^2.0.3",
     "jsonexport": "^3.2.0",
+    "@saulx/utils": "1.6.6",
     "csvtojson": "^2.0.10"
   },
   "scripts": {

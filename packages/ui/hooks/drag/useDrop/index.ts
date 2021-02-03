@@ -35,9 +35,12 @@ const defValidate = () => true
 const useDrop = (
   onDrop?: DropEventHandler,
   props: DropProps = {}
-): [DropEvents, boolean] => {
+): [DropEvents, boolean, boolean] => {
   const [isDragOver, setDragOver] = useState(false)
   const ref = useRef(null)
+  const ref2 = useRef(null)
+
+  const [isDropLoading, setDropLoading] = useState(false)
 
   if (!props.validate) {
     props.validate = defValidate
@@ -63,40 +66,73 @@ const useDrop = (
       onDragOver: preventDefault,
       onDrop: useCallback(
         (e) => {
-          e.preventDefault()
-          if (props.validate(e)) {
-            ref.current = 0
-            setDragOver(false)
-            if (onDrop) {
-              const dx = e.dataTransfer.getData('application/based')
-              let d: Data
-              let data: Data[]
-              if (dx) {
-                d = JSON.parse(dx)
-                const s = getSelection()
+          if (ref2.current === e.nativeEvent) {
+            // do nothing
+          } else {
+            e.stopPropagation()
+            e.preventDefault()
 
-                const useSelection = s.find((ds) => deepEqual(ds.data, d.data))
+            const ev = e.nativeEvent
+            ref2.current = ev
+            const t = e.target
 
-                if (useSelection) {
-                  data = s
-                  clearSelection()
-                } else {
-                  data = [d]
-                }
-              }
-              if (props.readFiles) {
-                readFiles(e.dataTransfer).then((files) => {
-                  if (data) {
-                    onDrop(e, { files, data })
+            if (props.validate(e)) {
+              ref.current = 0
+              setDragOver(false)
+              if (onDrop) {
+                const dx = e.dataTransfer.getData('application/based')
+                let d: Data
+                let data: Data[]
+                if (dx) {
+                  d = JSON.parse(dx)
+                  const s = getSelection()
+
+                  const useSelection = s.find((ds) =>
+                    deepEqual(ds.data, d.data)
+                  )
+
+                  if (useSelection) {
+                    data = s
+                    clearSelection()
                   } else {
-                    onDrop(e, { files })
+                    data = [d]
                   }
-                })
-              } else {
-                if (data) {
-                  onDrop(e, { data, files: [] })
+                }
+                let p
+
+                setDropLoading(true)
+                if (props.readFiles) {
+                  readFiles(e.dataTransfer).then((files) => {
+                    if (data) {
+                      p = onDrop(e, { files, data })
+                    } else {
+                      p = onDrop(e, { files })
+                    }
+                    if (p instanceof Promise) {
+                      p.then((v) => {
+                        setDropLoading(false)
+                        t.dispatchEvent(ev)
+                      })
+                    } else {
+                      setDropLoading(false)
+                      t.dispatchEvent(ev)
+                    }
+                  })
                 } else {
-                  onDrop(e, { files: [] })
+                  if (data) {
+                    p = onDrop(e, { data, files: [] })
+                  } else {
+                    p = onDrop(e, { files: [] })
+                  }
+                  if (p instanceof Promise) {
+                    p.then((v) => {
+                      setDropLoading(false)
+                      t.dispatchEvent(ev)
+                    })
+                  } else {
+                    setDropLoading(false)
+                    t.dispatchEvent(ev)
+                  }
                 }
               }
             }
@@ -106,6 +142,7 @@ const useDrop = (
       ),
     },
     isDragOver,
+    isDropLoading,
   ]
 }
 

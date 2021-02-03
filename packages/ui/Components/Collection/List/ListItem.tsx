@@ -9,6 +9,7 @@ import useDrop from '../../../hooks/drag/useDrop'
 import { useSelect, useClick } from '../../../hooks/useSelect'
 import useContextualMenu from '../../../hooks/events/useContextualMenu'
 import { ListDataProps } from './types'
+import { Loader } from '../../Loader/Loader'
 
 const Img = ({ src, size }) => {
   return (
@@ -100,19 +101,19 @@ const ListItem = ({
 
   const isActive = activeId === itemData.id
   const [hover, isHover] = useHover()
-  const [drop, isDragOver] = useDrop(
+  const [drop, isDragOver, isDropLoading] = useDrop(
     useCallback(
       (e, { files, data }) => {
         if (onDrop) {
           if (data && data.length) {
             const oldIndex = data[0].index
             const newIndex = index > oldIndex ? index - 1 : index
-            onDrop(e, {
+            return onDrop(e, {
               targetIndex: newIndex || index,
               data,
             })
           } else if (files) {
-            onDrop(e, { files, targetIndex: index })
+            return onDrop(e, { files, targetIndex: index })
           }
         }
       },
@@ -125,7 +126,7 @@ const ListItem = ({
 
   if (onDrop) {
     useEffect(() => {
-      if (isDragOver) {
+      if (isDragOver || isDropLoading) {
         if (!ref.current || !ref.current.dragLayerActive) {
           const el = ref.current
           const p = el.parentNode
@@ -158,7 +159,7 @@ const ListItem = ({
           holder.isDrop = false
         }
       }
-    }, [isDragOver, onDrop])
+    }, [isDragOver, onDrop, isDropLoading])
   }
 
   const OptionsIcon = optionsIcon ? iconFromString(optionsIcon) : Settings
@@ -168,18 +169,36 @@ const ListItem = ({
   return (
     <div style={styleOverride || x} {...drop}>
       {onDrop ? (
-        <div
-          style={{
-            position: 'absolute',
-            left: 0,
-            top: 23,
-            pointerEvents: 'none',
-            opacity: isDragOver ? 1 : 0,
-            transition: 'opacity 0.2s',
-            width: '100%',
-            borderTop: '2px solid ' + useColor({ color: 'primary' }),
-          }}
-        />
+        <div>
+          <div
+            style={{
+              position: 'absolute',
+              left: 0,
+              top: 23,
+              pointerEvents: 'none',
+              opacity: isDragOver ? 1 : 0,
+              transition: 'opacity 0.2s',
+              width: '100%',
+              borderTop: '2px solid ' + useColor({ color: 'primary' }),
+            }}
+          />
+          {isDropLoading ? (
+            <div
+              style={{
+                position: 'absolute',
+                height: 0,
+                left: 15,
+                width: '100%',
+                display: 'flex',
+                alignItems: 'center',
+                // justifyContent: 'center',
+                top: 23,
+              }}
+            >
+              <Loader color={{ color: 'primary' }} />
+            </div>
+          ) : null}
+        </div>
       ) : null}
       <div
         ref={ref}

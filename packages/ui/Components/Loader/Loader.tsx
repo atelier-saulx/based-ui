@@ -4,12 +4,12 @@ import React, {
   useEffect,
   useState,
 } from 'react'
-import { useColor, ColorKey } from '@based/theme'
+import { useColor, Color } from '@based/theme'
 
 type LoaderProps = {
   style?: CSSProperties
   size?: number
-  color?: ColorKey
+  color?: Color
   delay?: number
   fadeIn?: boolean
 }
@@ -17,11 +17,11 @@ type LoaderProps = {
 export const Loader: FunctionComponent<LoaderProps> = ({
   style,
   size = 20,
-  color = 'foreground',
+  color = { color: 'foreground' },
   delay = 0,
   fadeIn,
 }) => {
-  const stroke = useColor({ color })
+  const stroke = useColor(color)
 
   const [ready, setReady] = useState(!fadeIn && !delay)
   useEffect(() => {

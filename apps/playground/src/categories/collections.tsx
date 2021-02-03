@@ -13,6 +13,8 @@ import { randomText, randomIcon } from './util'
 import { Grid } from '@based/ui/Components/Collection/Grid'
 import { Image } from '@based/ui/Components/Collection/Grid/Image'
 import { Tabs } from '@based/ui/Components/Collection/Tabs'
+import WaitingScreen from '@based/icons/Components/WaitingScreen'
+import { wait } from '@saulx/utils'
 
 const profilePic = 'https://scx2.b-cdn.net/gfx/news/hires/2019/2-forest.jpg'
 const randomDate = () => {
@@ -141,9 +143,12 @@ export default {
                 paddingTop={30}
                 paddingBottom={30}
                 paddingRight={140}
-                onDrop={(e, data) => {
+                onDrop={async (e, data) => {
                   // data will get a files field if its external
                   console.info('NORMAL', data)
+
+                  await wait(1e3)
+                  console.log('yes')
                 }}
                 header={{
                   Actions: () => {
