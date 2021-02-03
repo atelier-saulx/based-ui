@@ -33,7 +33,7 @@ type DropProps = {
 const defValidate = () => true
 
 const useDrop = (
-  onDrop: DropEventHandler,
+  onDrop?: DropEventHandler,
   props: DropProps = {}
 ): [DropEvents, boolean] => {
   const [isDragOver, setDragOver] = useState(false)
@@ -63,42 +63,41 @@ const useDrop = (
       onDragOver: preventDefault,
       onDrop: useCallback(
         (e) => {
-          e.stopPropagation()
           e.preventDefault()
           if (props.validate(e)) {
             ref.current = 0
             setDragOver(false)
+            if (onDrop) {
+              const dx = e.dataTransfer.getData('application/based')
+              let d: Data
+              let data: Data[]
+              if (dx) {
+                d = JSON.parse(dx)
+                const s = getSelection()
 
-            const dx = e.dataTransfer.getData('application/based')
-            let d: Data
-            let data: Data[]
+                const useSelection = s.find((ds) => deepEqual(ds.data, d.data))
 
-            if (dx) {
-              d = JSON.parse(dx)
-              const s = getSelection()
-
-              const useSelection = s.find((ds) => deepEqual(ds.data, d.data))
-
-              if (useSelection) {
-                data = s
-                clearSelection()
-              } else {
-                data = [d]
-              }
-            }
-            if (props.readFiles) {
-              readFiles(e.dataTransfer).then((files) => {
-                if (data) {
-                  onDrop(e, { files, data })
+                if (useSelection) {
+                  data = s
+                  clearSelection()
                 } else {
-                  onDrop(e, { files })
+                  data = [d]
                 }
-              })
-            } else {
-              if (data) {
-                onDrop(e, { data, files: [] })
+              }
+              if (props.readFiles) {
+                readFiles(e.dataTransfer).then((files) => {
+                  if (data) {
+                    onDrop(e, { files, data })
+                  } else {
+                    onDrop(e, { files })
+                  }
+                })
               } else {
-                onDrop(e, { files: [] })
+                if (data) {
+                  onDrop(e, { data, files: [] })
+                } else {
+                  onDrop(e, { files: [] })
+                }
               }
             }
           }

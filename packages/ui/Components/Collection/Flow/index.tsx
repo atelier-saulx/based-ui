@@ -28,32 +28,16 @@ const Sequence = ({ style, data: { items, context }, index }) => {
     )
   } else {
     const [drag, isDragging] = useDrag<any>(itemData)
-    const [drop, isDragOver] = useDrop(
-      useCallback(
-        (e, { files, data }) => {
-          //   if (onDrop) {
-          //     if (data && data.length) {
-          //       const oldIndex = data[0].index
-          //       const newIndex = index > oldIndex ? index - 1 : index
-          //       onDrop(e, {
-          //         targetIndex: newIndex || index,
-          //         data,
-          //       })
-          //     } else if (files) {
-          //       onDrop(e, { files, targetIndex: index })
-          //     }
-          //   }
-        },
-        [index, items]
-      ),
-      { readFiles: true }
+    const [drop, isDragOver] = useDrop()
+
+    const [dropSeq, isDragOverSeq] = useDrop(
+      useCallback((e, { files, data }) => {}, [index, items])
     )
 
     return (
       <div
         style={{
           ...style,
-          paddingBottom: 35,
         }}
       >
         <div
@@ -62,6 +46,7 @@ const Sequence = ({ style, data: { items, context }, index }) => {
           }}
           {...useMultipleEvents(drop)}
         >
+          {/* @ts-ignore */}
           <div {...drag}>
             <Header
               framed
@@ -105,6 +90,7 @@ const Sequence = ({ style, data: { items, context }, index }) => {
             }}
           />
         </div>
+        <div>THIS IS THE LINE</div>
       </div>
     )
   }
