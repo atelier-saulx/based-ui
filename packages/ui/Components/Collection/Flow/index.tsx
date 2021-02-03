@@ -12,27 +12,6 @@ import useMultipleEvents from '../../../hooks/events/useMultipleEvents'
 import { FlowProps } from './types'
 import { useColor } from '@based/theme'
 
-const mem = {}
-
-const getElementType = (paddingTop: number, paddingBottom: number) => {
-  const padding = paddingTop + paddingBottom
-  if (!(padding in mem)) {
-    mem[padding] = forwardRef<any>(({ style, ...rest }: any, ref) => {
-      return (
-        <div
-          ref={ref}
-          style={{
-            ...style,
-            height: `${parseFloat(style.height) + padding}px`,
-          }}
-          {...rest}
-        />
-      )
-    })
-  }
-  return mem[padding]
-}
-
 const DragSeqLine = ({ index, width, onDropSequence, context }) => {
   if (onDropSequence) {
     const [dropSeq, isDragOverSeq] = useDrop(
@@ -126,6 +105,7 @@ const Sequence = ({ style, data: { items, context, width }, index }) => {
       >
         <div
           style={{
+            paddingTop: index === 0 ? context.paddingTop : 0,
             height: style.height - 35 - 48,
           }}
         >
@@ -265,24 +245,29 @@ export const Flow = (props: FlowProps) => {
               paddingTop,
               paddingBottom,
             }}
-            innerElementType={
-              paddingTop || paddingBottom
-                ? getElementType(paddingTop, paddingBottom)
-                : null
-            }
             itemCount={itemsWithNew.length}
             height={height}
             itemData={{ items: itemsWithNew, context, width }}
             itemSize={(index) => {
+              let x = 0
+              if (index === 0 && paddingTop) {
+                x += paddingTop
+              }
+
               const data = itemsWithNew[index]
+
+              if (index === itemsWithNew.length - 1) {
+                x += paddingBottom
+              }
+
               if (data.newSequence) {
-                return 48 + 35
+                return 48 + 35 + x
               }
               const items = data.items
               // need to correct for header and footer
               // and margin
               // with img
-              return items.length * 48 + 2 * 48 + 35
+              return items.length * 48 + 2 * 48 + 35 + x
             }}
             {...useDragScroll(true)}
           >

@@ -118,10 +118,10 @@ export default {
                     />
                   )
                 }}
-                paddingLeft={15}
-                paddingTop={15}
-                paddingBottom={15}
-                paddingRight={15}
+                paddingLeft={30}
+                paddingTop={30}
+                paddingBottom={30}
+                paddingRight={30}
                 onDrop={(e, data) => {
                   // data will get a files field if its external
                   console.info('NORMAL', data)
