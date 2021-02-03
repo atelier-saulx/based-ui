@@ -18,7 +18,7 @@ async function readFile(file): Promise<File> {
             .fromString(parsed)
             .then((v) => {
               resolve({
-                content: parsed,
+                content: v,
                 name: file.name,
                 mime: file.type,
               })
