@@ -130,10 +130,14 @@ function useDrag<T>(
       holder.style.position = 'fixed'
       document.body.appendChild(holder)
 
+      holder.style.top = '0px'
+      holder.style.left = '0px'
+
       let cp
       if (s.length > 1) {
         render(<MultiDragInfo />, holder)
         cp = holder.firstChild
+
         cp.children[1].innerHTML = `${s.length} items`
       } else {
         cp = t.cloneNode(true)
