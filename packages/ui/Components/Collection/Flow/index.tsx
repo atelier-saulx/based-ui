@@ -143,6 +143,7 @@ const Sequence = ({ style, data: { items, context, width }, index }) => {
               }}
             >
               <Header
+                {...context.header}
                 framed
                 label={itemData.title}
                 icon={itemData.icon || 'newFlow'}

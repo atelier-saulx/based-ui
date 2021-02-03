@@ -80,7 +80,8 @@ export const SwitchTextButton: FunctionComponent<
   onChange,
   identifier,
   value,
-  ...props
+  style,
+  color,
 }) => {
   const [enabled, setValue] = useInputValue(value, identifier, false)
 
@@ -88,10 +89,9 @@ export const SwitchTextButton: FunctionComponent<
     <div
       style={{
         cursor: 'pointer',
-        opacity: !enabled ? 0.75 : 1,
-        transition: 'opacity 0.15s',
         display: 'flex',
         alignItems: 'center',
+        ...style,
       }}
       onClick={() => {
         const v = !enabled
@@ -100,6 +100,7 @@ export const SwitchTextButton: FunctionComponent<
       }}
     >
       <Switch
+        color={color}
         value={enabled}
         ignoreInternal
         onChange={useCallback(
@@ -111,10 +112,11 @@ export const SwitchTextButton: FunctionComponent<
         )}
       />
       <Text
+        weight="medium"
         singleLine
         noSelect
         style={{
-          marginLeft: 15,
+          marginLeft: 8,
         }}
       >
         {enabled ? enabledText : disabledText}

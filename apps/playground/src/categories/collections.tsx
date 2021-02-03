@@ -1,11 +1,18 @@
 import React from 'React'
 import RenderComponents from '../RenderComponents'
-import { ContextualMenuItem, List, useMenu, Text, Flow, Jump } from '@based/ui'
+import {
+  ContextualMenuItem,
+  List,
+  useMenu,
+  Text,
+  Flow,
+  Jump,
+  SwitchTextButton,
+} from '@based/ui'
 import { randomText, randomIcon } from './util'
 import { Grid } from '@based/ui/Components/Collection/Grid'
 import { Image } from '@based/ui/Components/Collection/Grid/Image'
 import { Tabs } from '@based/ui/Components/Collection/Tabs'
-import { useColor } from '@based/theme'
 
 const profilePic = 'https://scx2.b-cdn.net/gfx/news/hires/2019/2-forest.jpg'
 const randomDate = () => {
@@ -137,6 +144,18 @@ export default {
                 onDrop={(e, data) => {
                   // data will get a files field if its external
                   console.info('NORMAL', data)
+                }}
+                header={{
+                  Actions: () => {
+                    return (
+                      <SwitchTextButton
+                        enabledText="Editable"
+                        disabledText="Locked"
+                        onChange={() => {}}
+                        value
+                      />
+                    )
+                  },
                 }}
                 onDropSequence={(e, data) => {
                   // data will get a files field if its external

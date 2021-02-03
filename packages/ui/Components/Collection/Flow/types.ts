@@ -1,14 +1,8 @@
-import { IconName, IconStyleProps } from '@based/icons'
-import {
-  DataEventHandler,
-  MultiDataEventHandler,
-  Data,
-  ExportData,
-  File,
-} from '../../../types'
+import { IconName } from '@based/icons'
+import { DataEventHandler, Data, ExportData, File } from '../../../types'
 import { TextValue } from '@based/text'
-import { Img } from '../types'
 import { ComponentType } from 'react'
+import { HeaderProps } from '../Header'
 
 import { ListDataProps, FooterProps } from '../List/types'
 
@@ -52,4 +46,5 @@ export type FlowProps = {
     data: Data<ListDataProps>
     onOptions?: DataEventHandler<ListDataProps>
   }>
+  header?: HeaderProps
 }
