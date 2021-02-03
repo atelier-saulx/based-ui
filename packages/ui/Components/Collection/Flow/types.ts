@@ -10,7 +10,7 @@ import { TextValue } from '@based/text'
 import { Img } from '../types'
 import { ComponentType } from 'react'
 
-import { ListDataProps } from '../List/types'
+import { ListDataProps, FooterProps } from '../List/types'
 
 // seqence and flow
 export type StepDataProps = ListDataProps
@@ -20,6 +20,7 @@ export type Sequence = {
   title: TextValue
   id: string | number
   icon?: IconName
+  newSequence?: boolean
 }
 
 export type FlowProps = {
@@ -31,4 +32,5 @@ export type FlowProps = {
   onClick?: DataEventHandler<StepDataProps>
   actionIcon?: IconName
   onAction?: DataEventHandler<StepDataProps>
+  footer?: FooterProps
 }

@@ -25,7 +25,7 @@ export type ListProps = {
   forceActive?: boolean
   exportData?: ExportData<ListDataProps>
   onOptions?: DataEventHandler<ListDataProps> // select options
-  onDrop?: DataEventHandler<ListDataProps | { files: File[] }> // i think this is an order change - if this is not there dont allow order change
+  onDrop?: DataEventHandler<{ data: ListDataProps[] } | { files: File[] }> // i think this is an order change - if this is not there dont allow order change
   onClick?: DataEventHandler<ListDataProps> // on click on the item
   paddingRight?: number
   paddingLeft?: number

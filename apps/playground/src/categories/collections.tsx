@@ -97,6 +97,9 @@ export default {
                     items: listData.slice(0, 10),
                   },
                 ]}
+                footer={{
+                  onClick: () => {},
+                }}
                 onClick={(data, index) => {
                   console.info(data, index)
                 }}
