@@ -99,7 +99,7 @@ const Sequence = ({ style, data: { items, context, width }, index }) => {
             ) : null}
             <div
               style={{
-                // opacity: isDragOverSeq ? 0 : 1,
+                opacity: isDragging ? 0.5 : 1,
                 height: 48,
                 transition: 'opacity 0.15s, transform 0.2s',
                 transform: isDragOverSeq
@@ -120,7 +120,6 @@ const Sequence = ({ style, data: { items, context, width }, index }) => {
                 ? 'translate3d(0px, 20px, 0px)'
                 : 'translate3d(0px, 0px, 0px)',
               transition: 'opacity 0.15s, transform 0.2s',
-
               borderLeft: '1px solid ' + useColor({ color: 'divider' }),
               borderRight: '1px solid ' + useColor({ color: 'divider' }),
             }}
