@@ -10,6 +10,8 @@ const Footer: FunctionComponent<FooterProps> = ({
   framed,
   paddingRight,
   icon = 'add',
+  data,
+  floating,
   paddingLeft,
   label = { en: 'Add item' },
   onClick,
@@ -31,6 +33,8 @@ const Footer: FunctionComponent<FooterProps> = ({
         borderBottom: '1px solid ' + useColor({ color: 'divider' }),
         borderBottomLeftRadius: 4,
         borderBottomRightRadius: 4,
+        borderTopLeftRadius: floating ? 4 : null,
+        borderTopRightRadius: floating ? 4 : null,
         height: 48,
         width,
         backgroundColor: isActive
@@ -38,7 +42,7 @@ const Footer: FunctionComponent<FooterProps> = ({
           : null,
         justifyContent: 'space-between',
       }}
-      onClick={(e) => onClick(e, items)}
+      onClick={(e) => onClick(e, data || items)}
       {...hover}
     >
       <div

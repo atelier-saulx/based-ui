@@ -98,6 +98,11 @@ export default {
                   },
                 ]}
                 footer={{
+                  label: 'New sequence',
+                  onClick: () => {},
+                }}
+                stepFooter={{
+                  label: 'New step',
                   onClick: () => {},
                 }}
                 onClick={(data, index) => {

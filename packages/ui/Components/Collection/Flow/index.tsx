@@ -5,12 +5,14 @@ import AutoSizer from 'react-virtualized-auto-sizer'
 import useDragScroll from '../../../hooks/drag/useDragScroll'
 import { SelectableCollection } from '../../../hooks/useSelect'
 // import useDragScroll from '../../../hooks/drag/useDragScroll'
-// import { ListItem } from './ListItem'
 // import { ListProps } from './types'
 // import { useColor } from '@based/theme'
 import { Footer } from '../List/Footer'
+import { ListItem } from '../List/ListItem'
+import { Header } from '../List/Header'
 
 import { FlowProps } from './types'
+import { useColor } from '@based/theme'
 
 const Sequence = ({ style, data: { items, context }, index }) => {
   const itemData = items[index]
@@ -23,7 +25,7 @@ const Sequence = ({ style, data: { items, context }, index }) => {
           paddingBottom: 35,
         }}
       >
-        <Footer items={items} {...context.footer} />
+        <Footer framed floating items={items} {...context.footer} />
       </div>
     )
   } else {
@@ -36,11 +38,39 @@ const Sequence = ({ style, data: { items, context }, index }) => {
       >
         <div
           style={{
-            backgroundColor: 'red',
+            // border: '1px solid ' + useColor({ color: 'divider' }),
+            // backgroundColor: '#eee',
             height: style.height - 35,
           }}
         >
-          x
+          <Header
+            framed
+            label={itemData.title}
+            icon={itemData.icon || 'newFlow'}
+          />
+          <div
+            style={{
+              borderLeft: '1px solid ' + useColor({ color: 'divider' }),
+              borderRight: '1px solid ' + useColor({ color: 'divider' }),
+            }}
+          >
+            {itemData.items.map((data, index) => {
+              return (
+                <ListItem
+                  key={index}
+                  data={{ items: itemData.items, context }}
+                  index={index}
+                  style={{}}
+                />
+              )
+            })}
+          </div>
+          <Footer
+            framed
+            items={itemData.items}
+            {...context.stepFooter}
+            data={itemData}
+          />
         </div>
       </div>
     )
@@ -49,7 +79,7 @@ const Sequence = ({ style, data: { items, context }, index }) => {
 
 export const Flow = (props: FlowProps) => {
   const {
-    items = [],
+    items,
     footer,
     // paddingRight = 0,
     // paddingLeft = 0,
@@ -57,13 +87,10 @@ export const Flow = (props: FlowProps) => {
     paddingBottom = 0,
   } = props
 
-  // last item is a button
-
   const itemsWithNew = footer
     ? [
         ...items,
         {
-          title: 'New sequence',
           items: [],
           newSequence: true,
           id: 'new-seq',

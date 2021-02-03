@@ -67,7 +67,9 @@ export type HeaderProps<T = ListDataProps> = {
 
 export type FooterProps<T = ListDataProps> = {
   label?: TextValue
+  floating?: boolean
   framed?: boolean
+  data?: Data<T>
   paddingRight?: number
   width?: number
   icon?: IconName

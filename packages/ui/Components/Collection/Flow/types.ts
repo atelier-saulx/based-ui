@@ -32,5 +32,6 @@ export type FlowProps = {
   onClick?: DataEventHandler<StepDataProps>
   actionIcon?: IconName
   onAction?: DataEventHandler<StepDataProps>
-  footer?: FooterProps
+  footer: FooterProps
+  stepFooter: FooterProps
 }
