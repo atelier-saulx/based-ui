@@ -13,7 +13,6 @@ import { randomText, randomIcon } from './util'
 import { Grid } from '@based/ui/Components/Collection/Grid'
 import { Image } from '@based/ui/Components/Collection/Grid/Image'
 import { Tabs } from '@based/ui/Components/Collection/Tabs'
-import WaitingScreen from '@based/icons/Components/WaitingScreen'
 import { wait } from '@saulx/utils'
 
 const profilePic = 'https://scx2.b-cdn.net/gfx/news/hires/2019/2-forest.jpg'

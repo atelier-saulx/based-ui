@@ -18,6 +18,8 @@ export type DataEventHandler<T = {}> = (
   data?: Data<T>
 ) => void | Promise<void>
 
+export type AsyncEvent = (e: Event | SyntheticEvent) => void | Promise<void>
+
 export type MultiDataEventHandler<T = {}> = (
   e: Event | SyntheticEvent,
   data?: Data<T>[]

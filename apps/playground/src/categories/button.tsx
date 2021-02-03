@@ -2,6 +2,7 @@ import React from 'React'
 import { Button, Switch, SwitchTextButton } from '@based/ui'
 import RenderComponents from '../RenderComponents'
 import { randomIcon, randomTitle } from './util'
+import { wait } from '@saulx/utils'
 
 const genButtonProps = () => {
   const props = []
@@ -23,14 +24,16 @@ const genButtonProps = () => {
         color: 'foreground',
         tone: 2,
       },
+      onClick: () => {},
       color: { color: 'background', opacity: 0 },
     },
     {
       icon: randomIcon(),
       children: 'Button with actionKeys!',
       actionKeys: ['Enter', 'ArrowDown'],
-      onClick: () => {
+      onClick: async () => {
         console.info('Key is pressed!')
+        await wait(1e3)
       },
     }
   )
@@ -41,14 +44,26 @@ const genButtonProps = () => {
         icon: randomIcon(),
         children: randomTitle,
         color: { color },
+        onClick: async () => {
+          console.info('Key is pressed!')
+          await wait(1e3)
+        },
       },
       {
         children: randomTitle,
         color: { color },
+        onClick: async () => {
+          console.info('Key is pressed!')
+          await wait(1e3)
+        },
       },
       {
         icon: randomIcon(),
         color: { color },
+        onClick: async () => {
+          console.info('Key is pressed!')
+          await wait(1e3)
+        },
       },
     ]
     props.push(...vars)

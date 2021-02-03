@@ -5,6 +5,7 @@ import React, {
   SyntheticEvent,
   useRef,
   useEffect,
+  useState,
   useCallback,
 } from 'react'
 import { useColor, Color } from '@based/theme'
@@ -13,6 +14,8 @@ import { iconFromString, IconName } from '@based/icons'
 import useHover from '../../hooks/events/useHover'
 import { Text } from '../Text'
 import { useKeyUp, Key } from '../../hooks/events/useKeyboard'
+import { Loader } from '../Loader/Loader'
+import { AsyncEvent } from '../../types'
 
 type GenericEventHandler = EventHandler<SyntheticEvent>
 
@@ -23,7 +26,7 @@ type ButtonProps = {
   actionKeys?: Key[] // adds a key event
   icon?: IconName
   children?: TextValue
-  onClick?: GenericEventHandler
+  onClick?: GenericEventHandler | AsyncEvent
   onHover?: GenericEventHandler
   onMouseEnter?: GenericEventHandler
   onContextMenu?: GenericEventHandler
@@ -42,6 +45,7 @@ export const Button: FunctionComponent<ButtonProps> = ({
   onContextMenu,
 }) => {
   const [hover, isHover, isActive] = useHover(onHover || onMouseEnter)
+  const [loading, setLoading] = useState(false)
   let ref
 
   if (actionKeys && onClick) {
@@ -107,6 +111,8 @@ export const Button: FunctionComponent<ButtonProps> = ({
         ref={ref}
         style={{
           display: 'flex',
+          transition: 'width 0.15s',
+          width: 'auto',
           flexDirection: 'row',
           cursor: 'pointer',
           alignItems: 'flex-start',
@@ -122,11 +128,37 @@ export const Button: FunctionComponent<ButtonProps> = ({
               : color.tone,
           }),
         }}
-        onClick={onClick}
+        onClick={useCallback(
+          (e) => {
+            setLoading(true)
+            const p = onClick(e)
+            if (p instanceof Promise) {
+              p.then((v) => {
+                setLoading(false)
+              })
+            } else {
+              setLoading(false)
+            }
+          },
+          [onClick]
+        )}
         {...hover}
         onContextMenu={onContextMenu}
       >
-        {Icon ? (
+        {loading ? (
+          <div
+            style={{
+              width: 24,
+              height: 24,
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginRight: !children ? 0 : 4,
+            }}
+          >
+            <Loader color={foregroundColor} size={18} />
+          </div>
+        ) : Icon ? (
           <Icon
             style={{ marginRight: !children ? 0 : 4 }}
             color={foregroundColor}
