@@ -19,6 +19,18 @@ export type ListDataProps = {
   id: string | number
 }
 
+export type OptionsComponent = ComponentType<{
+  onClick?: DataEventHandler<ListDataProps>
+  isHover: boolean
+  isActive: boolean
+  isDragging: boolean
+  isDragOver: boolean
+  isSelected: boolean
+  items: Data<ListDataProps>[]
+  data: Data<ListDataProps>
+  onOptions?: DataEventHandler<ListDataProps>
+}>
+
 export type ListProps = {
   header?: HeaderProps
   footer?: FooterProps
@@ -36,17 +48,7 @@ export type ListProps = {
   framed?: boolean
   optionsIcon?: IconName
   contextualMenu?: boolean
-  Options?: ComponentType<{
-    onClick?: DataEventHandler<ListDataProps>
-    isHover: boolean
-    isActive: boolean
-    isDragging: boolean
-    isDragOver: boolean
-    isSelected: boolean
-    items: Data<ListDataProps>[]
-    data: Data<ListDataProps>
-    onOptions?: DataEventHandler<ListDataProps>
-  }>
+  Options?: OptionsComponent
   actionIcon?: IconName
   onAction?: DataEventHandler<ListDataProps>
 }

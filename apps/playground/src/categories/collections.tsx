@@ -1,6 +1,6 @@
 import React from 'React'
 import RenderComponents from '../RenderComponents'
-import { ContextualMenuItem, List, useMenu, Text, Flow } from '@based/ui'
+import { ContextualMenuItem, List, useMenu, Text, Flow, Jump } from '@based/ui'
 import { randomText, randomIcon } from './util'
 import { Grid } from '@based/ui/Components/Collection/Grid'
 import { Image } from '@based/ui/Components/Collection/Grid/Image'
@@ -103,34 +103,24 @@ export default {
                     items: listData.slice(10, 40),
                   },
                 ]}
-                Options={({ isHover, data }) => {
+                Options={({ isHover, data, items }) => {
                   return (
                     <div
                       style={{
-                        width: 24,
+                        width: 50,
                         height: 24,
                         position: 'relative',
                       }}
                     >
-                      <div
-                        style={{
-                          width: 24,
-                          background: isHover
-                            ? useColor({ color: 'primary' })
-                            : useColor({ color: 'background', tone: 4 }),
-                          borderRadius: 20,
-                          height: 24,
-                        }}
-                      />
                       {data.id === 2 ? (
                         <div
                           style={{
                             position: 'absolute',
-                            left: 50,
+                            left: 26.5 + 25,
                             top: 0,
                           }}
                         >
-                          <Text singleLine>YESH !</Text>
+                          <Jump items={[items[1], items[2]]} data={data} />
                         </div>
                       ) : null}
                     </div>
@@ -139,7 +129,7 @@ export default {
                 paddingLeft={30}
                 paddingTop={30}
                 paddingBottom={30}
-                paddingRight={130}
+                paddingRight={140}
                 onDrop={(e, data) => {
                   // data will get a files field if its external
                   console.info('NORMAL', data)

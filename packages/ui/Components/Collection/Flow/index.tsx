@@ -1,4 +1,4 @@
-import React, { useCallback, forwardRef } from 'react'
+import React, { useCallback } from 'react'
 import { VariableSizeList } from 'react-window'
 import AutoSizer from 'react-virtualized-auto-sizer'
 import useDragScroll from '../../../hooks/drag/useDragScroll'
