@@ -12,7 +12,37 @@ import useMultipleEvents from '../../../hooks/events/useMultipleEvents'
 import { FlowProps } from './types'
 import { useColor } from '@based/theme'
 
-const Sequence = ({ style, data: { items, context }, index }) => {
+const DragSeqLine = ({ index, width }) => {
+  const [dropSeq, isDragOverSeq] = useDrop(
+    useCallback((e, { files, data }) => {}, [index])
+  )
+  return (
+    <div
+      style={{
+        top: 0,
+        left: 0,
+        width,
+        position: 'absolute',
+        height: 35,
+      }}
+      // @ts-ignore
+      {...dropSeq}
+    >
+      <div
+        style={{
+          pointerEvents: 'none',
+          marginTop: 16.5,
+          opacity: isDragOverSeq ? 1 : 0,
+          transition: 'opacity 0.2s',
+          width: '100%',
+          borderTop: '2px solid ' + useColor({ color: 'primary' }),
+        }}
+      />
+    </div>
+  )
+}
+
+const Sequence = ({ style, data: { items, context, width }, index }) => {
   const itemData = items[index]
 
   if (itemData.newSequence) {
@@ -30,9 +60,12 @@ const Sequence = ({ style, data: { items, context }, index }) => {
     const [drag, isDragging] = useDrag<any>(itemData)
     const [drop, isDragOver] = useDrop()
 
-    const [dropSeq, isDragOverSeq] = useDrop(
-      useCallback((e, { files, data }) => {}, [index, items])
-    )
+    let dropSeq, isDragOverSeq
+    if (index === 0) {
+      ;[dropSeq, isDragOverSeq] = useDrop(
+        useCallback((e, { files, data }) => {}, [index])
+      )
+    }
 
     return (
       <div
@@ -42,23 +75,56 @@ const Sequence = ({ style, data: { items, context }, index }) => {
       >
         <div
           style={{
-            height: style.height - 35,
+            height: style.height - 35 - 48,
           }}
-          {...useMultipleEvents(drop)}
         >
           {/* @ts-ignore */}
-          <div {...drag}>
-            <Header
-              framed
-              label={itemData.title}
-              icon={itemData.icon || 'newFlow'}
-            />
+          <div
+            {...useMultipleEvents(drag, dropSeq)}
+            style={{
+              position: 'relative',
+            }}
+          >
+            {dropSeq ? (
+              <div
+                style={{
+                  position: 'absolute',
+                  pointerEvents: 'none',
+                  opacity: isDragOverSeq ? 1 : 0,
+                  transition: 'opacity 0.2s',
+                  width: '100%',
+                  borderTop: '2px solid ' + useColor({ color: 'primary' }),
+                }}
+              />
+            ) : null}
+            <div
+              style={{
+                // opacity: isDragOverSeq ? 0 : 1,
+                height: 48,
+                transition: 'opacity 0.15s, transform 0.2s',
+                transform: isDragOverSeq
+                  ? 'translate3d(0px, 20px, 0px)'
+                  : 'translate3d(0px, 0px, 0px)',
+              }}
+            >
+              <Header
+                framed
+                label={itemData.title}
+                icon={itemData.icon || 'newFlow'}
+              />
+            </div>
           </div>
           <div
             style={{
+              transform: isDragOverSeq
+                ? 'translate3d(0px, 20px, 0px)'
+                : 'translate3d(0px, 0px, 0px)',
+              transition: 'opacity 0.15s, transform 0.2s',
+
               borderLeft: '1px solid ' + useColor({ color: 'divider' }),
               borderRight: '1px solid ' + useColor({ color: 'divider' }),
             }}
+            {...drop}
           >
             <SelectableCollection items={itemData.items}>
               {itemData.items.map((_data, index) => {
@@ -76,21 +142,29 @@ const Sequence = ({ style, data: { items, context }, index }) => {
               })}
             </SelectableCollection>
           </div>
-          <Footer
-            framed
-            items={itemData.items}
-            {...context.stepFooter}
-            data={itemData}
-            style={{
-              opacity: isDragOver ? 0 : 1,
-              transition: 'opacity 0.15s, transform 0.2s',
-              transform: isDragOver
-                ? 'translate3d(0px, 40px, 0px)'
-                : 'translate3d(0px, 0px, 0px)',
-            }}
-          />
         </div>
-        <div>THIS IS THE LINE</div>
+        <Footer
+          framed
+          items={itemData.items}
+          {...context.stepFooter}
+          data={itemData}
+          style={{
+            opacity: isDragOver ? 0 : 1,
+            transition: 'opacity 0.15s, transform 0.2s',
+            transform: isDragOverSeq
+              ? 'translate3d(0px, 20px, 0px)'
+              : isDragOver
+              ? 'translate3d(0px, 40px, 0px)'
+              : 'translate3d(0px, 0px, 0px)',
+          }}
+        />
+        <div
+          style={{
+            position: 'relative',
+          }}
+        >
+          <DragSeqLine index={index} width={width} />
+        </div>
       </div>
     )
   }
@@ -130,7 +204,7 @@ export const Flow = (props: FlowProps) => {
             }}
             itemCount={itemsWithNew.length}
             height={height}
-            itemData={{ items: itemsWithNew, context }}
+            itemData={{ items: itemsWithNew, context, width }}
             itemSize={(index) => {
               const data = itemsWithNew[index]
               if (data.newSequence) {
