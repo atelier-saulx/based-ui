@@ -4,12 +4,16 @@ import { Radio } from '../Button/Radio'
 import { Text } from '../Text'
 import { TextValue } from '@based/text'
 import { OnValueChange } from '../../types'
+import { IconName, iconFromString } from '@based/icons'
 import useInputValue from '../../hooks/useInputValue'
+import { useColor } from '@based/theme'
 
 export type ToggleInputProps = {
   style?: CSSProperties
   onChange: OnValueChange<boolean>
   value?: boolean
+  icon?: IconName
+  border?: boolean
   identifier?: any
   children?: TextValue
 }
@@ -19,6 +23,8 @@ export const CheckBox: FunctionComponent<ToggleInputProps> = ({
   children,
   onChange,
   identifier,
+  border,
+  icon,
   value = false,
   ...rest
 }) => {
@@ -28,12 +34,21 @@ export const CheckBox: FunctionComponent<ToggleInputProps> = ({
     false
   )
 
+  const Icon = icon ? iconFromString(icon) : null
+
   return (
     <div
       style={{
+        border: border ? '1px solid ' + useColor({ color: 'divider' }) : null,
+        borderRadius: 4,
+        paddingLeft: 12,
+        paddingRight: 12,
+        paddingTop: 7.5,
+        paddingBottom: 7.5,
         display: 'flex',
         alignItems: 'center',
         cursor: 'pointer',
+        justifyContent: 'space-between',
         ...style,
       }}
       onClick={useCallback(() => {
@@ -44,15 +59,23 @@ export const CheckBox: FunctionComponent<ToggleInputProps> = ({
         setValue(v)
       }, [onChange, stateValue])}
     >
-      <Check {...rest} overrideValue={stateValue} />
-      <Text
-        noSelect
+      <div
         style={{
-          marginLeft: 15,
+          display: 'flex',
+          alignItems: 'center',
         }}
       >
-        {children}
-      </Text>
+        <Check {...rest} overrideValue={stateValue} />
+        <Text
+          noSelect
+          style={{
+            marginLeft: 15,
+          }}
+        >
+          {children}
+        </Text>
+      </div>
+      {Icon ? <Icon /> : null}
     </div>
   )
 }
@@ -61,6 +84,8 @@ export const RadioButton: FunctionComponent<ToggleInputProps> = ({
   style,
   children,
   onChange,
+  icon,
+  border,
   identifier,
   value = false,
   ...rest
@@ -71,12 +96,20 @@ export const RadioButton: FunctionComponent<ToggleInputProps> = ({
     false
   )
 
+  const Icon = icon ? iconFromString(icon) : null
+
   return (
     <div
       style={{
         display: 'flex',
+        border: border ? '1px solid ' + useColor({ color: 'divider' }) : null,
         alignItems: 'center',
         cursor: 'pointer',
+        paddingLeft: 12,
+        paddingRight: 12,
+        paddingTop: 7.5,
+        paddingBottom: 7.5,
+        justifyContent: 'space-between',
         ...style,
       }}
       onClick={useCallback(() => {
@@ -87,15 +120,23 @@ export const RadioButton: FunctionComponent<ToggleInputProps> = ({
         setValue(v)
       }, [onChange, stateValue])}
     >
-      <Radio overrideValue={stateValue} {...rest} />
-      <Text
-        noSelect
+      <div
         style={{
-          marginLeft: 15,
+          display: 'flex',
+          alignItems: 'center',
         }}
       >
-        {children}
-      </Text>
+        <Radio overrideValue={stateValue} {...rest} />
+        <Text
+          noSelect
+          style={{
+            marginLeft: 15,
+          }}
+        >
+          {children}
+        </Text>
+      </div>
+      {Icon ? <Icon /> : null}
     </div>
   )
 }

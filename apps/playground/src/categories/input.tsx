@@ -175,6 +175,13 @@ export default {
           onChange: () => {},
           value: true,
         },
+        {
+          children: 'Hello Checked',
+          onChange: () => {},
+          value: true,
+          icon: 'Add',
+          border: true,
+        },
       ],
     },
     {
