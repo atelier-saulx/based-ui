@@ -1,6 +1,6 @@
 import React from 'React'
 import RenderComponents from '../RenderComponents'
-import { ContextualMenuItem, List, useMenu, Text } from '@based/ui'
+import { ContextualMenuItem, List, useMenu, Text, Flow } from '@based/ui'
 import { randomText, randomIcon } from './util'
 import { Grid } from '@based/ui/Components/Collection/Grid'
 import { Image } from '@based/ui/Components/Collection/Grid/Image'
@@ -67,8 +67,49 @@ export default {
   Render: RenderComponents,
   components: [
     {
+      name: 'Flow',
+      category: 'collections',
+      Component: Flow,
+      props: [
+        () => {
+          return (
+            <div
+              style={{
+                height: 1000,
+              }}
+            >
+              <Flow
+                items={[
+                  {
+                    title: 'my seq1',
+                    id: 1,
+                    items: [
+                      {
+                        title: 'yesh',
+                        data: {},
+                        id: 1,
+                      },
+                    ],
+                  },
+                  {
+                    title: 'my seq2',
+                    id: 2,
+                    items: listData.slice(0, 10),
+                  },
+                ]}
+                onClick={(data, index) => {
+                  console.info(data, index)
+                }}
+              />
+            </div>
+          )
+        },
+      ],
+    },
+
+    {
       name: 'OrderedList',
-      category: 'misc',
+      category: 'collections',
       Component: List,
       props: [
         () => {
@@ -181,7 +222,7 @@ export default {
     },
     {
       name: 'Grid',
-      category: 'misc',
+      category: 'collections',
       Component: Grid,
       props: [
         () => {
@@ -233,7 +274,7 @@ export default {
     },
     {
       name: 'Tabs',
-      category: 'misc',
+      category: 'collections',
       Component: Tabs,
       props: [
         {

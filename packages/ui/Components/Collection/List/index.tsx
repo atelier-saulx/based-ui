@@ -59,7 +59,6 @@ export const List = (props: ListProps) => {
     <AutoSizer>
       {({ height, width }) => {
         const context = props
-
         return (
           <SelectableCollection items={items}>
             <>
