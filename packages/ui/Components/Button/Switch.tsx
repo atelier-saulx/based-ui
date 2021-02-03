@@ -1,7 +1,9 @@
-import React, { FunctionComponent, CSSProperties } from 'react'
+import React, { FunctionComponent, CSSProperties, useCallback } from 'react'
 import { useColor, Color } from '@based/theme'
 import { OnValueChange } from '../../types'
 import useInputValue from '../../hooks/useInputValue'
+import { TextValue } from '@based/text'
+import { Text } from '../Text'
 
 export type SwitchProps = {
   color?: Color
@@ -11,20 +13,27 @@ export type SwitchProps = {
   identifier?: any
 }
 
-export const Switch: FunctionComponent<SwitchProps> = ({
+export const Switch: FunctionComponent<
+  SwitchProps & { ignoreInternal?: boolean }
+> = ({
   onChange,
   color = { color: 'primary' },
+  ignoreInternal,
   value,
   identifier,
   style,
 }) => {
-  const [enabled, setValue] = useInputValue(value, identifier, false)
+  let enabled, setValue
+  if (!ignoreInternal) {
+    ;[enabled, setValue] = useInputValue(value, identifier, false)
+  } else {
+    enabled = value
+  }
 
   return (
     <div
       style={{
         display: 'flex',
-        // width: 51,
         width: 31 - 3,
         cursor: 'pointer',
         paddingTop: 2,
@@ -40,10 +49,10 @@ export const Switch: FunctionComponent<SwitchProps> = ({
       }}
       onClick={() => {
         const value = !enabled
-        setValue(value)
-        if (onChange) {
-          onChange(value)
+        if (setValue) {
+          setValue(value)
         }
+        onChange(value)
       }}
     >
       <div
@@ -51,12 +60,65 @@ export const Switch: FunctionComponent<SwitchProps> = ({
           width: 13,
           height: 13,
           borderRadius: '50%',
-          //   borderRadius: 13.5,
           backgroundColor: useColor({ color: 'background' }),
           transition: 'transform 0.2s',
           transform: `translate3d(${enabled ? 7 + 5 - 3 : 0}px,0px,0px)`,
         }}
       />
+    </div>
+  )
+}
+
+export const SwitchTextButton: FunctionComponent<
+  SwitchProps & {
+    enabledText?: TextValue
+    disabledText?: TextValue
+  }
+> = ({
+  enabledText = 'Enabled',
+  disabledText = 'Disabled',
+  onChange,
+  identifier,
+  value,
+  ...props
+}) => {
+  const [enabled, setValue] = useInputValue(value, identifier, false)
+
+  return (
+    <div
+      style={{
+        cursor: 'pointer',
+        opacity: !enabled ? 0.75 : 1,
+        transition: 'opacity 0.15s',
+        display: 'flex',
+        alignItems: 'center',
+      }}
+      onClick={() => {
+        const v = !enabled
+        setValue(v)
+        onChange(v)
+      }}
+    >
+      <Switch
+        value={enabled}
+        ignoreInternal
+        onChange={useCallback(
+          (v) => {
+            setValue(v)
+            onChange(v)
+          },
+          [onChange]
+        )}
+      />
+      <Text
+        singleLine
+        noSelect
+        style={{
+          marginLeft: 15,
+        }}
+      >
+        {enabled ? enabledText : disabledText}
+      </Text>
     </div>
   )
 }

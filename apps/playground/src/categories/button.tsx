@@ -1,5 +1,5 @@
 import React from 'React'
-import { Button, Switch } from '@based/ui'
+import { Button, Switch, SwitchTextButton } from '@based/ui'
 import RenderComponents from '../RenderComponents'
 import { randomIcon, randomTitle } from './util'
 
@@ -70,6 +70,20 @@ export default {
     {
       name: 'Switch',
       Component: Switch,
+      props: [
+        {
+          value: true,
+          onChange: () => {},
+        },
+        {
+          value: false,
+          onChange: () => {},
+        },
+      ],
+    },
+    {
+      name: 'SwitchTextButton',
+      Component: SwitchTextButton,
       props: [
         {
           value: true,
