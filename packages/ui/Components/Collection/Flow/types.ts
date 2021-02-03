@@ -24,6 +24,8 @@ export type Sequence = {
 }
 
 export type FlowProps = {
+  onDrop?: DataEventHandler<{ data: ListDataProps[] } | { files: File[] }> // i think this is an order change - if this is not there dont allow order change
+  onDropSequence?: DataEventHandler<{ data: Sequence[] } | { files: File[] }> // i think this is an order change - if this is not there dont allow order change
   paddingRight?: number
   paddingLeft?: number
   paddingTop?: number

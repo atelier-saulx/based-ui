@@ -97,6 +97,14 @@ export default {
                     items: listData.slice(0, 10),
                   },
                 ]}
+                onDrop={(e, data) => {
+                  // data will get a files field if its external
+                  console.info(e, data)
+                }}
+                onDropSequence={(e, data) => {
+                  // data will get a files field if its external
+                  console.info(e, data)
+                }}
                 footer={{
                   label: 'New sequence',
                   onClick: () => {},
