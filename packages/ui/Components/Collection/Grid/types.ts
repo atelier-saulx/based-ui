@@ -18,7 +18,6 @@ export type GridProps = {
   large?: boolean
   draggable?: boolean
   optionsIcon?: IconName
-  // forceActive?: boolean
   exportData?: ExportData<GridDataProps>
   onOptions?: DataEventHandler<GridDataProps> // select options
   onDrop?: DataEventHandler<GridDataProps | { files: File[] }> // i think this is an order change - if this is not there dont allow order change
@@ -28,7 +27,8 @@ export type GridProps = {
   framed?: boolean
   // paddingTop?: number
   // paddingBottom?: number
-  // activeId?: string | number
+  activeId?: string | number
+  forceActive?: boolean
   // contextualMenu?: any // TODO: type a function to pass to useMenu - make this better
   // optionsIcon?: IconName
 }

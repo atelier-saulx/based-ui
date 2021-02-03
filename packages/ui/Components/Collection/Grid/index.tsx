@@ -1,4 +1,4 @@
-import React, { createContext, useRef, useCallback } from 'react'
+import React, { createContext, useRef, useCallback, useEffect } from 'react'
 import { FixedSizeGrid } from 'react-window'
 import AutoSizer from 'react-virtualized-auto-sizer'
 import { useColor } from '@based/theme'
@@ -52,9 +52,12 @@ const GridItemWrapped = ({
     width,
     draggable,
     onOptions,
+    activeId,
   } = context
   const index = columnIndex + rowIndex * columnCount
   const itemData = items[index]
+  const isActive = activeId === itemData.id
+  console.log({ isActive, activeId })
   const [hover, isHover] = useHover()
   const ref = useRef()
   const [drag] = draggable ? useDrag(itemData, ref) : [{}]
@@ -79,7 +82,8 @@ const GridItemWrapped = ({
           cursor: 'pointer',
           transition: 'background-color 0.15s, border 0.15s',
           border:
-            (isSelected ? '2px solid ' : '1px solid ') +
+            // TODO: isActve style
+            (isSelected || isActive ? '2px solid ' : '1px solid ') +
             (isHover && !isSelected
               ? useColor({ color: 'foreground', tone: 2 })
               : useColor({
@@ -172,7 +176,20 @@ export const Grid = (props: GridProps) => {
     framed,
     paddingRight,
     paddingLeft,
+    activeId,
   } = props
+  let { forceActive } = props
+
+  if (forceActive) {
+    forceActive = !activeId && !!items[0]
+  }
+
+  useEffect(() => {
+    if (forceActive) {
+      onClick(null, items[0])
+    }
+  }, [forceActive])
+
   return (
     <div
       style={{
@@ -201,6 +218,7 @@ export const Grid = (props: GridProps) => {
             height: h - 16,
             // Menu,
             columnCount,
+            activeId,
           }
           return (
             <SelectableCollection items={items}>
