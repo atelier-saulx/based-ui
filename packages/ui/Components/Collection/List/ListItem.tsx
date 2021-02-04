@@ -56,7 +56,7 @@ const Action = ({ icon, onClick, isHover }) => {
   )
 }
 
-const defaultDataMap = {
+const defaultitemProps = {
   title: {
     path: ['title'],
   },
@@ -74,7 +74,7 @@ const ListItem = ({
     onOptions,
     Options,
     actionIcon,
-    dataMap,
+    itemProps,
     onAction,
     optionsIcon,
     contextualMenu,
@@ -85,8 +85,8 @@ const ListItem = ({
     exportData,
   } = context
 
-  if (!dataMap) {
-    dataMap = defaultDataMap
+  if (!itemProps) {
+    itemProps = defaultitemProps
   }
 
   const style = {
@@ -102,23 +102,25 @@ const ListItem = ({
 
   const itemData = items[index]
 
-  const iconName = dataMap.icon && getData(itemData, dataMap.icon.path)
-  const img = dataMap.img && getData(itemData, dataMap.img.path)
-  const title = dataMap.title.format
+  const titleProps = itemProps.title || defaultitemProps.title
+
+  const iconName = itemProps.icon && getData(itemData, itemProps.icon.path)
+  const img = itemProps.img && getData(itemData, itemProps.img.path)
+  const title = titleProps.format
     ? {
-        format: dataMap.title.format,
-        value: getData(itemData, dataMap.title.path),
+        format: titleProps.format,
+        value: getData(itemData, titleProps.path),
       }
-    : getData(itemData, dataMap.title.path)
+    : getData(itemData, titleProps.path)
   const info =
-    dataMap.info &&
-    (dataMap.info.format
+    itemProps.info &&
+    (itemProps.info.format
       ? {
-          format: dataMap.info.format,
-          value: getData(itemData, dataMap.info.path),
+          format: itemProps.info.format,
+          value: getData(itemData, itemProps.info.path),
         }
-      : getData(itemData, dataMap.info.path))
-  const id = dataMap.id ? getData(itemData, dataMap.id) : index
+      : getData(itemData, itemProps.info.path))
+  const id = itemProps.id ? getData(itemData, itemProps.id) : index
 
   const wrappedData = {
     index,
@@ -230,7 +232,7 @@ const ListItem = ({
       <div
         ref={ref}
         style={{
-          height: 48 + (dataMap.info ? 15 : 0),
+          height: 48 + (itemProps.info ? 15 : 0),
           opacity: isDragging ? 0.5 : 1,
           alignItems: 'center',
           display: 'flex',
@@ -280,9 +282,9 @@ const ListItem = ({
         )}
       >
         {img ? (
-          <Img src={img} size={24 + (dataMap.info ? 15 : 0)} />
+          <Img src={img} size={24 + (itemProps.info ? 15 : 0)} />
         ) : Icon ? (
-          <Icon {...dataMap.icon} />
+          <Icon {...itemProps.icon} />
         ) : null}
         <div
           style={{

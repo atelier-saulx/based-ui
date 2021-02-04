@@ -13,6 +13,8 @@ import { FlowProps } from './types'
 import { useColor } from '@based/theme'
 import { Loader } from '../../Loader/Loader'
 
+import getData from '../getData'
+
 const DragSeqLine = ({ index, width, onDropSequence, context }) => {
   if (onDropSequence) {
     const [dropSeq, isDragOverSeq, isDropLoading] = useDrop(
@@ -72,10 +74,15 @@ const DragSeqLine = ({ index, width, onDropSequence, context }) => {
   }
 }
 
+const defaultItemProps = {
+  title: { path: ['title'] },
+  items: { path: ['items'] },
+}
+
 const Sequence = ({ style, data: { items, context, width }, index }) => {
   const itemData = items[index]
 
-  if (itemData.newSequence) {
+  if (itemData['@@newSequence']) {
     return (
       <div
         style={{
@@ -106,6 +113,28 @@ const Sequence = ({ style, data: { items, context, width }, index }) => {
           [index, context.onDropSequence]
         )
       )
+    }
+
+    const itemProps = context.seqItemProps || defaultItemProps
+
+    const titleProps = itemProps.title || defaultItemProps.title
+    const nestedItemProps = itemProps.items || defaultItemProps.items
+
+    const iconName = itemProps.icon && getData(itemData, itemProps.icon.path)
+    const title = titleProps.format
+      ? {
+          format: titleProps.format,
+          value: getData(itemData, titleProps.path),
+        }
+      : getData(itemData, titleProps.path)
+    // const id = itemProps.id ? getData(itemData, itemProps.id) : index
+
+    const seqItems = getData(itemData, nestedItemProps.path) || []
+
+    const wrappedData = {
+      exportData: context.exportDataSequence,
+      index,
+      data: itemData,
     }
 
     return (
@@ -179,8 +208,8 @@ const Sequence = ({ style, data: { items, context, width }, index }) => {
               <Header
                 {...context.header}
                 framed
-                label={itemData.title}
-                icon={itemData.icon || 'newFlow'}
+                label={title}
+                icon={iconName || 'newFlow'}
               />
             </div>
           </div>
@@ -196,7 +225,7 @@ const Sequence = ({ style, data: { items, context, width }, index }) => {
             }}
             {...drop}
           >
-            <SelectableCollection items={itemData.items}>
+            <SelectableCollection items={seqItems}>
               {itemData.items.map((_data, index) => {
                 const s = {
                   position: 'relative',
@@ -204,7 +233,7 @@ const Sequence = ({ style, data: { items, context, width }, index }) => {
                 return (
                   <ListItem
                     key={index}
-                    data={{ items: itemData.items, context }}
+                    data={{ items: seqItems, context }}
                     index={index}
                     styleOverride={s}
                   />
@@ -215,7 +244,7 @@ const Sequence = ({ style, data: { items, context, width }, index }) => {
         </div>
         <Footer
           framed
-          items={itemData.items}
+          items={seqItems}
           {...context.stepFooter}
           data={itemData}
           style={{
@@ -247,22 +276,13 @@ const Sequence = ({ style, data: { items, context, width }, index }) => {
 }
 
 export const Flow = (props: FlowProps) => {
-  const {
-    items,
-    footer,
-    // paddingRight = 0,
-    // paddingLeft = 0,
-    paddingTop = 0,
-    paddingBottom = 0,
-  } = props
+  const { items, footer, paddingTop = 0, paddingBottom = 0 } = props
 
   const itemsWithNew = footer
     ? [
         ...items,
         {
-          items: [],
-          newSequence: true,
-          id: 'new-seq',
+          '@@newSequence': true,
         },
       ]
     : items
@@ -280,7 +300,19 @@ export const Flow = (props: FlowProps) => {
             }}
             itemCount={itemsWithNew.length}
             height={height}
-            itemData={{ items: itemsWithNew, context, width }}
+            itemData={{
+              items: itemsWithNew,
+              context: {
+                ...props,
+                seqItemProps: props.itemProps,
+                itemProps: props.itemProps
+                  ? props.itemProps.items
+                    ? props.itemProps.items.props
+                    : undefined
+                  : undefined,
+              },
+              width,
+            }}
             itemSize={(index) => {
               let x = 0
               if (index === 0 && paddingTop) {
@@ -293,14 +325,19 @@ export const Flow = (props: FlowProps) => {
                 x += paddingBottom
               }
 
-              if (data.newSequence) {
+              if (data['@@newSequence']) {
                 return 48 + 35 + x
               }
-              const items = data.items
+
+              const selectItems =
+                (props.itemProps && props.itemProps.items) ||
+                defaultItemProps.items
+
+              const items = getData(data, selectItems.path)
               // need to correct for header and footer
               // and margin
               // with img
-              return items.length * 48 + 2 * 48 + 35 + x
+              return (items ? items.length : 0) * 48 + 2 * 48 + 35 + x
             }}
             {...useDragScroll(true)}
           >

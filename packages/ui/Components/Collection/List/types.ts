@@ -1,7 +1,7 @@
 import { IconName } from '@based/icons'
 import { DataEventHandler, Data, ExportData, File } from '../../../types'
 import { ComponentType } from 'react'
-import { CollectionDataMap, HeaderProps, FooterProps } from '../types'
+import { CollectionitemProps, HeaderProps, FooterProps } from '../types'
 
 export type OptionsComponent = ComponentType<{
   onClick?: DataEventHandler
@@ -35,5 +35,5 @@ export type ListProps = {
   Options?: OptionsComponent
   actionIcon?: IconName
   onAction?: DataEventHandler
-  dataMap?: CollectionDataMap
+  itemProps?: CollectionitemProps
 }

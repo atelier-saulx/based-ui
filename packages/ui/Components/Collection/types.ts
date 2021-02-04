@@ -5,45 +5,45 @@ import { CSSProperties, ComponentType } from 'react'
 
 export type DataPath = (string | number)[]
 
-export type ImgDataMap = {
+export type ImgItemProps = {
   path: DataPath
 }
 
-export type IconDataMap = IconStyleProps & {
+export type IconItemProps = IconStyleProps & {
   path: DataPath
 }
 
-export type TextDataMap = {
+export type TextItemProps = {
   format?: TextFormat
   path: DataPath
 }
 
-export type DataMap =
-  | (TextDataMap & { type: 'text' })
-  | (ImgDataMap & { type: 'img' })
-  | (IconDataMap & { type: 'icon' })
+export type ItemProps =
+  | (TextItemProps & { type: 'text' })
+  | (ImgItemProps & { type: 'img' })
+  | (IconItemProps & { type: 'icon' })
 
-export type TableDataMap = {
-  fields: DataMap[]
+export type TableitemProps = {
+  fields: ItemProps[]
   id?: DataPath
 }
 
-export type CollectionDataMap = {
-  title?: TextDataMap
-  info?: TextDataMap
-  img?: ImgDataMap
-  icon?: IconDataMap
+export type CollectionitemProps = {
+  title?: TextItemProps
+  info?: TextItemProps
+  img?: ImgItemProps
+  icon?: IconItemProps
   id?: DataPath
 }
 
-export type SequenceDataMap = {
-  title?: TextDataMap
+export type SequenceitemProps = {
+  title?: TextItemProps
   id?: DataPath
-  img?: ImgDataMap
-  icon?: IconDataMap
+  img?: ImgItemProps
+  icon?: IconItemProps
   items?: {
     path: DataPath
-    data?: DataMap
+    props?: CollectionitemProps
   }
 }
 
@@ -57,8 +57,8 @@ export type FooterProps<T = any> = {
   width?: number
   icon?: IconName
   paddingLeft?: number
-  items?: Data<T>[]
-  onClick: MultiDataEventHandler<Data<T>> | DataEventHandler<Data<T>>
+  items?: Object[]
+  onClick: MultiDataEventHandler<Object> | DataEventHandler<Data<T>>
 }
 
 export type ActionProps = {

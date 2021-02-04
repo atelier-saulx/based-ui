@@ -54,114 +54,124 @@ export default {
   name: 'collections',
   Render: RenderComponents,
   components: [
-    // {
-    //   name: 'Flow',
-    //   category: 'collections',
-    //   Component: Flow,
-    //   props: [
-    //     () => {
-    //       return (
-    //         <div
-    //           style={{
-    //             height: 1000,
-    //           }}
-    //         >
-    //           <Flow
-    //             items={[
-    //               {
-    //                 title: 'my seq1',
-    //                 id: 1,
-    //                 items: [
-    //                   {
-    //                     title: 'yesh',
-    //                     data: {},
-    //                     id: 1,
-    //                   },
-    //                 ],
-    //               },
-    //               {
-    //                 title: 'my seq2',
-    //                 id: 2,
-    //                 items: listData.slice(0, 10),
-    //               },
-    //               {
-    //                 title: 'my seq3',
-    //                 id: 3,
-    //                 items: listData.slice(10, 40),
-    //               },
-    //             ]}
-    //             Options={({ isHover, data, items }) => {
-    //               return (
-    //                 <div
-    //                   style={{
-    //                     width: 50,
-    //                     height: 24,
-    //                     position: 'relative',
-    //                   }}
-    //                 >
-    //                   {data.id === 2 ? (
-    //                     <div
-    //                       style={{
-    //                         position: 'absolute',
-    //                         left: 26.5 + 25,
-    //                         top: 0,
-    //                       }}
-    //                     >
-    //                       <Jump
-    //                         isHover={isHover}
-    //                         items={[items[1], items[2]]}
-    //                         data={data}
-    //                       />
-    //                     </div>
-    //                   ) : null}
-    //                 </div>
-    //               )
-    //             }}
-    //             paddingLeft={30}
-    //             paddingTop={30}
-    //             paddingBottom={30}
-    //             paddingRight={140}
-    //             onDrop={async (e, data) => {
-    //               console.info(data)
-    //               await wait(1e3)
-    //             }}
-    //             header={{
-    //               Actions: () => {
-    //                 return (
-    //                   <SwitchTextButton
-    //                     enabledText="Editable"
-    //                     disabledText="Locked"
-    //                     onChange={() => {}}
-    //                     value
-    //                   />
-    //                 )
-    //               },
-    //             }}
-    //             onDropSequence={async (e, data) => {
-    //               console.info('SEQ AREA', data)
-    //               await wait(1e3)
-    //             }}
-    //             footer={{
-    //               label: 'New sequence',
-    //               onClick: async (e, data) => {
-    //                 await wait(1e3)
-    //               },
-    //             }}
-    //             stepFooter={{
-    //               label: 'New step',
-    //               onClick: async (e, data) => {
-    //                 await wait(1e3)
-    //               },
-    //             }}
-    //             onClick={(data, index) => {
-    //               console.info(data, index)
-    //             }}
-    //           />
-    //         </div>
-    //       )
-    //     },
-    //   ],
-    // },
+    {
+      name: 'Flow',
+      category: 'collections',
+      Component: Flow,
+      props: [
+        () => {
+          return (
+            <div
+              style={{
+                height: 1000,
+              }}
+            >
+              <Flow
+                itemProps={{
+                  id: ['id'],
+                  items: {
+                    props: {
+                      title: { path: ['text'] },
+                      icon: { path: ['flurpen'], framed: true },
+                      id: ['id'],
+                    },
+                    path: ['items'],
+                  },
+                }}
+                items={[
+                  {
+                    title: 'my seq1',
+                    id: 1,
+                    items: [
+                      {
+                        text: 'yesh',
+                        id: 1,
+                      },
+                    ],
+                  },
+                  {
+                    title: 'my seq2',
+                    id: 2,
+                    items: listData.slice(0, 10),
+                  },
+                  {
+                    title: 'my seq3',
+                    id: 3,
+                    items: listData.slice(10, 40),
+                  },
+                ]}
+                Options={({ isHover, data, items }) => {
+                  return (
+                    <div
+                      style={{
+                        width: 50,
+                        height: 24,
+                        position: 'relative',
+                      }}
+                    >
+                      {data.id === 2 ? (
+                        <div
+                          style={{
+                            position: 'absolute',
+                            left: 26.5 + 25,
+                            top: 0,
+                          }}
+                        >
+                          <Jump
+                            isHover={isHover}
+                            items={[items[1], items[2]]}
+                            data={data}
+                          />
+                        </div>
+                      ) : null}
+                    </div>
+                  )
+                }}
+                paddingLeft={30}
+                paddingTop={30}
+                paddingBottom={30}
+                paddingRight={140}
+                onDrop={async (e, data) => {
+                  console.info(data)
+                  await wait(1e3)
+                }}
+                header={{
+                  Actions: () => {
+                    return (
+                      <SwitchTextButton
+                        enabledText="Editable"
+                        disabledText="Locked"
+                        onChange={() => {}}
+                        value
+                      />
+                    )
+                  },
+                }}
+                onDropSequence={async (e, data) => {
+                  console.info('SEQ AREA', data)
+                  await wait(1e3)
+                }}
+                footer={{
+                  label: 'New sequence',
+                  onClick: async (e, data) => {
+                    await wait(1e3)
+                  },
+                }}
+                stepFooter={{
+                  label: 'New step',
+                  onClick: async (e, data) => {
+                    await wait(1e3)
+                  },
+                }}
+                onClick={(data, index) => {
+                  console.info(data, index)
+                }}
+              />
+            </div>
+          )
+        },
+      ],
+    },
     {
       name: 'OrderedList',
       category: 'collections',
@@ -185,7 +195,7 @@ export default {
                     text: data.title,
                   }
                 }}
-                dataMap={{
+                itemProps={{
                   title: { path: ['text'], format: 'uppercase' },
                   icon: { path: ['flurpen'], framed: true },
                   id: ['id'],
@@ -225,7 +235,7 @@ export default {
                     />
                   )
                 }}
-                dataMap={{
+                itemProps={{
                   title: { path: ['text'] },
                   icon: { path: ['flurpen'], framed: true },
                   id: ['id'],
@@ -274,7 +284,7 @@ export default {
                   // data will get a files field if its external
                   console.info(e, data)
                 }}
-                dataMap={{
+                itemProps={{
                   title: { path: ['text'] },
                   img: { path: ['img'] },
                   info: { path: ['created'], format: 'date-time-human' },
