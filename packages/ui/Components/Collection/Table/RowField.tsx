@@ -31,7 +31,7 @@ const RowField = ({ field, data, isLarge }) => {
         width: field.width,
       }}
     >
-      <Icon {...iconProps} />
+      {Icon ? <Icon {...iconProps} /> : null}
     </div>
   ) : field.type === 'img' ? (
     <div
