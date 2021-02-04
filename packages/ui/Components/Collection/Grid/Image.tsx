@@ -2,10 +2,6 @@ import { useColor } from '@based/theme'
 import React from 'react'
 
 export const Image = ({ src }: { src?: string }) => {
-  if (!src) {
-    return null
-  }
-
   return (
     <div
       style={{
@@ -21,7 +17,8 @@ export const Image = ({ src }: { src?: string }) => {
           ? `url(${src})`
           : `linear-gradient(135deg,${useColor({
               color: 'foreground',
-              tone: 3,
+              tone: 5,
+              opacity: 0.3,
             })} 0%,${useColor({ color: 'background', tone: 2 })} 100%)`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',

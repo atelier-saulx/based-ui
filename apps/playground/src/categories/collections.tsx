@@ -30,7 +30,7 @@ for (let i = 0; i < 50; i++) {
     text: 'Item ' + i,
     longtext: randomLongText(),
     flurpen: randomIcon(),
-    img: profilePic,
+    img: i !== 3 ? profilePic : '',
     created: randomDate(),
   })
 }

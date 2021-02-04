@@ -46,7 +46,7 @@ export const Grid = (props: GridProps) => {
           let w = (large ? 440 : 220) + 16
           const columnCount = Math.floor(width / w)
           // - 4 for scrollbar
-          w = Math.floor((width - 8) / columnCount) - 4 / columnCount
+          w = Math.floor((width - 16) / columnCount) - 4 / columnCount
           const h = w * ratio + 16
           const context = {
             onOptions,
