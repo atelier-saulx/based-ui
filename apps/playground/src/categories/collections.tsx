@@ -69,7 +69,7 @@ export default {
                 itemProps={{
                   title: { path: ['text'] },
                   img: { path: ['img'] },
-                  icon: { path: ['flurpen'] },
+                  icon: { path: ['flurpen'], framed: true },
                   info: { path: ['created'], format: 'date-time-human' },
                   id: ['id'],
                 }}
@@ -460,41 +460,41 @@ export default {
         },
       ],
     },
-    // {
-    //   name: 'Tabs',
-    //   category: 'collections',
-    //   Component: Tabs,
-    //   props: [
-    //     {
-    //       active: 6,
-    //       tabs: [
-    //         {
-    //           title: { en: 'Fun' },
-    //         },
-    //         {
-    //           title: { en: 'Snurfels' },
-    //         },
-    //         {
-    //           title: { en: 'Flurp' },
-    //         },
-    //         {
-    //           title: { en: 'Schlomodomo' },
-    //         },
-    //         {
-    //           title: { en: 'Setturs' },
-    //         },
-    //         {
-    //           title: { en: 'SchlomoSnur' },
-    //         },
-    //         {
-    //           title: { en: 'Plappa' },
-    //         },
-    //       ],
-    //       onChange: (tab) => {
-    //         console.info(tab)
-    //       },
-    //     },
-    //   ],
-    // },
+    {
+      name: 'Tabs',
+      category: 'collections',
+      Component: Tabs,
+      props: [
+        {
+          active: 6,
+          tabs: [
+            {
+              title: { en: 'Fun' },
+            },
+            {
+              title: { en: 'Snurfels' },
+            },
+            {
+              title: { en: 'Flurp' },
+            },
+            {
+              title: { en: 'Schlomodomo' },
+            },
+            {
+              title: { en: 'Setturs' },
+            },
+            {
+              title: { en: 'SchlomoSnur' },
+            },
+            {
+              title: { en: 'Plappa' },
+            },
+          ],
+          onChange: (tab) => {
+            console.info(tab)
+          },
+        },
+      ],
+    },
   ],
 }

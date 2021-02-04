@@ -241,13 +241,14 @@ const GridItem = ({
               style={{
                 display: 'flex',
                 alignItems: 'center',
+                marginBottom: itemProps.icon && itemProps.icon.framed ? 5 : 0,
               }}
             >
               {Icon ? (
                 <Icon
                   {...itemProps.icon}
                   style={{
-                    marginRight: 8,
+                    marginRight: itemProps.icon.framed ? 12 : 8,
                     marginLeft: itemProps.icon.framed ? 0 : -3,
                   }}
                 />
