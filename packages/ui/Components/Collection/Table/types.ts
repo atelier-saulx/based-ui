@@ -21,7 +21,10 @@ export type TableProps = {
   forceActive?: boolean
   exportData?: ExportData
   onOptions?: DataEventHandler // select options
-  onDrop?: DataEventHandler<{ data: Data[] } | { files: File[] }>
+  onDrop?: DataEventHandler<
+    | { data: Data[]; targetIndex?: number }
+    | { files: File[]; targetIndex?: number }
+  >
   onClick?: DataEventHandler // on click on the item
   activeId?: string | number
   optionsIcon?: IconName

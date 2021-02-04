@@ -1,4 +1,4 @@
-import React from 'React'
+import React, { useReducer } from 'React'
 import RenderComponents from '../RenderComponents'
 import {
   ContextualMenuItem,
@@ -14,6 +14,7 @@ import { randomIcon, randomLongText } from './util'
 import { Grid } from '@based/ui/Components/Collection/Grid'
 import { Tabs } from '@based/ui/Components/Collection/Tabs'
 import { wait } from '@saulx/utils'
+import { updateLanguage } from '@based/text'
 
 const profilePic = 'https://scx2.b-cdn.net/gfx/news/hires/2019/2-forest.jpg'
 const randomDate = () => {
@@ -300,6 +301,8 @@ export default {
       Component: Flow,
       props: [
         () => {
+          const [, update] = useReducer((x) => x + 1, 1)
+
           return (
             <div
               style={{
@@ -376,8 +379,30 @@ export default {
                 paddingBottom={30}
                 paddingRight={140}
                 onDrop={async (e, data) => {
-                  console.info(data)
                   await wait(1e3)
+
+                  if (data.data) {
+                    data.data.sort((a, b) => (a.index > b.index ? 1 : -1))
+
+                    for (let d of data.data) {
+                      listData.splice(d.index, 1)
+                    }
+
+                    if (data.targetIndex !== undefined) {
+                      listData.splice(
+                        data.targetIndex,
+                        0,
+                        ...data.data.map((v) => v.data)
+                      )
+
+                      console.log(
+                        data.data.map((v) => v.data.id),
+                        listData.map((v) => v.id)
+                      )
+                    }
+
+                    update()
+                  }
                 }}
                 header={{
                   Actions: () => {

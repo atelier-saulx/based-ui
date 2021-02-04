@@ -16,6 +16,7 @@ import isSafari from '../../../util/isSafari'
 import dragScroll from './dragScroll'
 import { Data } from '../../../types'
 import setData from './setData'
+import { deepEqual } from '@saulx/utils'
 
 const drag = {
   cnt: 0,
@@ -117,94 +118,96 @@ function useDrag<T>(
   const events: DragEvents = {
     draggable: true,
     current: null,
-    onDragStart: useCallback((e) => {
-      setDrag(true)
-      const t = ref ? ref.current : e.currentTarget
+    onDragStart: useCallback(
+      (e) => {
+        setDrag(true)
+        const t = ref ? ref.current : e.currentTarget
 
-      const { width, height } = t.getBoundingClientRect()
-      drag.cnt++
+        const { width, height } = t.getBoundingClientRect()
+        drag.cnt++
 
-      const s = getSelection()
+        const s = getSelection()
 
-      const holder = document.createElement('div')
-      holder.style.position = 'fixed'
-      document.body.appendChild(holder)
+        const holder = document.createElement('div')
+        holder.style.position = 'fixed'
+        document.body.appendChild(holder)
 
-      holder.style.top = '0px'
-      holder.style.left = '0px'
+        holder.style.top = '0px'
+        holder.style.left = '0px'
 
-      let cp
-      if (s.length > 1) {
-        render(<MultiDragInfo />, holder)
-        cp = holder.firstChild
+        let cp
+        if (s.length > 1) {
+          render(<MultiDragInfo />, holder)
+          cp = holder.firstChild
 
-        cp.children[1].innerHTML = `${s.length} items`
-      } else {
-        cp = t.cloneNode(true)
-        cp.style.position = 'absolute'
-        cp.style.width = width
-        cp.style.zIndex = 1000
-        cp.style.height = height
-        cp.style.pointerEvents = 'none'
-        if (props.style) {
-          for (const style in props.style) {
-            cp.style[style] = props.style[style]
+          cp.children[1].innerHTML = `${s.length} items`
+        } else {
+          cp = t.cloneNode(true)
+          cp.style.position = 'absolute'
+          cp.style.width = width
+          cp.style.zIndex = 1000
+          cp.style.height = height
+          cp.style.pointerEvents = 'none'
+          if (props.style) {
+            for (const style in props.style) {
+              cp.style[style] = props.style[style]
+            }
+          }
+          if (props.modifyImageElement) {
+            props.modifyImageElement(cp)
+          }
+          holder.appendChild(cp)
+        }
+
+        // remove the sneaky copy
+        global.requestAnimationFrame(() => {
+          document.body.removeChild(holder)
+        })
+
+        // allow adding file data for example for images
+        e.dataTransfer.setDragImage(cp, 0, 0)
+
+        e.dataTransfer.setData('application/based', JSON.stringify(data))
+
+        // need to check to use selection or not
+
+        const useSelection = s.find((ds) => deepEqual(ds.data, data.data))
+        Promise.all(
+          useSelection
+            ? s.filter((s) => !!s.exportData).map((s) => s.exportData(s))
+            : [
+                data.exportData
+                  ? data.exportData(data)
+                  : { text: JSON.stringify(data.data) },
+              ]
+        ).then(async (v) => {
+          await setData(e.dataTransfer, v)
+        })
+
+        let cancelDragScroll
+        if (isSafari()) {
+          cancelDragScroll = dragScroll(t)
+        }
+
+        const end = () => {
+          drag.cnt--
+          delete endListener.current
+          document.body.removeEventListener('dragend', end)
+          if (!isRemoved.current) {
+            setDrag(false)
+          } else {
+            document.body.removeChild(isRemoved.current)
+          }
+          if (cancelDragScroll) {
+            cancelDragScroll()
           }
         }
-        if (props.modifyImageElement) {
-          props.modifyImageElement(cp)
-        }
-        holder.appendChild(cp)
-      }
 
-      // remove the sneaky copy
-      global.requestAnimationFrame(() => {
-        document.body.removeChild(holder)
-      })
-
-      // allow adding file data for example for images
-      e.dataTransfer.setDragImage(cp, 0, 0)
-
-      e.dataTransfer.setData('application/based', JSON.stringify(data))
-
-      // need to check to use selection or not
-
-      const useSelection = s.find((d) => d === data)
-
-      Promise.all(
-        useSelection
-          ? s.filter((s) => !!s.exportData).map((s) => s.exportData(s))
-          : [
-              data.exportData
-                ? data.exportData(data)
-                : { text: JSON.stringify(data.data) },
-            ]
-      ).then(async (v) => {
-        await setData(e.dataTransfer, v)
-      })
-
-      let cancelDragScroll
-      if (isSafari()) {
-        cancelDragScroll = dragScroll(t)
-      }
-
-      const end = () => {
-        drag.cnt--
-        delete endListener.current
-        document.body.removeEventListener('dragend', end)
-        if (!isRemoved.current) {
-          setDrag(false)
-        } else {
-          document.body.removeChild(isRemoved.current)
-        }
-        if (cancelDragScroll) {
-          cancelDragScroll()
-        }
-      }
-
-      endListener.current = true
-      document.body.addEventListener('dragend', end)
-    }, []),
+        endListener.current = true
+        document.body.addEventListener('dragend', end)
+      },
+      [data]
+    ),
   }
 
   if (addRef) {

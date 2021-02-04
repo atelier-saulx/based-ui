@@ -7,7 +7,7 @@ import React, {
   EventHandler,
   SyntheticEvent,
 } from 'react'
-import { Data, ExportData } from '../types'
+import { Data } from '../types'
 
 const addListeners = () => {
   document.addEventListener('click', (e) => {
@@ -161,7 +161,10 @@ export function useSelect<T = any>(data: Data<T>): [SelectEvents, boolean] {
                   const nIndex = s[1]
                   if (nIndex > data.index) {
                     for (let i = data.index + 1; i < nIndex; i++) {
-                      const newItemData = selectionContext.data[i]
+                      const newItemData = {
+                        index: i,
+                        data: selectionContext.data[i],
+                      }
                       selectionContext.selection.add(newItemData)
                       selection.set(newItemData, [selectionContext, i])
                       if (selectionContext.children[i]) {
@@ -170,7 +173,10 @@ export function useSelect<T = any>(data: Data<T>): [SelectEvents, boolean] {
                     }
                   } else if (nIndex < data.index) {
                     for (let i = data.index - 1; i > nIndex; i--) {
-                      const newItemData = selectionContext.data[i]
+                      const newItemData = {
+                        index: i,
+                        data: selectionContext.data[i],
+                      }
                       selectionContext.selection.add(newItemData)
                       selection.set(newItemData, [selectionContext, i])
                       if (selectionContext.children[i]) {
@@ -185,7 +191,7 @@ export function useSelect<T = any>(data: Data<T>): [SelectEvents, boolean] {
             }
           }
         },
-        [isSelected]
+        [isSelected, data]
       ),
     },
     isSelected,

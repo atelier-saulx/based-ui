@@ -14,7 +14,10 @@ export type ListProps = {
   forceActive?: boolean
   exportData?: ExportData
   onOptions?: DataEventHandler
-  onDrop?: DataEventHandler<{ data: Data[] } | { files: File[] }>
+  onDrop?: DataEventHandler<
+    | { data: Data[]; targetIndex?: number }
+    | { files: File[]; targetIndex?: number }
+  >
   onClick?: DataEventHandler
   paddingRight?: number
   paddingLeft?: number

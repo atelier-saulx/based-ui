@@ -92,6 +92,7 @@ const useDrop = (
 
                   if (useSelection) {
                     data = s
+
                     clearSelection()
                   } else {
                     data = [d]
