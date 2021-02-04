@@ -11,6 +11,7 @@ const Header: FunctionComponent<HeaderProps> = ({
   framed,
   icon,
   items,
+  style,
   paddingLeft,
   paddingRight,
   ...props
@@ -31,6 +32,7 @@ const Header: FunctionComponent<HeaderProps> = ({
         height: 48,
         width,
         justifyContent: 'space-between',
+        ...style,
       }}
       {...props}
     >

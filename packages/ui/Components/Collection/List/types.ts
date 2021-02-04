@@ -1,19 +1,11 @@
 import { IconName } from '@based/icons'
 import { DataEventHandler, Data, ExportData, File } from '../../../types'
-import { ComponentType } from 'react'
-import { CollectionitemProps, HeaderProps, FooterProps } from '../types'
-
-export type OptionsComponent = ComponentType<{
-  onClick?: DataEventHandler
-  isHover: boolean
-  isActive: boolean
-  isDragging: boolean
-  isDragOver: boolean
-  isSelected: boolean
-  items: Object[]
-  data: Data
-  onOptions?: DataEventHandler
-}>
+import {
+  CollectionitemProps,
+  HeaderProps,
+  FooterProps,
+  OptionsComponent,
+} from '../types'
 
 export type ListProps = {
   header?: HeaderProps

@@ -66,6 +66,7 @@ export type ActionProps = {
 }
 
 export type HeaderProps = {
+  style?: CSSProperties
   label?: TextValue
   Actions?: ComponentType<ActionProps>
   framed?: boolean
@@ -75,3 +76,15 @@ export type HeaderProps = {
   paddingLeft?: number
   items?: Object[]
 }
+
+export type OptionsComponent = ComponentType<{
+  onClick?: DataEventHandler
+  isHover: boolean
+  isActive: boolean
+  isDragging: boolean
+  isDragOver: boolean
+  isSelected: boolean
+  items: Object[]
+  data: Data
+  onOptions?: DataEventHandler
+}>

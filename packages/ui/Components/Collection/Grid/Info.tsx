@@ -1,7 +1,5 @@
-import { getTextValue } from '@based/text'
 import React from 'react'
 import { SubText } from '../../..'
-// import { Body } from '../Text/Body'
 
 export default ({ data }) => {
   const values = [].concat(data)
@@ -17,7 +15,7 @@ export default ({ data }) => {
             }}
             color={{ color: 'foreground', tone: 2 }}
           >
-            {getTextValue(value)}
+            {value}
           </SubText>
         )
       })}

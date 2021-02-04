@@ -1,21 +1,24 @@
 import { useColor } from '@based/theme'
 import React from 'react'
-import { Img } from '../types'
 
-export const Image = ({ href }: { href: Img }) => {
+export const Image = ({ src }: { src?: string }) => {
+  if (!src) {
+    return null
+  }
+
   return (
     <div
       style={{
         // weird behaviour with 100% height in safari
         position: 'absolute',
         top: 0,
-        borderTopLeftRadius: 8,
-        borderTopRightRadius: 8,
+        borderTopLeftRadius: 4,
+        borderTopRightRadius: 4,
         left: 0,
         bottom: 0,
         right: 0,
-        backgroundImage: href
-          ? `url(${href})`
+        backgroundImage: src
+          ? `url(${src})`
           : `linear-gradient(135deg,${useColor({
               color: 'foreground',
               tone: 3,
