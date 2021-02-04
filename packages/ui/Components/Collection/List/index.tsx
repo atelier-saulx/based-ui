@@ -1,13 +1,13 @@
 import React, { forwardRef, useEffect } from 'react'
 import { FixedSizeList } from 'react-window'
 import AutoSizer from 'react-virtualized-auto-sizer'
-import { Header } from './../Header'
+import { Header } from '../Header'
 import { SelectableCollection } from '../../../hooks/useSelect'
 import useDragScroll from '../../../hooks/drag/useDragScroll'
 import { ListItem } from './ListItem'
 import { ListProps } from './types'
 import { useColor } from '@based/theme'
-import { Footer } from './Footer'
+import { Footer } from '../Footer'
 
 const mem = {}
 
@@ -50,8 +50,8 @@ export const List = (props: ListProps) => {
   }
 
   useEffect(() => {
-    if (forceActive) {
-      onClick(null, items[0])
+    if (forceActive && items[0]) {
+      onClick(null, { index: 0, data: items[0], exportData: props.exportData })
     }
   }, [forceActive])
 
@@ -98,7 +98,7 @@ export const List = (props: ListProps) => {
                 itemCount={items.length}
                 height={height - (header ? 48 : 0) - (footer ? 48 : 0)}
                 itemData={{ items, context }}
-                itemSize={48 + (items[0] && 'info' in items[0] ? 15 : 0)}
+                itemSize={48 + (props.dataMap && props.dataMap.info ? 15 : 0)}
                 {...useDragScroll(true)}
               >
                 {ListItem}

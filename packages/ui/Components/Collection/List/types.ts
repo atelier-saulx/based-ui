@@ -1,45 +1,29 @@
-import { IconName, IconStyleProps } from '@based/icons'
-import {
-  DataEventHandler,
-  MultiDataEventHandler,
-  Data,
-  ExportData,
-  File,
-} from '../../../types'
-import { TextValue } from '@based/text'
-import { Img } from '../types'
-import { ComponentType, CSSProperties } from 'react'
-import { HeaderProps } from './../Header'
-
-export type ListDataProps = {
-  icon?: IconStyleProps & { name: IconName }
-  img?: Img
-  info?: TextValue
-  title: TextValue
-  id: string | number
-}
+import { IconName } from '@based/icons'
+import { DataEventHandler, Data, ExportData, File } from '../../../types'
+import { ComponentType } from 'react'
+import { CollectionDataMap, HeaderProps, FooterProps } from '../types'
 
 export type OptionsComponent = ComponentType<{
-  onClick?: DataEventHandler<ListDataProps>
+  onClick?: DataEventHandler
   isHover: boolean
   isActive: boolean
   isDragging: boolean
   isDragOver: boolean
   isSelected: boolean
-  items: Data<ListDataProps>[]
-  data: Data<ListDataProps>
-  onOptions?: DataEventHandler<ListDataProps>
+  items: Object[]
+  data: Data
+  onOptions?: DataEventHandler
 }>
 
 export type ListProps = {
   header?: HeaderProps
   footer?: FooterProps
-  items?: Data<ListDataProps>[]
+  items?: Object[]
   forceActive?: boolean
-  exportData?: ExportData<ListDataProps>
-  onOptions?: DataEventHandler<ListDataProps> // select options
-  onDrop?: DataEventHandler<{ data: ListDataProps[] } | { files: File[] }> // i think this is an order change - if this is not there dont allow order change
-  onClick?: DataEventHandler<ListDataProps> // on click on the item
+  exportData?: ExportData
+  onOptions?: DataEventHandler
+  onDrop?: DataEventHandler<{ data: Data[] } | { files: File[] }>
+  onClick?: DataEventHandler
   paddingRight?: number
   paddingLeft?: number
   paddingTop?: number
@@ -50,23 +34,6 @@ export type ListProps = {
   contextualMenu?: boolean
   Options?: OptionsComponent
   actionIcon?: IconName
-  onAction?: DataEventHandler<ListDataProps>
-}
-
-export type ActionProps<T = ListDataProps> = {
-  items: Data<T>[]
-}
-
-export type FooterProps<T = ListDataProps> = {
-  label?: TextValue
-  floating?: boolean
-  framed?: boolean
-  data?: Data<T>
-  paddingRight?: number
-  style?: CSSProperties
-  width?: number
-  icon?: IconName
-  paddingLeft?: number
-  items?: Data<T>[]
-  onClick: MultiDataEventHandler<Data<T>> | DataEventHandler<Data<T>>
+  onAction?: DataEventHandler
+  dataMap?: CollectionDataMap
 }

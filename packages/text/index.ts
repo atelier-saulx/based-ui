@@ -3,15 +3,17 @@ import { useReducer, useEffect } from 'react'
 import parseDate, { DateFormat } from './dateString'
 import parseNumber, { NumberFormat } from './numberString'
 
+export type TextFormat =
+  | DateFormat
+  | NumberFormat
+  | 'capitalize'
+  | 'uppercase'
+  | 'lowercase'
+  | 'first-word'
+
 export type TextValueFormat = {
   value: TextValueSingle
-  format:
-    | DateFormat
-    | NumberFormat
-    | 'capitalize'
-    | 'uppercase'
-    | 'lowercase'
-    | 'first-word'
+  format: TextFormat
 }
 
 export { Language }

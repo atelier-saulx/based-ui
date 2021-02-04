@@ -97,8 +97,8 @@ const useDrop = (
                     data = [d]
                   }
                 }
-                let p
 
+                let p
                 setDropLoading(true)
                 if (props.readFiles) {
                   e.stopPropagation()
@@ -115,7 +115,9 @@ const useDrop = (
                       })
                     } else {
                       setDropLoading(false)
-                      t.dispatchEvent(ev)
+                      global.requestAnimationFrame(() => {
+                        t.dispatchEvent(ev)
+                      })
                     }
                   })
                 } else {
@@ -132,7 +134,6 @@ const useDrop = (
                     })
                   } else {
                     setDropLoading(false)
-                    // t.dispatchEvent(ev)
                   }
                 }
               }

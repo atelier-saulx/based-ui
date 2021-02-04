@@ -8,8 +8,8 @@ import useDrag from '../../../hooks/drag/useDrag'
 import useDrop from '../../../hooks/drag/useDrop'
 import { useSelect, useClick } from '../../../hooks/useSelect'
 import useContextualMenu from '../../../hooks/events/useContextualMenu'
-import { ListDataProps } from './types'
 import { Loader } from '../../Loader/Loader'
+import getData from '../getData'
 
 const Img = ({ src, size }) => {
   return (
@@ -56,18 +56,25 @@ const Action = ({ icon, onClick, isHover }) => {
   )
 }
 
+const defaultDataMap = {
+  title: {
+    path: ['title'],
+  },
+}
+
 const ListItem = ({
   index,
   data: { items, context },
   style: itemStyle = undefined,
   styleOverride,
 }) => {
-  const {
+  let {
     onClick,
     activeId,
     onOptions,
     Options,
     actionIcon,
+    dataMap,
     onAction,
     optionsIcon,
     contextualMenu,
@@ -77,6 +84,10 @@ const ListItem = ({
     paddingTop = 0,
     exportData,
   } = context
+
+  if (!dataMap) {
+    dataMap = defaultDataMap
+  }
 
   const style = {
     height: 48,
@@ -91,15 +102,32 @@ const ListItem = ({
 
   const itemData = items[index]
 
-  if (exportData) {
-    itemData.exportData = exportData
+  const iconName = dataMap.icon && getData(itemData, dataMap.icon.path)
+  const img = dataMap.img && getData(itemData, dataMap.img.path)
+  const title = dataMap.title.format
+    ? {
+        format: dataMap.title.format,
+        value: getData(itemData, dataMap.title.path),
+      }
+    : getData(itemData, dataMap.title.path)
+  const info =
+    dataMap.info &&
+    (dataMap.info.format
+      ? {
+          format: dataMap.info.format,
+          value: getData(itemData, dataMap.info.path),
+        }
+      : getData(itemData, dataMap.info.path))
+  const id = dataMap.id ? getData(itemData, dataMap.id) : index
+
+  const wrappedData = {
+    index,
+    data: itemData,
+    exportData,
   }
 
-  if (!itemData.index) {
-    itemData.index = index
-  }
+  const isActive = activeId === id
 
-  const isActive = activeId === itemData.id
   const [hover, isHover] = useHover()
   const [drop, isDragOver, isDropLoading] = useDrop(
     useCallback(
@@ -121,8 +149,9 @@ const ListItem = ({
     ),
     { readFiles: true }
   )
-  const [drag, isDragging] = useDrag<ListDataProps>(itemData, ref)
-  const [select, isSelected] = useSelect(itemData)
+
+  const [drag, isDragging] = useDrag(wrappedData, ref)
+  const [select, isSelected] = useSelect(wrappedData)
 
   if (onDrop) {
     useEffect(() => {
@@ -162,9 +191,8 @@ const ListItem = ({
     }, [isDragOver, onDrop, isDropLoading])
   }
 
+  const Icon = iconName ? iconFromString(iconName) : null
   const OptionsIcon = optionsIcon ? iconFromString(optionsIcon) : Settings
-
-  const Icon = itemData.icon ? iconFromString(itemData.icon.name) : null
 
   return (
     <div style={styleOverride || x} {...drop}>
@@ -191,7 +219,6 @@ const ListItem = ({
                 width: '100%',
                 display: 'flex',
                 alignItems: 'center',
-                // justifyContent: 'center',
                 top: 23,
               }}
             >
@@ -203,7 +230,7 @@ const ListItem = ({
       <div
         ref={ref}
         style={{
-          height: 48 + (itemData.info ? 15 : 0),
+          height: 48 + (dataMap.info ? 15 : 0),
           opacity: isDragging ? 0.5 : 1,
           alignItems: 'center',
           display: 'flex',
@@ -234,9 +261,9 @@ const ListItem = ({
             ? {
                 onClick: useClick(
                   (e) => {
-                    onClick(e, itemData)
+                    onClick(e, wrappedData)
                   },
-                  [onClick, itemData]
+                  [onClick, wrappedData]
                 ),
               }
             : undefined,
@@ -244,18 +271,18 @@ const ListItem = ({
             ? useContextualMenu(
                 useCallback(
                   (e) => {
-                    onOptions(e, itemData)
+                    onOptions(e, wrappedData)
                   },
-                  [onOptions, itemData]
+                  [onOptions, wrappedData]
                 )
               )
             : undefined
         )}
       >
-        {itemData.img ? (
-          <Img src={itemData.img} size={24 + (itemData.info ? 15 : 0)} />
+        {img ? (
+          <Img src={img} size={24 + (dataMap.info ? 15 : 0)} />
         ) : Icon ? (
-          <Icon {...itemData.icon} />
+          <Icon {...dataMap.icon} />
         ) : null}
         <div
           style={{
@@ -264,9 +291,9 @@ const ListItem = ({
           }}
         >
           <Text weight="medium" singleLine>
-            {itemData.title}
+            {title}
           </Text>
-          {itemData.info ? (
+          {info ? (
             <Text
               singleLine
               weight="regular"
@@ -275,7 +302,7 @@ const ListItem = ({
                 marginTop: -4,
               }}
             >
-              {itemData.info}
+              {info}
             </Text>
           ) : null}
         </div>
@@ -287,7 +314,7 @@ const ListItem = ({
               (e) => {
                 e.stopPropagation()
                 if (onAction) {
-                  onAction(e, itemData)
+                  onAction(e, wrappedData)
                 }
               },
               [itemData]
@@ -317,9 +344,9 @@ const ListItem = ({
               onClick={useCallback(
                 (e) => {
                   e.stopPropagation()
-                  onOptions(e, itemData)
+                  onOptions(e, wrappedData)
                 },
-                [itemData]
+                [wrappedData]
               )}
               style={{
                 width: 35,
@@ -336,7 +363,7 @@ const ListItem = ({
               isActive={isActive}
               onOptions={onOptions}
               onClick={onClick}
-              data={itemData}
+              data={wrappedData}
               items={items}
             />
           ) : null}
