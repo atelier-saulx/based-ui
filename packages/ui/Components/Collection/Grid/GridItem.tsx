@@ -135,18 +135,25 @@ const GridItem = ({
           opacity: isDragging ? 0.5 : 1,
           width,
           display: 'flex',
+          transform: isDragOver
+            ? large
+              ? 'scale(0.98)'
+              : 'scale(0.96)'
+            : 'scale(1.0)',
           flexDirection: 'column',
           cursor: 'pointer',
-          transition: 'background-color 0.15s, border 0.15s',
+          transition: 'transform 0.15s',
           border:
-            // TODO: isActve style
             '1px solid ' +
-            (isHover && !isSelected
-              ? useColor({ color: 'foreground', tone: 3 })
-              : useColor({
-                  color:
-                    isSelected || isHover || isActive ? 'primary' : 'divider',
-                })),
+            useColor({
+              tone: isHover ? 3 : 1,
+              color:
+                isSelected || isActive
+                  ? 'primary'
+                  : isHover
+                  ? 'foreground'
+                  : 'divider',
+            }),
           borderRadius: 4,
         }}
         {...useMultipleEvents(
