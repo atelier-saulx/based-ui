@@ -5,12 +5,12 @@ import { HeaderProps, FooterProps, SequenceitemProps } from '../types'
 
 export type FlowProps = {
   onDrop?: DataEventHandler<
-    | { data: Data[]; targetIndex?: number }
-    | { files: File[]; targetIndex?: number }
+    | { data: Data[]; targetIndex: number; targetData: Data }
+    | { files: File[]; targetIndex: number; targetData: Data }
   > // i think this is an order change - if this is not there dont allow order change
   onDropSequence?: DataEventHandler<
-    | { data: Data[]; targetIndex?: number }
-    | { files: File[]; targetIndex?: number }
+    | { data: Data[]; targetIndex: number }
+    | { files: File[]; targetIndex: number }
   > // i think this is an order change - if this is not there dont allow order change
   paddingRight?: number
   paddingLeft?: number

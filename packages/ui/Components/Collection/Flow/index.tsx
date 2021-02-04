@@ -102,6 +102,19 @@ const Sequence = ({ style, data: { items, context, width }, index }) => {
       data: itemData,
     }
 
+    if (context.onDrop) {
+      const onDrop = context.onDrop
+      context = {
+        ...context,
+        onDrop: useCallback(
+          (e, d) => {
+            return onDrop(e, { ...d, targetData: itemData })
+          },
+          [onDrop, itemData]
+        ),
+      }
+    }
+
     const [drag, isDragging] = useDrag(wrappedData)
     const [drop, isDragOver] = useDrop()
 

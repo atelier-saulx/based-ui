@@ -305,20 +305,20 @@ export default {
 
           const fd = [...listData]
 
-          useEffect(() => {
-            const int = setInterval(() => {
-              console.log('GO UPDATE')
-              const id = ~~(Math.random() * 1000)
-              listData.unshift({
-                id: id,
-                text: 'ITEM NEW ' + id,
-              })
-              update()
-            }, 5e3)
-            return () => {
-              clearTimeout(int)
-            }
-          }, [])
+          // useEffect(() => {
+          //   const int = setInterval(() => {
+          //     console.log('GO UPDATE')
+          //     const id = ~~(Math.random() * 1000)
+          //     listData.unshift({
+          //       id: id,
+          //       text: 'ITEM NEW ' + id,
+          //     })
+          //     update()
+          //   }, 5e3)
+          //   return () => {
+          //     clearTimeout(int)
+          //   }
+          // }, [])
 
           return (
             <div
@@ -356,7 +356,7 @@ export default {
                   {
                     title: 'my seq2',
                     id: 2,
-                    items: fd.slice(40),
+                    items: fd.slice(0, 10),
                   },
                   {
                     title: 'my seq3',
@@ -397,6 +397,8 @@ export default {
                 paddingRight={200}
                 onDrop={async (e, data) => {
                   if (data.data) {
+                    console.log(data)
+
                     data.data.sort((a, b) => (a.index > b.index ? 1 : -1))
                     for (let d of data.data) {
                       listData.splice(
@@ -434,7 +436,12 @@ export default {
                 stepFooter={{
                   label: 'New step',
                   onClick: async (e, data) => {
+                    listData.unshift({
+                      id: listData.length,
+                      text: 'gruken ' + listData.length,
+                    })
                     await wait(1e3)
+                    update()
                   },
                 }}
                 onClick={(data, index) => {
