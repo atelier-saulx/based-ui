@@ -15,9 +15,6 @@ const modifyImageElement = (el) => {
 }
 
 const TableRow = (props) => {
-  if (!props.data) {
-    return null
-  }
   const context = props.data.context
 
   const { index, data } = props
@@ -25,9 +22,15 @@ const TableRow = (props) => {
   const [hover, isHover] = useHover()
   const ref = useRef()
 
+  const wrappedData = {
+    index,
+    data: itemData,
+    exportData: context.exportData,
+  }
+
   let drag
   if (context.draggable) {
-    ;[drag] = useDrag(itemData, ref, {
+    ;[drag] = useDrag(wrappedData, ref, {
       style: {
         maxWidth: 500,
         backgroundColor: useColor({ color: 'background' }),
@@ -36,7 +39,7 @@ const TableRow = (props) => {
     })
   }
 
-  const [select, isSelected] = useSelect(itemData)
+  const [select, isSelected] = useSelect(wrappedData)
 
   let optionsRef
   if (context.onOptions) {
@@ -56,9 +59,9 @@ const TableRow = (props) => {
           ? useContextualMenu(
               useCallback(
                 (e) => {
-                  context.onOptions(e, { data: itemData, index })
+                  context.onOptions(e, wrappedData)
                 },
-                [context.onOptions]
+                [context.onOptions, wrappedData]
               )
             )
           : undefined,
@@ -66,9 +69,9 @@ const TableRow = (props) => {
           ? {
               onClick: useClick(
                 (e) => {
-                  context.onClick(e, { data: itemData, index })
+                  context.onClick(e, wrappedData)
                 },
-                [context.onClick, index, itemData]
+                [context.onClick, wrappedData]
               ),
             }
           : undefined
@@ -76,7 +79,7 @@ const TableRow = (props) => {
       style={{
         paddingTop: context.isLarge ? 10 : 5,
         cursor: context.onClick ? 'pointer' : 'default',
-        height: 60,
+        height: context.isLarge ? 80 : 60,
         ...props.style,
       }}
     >
@@ -85,8 +88,8 @@ const TableRow = (props) => {
         style={{
           display: 'flex',
           alignItems: 'center',
-          height: 60,
-          paddingLeft: 16 + (context.draggable ? 20 : 10),
+          height: context.isLarge ? 70 : 55,
+          paddingLeft: 16,
           paddingRight: 16,
           borderRadius: 4,
           backgroundColor: isSelected
@@ -97,29 +100,25 @@ const TableRow = (props) => {
         }}
       >
         {context.draggable ? (
-          <Drag
+          <div
             style={{
               opacity: isHover ? 1 : 0,
               transition: 'opacity 0.15s',
-              position: 'absolute',
               cursor: 'grab',
-              left: 5,
-              top: 0,
-              bottom: 0,
-              display: 'flex',
-              alignItems: 'center',
+              marginRight: 10,
+              marginLeft: -12,
             }}
             {...drag}
-          />
+          >
+            <Drag />
+          </div>
         ) : null}
-        {context.fields.map((field, index) => {
+        {context.itemProps.fields.map((field, index) => {
           return (
             <RowField
-              index={index}
-              isLast={index === context.fields.length - 1}
-              data={props.data[props.index]}
-              {...field}
-              isLarge={context.isLarge}
+              data={data.items[props.index]}
+              field={field}
+              isLarge={context.large}
               key={index}
             />
           )
@@ -134,10 +133,9 @@ const TableRow = (props) => {
             }}
           >
             <OptionsIcon
-              onClick={useCallback(
-                (e) => context.onOptions(e, { data: itemData, index }),
-                [itemData]
-              )}
+              onClick={useCallback((e) => context.onOptions(e, wrappedData), [
+                wrappedData,
+              ])}
               style={{ width: 35 }}
             />
           </div>

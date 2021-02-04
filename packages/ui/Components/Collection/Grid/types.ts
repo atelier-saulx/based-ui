@@ -16,7 +16,7 @@ export type GridProps = {
   optionsIcon?: IconName
   exportData?: ExportData
   onOptions?: DataEventHandler // select options
-  onDrop?: DataEventHandler<{ data: Data[] } | { files: File[] }> // i think this is an order change - if this is not there dont allow order change
+  onDrop?: DataEventHandler<{ data: Data[] } | { files: File[] }>
   onClick?: DataEventHandler // on click on the item
   framed?: boolean
   Graphic?: OptionsComponent

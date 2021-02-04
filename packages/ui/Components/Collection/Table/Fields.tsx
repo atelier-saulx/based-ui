@@ -15,7 +15,6 @@ const SortableField = ({ children, sort, width, sortable, onChange }) => {
       {...hover}
       style={{
         width: width,
-        // overflow: 'hidden',
         display: 'flex',
         cursor: 'pointer',
         position: 'relative',
@@ -45,7 +44,7 @@ const SortableField = ({ children, sort, width, sortable, onChange }) => {
   )
 }
 
-const Field = ({ field, width, label, type, sortable, sort, onChange }) => {
+const Field = ({ path, width, type, label, sortable, sort, onChange }) => {
   const children =
     label === false ? (
       <div style={{ width: width }} />
@@ -58,13 +57,13 @@ const Field = ({ field, width, label, type, sortable, sort, onChange }) => {
           textTransform: !label ? 'capitalize' : null,
         }}
       >
-        {label || field}
+        {label || (type !== 'img' && type !== 'icon' ? path[0] : '')}
       </Text>
     )
 
   if (sortable) {
     return (
-      <SortableField sort={sort} width={width} onChange={onChange}>
+      <SortableField sort={sort} width={width} onChange={onChange} sortable>
         {children}
       </SortableField>
     )
@@ -74,8 +73,8 @@ const Field = ({ field, width, label, type, sortable, sort, onChange }) => {
 }
 
 const Fields = ({ onChange, filter, width, context }) => {
-  //   const context = useContext(TableContext)
   const options = context.onOptions
+  // do something with filter
   return (
     <div
       style={{
@@ -89,7 +88,7 @@ const Fields = ({ onChange, filter, width, context }) => {
         borderBottom: '1px solid ' + useColor({ color: 'divider' }),
       }}
     >
-      {context.fields.map((field, index) => {
+      {context.itemProps.fields.map((field, index) => {
         return <Field {...field} key={index} onChange={onChange} />
       })}
       {options ? <div style={{ width: 35 }} /> : null}

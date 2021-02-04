@@ -8,7 +8,7 @@ import useDrag from '../../../hooks/drag/useDrag'
 import useDrop from '../../../hooks/drag/useDrop'
 import { useSelect, useClick } from '../../../hooks/useSelect'
 import useMultipleEvents from '../../../hooks/events/useMultipleEvents'
-import useOptions from '../../../hooks/events/useContextualMenu'
+import useContextualMenu from '../../../hooks/events/useContextualMenu'
 import getData from '../getData'
 import { Image } from './Image'
 import { Title } from '../../Text/Title'
@@ -96,7 +96,7 @@ const GridItem = ({
   const ref = useRef()
   const [drag, isDragging] = useDrag(wrappedData, ref)
   const [select, isSelected] = useSelect(wrappedData)
-  const [drop, isDragOver, isDropLoading] = useDrop(
+  const [drop, isDragOver] = useDrop(
     useCallback(
       (e, { files, data }) => {
         if (onDrop) {
@@ -171,8 +171,8 @@ const GridItem = ({
                 ),
               }
             : undefined,
-          onOptions
-            ? useOptions(
+          onOptions && context.contextualMenu
+            ? useContextualMenu(
                 useCallback(
                   (e) => {
                     onOptions(e, wrappedData)

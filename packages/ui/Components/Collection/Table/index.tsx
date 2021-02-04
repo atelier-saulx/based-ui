@@ -1,64 +1,38 @@
-import React from 'react'
+import React, { FunctionComponent } from 'react'
 import { FixedSizeList } from 'react-window'
 import AutoSizer from 'react-virtualized-auto-sizer'
 import { SelectableCollection } from '../../../hooks/useSelect'
 import useDragScroll from '../../../hooks/drag/useDragScroll'
-import parseProps from './parseProps'
 import TableRow from './TableRow'
 import Fields from './Fields'
-// make nice props
+import { TableProps } from './types'
+import getFieldSizes from './getFieldSizes'
 
-// fields
-
-// data (format)
-
-// TextValue for parsing
-
-// many things the same as list
-
-export const Table = ({
-  fields,
-  data = [],
-  onChange,
-  filter,
-  onOptions,
-  optionsIcon,
-  draggable = false,
-  large,
-  onClick,
-  contextualMenu,
-}) => {
+export const Table: FunctionComponent<TableProps> = (props) => {
   return (
     <AutoSizer>
       {({ height, width }) => {
-        const context = parseProps(
+        const itemProps = getFieldSizes(
           width,
-          fields,
-          optionsIcon,
-          onOptions,
-          large,
-          draggable,
-          contextualMenu
+          props.itemProps,
+          props.onOptions,
+          true
         )
-
-        if (onClick) {
-          context.onClick = onClick
-        }
-
+        const context = { ...props, itemProps }
         return (
-          <SelectableCollection items={data}>
+          <SelectableCollection items={props.items}>
             <Fields
-              onChange={onChange}
-              filter={filter}
+              onChange={props.onChange}
+              filter={props.filter}
               width={width}
               context={context}
             />
             <FixedSizeList
               width={width}
-              itemCount={data.length}
+              itemCount={props.items.length}
               height={height - 42}
-              itemData={{ context, items: data }}
-              itemSize={context.isLarge ? 80 : 60}
+              itemData={{ context, items: props.items }}
+              itemSize={props.large ? 80 : 60}
               {...useDragScroll(true)}
             >
               {TableRow}

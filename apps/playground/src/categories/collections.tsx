@@ -5,6 +5,7 @@ import {
   List,
   useMenu,
   Text,
+  Table,
   Flow,
   Jump,
   SwitchTextButton,
@@ -40,6 +41,89 @@ export default {
   Render: RenderComponents,
   components: [
     {
+      name: 'Table',
+      category: 'collections',
+      Component: Table,
+      props: [
+        () => {
+          return (
+            <div
+              style={{
+                height: 400,
+              }}
+            >
+              <Table
+                large
+                draggable
+                onChange={(s) => {
+                  console.info(s)
+                }}
+                optionsIcon="More"
+                onOptions={useMenu((props) => {
+                  return (
+                    <ContextualMenuItem
+                      label="Yesh"
+                      icon="NewFlow"
+                      onClick={() => {
+                        console.info(props)
+                      }}
+                    />
+                  )
+                })}
+                itemProps={{
+                  id: ['id'],
+                  fields: [
+                    {
+                      type: 'icon',
+                      framed: true,
+                      path: ['flurpen'],
+                    },
+                    {
+                      bold: true,
+                      type: 'text',
+                      path: ['text'],
+                      label: 'Show',
+                    },
+
+                    {
+                      type: 'text',
+                      path: ['created'],
+                      label: 'Created',
+                      format: 'date-time-human',
+                    },
+                    {
+                      type: 'img',
+                      path: ['img'],
+                    },
+                  ],
+                }}
+                items={listData}
+                exportData={async (data) => {
+                  return {
+                    file: {
+                      name: `snurpel-index-${data.index}.csv`,
+                      mime: 'text/csv',
+                      value: data.data,
+                    },
+                    text: data.title,
+                  }
+                }}
+                onDrop={(e, data) => {
+                  // data will get a files field if its external
+                  console.info(e, data)
+                }}
+                activeId={2}
+                onClick={(data, index) => {
+                  console.info(data, index)
+                }}
+              />
+            </div>
+          )
+        },
+      ],
+    },
+
+    {
       name: 'Grid',
       category: 'collections',
       Component: Grid,
@@ -52,7 +136,7 @@ export default {
               }}
             >
               <Grid
-                // framed
+                contextualMenu
                 footer={{ onClick: () => {} }}
                 optionsIcon="More"
                 onOptions={useMenu((props) => {

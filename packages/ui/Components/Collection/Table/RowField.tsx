@@ -1,55 +1,71 @@
 import React from 'react'
 import { useColor } from '@based/theme'
 import { Text } from '../../Text'
+import getData from '../getData'
+import { iconFromString } from '@based/icons'
 
-const RowField = ({
-  field,
-  fields,
-  bold,
-  index,
-  width,
-  data,
-  editable,
-  isLast,
-  format,
-  type,
-  isLarge,
-}) => {
-  //   const selectedData = selectData(field, data)
-  return type === 'image' ? (
+const RowField = ({ field, data, isLarge }) => {
+  let selectedData = getData(data, field.path)
+  if (field.format) {
+    selectedData = {
+      value: selectedData,
+      format: field.format,
+    }
+  }
+  let Icon, iconProps
+  if (field.type === 'icon') {
+    let iconName
+    if (selectedData && typeof selectedData === 'object') {
+      iconName = selectedData.name
+      iconProps = selectedData
+    } else if (selectedData) {
+      iconName = selectedData
+      iconProps = field
+    }
+    Icon = iconFromString(iconName)
+  }
+
+  return field.type === 'icon' ? (
     <div
       style={{
-        width: width,
+        width: field.width,
+      }}
+    >
+      <Icon {...iconProps} />
+    </div>
+  ) : field.type === 'img' ? (
+    <div
+      style={{
+        width: field.width,
       }}
     >
       <div
         style={{
           width: isLarge ? 50 : 35,
           height: isLarge ? 50 : 35,
-          backgroundColor: useColor({ color: 'foreground', tone: 3 }),
+          backgroundColor: useColor({ color: 'background', tone: 5 }),
           borderRadius: '50%',
           backgroundSize: 'cover',
           boxShadow: `0px 0px 3px ${useColor({
             color: 'foreground',
-            tone: 1,
-            opacity: 0.15,
+            tone: 5,
+            opacity: 0.3,
           })} inset`,
-          //   backgroundImage: `url(${selectedData})`,
+          backgroundImage: `url(${selectedData})`,
         }}
       />
     </div>
   ) : (
     <Text
-      weight={bold ? 'semibold' : 'regular'}
+      weight={field.bold ? 'semibold' : 'regular'}
       singleLine
       style={{
-        width: width,
+        width: field.width,
         paddingRight: 30,
         userSelect: 'none',
       }}
     >
-      YESH
-      {/* {type === 'date' ? dateString(selectedData, format) : selectedData} */}
+      {selectedData}
     </Text>
   )
 }

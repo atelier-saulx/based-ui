@@ -1,32 +1,34 @@
-import { IconName, IconStyleProps } from '@based/icons'
-import { DataEventHandler, Data, ExportData, File } from '../../../types'
-import { TextValue } from '@based/text'
-import { Img } from '../types'
-import { ComponentType, CSSProperties } from 'react'
-import { HeaderProps } from './../Header'
+import { IconName } from '@based/icons'
+import {
+  DataEventHandler,
+  ExportData,
+  File,
+  Data,
+  OnValueChange,
+} from '../../../types'
+import { TableitemProps, OptionsComponent } from '../types'
 
-// allmost the same as list props + fields
+export type FieldsViewUpdate = {
+  sort?: { field: number; order: 'desc' | 'asc' }
+  filter?: string
+}
 
-// here we actualy may need select data...
-
-export type ListProps = {
-  header?: HeaderProps
-  footer?: FooterProps
-  items?: Data<ListDataProps>[]
+export type TableProps = {
+  draggable?: boolean
+  itemProps: TableitemProps
+  large?: boolean
+  items?: Object[]
   forceActive?: boolean
-  exportData?: ExportData<ListDataProps>
-  onOptions?: DataEventHandler<ListDataProps> // select options
-  onDrop?: DataEventHandler<{ data: ListDataProps[] } | { files: File[] }> // i think this is an order change - if this is not there dont allow order change
-  onClick?: DataEventHandler<ListDataProps> // on click on the item
-  paddingRight?: number
-  paddingLeft?: number
-  paddingTop?: number
-  paddingBottom?: number
+  exportData?: ExportData
+  onOptions?: DataEventHandler // select options
+  onDrop?: DataEventHandler<{ data: Data[] } | { files: File[] }>
+  onClick?: DataEventHandler // on click on the item
   activeId?: string | number
-  framed?: boolean
   optionsIcon?: IconName
   contextualMenu?: boolean
   Options?: OptionsComponent
   actionIcon?: IconName
-  onAction?: DataEventHandler<ListDataProps>
+  filter?: boolean
+  onChange: OnValueChange<FieldsViewUpdate>
+  onAction?: DataEventHandler
 }

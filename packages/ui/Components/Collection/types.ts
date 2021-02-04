@@ -18,13 +18,24 @@ export type TextItemProps = {
   path: DataPath
 }
 
-export type ItemProps =
-  | (TextItemProps & { type: 'text' })
-  | (ImgItemProps & { type: 'img' })
-  | (IconItemProps & { type: 'icon' })
+export type TableItemPropsField =
+  | (TextItemProps & {
+      type: 'text'
+      label?: TextValue
+      width?: number
+      bold?: boolean
+    })
+  | (TextItemProps & {
+      type: 'number'
+      label?: TextValue
+      width?: number
+      bold?: boolean
+    })
+  | (ImgItemProps & { type: 'img'; label?: TextValue; width?: number })
+  | (IconItemProps & { type: 'icon'; label?: TextValue; width?: number })
 
 export type TableitemProps = {
-  fields: ItemProps[]
+  fields: TableItemPropsField[]
   id?: DataPath
 }
 
