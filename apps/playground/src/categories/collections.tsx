@@ -1,4 +1,4 @@
-import React, { useReducer } from 'React'
+import React, { useEffect, useReducer } from 'React'
 import RenderComponents from '../RenderComponents'
 import {
   ContextualMenuItem,
@@ -25,7 +25,7 @@ const randomDate = () => {
   ).getTime()
 }
 
-const listData = []
+let listData = []
 for (let i = 0; i < 50; i++) {
   listData.push({
     id: i,
@@ -303,6 +303,23 @@ export default {
         () => {
           const [, update] = useReducer((x) => x + 1, 1)
 
+          const fd = [...listData]
+
+          useEffect(() => {
+            const int = setInterval(() => {
+              console.log('GO UPDATE')
+              const id = ~~(Math.random() * 1000)
+              listData.unshift({
+                id: id,
+                text: 'ITEM NEW ' + id,
+              })
+              update()
+            }, 1e3)
+            return () => {
+              clearTimeout(int)
+            }
+          }, [])
+
           return (
             <div
               style={{
@@ -339,12 +356,12 @@ export default {
                   {
                     title: 'my seq2',
                     id: 2,
-                    items: listData.slice(0, 10),
+                    items: fd.slice(40),
                   },
                   {
                     title: 'my seq3',
                     id: 3,
-                    items: listData.slice(10, 40),
+                    items: fd.slice(10),
                   },
                 ]}
                 Options={({ isHover, data, items }) => {
@@ -374,10 +391,10 @@ export default {
                     </div>
                   )
                 }}
-                paddingLeft={30}
+                paddingLeft={200}
                 paddingTop={30}
                 paddingBottom={30}
-                paddingRight={140}
+                paddingRight={200}
                 onDrop={async (e, data) => {
                   await wait(1e3)
 
@@ -385,21 +402,22 @@ export default {
                     data.data.sort((a, b) => (a.index > b.index ? 1 : -1))
 
                     for (let d of data.data) {
+                      console.log(d.index)
                       listData.splice(d.index, 1)
                     }
 
-                    if (data.targetIndex !== undefined) {
-                      listData.splice(
-                        data.targetIndex,
-                        0,
-                        ...data.data.map((v) => v.data)
-                      )
+                    // if (data.targetIndex !== undefined) {
+                    //   listData.splice(
+                    //     data.targetIndex,
+                    //     0,
+                    //     ...data.data.map((v) => v.data)
+                    //   )
 
-                      console.log(
-                        data.data.map((v) => v.data.id),
-                        listData.map((v) => v.id)
-                      )
-                    }
+                    //   console.log(
+                    //     data.data.map((v) => v.data.id),
+                    //     listData.map((v) => v.id)
+                    //   )
+                    // }
 
                     update()
                   }

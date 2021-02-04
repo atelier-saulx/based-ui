@@ -267,7 +267,9 @@ const GridItem = ({
                 }}
               >
                 <Text>
-                  {text.length > 1e3 ? text.slice(0, 1000) + '...' : text}
+                  {text && text.length > 1e3
+                    ? text.slice(0, 1000) + '...'
+                    : text}
                 </Text>
               </div>
             ) : null}

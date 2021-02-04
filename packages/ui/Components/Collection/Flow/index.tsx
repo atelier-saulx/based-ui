@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect, useRef } from 'react'
 import { VariableSizeList } from 'react-window'
 import AutoSizer from 'react-virtualized-auto-sizer'
 import useDragScroll from '../../../hooks/drag/useDragScroll'
@@ -287,16 +287,27 @@ export const Flow = (props: FlowProps) => {
       ]
     : items
 
+  const listRef = useRef<any>()
+
+  useEffect(() => {
+    if (listRef.current) {
+      listRef.current.resetAfterIndex(0)
+    }
+  }, [items])
+
+  // const itemsWithNew = items
   return (
     <AutoSizer>
       {({ height, width }) => {
         return (
           <VariableSizeList
+            ref={listRef}
             width={width}
             style={{
               paddingTop,
               paddingBottom,
             }}
+            resz
             itemCount={itemsWithNew.length}
             height={height}
             itemData={{
@@ -313,6 +324,8 @@ export const Flow = (props: FlowProps) => {
               width,
             }}
             itemSize={(index) => {
+              console.log('YO RECALC')
+
               let x = 0
               if (index === 0 && paddingTop) {
                 x += paddingTop
