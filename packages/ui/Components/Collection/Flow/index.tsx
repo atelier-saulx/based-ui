@@ -96,7 +96,13 @@ const Sequence = ({ style, data: { items, context, width }, index }) => {
       </div>
     )
   } else {
-    const [drag, isDragging] = useDrag<any>(itemData)
+    const wrappedData = {
+      exportData: context.exportDataSequence,
+      index,
+      data: itemData,
+    }
+
+    const [drag, isDragging] = useDrag(wrappedData)
     const [drop, isDragOver] = useDrop()
 
     let dropSeq, isDragOverSeq, isDropLoading
@@ -130,12 +136,6 @@ const Sequence = ({ style, data: { items, context, width }, index }) => {
     // const id = itemProps.id ? getData(itemData, itemProps.id) : index
 
     const seqItems = getData(itemData, nestedItemProps.path) || []
-
-    const wrappedData = {
-      exportData: context.exportDataSequence,
-      index,
-      data: itemData,
-    }
 
     return (
       <div
@@ -246,7 +246,7 @@ const Sequence = ({ style, data: { items, context, width }, index }) => {
           framed
           items={seqItems}
           {...context.stepFooter}
-          data={itemData}
+          data={wrappedData}
           style={{
             opacity: isDragOver ? 0 : 1,
             transition: 'opacity 0.15s, transform 0.2s',
@@ -290,7 +290,6 @@ export const Flow = (props: FlowProps) => {
   return (
     <AutoSizer>
       {({ height, width }) => {
-        const context = props
         return (
           <VariableSizeList
             width={width}
