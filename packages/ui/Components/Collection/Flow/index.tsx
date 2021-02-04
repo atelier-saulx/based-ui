@@ -324,8 +324,6 @@ export const Flow = (props: FlowProps) => {
               width,
             }}
             itemSize={(index) => {
-              console.log('YO RECALC')
-
               let x = 0
               if (index === 0 && paddingTop) {
                 x += paddingTop

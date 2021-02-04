@@ -314,7 +314,7 @@ export default {
                 text: 'ITEM NEW ' + id,
               })
               update()
-            }, 1e3)
+            }, 5e3)
             return () => {
               clearTimeout(int)
             }
@@ -396,29 +396,16 @@ export default {
                 paddingBottom={30}
                 paddingRight={200}
                 onDrop={async (e, data) => {
-                  await wait(1e3)
-
                   if (data.data) {
                     data.data.sort((a, b) => (a.index > b.index ? 1 : -1))
-
                     for (let d of data.data) {
-                      console.log(d.index)
-                      listData.splice(d.index, 1)
+                      listData.splice(
+                        listData.findIndex((x) => d.data.id === x.id),
+                        1
+                      )
                     }
 
-                    // if (data.targetIndex !== undefined) {
-                    //   listData.splice(
-                    //     data.targetIndex,
-                    //     0,
-                    //     ...data.data.map((v) => v.data)
-                    //   )
-
-                    //   console.log(
-                    //     data.data.map((v) => v.data.id),
-                    //     listData.map((v) => v.id)
-                    //   )
-                    // }
-
+                    await wait(1e3)
                     update()
                   }
                 }}
