@@ -1,6 +1,7 @@
 import React, { CSSProperties, FunctionComponent } from 'react'
 import { useColor, Color } from '@based/theme'
 import { getTextValue, TextValue } from '@based/text'
+import useDate from './useDate'
 
 type TextProps = {
   style?: CSSProperties
@@ -20,6 +21,7 @@ export const Text: FunctionComponent<TextProps> = ({
   singleLine,
   weight = 'regular',
 }) => {
+  useDate(children)
   return (
     <div
       style={{

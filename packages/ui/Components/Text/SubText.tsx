@@ -1,6 +1,7 @@
 import React, { CSSProperties, FunctionComponent } from 'react'
 import { useColor, Color } from '@based/theme'
 import { getTextValue, TextValue } from '@based/text'
+import useDate from './useDate'
 
 type TitleProps = {
   style?: CSSProperties
@@ -17,6 +18,7 @@ export const SubText: FunctionComponent<TitleProps> = ({
   noSelect,
   singleLine,
 }) => {
+  useDate(children)
   return (
     <div
       style={{

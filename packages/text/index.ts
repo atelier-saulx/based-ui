@@ -79,7 +79,7 @@ export const useLanguage = (language?: Language) => {
   return lang
 }
 
-function isFormat(value: any): value is TextValueFormat {
+export function isTextFormat(value: any): value is TextValueFormat {
   return (
     typeof value === 'string' ||
     typeof value === 'number' ||
@@ -141,7 +141,7 @@ export function getTextValue(
     })
   }
   if (typeof value === 'object' && !('$$typeof' in value)) {
-    if (isFormat(value)) {
+    if (isTextFormat(value)) {
       return formatText(value, language)
     } else {
       return value[language] || value.en
