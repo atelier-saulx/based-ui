@@ -103,8 +103,7 @@ const ListItem = ({
   const itemData = items[index]
 
   const titleProps = itemProps.title || defaultitemProps.title
-
-  const iconName = itemProps.icon && getData(itemData, itemProps.icon.path)
+  const iconDef = itemProps.icon && getData(itemData, itemProps.icon.path)
   const img = itemProps.img && getData(itemData, itemProps.img.path)
   const title = titleProps.format
     ? {
@@ -126,6 +125,15 @@ const ListItem = ({
     index,
     data: itemData,
     exportData,
+  }
+
+  let iconName, iconProps
+  if (iconDef && typeof iconDef === 'object') {
+    iconName = iconDef.name
+    iconProps = iconDef
+  } else if (iconDef) {
+    iconName = iconDef
+    iconProps = itemProps.icon
   }
 
   const isActive = activeId === id
@@ -284,7 +292,7 @@ const ListItem = ({
         {img ? (
           <Img src={img} size={24 + (itemProps.info ? 15 : 0)} />
         ) : Icon ? (
-          <Icon {...itemProps.icon} />
+          <Icon {...iconProps} />
         ) : null}
         <div
           style={{

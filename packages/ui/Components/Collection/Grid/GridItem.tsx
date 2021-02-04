@@ -11,6 +11,7 @@ import useMultipleEvents from '../../../hooks/events/useMultipleEvents'
 import useOptions from '../../../hooks/events/useContextualMenu'
 import getData from '../getData'
 import { Image } from './Image'
+import { Title } from '../../Text/Title'
 
 const defaultitemProps = {
   title: {
@@ -34,6 +35,7 @@ const GridItem = ({
     Graphic,
     onDrop,
     onOptions,
+    large,
     itemProps,
     activeId,
   } = context
@@ -48,6 +50,7 @@ const GridItem = ({
     itemProps = defaultitemProps
   }
 
+  const textProps = itemProps.text
   const titleProps = itemProps.title || defaultitemProps.title
   const iconName = itemProps.icon && getData(itemData, itemProps.icon.path)
   const img = itemProps.img && getData(itemData, itemProps.img.path)
@@ -57,6 +60,16 @@ const GridItem = ({
         value: getData(itemData, titleProps.path),
       }
     : getData(itemData, titleProps.path)
+
+  const text = textProps
+    ? textProps.format
+      ? {
+          format: textProps.format,
+          value: getData(itemData, textProps.path),
+        }
+      : getData(itemData, textProps.path)
+    : undefined
+
   const info =
     itemProps.info &&
     (itemProps.info.format
@@ -74,6 +87,10 @@ const GridItem = ({
   }
 
   const isActive = activeId === id
+
+  const TextComponent = large ? Title : Text
+
+  const hasGraphic = itemProps.img || Graphic
 
   const [hover, isHover] = useHover()
   const ref = useRef()
@@ -125,7 +142,7 @@ const GridItem = ({
             // TODO: isActve style
             '1px solid ' +
             (isHover && !isSelected
-              ? useColor({ color: 'foreground', tone: 2 })
+              ? useColor({ color: 'foreground', tone: 3 })
               : useColor({
                   color:
                     isSelected || isHover || isActive ? 'primary' : 'divider',
@@ -162,7 +179,7 @@ const GridItem = ({
         <>
           <div
             style={{
-              flex: 1,
+              flex: hasGraphic ? 1 : 0,
               display: 'flex',
               position: 'relative',
               justifyContent: 'center',
@@ -206,9 +223,10 @@ const GridItem = ({
           </div>
           <div
             style={{
+              overflow: 'hidden',
               display: 'flex',
               flexDirection: 'column',
-              justifyContent: 'flex-end',
+              // justifyContent: hasGraphic ? 'flex-end' : 'flex-start',
               padding: 16,
             }}
           >
@@ -227,11 +245,24 @@ const GridItem = ({
                   }}
                 />
               ) : null}
-              <Text weight="medium" noSelect>
+              <TextComponent weight="medium" noSelect>
                 {title}
-              </Text>
+              </TextComponent>
             </div>
             {itemProps.info ? <Info data={info} /> : null}
+            {!hasGraphic && itemProps.text ? (
+              <div
+                style={{
+                  // height: '100%',
+                  marginTop: 8,
+                  marginBottom: 8,
+                }}
+              >
+                <Text>
+                  {text.length > 1e3 ? text.slice(0, 1000) + '...' : text}
+                </Text>
+              </div>
+            ) : null}
           </div>
         </>
       </div>

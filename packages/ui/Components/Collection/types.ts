@@ -34,6 +34,7 @@ export type CollectionitemProps = {
   img?: ImgItemProps
   icon?: IconItemProps
   id?: DataPath
+  text?: TextItemProps
 }
 
 export type SequenceitemProps = {

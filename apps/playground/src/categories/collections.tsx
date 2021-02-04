@@ -9,7 +9,7 @@ import {
   Jump,
   SwitchTextButton,
 } from '@based/ui'
-import { randomIcon } from './util'
+import { randomIcon, randomLongText } from './util'
 import { Grid } from '@based/ui/Components/Collection/Grid'
 import { Tabs } from '@based/ui/Components/Collection/Tabs'
 import { wait } from '@saulx/utils'
@@ -28,6 +28,7 @@ for (let i = 0; i < 50; i++) {
   listData.push({
     id: i,
     text: 'Item ' + i,
+    longtext: randomLongText(),
     flurpen: randomIcon(),
     img: profilePic,
     created: randomDate(),
@@ -154,6 +155,59 @@ export default {
             </div>
           )
         },
+
+        () => {
+          return (
+            <div
+              style={{
+                height: 600,
+              }}
+            >
+              <Grid
+                large
+                // framed
+                optionsIcon="More"
+                onOptions={useMenu((props) => {
+                  return (
+                    <ContextualMenuItem
+                      label="Yesh"
+                      icon="NewFlow"
+                      onClick={() => {
+                        console.info(props)
+                      }}
+                    />
+                  )
+                })}
+                itemProps={{
+                  title: { path: ['text'] },
+                  info: { path: ['created'], format: 'date-time-human' },
+                  text: { path: ['longtext'] },
+                  icon: { path: ['flurpen'] },
+                  id: ['id'],
+                }}
+                items={listData}
+                exportData={async (data) => {
+                  return {
+                    file: {
+                      name: `snurpel-index-${data.index}.csv`,
+                      mime: 'text/csv',
+                      value: data.data,
+                    },
+                    text: data.title,
+                  }
+                }}
+                onDrop={(e, data) => {
+                  // data will get a files field if its external
+                  console.info(e, data)
+                }}
+                activeId={2}
+                onClick={(data, index) => {
+                  console.info(data, index)
+                }}
+              />
+            </div>
+          )
+        },
       ],
     },
     {
@@ -186,6 +240,10 @@ export default {
                     id: 1,
                     items: [
                       {
+                        flurpen: {
+                          name: 'Add',
+                          color: { color: 'secondary' },
+                        },
                         text: 'yesh',
                         id: 1,
                       },
