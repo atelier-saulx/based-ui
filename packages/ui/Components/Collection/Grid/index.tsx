@@ -90,7 +90,7 @@ export const Grid = (props: GridProps) => {
                 }}
               >
                 <FixedSizeGrid
-                  width={width - 10}
+                  width={width - 9}
                   columnCount={context.columnCount}
                   rowCount={Math.ceil(items.length / context.columnCount)}
                   height={height - 10 - (header ? 48 : 0) - (footer ? 48 : 0)}

@@ -219,9 +219,17 @@ const GridItem = ({
               }}
             >
               {Icon ? (
-                <Icon {...itemProps.icon} style={{ marginRight: 15 }} />
+                <Icon
+                  {...itemProps.icon}
+                  style={{
+                    marginRight: 8,
+                    marginLeft: itemProps.icon.framed ? 0 : -3,
+                  }}
+                />
               ) : null}
-              <Text>{title}</Text>
+              <Text weight="medium" noSelect>
+                {title}
+              </Text>
             </div>
             {itemProps.info ? <Info data={info} /> : null}
           </div>

@@ -47,12 +47,68 @@ export default {
           return (
             <div
               style={{
+                height: 400,
+              }}
+            >
+              <Grid
+                // framed
+                footer={{ onClick: () => {} }}
+                optionsIcon="More"
+                onOptions={useMenu((props) => {
+                  return (
+                    <ContextualMenuItem
+                      label="Yesh"
+                      icon="NewFlow"
+                      onClick={() => {
+                        console.info(props)
+                      }}
+                    />
+                  )
+                })}
+                itemProps={{
+                  title: { path: ['text'] },
+                  img: { path: ['img'] },
+                  icon: { path: ['flurpen'] },
+                  info: { path: ['created'], format: 'date-time-human' },
+                  id: ['id'],
+                }}
+                items={listData}
+                exportData={async (data) => {
+                  return {
+                    file: {
+                      name: `snurpel-index-${data.index}.csv`,
+                      mime: 'text/csv',
+                      value: data.data,
+                    },
+                    text: data.title,
+                  }
+                }}
+                onDrop={(e, data) => {
+                  // data will get a files field if its external
+                  console.info(e, data)
+                }}
+                header={{
+                  label: 'My Grid',
+                  Actions: () => <Text weight="medium">Action</Text>,
+                }}
+                activeId={2}
+                onClick={(data, index) => {
+                  console.info(data, index)
+                }}
+              />
+            </div>
+          )
+        },
+        () => {
+          return (
+            <div
+              style={{
                 height: 600,
               }}
             >
               <Grid
+                large
                 framed
-                footer={{ onClick: () => {} }}
                 optionsIcon="More"
                 onOptions={useMenu((props) => {
                   return (

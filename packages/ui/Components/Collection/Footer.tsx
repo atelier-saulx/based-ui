@@ -32,7 +32,7 @@ const Footer: FunctionComponent<FooterProps> = ({
         display: 'flex',
         alignItems: 'center',
         border: framed ? '1px solid ' + useColor({ color: 'divider' }) : null,
-        borderBottom: '1px solid ' + useColor({ color: 'divider' }),
+        borderTop: '1px solid ' + useColor({ color: 'divider' }),
         borderBottomLeftRadius: 4,
         borderBottomRightRadius: 4,
         borderTopLeftRadius: floating ? 4 : null,
