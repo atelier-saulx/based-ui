@@ -397,16 +397,14 @@ export default {
                 paddingRight={200}
                 onDrop={async (e, data) => {
                   if (data.data) {
-                    console.log(data)
-
+                    console.info(data)
                     data.data.sort((a, b) => (a.index > b.index ? 1 : -1))
-                    for (let d of data.data) {
+                    for (const d of data.data) {
                       listData.splice(
                         listData.findIndex((x) => d.data.id === x.id),
                         1
                       )
                     }
-
                     await wait(1e3)
                     update()
                   }
