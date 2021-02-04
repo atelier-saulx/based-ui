@@ -12,7 +12,7 @@ let smallest: number | undefined
 const setTimer = () => {
   const d = Date.now()
   const v = d - smallest
-  const next = v < 60e3 ? 1e3 : v < 60e3 * 60 ? 30e3 : 60 * 30e3
+  const next = v < 60e3 ? 500 : v < 60e3 * 60 ? 30e3 : 60 * 30e3
   timer = setTimeout(() => {
     const d = Date.now()
     timeUpdaters.forEach((v) => {
