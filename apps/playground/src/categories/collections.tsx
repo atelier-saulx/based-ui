@@ -241,7 +241,7 @@ export default {
                     items: [
                       {
                         flurpen: {
-                          name: 'Add',
+                          name: 'Logic',
                           color: { color: 'secondary' },
                         },
                         text: 'yesh',
