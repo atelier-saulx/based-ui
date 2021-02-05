@@ -175,8 +175,9 @@ const Sequence = ({ style, data: { items, context, width }, index }) => {
               <div
                 style={{
                   position: 'relative',
-                  paddingLeft: context.paddingLeft || 5,
-                  paddingRight: context.paddingRight || 5,
+                  width: '100%',
+                  // paddingLeft: 5,
+                  // paddingRight: 5,
                 }}
               >
                 <div
@@ -320,7 +321,6 @@ export const Flow = (props: FlowProps) => {
               paddingTop,
               paddingBottom,
             }}
-            resz
             itemCount={itemsWithNew.length}
             height={height}
             itemData={{
