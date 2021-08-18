@@ -11,12 +11,5 @@
     "build": "yarn tsconfig && tsc -b && cp ./src/style.css ./dist/style.css && cp -R ./src/font ./dist/font",
     "watch": "yarn build -w"
   },
-  "devDependencies": {
-    "@based/tsconfig": "*",
-    "@types/node": "^16.3.1",
-    "@types/react": "^17.0.14",
-    "ts-node": "^10.1.0",
-    "typescript": "^4.3.5"
-  },
   "license": "MIT"
 }
