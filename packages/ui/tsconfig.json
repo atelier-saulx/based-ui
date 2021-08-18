@@ -1,0 +1,27 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "dist"
+  },
+  "references": [
+    {
+      "path": "../../packages/get-service"
+    },
+    {
+      "path": "../../packages/text"
+    },
+    {
+      "path": "../../packages/theme"
+    },
+    {
+      "path": "../../packages/icons"
+    }
+  ],
+  "exclude": [
+    "node_modules",
+    "test",
+    "dist",
+    "tmp"
+  ]
+}

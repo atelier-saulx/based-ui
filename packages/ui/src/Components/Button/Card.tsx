@@ -1,0 +1,75 @@
+import React, { FunctionComponent, EventHandler, SyntheticEvent } from 'react'
+import { Text } from '../Text'
+import { Color, useColor } from '@based/theme'
+import useHover from '../../hooks/events/useHover'
+import { iconFromString, IconName } from '@based/icons'
+import { SubText } from '../Text/SubText'
+import { TextValue } from '@based/text'
+import { Loader } from '../Loader/Loader'
+import { AsyncEvent } from '../../types'
+import useAsyncClick from './useAsyncClick'
+
+type GenericEventHandler = EventHandler<SyntheticEvent>
+
+export const Card: FunctionComponent<{
+  icon: IconName
+  onClick?: AsyncEvent | GenericEventHandler
+  label?: TextValue
+  width?: number
+  onHover?: GenericEventHandler
+  frameColor?: Color
+  children?: TextValue
+}> = ({
+  onClick,
+  children = '',
+  label = '',
+  onHover,
+  width = '100%',
+  icon,
+  frameColor = { color: 'primary' },
+}) => {
+  const [hover, isHover] = useHover(onHover)
+  const Icon = icon && iconFromString(icon)
+  const [isLoading, handler] = useAsyncClick(onClick)
+
+  return (
+    <div
+      {...hover}
+      onClick={isLoading ? null : handler}
+      style={{
+        width,
+        padding: 20,
+        border: isHover
+          ? '1px solid ' + useColor({ color: 'primary' })
+          : '1px solid ' + useColor({ color: 'divider' }),
+        alignItems: 'center',
+        position: 'relative',
+        cursor: 'pointer',
+        borderRadius: 4,
+        transition: 'hover 0.15s, background-color 0.15s',
+        backgroundColor: isHover
+          ? useColor({ color: 'primary', opacity: 0.05 })
+          : null,
+      }}
+    >
+      {isLoading ? (
+        <Loader />
+      ) : Icon ? (
+        <Icon framed frameColor={frameColor} />
+      ) : null}
+      <Text
+        weight="semibold"
+        noSelect
+        singleLine
+        style={{
+          marginTop: 15,
+        }}
+      >
+        {label}
+      </Text>
+      <SubText color={{ color: 'foreground', tone: 2 }} noSelect>
+        {children}
+      </SubText>
+    </div>
+  )
+}

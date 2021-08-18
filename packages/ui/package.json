@@ -1,0 +1,42 @@
+{
+  "name": "@based/ui",
+  "version": "0.1.5",
+  "dependencies": {
+    "@based/get-service": "0.1.0",
+    "@based/icons": "^0.1.0",
+    "@based/text": "^0.1.0",
+    "@based/theme": "^0.1.0",
+    "@saulx/utils": "^2.0.1",
+    "@types/css-font-loading-module": "^0.0.6",
+    "@types/mapbox-gl": "^2.3.3",
+    "csvtojson": "^2.0.10",
+    "escape-html": "^1.0.3",
+    "hex-rgb": "^5.0.0",
+    "jsonexport": "^3.2.0",
+    "mapbox-gl": "^2.3.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-virtualized-auto-sizer": "^1.0.5",
+    "react-window": "^1.8.6",
+    "react-window-infinite-loader": "^1.0.7",
+    "rgb-hex": "^4.0.0",
+    "svg-path-utils": "^0.0.3",
+    "tarts": "^1.0.0",
+    "wouter": "^2.7.4"
+  },
+  "scripts": {
+    "build": "yarn tsconfig && tsc -b && node postbuild.js",
+    "watch": "yarn build -w"
+  },
+  "devDependencies": {
+    "@based/tsconfig": "*",
+    "@compiled/react": "^0.6.13",
+    "@types/node": "^16.3.1",
+    "@types/react": "^17.0.14",
+    "ts-node": "^10.1.0",
+    "typescript": "^4.3.5"
+  },
+  "main": "dist/index.js",
+  "module": "src/index.ts",
+  "license": "MIT"
+}

@@ -1,0 +1,130 @@
+import { IconStyleProps, IconName } from '@based/icons';
+import { TextFormat, TextValue } from '@based/text';
+import { DataEventHandler, MultiDataEventHandler, Data, Children } from '../../types';
+import { CSSProperties, PropsWithChildren } from 'react';
+export declare type DataPath = (string | number)[];
+export declare type ImgItemProps = {
+    path: DataPath;
+    avatar?: boolean;
+    textPath?: DataPath;
+};
+export declare type IconItemProps = IconStyleProps & {
+    path: DataPath;
+};
+export declare type TextItemProps = {
+    format?: TextFormat;
+    weight?: 'semibold' | 'medium' | 'regular';
+    path: DataPath;
+};
+export declare type TableItemPropsField = (TextItemProps & {
+    type: 'text';
+    label?: TextValue;
+    width?: number;
+    bold?: boolean;
+    sort?: 'asc' | 'desc' | undefined;
+    sortable?: 'asc' | 'desc';
+}) | (TextItemProps & {
+    type: 'number';
+    label?: TextValue;
+    width?: number;
+    bold?: boolean;
+    sort?: 'asc' | 'desc' | undefined;
+    sortable?: 'asc' | 'desc';
+}) | (ImgItemProps & {
+    type: 'img';
+    label?: TextValue;
+    width?: number;
+}) | (IconItemProps & {
+    type: 'icon';
+    label?: TextValue;
+    width?: number;
+});
+export declare type TableitemProps = {
+    fields: TableItemPropsField[];
+    id?: DataPath;
+};
+export declare type CollectionitemProps = {
+    title?: TextItemProps;
+    info?: TextItemProps;
+    img?: ImgItemProps;
+    icon?: IconItemProps;
+    id?: DataPath;
+    inActive?: DataPath;
+    text?: TextItemProps;
+};
+export declare type SequenceitemProps = {
+    title?: TextItemProps;
+    id?: DataPath;
+    img?: ImgItemProps;
+    icon?: IconItemProps;
+    items?: {
+        path: DataPath;
+        props?: CollectionitemProps;
+    };
+};
+export declare type ExpandableListItemProps = {
+    title?: TextItemProps;
+    id?: DataPath;
+    img?: ImgItemProps;
+    icon?: IconItemProps;
+};
+export declare type ResultListItemProps = {
+    title?: TextItemProps;
+    id?: DataPath;
+    img?: ImgItemProps;
+    icon?: IconItemProps;
+    value?: {
+        path: DataPath;
+    };
+    items?: {
+        path: DataPath;
+        props?: ResultListItemProps;
+    };
+};
+export declare type FooterProps<T = any> = {
+    label?: TextValue;
+    floating?: boolean;
+    framed?: boolean;
+    data?: Data<T>;
+    paddingRight?: number;
+    style?: CSSProperties;
+    width?: number;
+    icon?: IconName;
+    paddingLeft?: number;
+    items?: Object[];
+    onClick: MultiDataEventHandler<Object> | DataEventHandler<Data<T>>;
+};
+export declare type HeaderProps = {
+    data?: Data<any>;
+    autoFocusTitle?: boolean;
+    indicator?: TextValue;
+    style?: CSSProperties;
+    onEditTitle?: (value: string, data?: Data<any>) => void;
+    label?: TextValue;
+    noBorderBottom?: boolean;
+    isHover?: boolean;
+    children?: Children<{
+        items?: Object[];
+        data?: Data<any>;
+    }>;
+    framed?: boolean;
+    paddingRight?: number;
+    width?: number | string;
+    icon?: IconName;
+    weight?: 'semibold' | 'regular' | 'medium';
+    paddingLeft?: number;
+    items?: Object[];
+    isExpanded?: boolean;
+    onExpand?: () => void;
+};
+export declare type OptionsComponentProps = PropsWithChildren<{
+    onClick?: DataEventHandler;
+    isHover: boolean;
+    isActive: boolean;
+    isDragging: boolean;
+    isDragOver: boolean;
+    isSelected: boolean;
+    items: Object[];
+    data: Data;
+    onOptions?: DataEventHandler;
+}>;

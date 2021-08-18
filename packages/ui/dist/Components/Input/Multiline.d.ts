@@ -1,0 +1,24 @@
+import { FunctionComponent, CSSProperties } from 'react';
+import { Color } from '@based/theme';
+import './style.css';
+import { Validator } from './validators';
+import { OnValueChange } from '../../types';
+import { TextValue } from '@based/text';
+declare type MultilineInputProps = {
+    style?: CSSProperties;
+    placeholder?: TextValue;
+    border?: boolean;
+    autoFocus?: boolean;
+    onFocus?: () => void;
+    onBlur?: () => void;
+    onChange: OnValueChange<string | undefined>;
+    identifier?: any;
+    errorText?: TextValue;
+    helperText?: TextValue;
+    value?: string | number;
+    color?: Color;
+    validator?: Validator;
+    progress?: number;
+};
+export declare const MultilineTextInput: FunctionComponent<MultilineInputProps>;
+export {};

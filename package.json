@@ -1,0 +1,22 @@
+{
+  "workspaces": [
+    "packages/*"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/atelier-saulx/based-ui.git"
+  },
+  "keywords": [
+    "ui",
+    "components",
+    "react",
+    "based",
+    "saulx"
+  ],
+  "author": "Based",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/atelier-saulx/based-ui/issues"
+  },
+  "homepage": "https://github.com/atelier-saulx/based-ui#readme"
+}
