@@ -9,16 +9,16 @@ This contains several React components, such as `Button, Input, Label` and sever
 **This package has both _Icons_ and _Themes_ as its dependencies.**
 
 ```jsx
-import React from 'react'
-import { Button, Input } from '@based/ui'
+import React from "react";
+import { Button, Input } from "@based/ui";
 
 export default () => {
-    return {
-        <>
-        <Button>Test</Button>
-        </>
-    }
-}
+  return (
+    <>
+      <Button>Test</Button>
+    </>
+  );
+};
 ```
 
 Each component takes several props.
@@ -28,22 +28,20 @@ Each component takes several props.
 This package contains common style and theme elements.
 
 ```jsx
-import React from 'react'
-import { useColor } from '@based/theme'
+import React from "react";
+import { useColor } from "@based/theme";
 
 export default () => {
-    return {
-        return (
+  return (
     <div
       style={{
         padding: 16,
-        border: 'solid 1px ' + useColor({ color: 'divider' }),
+        border: "solid 1px " + useColor({ color: "divider" }),
         borderRadius: 8,
       }}
-    >
-    </div>
-    }
-}
+    ></div>
+  );
+};
 ```
 
 ## Icon package
@@ -55,7 +53,7 @@ import React from 'react'
 import { Button } from '@based/ui'
 
 export default () => {
-    return {
+    return (
     <>
         <Button
             icon="Add"
@@ -65,6 +63,6 @@ export default () => {
         Test
         </Button>
     </>
-    }
+    )
 }
 ```
