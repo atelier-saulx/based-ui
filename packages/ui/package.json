@@ -31,6 +31,13 @@
     "build": "yarn tsconfig && tsc -b && node postbuild.js",
     "watch": "yarn build -w"
   },
+  "devDependencies": {
+    "@based/tsconfig": "*",
+    "@types/node": "^16.3.1",
+    "@types/react": "^17.0.14",
+    "ts-node": "^10.1.0",
+    "typescript": "^4.3.5"
+  },
   "main": "dist/index.js",
   "module": "src/index.ts",
   "license": "MIT"
