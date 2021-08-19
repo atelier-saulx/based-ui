@@ -1,6 +1,6 @@
 {
   "name": "@based/ui",
-  "version": "0.1.6",
+  "version": "0.2.0",
   "repository": "https://github.com/atelier-saulx/based-ui",
   "description": "A library of front-end React components for Based",
   "dependencies": {
@@ -11,6 +11,7 @@
     "@saulx/utils": "^2.0.1",
     "@types/css-font-loading-module": "^0.0.6",
     "@types/mapbox-gl": "^2.3.3",
+    "@compiled/react": "^0.6.13",
     "csvtojson": "^2.0.10",
     "escape-html": "^1.0.3",
     "hex-rgb": "^5.0.0",

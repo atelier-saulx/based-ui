@@ -3,54 +3,55 @@ import React, {
   CSSProperties,
   useEffect,
   useState,
-} from 'react'
-import { useColor, Color } from '@based/theme'
-import '@compiled/react'
+} from "react";
+import { useColor, Color } from "@based/theme";
+
+import "@compiled/react";
 
 type LoaderProps = {
-  style?: CSSProperties
-  size?: number
-  color?: Color
-  delay?: number
-  fadeIn?: boolean
-}
+  style?: CSSProperties;
+  size?: number;
+  color?: Color;
+  delay?: number;
+  fadeIn?: boolean;
+};
 
 export const Loader: FunctionComponent<LoaderProps> = ({
   style,
   size = 20,
-  color = { color: 'foreground' },
+  color = { color: "foreground" },
   delay = 0,
   fadeIn,
 }) => {
-  const stroke = useColor(color)
+  const stroke = useColor(color);
 
-  const [ready, setReady] = useState(!fadeIn && !delay)
+  const [ready, setReady] = useState(!fadeIn && !delay);
   useEffect(() => {
     const timer = setTimeout(() => {
-      setReady(true)
-    }, delay)
+      setReady(true);
+    }, delay);
     return () => {
-      clearTimeout(timer)
-    }
-  }, [])
+      clearTimeout(timer);
+    };
+  }, []);
 
   const svg = (
     <svg
       // @ts-ignore
       css={{
-        position: 'absolute',
+        position: "absolute",
         top: 0,
-        width: '100%',
-        height: '100%',
-        '@keyframes spin': {
-          from: { transform: 'rotate(0deg)' },
-          to: { transform: 'rotate(360deg)' },
+        width: "100%",
+        height: "100%",
+        "@keyframes spin": {
+          from: { transform: "rotate(0deg)" },
+          to: { transform: "rotate(360deg)" },
         },
-        animationName: 'spin',
-        animationDuration: '0.5s',
-        transform: 'rotate(-90deg)',
-        animationTimingFunction: 'linear',
-        animationIterationCount: 'infinite',
+        animationName: "spin",
+        animationDuration: "0.5s",
+        transform: "rotate(-90deg)",
+        animationTimingFunction: "linear",
+        animationIterationCount: "infinite",
       }}
       viewBox="0 0 32 32"
       width={size}
@@ -80,14 +81,14 @@ export const Loader: FunctionComponent<LoaderProps> = ({
         }}
       />
     </svg>
-  )
+  );
 
   return (
     <div
       // @ts-ignore
       css={{
-        position: 'relative',
-        transition: 'opacity 0.5s',
+        position: "relative",
+        transition: "opacity 0.5s",
       }}
       style={{
         opacity: ready ? 1 : 0,
@@ -100,5 +101,5 @@ export const Loader: FunctionComponent<LoaderProps> = ({
     >
       {svg}
     </div>
-  )
-}
+  );
+};

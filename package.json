@@ -16,6 +16,10 @@
     "based",
     "saulx"
   ],
+  "scripts": {
+    "publish-all": "yarn workspaces run npm publish",
+    "force-publish-all": "yarn workspaces foreach npm publish --tolerate-republish"
+  },
   "author": "Based",
   "license": "ISC",
   "bugs": {
