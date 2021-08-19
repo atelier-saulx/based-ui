@@ -6,12 +6,6 @@
   },
   "references": [
     {
-      "path": "../../packages/get-service"
-    },
-    {
-      "path": "../../packages/text"
-    },
-    {
       "path": "../../packages/theme"
     },
     {
