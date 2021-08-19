@@ -4,7 +4,7 @@
   "repository": "https://github.com/atelier-saulx/based-ui",
   "description": "A library of front-end React components for Based",
   "dependencies": {
-    "@based/get-service": "0.1.0",
+    "@based/get-service": "0.1.1",
     "@based/icons": "^0.1.0",
     "@based/text": "^0.1.0",
     "@based/theme": "^0.1.0",
@@ -27,8 +27,16 @@
     "tarts": "^1.0.0",
     "wouter": "^2.7.4"
   },
+  "devDependencies": {
+    "@based/tsconfig": "*",
+    "@compiled/react": "^0.6.13",
+    "@types/node": "^16.3.1",
+    "@types/react": "^17.0.14",
+    "ts-node": "^10.1.0",
+    "typescript": "^4.3.5"
+  },
   "scripts": {
-    "build": "yarn tsconfig && tsc -b && node postbuild.js",
+    "build": "tsc -b && node postbuild.js",
     "watch": "yarn build -w"
   },
   "main": "dist/index.js",
