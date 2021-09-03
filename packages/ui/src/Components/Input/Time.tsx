@@ -178,6 +178,9 @@ export const TimeInput: FunctionComponent<TimeInputProps> = ({
             const { value } = e.target as HTMLInputElement
             const parsedTimeString = parseTimeString(value, useSeconds)
             setTimeString(parsedTimeString.formatedString)
+            if (parsedTimeString.valid) {
+              update()
+            }
           }, [])}
           onClick={(e) => {
             const el = e.target as HTMLInputElement

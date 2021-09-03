@@ -304,16 +304,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@based/get-service@npm:0.1.0":
-  version: 0.1.0
-  resolution: "@based/get-service@npm:0.1.0"
-  dependencies:
-    cross-fetch: ^3.1.4
-    timeout-signal: ^1.1.0
-  checksum: 7e109b1fd5487d7502d4f1c5c5a159659baf8c442eb51bb19a79c62a49897efb83e94b97ea6f95c835f9fec42161a2e2806e9cfb5cf52ee32fc1a8d032b83951
-  languageName: node
-  linkType: hard
-
 "@based/get-service@npm:0.1.1":
   version: 0.1.1
   resolution: "@based/get-service@npm:0.1.1"
@@ -366,7 +356,7 @@ __metadata:
     "@based/icons": "*"
     "@based/text": "*"
     "@based/theme": "*"
-    "@based/ui": 0.2.0
+    "@based/ui": "*"
     "@saulx/aristotle": ^4.0.1
     "@saulx/utils": 2.0.1
     csvtojson: ^2.0.10
@@ -383,37 +373,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@based/ui@npm:0.2.0":
-  version: 0.2.0
-  resolution: "@based/ui@npm:0.2.0"
-  dependencies:
-    "@based/get-service": 0.1.0
-    "@based/icons": ^0.1.0
-    "@based/text": ^0.1.0
-    "@based/theme": ^0.1.0
-    "@compiled/react": ^0.6.13
-    "@saulx/utils": ^2.0.1
-    "@types/css-font-loading-module": ^0.0.6
-    "@types/mapbox-gl": ^2.3.3
-    csvtojson: ^2.0.10
-    escape-html: ^1.0.3
-    hex-rgb: ^5.0.0
-    jsonexport: ^3.2.0
-    mapbox-gl: ^2.3.1
-    react: ^17.0.2
-    react-dom: ^17.0.2
-    react-virtualized-auto-sizer: ^1.0.5
-    react-window: ^1.8.6
-    react-window-infinite-loader: ^1.0.7
-    rgb-hex: ^4.0.0
-    svg-path-utils: ^0.0.3
-    tarts: ^1.0.0
-    wouter: ^2.7.4
-  checksum: fbd9762a5bd62ec939e4c35711c5cfe64ab0e9ad612d61684c2fc7f2037be0bf05ba74b74e1142bbbbceca2a99395f290d6e54af6fd2d83c150ca8f472c348e9
-  languageName: node
-  linkType: hard
-
-"@based/ui@workspace:packages/ui":
+"@based/ui@*, @based/ui@workspace:packages/ui":
   version: 0.0.0-use.local
   resolution: "@based/ui@workspace:packages/ui"
   dependencies:
@@ -423,6 +383,7 @@ __metadata:
     "@based/theme": ^0.1.0
     "@based/tsconfig": "*"
     "@compiled/react": ^0.6.13
+    "@saulx/prettier-config": ^1.0.0
     "@saulx/utils": ^2.0.1
     "@types/css-font-loading-module": ^0.0.6
     "@types/mapbox-gl": ^2.3.3
@@ -765,6 +726,15 @@ __metadata:
   version: 1.1.0
   resolution: "@saulx/hash@npm:1.1.0"
   checksum: 8159d3f3a31b2092685c6d48d7bc5006302c3ef0c70a667f52c0a8b2355f7c6ab6a4382257adebc60d8282156b0f659adb8ce067a2be46bf036f58a7f294f8a8
+  languageName: node
+  linkType: hard
+
+"@saulx/prettier-config@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "@saulx/prettier-config@npm:1.0.0"
+  peerDependencies:
+    prettier: ^2.2.1
+  checksum: 95ada1e2751340b144c6f7206fc9fc7fb636b42870b232af83ff7371e7b91202f11b23081a790d8b4aa1201c498ee75c3efbc002aa5b57f014a0ace1d576f4c0
   languageName: node
   linkType: hard
 

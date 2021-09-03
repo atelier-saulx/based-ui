@@ -42,7 +42,7 @@ const DateTimeInput: FunctionComponent<DateTimeProps> = ({
       if (!state) {
         state = new Date()
       }
-      if (!action.value) {
+      if (typeof action.value === 'undefined') {
         onChange(state.getTime())
         return state
       }
