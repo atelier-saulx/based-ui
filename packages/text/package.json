@@ -4,7 +4,7 @@
   "repository": "https://github.com/atelier-saulx/based-ui",
   "license": "MIT",
   "main": "dist/index.js",
-  "__module": "src/index.ts",
+  "module": "src/index.ts",
   "scripts": {
     "build": "yarn tsconfig && tsc -b",
     "watch": "yarn build -w"

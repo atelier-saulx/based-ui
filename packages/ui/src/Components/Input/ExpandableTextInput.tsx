@@ -40,6 +40,7 @@ type ExpandTextProps = {
   validator?: Validator
   identifier?: any
   value?: string | number
+  label?: TextValue
   placeholder?: TextValue
   dropdown?: DropdownOption[]
   color?: Color
@@ -60,6 +61,7 @@ const r = (x) => !x
 const ExpandableTextInput: FunctionComponent<ExpandTextProps> = ({
   style,
   children,
+  label,
   optionsIcon,
   onOptions,
   draggable,
@@ -154,6 +156,7 @@ const ExpandableTextInput: FunctionComponent<ExpandTextProps> = ({
           }
         />
         {checkbox ? <CheckBox {...checkbox} /> : null}
+        {label}
         <Input
           noClear
           style={{

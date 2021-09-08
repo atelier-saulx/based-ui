@@ -4,7 +4,7 @@
   "repository": "https://github.com/atelier-saulx/based-ui",
   "description": "A front-end library of icons for Based",
   "main": "dist/index.js",
-  "__module": "src/index.ts",
+  "module": "src/index.tsx",
   "dependencies": {
     "@based/theme": "^0.1.0",
     "react": "^17.0.2"
