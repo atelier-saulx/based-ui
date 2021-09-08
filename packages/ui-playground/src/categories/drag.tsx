@@ -1,4 +1,4 @@
-import React, { useState } from 'React'
+import React, { useState } from 'react'
 import { Text, useDrag, useSelect, useMultipleEvents, useDrop } from '@based/ui'
 import RenderComponents from '../RenderComponents'
 import { useColor } from '@based/theme'

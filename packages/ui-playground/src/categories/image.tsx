@@ -1,4 +1,4 @@
-import React from 'React'
+import React from 'react'
 import { Avatar } from '@based/ui'
 import RenderComponents from '../RenderComponents'
 
@@ -26,20 +26,17 @@ export default {
         },
         {
           name: 'Joany Beer',
-          src:
-            'https://whitleyaward-cdn.standfirst.com/content/uploads/2009/12/Angela-Maldonado-night-monkey.jpg',
+          src: 'https://whitleyaward-cdn.standfirst.com/content/uploads/2009/12/Angela-Maldonado-night-monkey.jpg',
         },
         {
           size: 50,
           name: 'Joany Beer',
-          src:
-            'https://whitleyaward-cdn.standfirst.com/content/uploads/2009/12/Angela-Maldonado-night-monkey.jpg',
+          src: 'https://whitleyaward-cdn.standfirst.com/content/uploads/2009/12/Angela-Maldonado-night-monkey.jpg',
         },
         {
           size: 200,
           name: 'Joany Beer',
-          src:
-            'https://whitleyaward-cdn.standfirst.com/content/uploads/2009/12/Angela-Maldonado-night-monkey.jpg',
+          src: 'https://whitleyaward-cdn.standfirst.com/content/uploads/2009/12/Angela-Maldonado-night-monkey.jpg',
         },
       ],
     },

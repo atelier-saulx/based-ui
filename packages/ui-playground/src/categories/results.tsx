@@ -1,4 +1,4 @@
-import React from 'React'
+import React from 'react'
 import RenderComponents from '../RenderComponents'
 import { LineGraph, BarGraph, ResultCard, ResultList, Scatter } from '@based/ui'
 

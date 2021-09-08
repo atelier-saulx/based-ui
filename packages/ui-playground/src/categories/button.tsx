@@ -1,4 +1,4 @@
-import React from 'React'
+import React from 'react'
 import { Button, Switch, SwitchTextButton, Card, CardOption } from '@based/ui'
 import RenderComponents from '../RenderComponents'
 import { randomIcon, randomTitle, randomText } from './util'
