@@ -323,12 +323,24 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@based/text@npm:*, @based/text@npm:^0.1.0":
-  version: 0.1.0
-  resolution: "@based/text@npm:0.1.0"
+"@based/text@*, @based/text@workspace:packages/text":
+  version: 0.0.0-use.local
+  resolution: "@based/text@workspace:packages/text"
+  dependencies:
+    "@based/tsconfig": "*"
+    "@types/node": ^16.3.1
+    react: ^17.0.2
+    ts-node: ^10.1.0
+    typescript: ^4.3.5
+  languageName: unknown
+  linkType: soft
+
+"@based/text@npm:^0.1.1":
+  version: 0.1.2
+  resolution: "@based/text@npm:0.1.2"
   dependencies:
     react: ^17.0.2
-  checksum: a57a8d069c6a8fdc1d1670a2be503e178dc9feb90f6c5fd80e7ea05e2722f179351f45500aa00ad3cac49724ddb7ccf41176ccd3b9abf41e8ab64e5541fb1d4c
+  checksum: 0b3f9bfe9e6ebe31166f99453143c606690dc6e90840cd54baadd82a617921bc713d822c74f50cb1cf4f7182e172fb2be509d15d956066fa9aa50144c9949930
   languageName: node
   linkType: hard
 
@@ -379,7 +391,7 @@ __metadata:
   dependencies:
     "@based/get-service": 0.1.1
     "@based/icons": ^0.1.0
-    "@based/text": ^0.1.0
+    "@based/text": ^0.1.1
     "@based/theme": ^0.1.0
     "@based/tsconfig": "*"
     "@compiled/react": ^0.6.13
