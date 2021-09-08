@@ -28,12 +28,16 @@
     "wouter": "^2.7.4"
   },
   "prettier": "@saulx/prettier-config",
+  "eslintConfig": {
+    "extends": "@saulx/eslint-config"
+  },
   "scripts": {
     "build": "yarn tsconfig && tsc -b && node postbuild.js",
     "watch": "yarn build -w"
   },
   "devDependencies": {
     "@based/tsconfig": "*",
+    "@saulx/eslint-config": "^1.1.0",
     "@saulx/prettier-config": "^1.0.0",
     "@types/node": "^16.3.1",
     "@types/react": "^17.0.14",
