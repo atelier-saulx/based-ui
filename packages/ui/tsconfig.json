@@ -6,6 +6,9 @@
   },
   "references": [
     {
+      "path": "../../packages/text"
+    },
+    {
       "path": "../../packages/theme"
     },
     {

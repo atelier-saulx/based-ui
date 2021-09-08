@@ -118,6 +118,7 @@ const getTargetRect = (
     // @ts-ignore
     return t.getBoundingClientRect()
   }
+  // @ts-ignore
   return { left: 0, top: 0, height: 0, width: 0, bottom: 0, right: 0 }
 }
 

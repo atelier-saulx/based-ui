@@ -18,8 +18,17 @@
   ],
   "scripts": {
     "start": "yarn workspace @based/ui-playground start",
+    "build": "yarn workspaces foreach run build",
     "publish-all": "yarn workspaces run npm publish",
     "force-publish-all": "yarn workspaces foreach npm publish --tolerate-republish"
+  },
+  "prettier": "@saulx/prettier-config",
+  "eslintConfig": {
+    "extends": "@saulx/eslint-config"
+  },
+  "devDependencies": {
+    "@saulx/eslint-config": "^1.1.0",
+    "@saulx/prettier-config": "^1.0.0"
   },
   "author": "Based",
   "license": "ISC",

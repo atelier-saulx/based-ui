@@ -9,7 +9,6 @@
     "node_modules",
     "test",
     "dist",
-    "tmp",
-    "examples"
+    "tmp"
   ]
 }

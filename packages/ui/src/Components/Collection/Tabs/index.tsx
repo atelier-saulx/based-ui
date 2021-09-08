@@ -100,9 +100,12 @@ export const Tabs = ({
     global.requestAnimationFrame(() => {
       if (ref.current) {
         const current = ref.current || ({} as any)
+        // @ts-ignore
         const children = current.childNodes
         const tabSizes: TabSizes = []
+
         const xTop =
+          // @ts-ignore
           current.getBoundingClientRect && current.getBoundingClientRect().x
         for (let i = 0; i < children.length - 1; i++) {
           const { x, width } = children[i].getBoundingClientRect()
