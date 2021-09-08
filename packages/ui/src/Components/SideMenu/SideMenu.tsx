@@ -26,7 +26,7 @@ export type SideMenuItemProps = {
   icon?: IconName
   isSmall?: boolean
   style?: CSSProperties
-  onClick?: (event: SyntheticEvent, meta: object) => {}
+  onClick?: (event: SyntheticEvent, meta: object) => void
   active?: boolean
   data?: Data
   to?: string
