@@ -18,7 +18,7 @@
   },
   "main": "dist/server/index.js",
   "scripts": {
-    "serve": "aristotle watch -t src/index.ts -p 8888",
+    "start": "aristotle watch -t src/index.ts -p 8888",
     "build": "aristotle build -t src/index.ts -d .service/dist"
   },
   "license": "UNLICENSED"
