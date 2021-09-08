@@ -194,7 +194,7 @@ export const getTone = (): string => {
   return theme.active
 }
 
-export const updateTheme = (update: { dark?: Colors; light?: Colors }) => {
+export const updateTheme = (update: Colors) => {
   for (const key in update) {
     theme.theme[key] = update[key]
   }
