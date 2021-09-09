@@ -339,7 +339,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@based/theme@*, @based/theme@^0.1.0, @based/theme@workspace:packages/theme":
+"@based/theme@*, @based/theme@^0.1.0, @based/theme@^0.1.8, @based/theme@workspace:packages/theme":
   version: 0.0.0-use.local
   resolution: "@based/theme@workspace:packages/theme"
   dependencies:
@@ -397,7 +397,7 @@ __metadata:
     "@based/get-service": 0.1.1
     "@based/icons": ^0.1.0
     "@based/text": ^0.1.1
-    "@based/theme": ^0.1.0
+    "@based/theme": ^0.1.8
     "@based/tsconfig": "*"
     "@compiled/react": ^0.6.13
     "@saulx/eslint-config": ^1.1.0

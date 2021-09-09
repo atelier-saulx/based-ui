@@ -7,7 +7,7 @@
     "@based/get-service": "0.1.1",
     "@based/icons": "^0.1.0",
     "@based/text": "^0.1.1",
-    "@based/theme": "^0.1.7",
+    "@based/theme": "^0.1.8",
     "@compiled/react": "^0.6.13",
     "@saulx/utils": "^2.0.1",
     "@types/css-font-loading-module": "^0.0.6",
