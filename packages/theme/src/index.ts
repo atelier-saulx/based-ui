@@ -194,9 +194,16 @@ export const getTone = (): string => {
   return theme.active
 }
 
-export const updateTheme = (update: { dark?: Colors; light?: Colors }) => {
+type Optional<T> = { [P in keyof T]?: T[P] }
+
+export const updateTheme = (update: {
+  dark?: Optional<Colors>
+  light?: Optional<Colors>
+}) => {
   for (const key in update) {
-    theme.theme[key] = update[key]
+    for (const c in update[key]) {
+      theme.theme[key][c] = update[key][c]
+    }
   }
   const newVersion = hashTheme(theme)
 
@@ -207,8 +214,6 @@ export const updateTheme = (update: { dark?: Colors; light?: Colors }) => {
     })
   }
 }
-
-console.log('?xxx??')
 
 export const switchTheme = (label: 'dark' | 'light') => {
   if (!label) {

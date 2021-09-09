@@ -1,6 +1,6 @@
 {
   "name": "@based/theme",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "repository": "https://github.com/atelier-saulx/based-ui",
   "description": "A front-end library of themes for Based",
   "main": "dist/index.js",
