@@ -12,7 +12,7 @@ export type CheckProps = {
   value?: boolean
   overrideValue?: boolean
   style?: CSSProperties
-  color?: Color
+  color?: Color | [Color, Color]
   disabledColor?: Color
 }
 
@@ -28,7 +28,24 @@ export const Check: FunctionComponent<CheckProps> = ({
   if (overrideValue !== undefined) {
     enabled = overrideValue
   }
-  const parsedColor = useColor(!enabled ? disabledColor || color : color)
+
+  const isArr = Array.isArray(color)
+
+  const parsedColor = isArr
+    ? useColor(!enabled ? disabledColor : color)
+    : useColor(!enabled ? disabledColor || color : color)
+
+  const bgColor = isArr
+    ? enabled
+      ? useColor(color)
+      : useColor({
+          color: disabledColor.color,
+          opacity: 0.1,
+        })
+    : useColor({
+        color: (!enabled ? disabledColor || color : color).color,
+        opacity: enabled ? 1 : 0.1,
+      })
 
   return (
     <div
@@ -43,10 +60,7 @@ export const Check: FunctionComponent<CheckProps> = ({
         justifyContent: 'center',
         border: '1px solid ' + parsedColor,
         boxShadow: `0 0 1px 0 ${parsedColor} inset, 0 0 1px 0 ` + parsedColor,
-        backgroundColor: useColor({
-          color: (!enabled ? disabledColor || color : color).color,
-          opacity: enabled ? 1 : 0.1,
-        }),
+        background: bgColor,
         ...style,
       }}
       onClick={useCallback(() => {

@@ -67,7 +67,7 @@ export const SideMenuItem: FunctionComponent<SideMenuItemProps> = ({
             : active
             ? useColor({
                 color: inverseColor ? 'foreground' : 'background',
-                tone: 4,
+                tone: inverseColor ? 2 : 4,
               })
             : null,
         }}

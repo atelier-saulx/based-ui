@@ -178,7 +178,6 @@ export const useColor = (color: Color | [Color, Color]): string => {
     const a = useColor(color[0])
     const b = useColor(color[1])
     const x = `linear-gradient(96.76deg, ${a} -85.47%, ${b} 104.14%)`
-    console.log(x)
     return x
   } else {
     const { tone = 1, opacity = 1, color: c } = color || { color: 'foreground' }

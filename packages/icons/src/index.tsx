@@ -7,6 +7,8 @@ import React, {
 
 import useHover from './useHover'
 
+import KeySvg from './Components/Key'
+import LightningSvg from './Components/Lightning'
 import AddSvg from './Components/Add'
 import AppleSvg from './Components/Apple'
 import AudioFileSvg from './Components/AudioFile'
@@ -215,6 +217,8 @@ const wrapIcon = (
   }
 }
 
+const Key = wrapIcon(KeySvg)
+const Lightning = wrapIcon(LightningSvg)
 const Add = wrapIcon(AddSvg)
 const Apple = wrapIcon(AppleSvg)
 const AudioFile = wrapIcon(AudioFileSvg)
@@ -287,8 +291,10 @@ const WaitingScreen = wrapIcon(WaitingScreenSvg)
 const WelcomeScreen = wrapIcon(WelcomeScreenSvg)
 
 const icons = {
+  Key,
   Add,
   Apple,
+  Lightning,
   AudioFile,
   Checked,
   ChevronLeft,
@@ -363,7 +369,9 @@ export type IconName =
   | keyof typeof icons
   | 'add'
   | 'apple'
+  | 'key'
   | 'audioFile'
+  | 'lightning'
   | 'checked'
   | 'chevronLeft'
   | 'chevronRight'
@@ -441,6 +449,8 @@ const iconFromString = (str: IconName): null | FunctionComponent<IconProps> => {
 }
 
 export {
+  Key,
+  Lightning,
   Add,
   Apple,
   AudioFile,
