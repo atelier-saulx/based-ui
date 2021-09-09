@@ -17,6 +17,7 @@ export const SideMenuItem: FunctionComponent<SideMenuItemProps> = ({
   onClick,
   isSmall,
   to,
+  inverseColor,
   active,
   data,
 }) => {
@@ -59,9 +60,15 @@ export const SideMenuItem: FunctionComponent<SideMenuItemProps> = ({
           borderRadius: 4,
           transition: 'background 0.15s',
           backgroundColor: isHover
-            ? useColor({ color: 'background', tone: 3 })
+            ? useColor({
+                color: inverseColor ? 'foreground' : 'background',
+                tone: 3,
+              })
             : active
-            ? useColor({ color: 'background', tone: 4 })
+            ? useColor({
+                color: inverseColor ? 'foreground' : 'background',
+                tone: 4,
+              })
             : null,
         }}
       >
@@ -69,8 +76,8 @@ export const SideMenuItem: FunctionComponent<SideMenuItemProps> = ({
           <ItemIcon
             color={
               active
-                ? { color: 'foreground' }
-                : { color: 'foreground', tone: 2 }
+                ? { color: inverseColor ? 'background' : 'foreground' }
+                : { color: inverseColor ? 'background' : 'foreground', tone: 2 }
             }
             style={{
               marginRight: 8,
@@ -85,8 +92,8 @@ export const SideMenuItem: FunctionComponent<SideMenuItemProps> = ({
             noSelect
             color={
               active
-                ? { color: 'foreground' }
-                : { color: 'foreground', tone: 2 }
+                ? { color: inverseColor ? 'background' : 'foreground' }
+                : { color: inverseColor ? 'background' : 'foreground', tone: 2 }
             }
           >
             {title}

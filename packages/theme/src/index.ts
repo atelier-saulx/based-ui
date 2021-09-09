@@ -173,16 +173,22 @@ export type Color = {
   opacity?: number
 }
 
-export const useColor = (color: Color): string => {
-  const { tone = 1, opacity = 1, color: c } = color || { color: 'foreground' }
-  const selector = theme.theme[theme.active][c]
-
-  const rgb = selector[tone - 1] || selector[selector.length - 1]
-
-  if (opacity !== 1) {
-    return `rgba(${rgb[0]},${rgb[1]},${rgb[2]}, ${opacity})`
+export const useColor = (color: Color | [Color, Color]): string => {
+  if (Array.isArray(color)) {
+    const a = useColor(color[0])
+    const b = useColor(color[1])
+    const x = `linear-gradient(96.76deg, ${a} -85.47%, ${b} 104.14%)`
+    console.log(x)
+    return x
   } else {
-    return `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
+    const { tone = 1, opacity = 1, color: c } = color || { color: 'foreground' }
+    const selector = theme.theme[theme.active][c]
+    const rgb = selector[tone - 1] || selector[selector.length - 1]
+    if (opacity !== 1) {
+      return `rgba(${rgb[0]},${rgb[1]},${rgb[2]}, ${opacity})`
+    } else {
+      return `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
+    }
   }
 }
 

@@ -36,5 +36,8 @@
     "url": "https://github.com/atelier-saulx/based-ui/issues"
   },
   "homepage": "https://github.com/atelier-saulx/based-ui#readme",
-  "packageManager": "yarn@3.0.2"
+  "packageManager": "yarn@3.0.2",
+  "resolutions": {
+    "@based/get-service": "portal:/Users/jim/saulx/based-core/packages/get-service"
+  }
 }

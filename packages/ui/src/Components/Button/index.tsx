@@ -21,7 +21,7 @@ type GenericEventHandler = EventHandler<SyntheticEvent>
 
 export type ButtonProps = {
   style?: CSSProperties
-  color?: Color
+  color?: Color | [Color, Color]
   foregroundColor?: Color
   actionKeys?: Key[] // adds a key event
   icon?: IconName
@@ -121,7 +121,17 @@ export const Button: FunctionComponent<ButtonProps> = ({
     useKeyUp(onKeyUp, ref, actionKeys)
   }
 
-  const c = color.color
+  const isArr = Array.isArray(color)
+
+  const pColor = isArr ? color[0] : color
+
+  if (isArr) {
+    if (!color[1].tone) {
+      color[1].tone = 1
+    }
+  }
+
+  const c = pColor.color
 
   if (!foregroundColor) {
     if (c === 'primary' || c === 'secondary') {
@@ -137,8 +147,8 @@ export const Button: FunctionComponent<ButtonProps> = ({
     foregroundColor = { color: foregroundColor }
   }
 
-  if (!color.tone) {
-    color.tone = 1
+  if (!pColor.tone) {
+    pColor.tone = 1
   }
 
   if (
@@ -177,15 +187,36 @@ export const Button: FunctionComponent<ButtonProps> = ({
           borderColor: borderColor
             ? useColor(borderColor)
             : useColor({ color: 'divider' }),
-          backgroundColor: useColor({
-            color: color.color,
-            opacity: color.opacity,
-            tone: isActive
-              ? color.tone + 2
-              : isHover
-              ? color.tone + 1
-              : color.tone,
-          }),
+          background: isArr
+            ? useColor([
+                {
+                  color: pColor.color,
+                  opacity: pColor.opacity,
+                  tone: isActive
+                    ? pColor.tone + 2
+                    : isHover
+                    ? pColor.tone + 1
+                    : pColor.tone,
+                },
+                {
+                  color: color[1].color,
+                  opacity: color[1].opacity,
+                  tone: isActive
+                    ? color[1].tone + 2
+                    : isHover
+                    ? color[1].tone + 1
+                    : color[1].tone,
+                },
+              ])
+            : useColor({
+                color: color.color,
+                opacity: color.opacity,
+                tone: isActive
+                  ? color.tone + 2
+                  : isHover
+                  ? color.tone + 1
+                  : color.tone,
+              }),
         }}
         onClick={isLoading ? null : handler}
         {...hover}

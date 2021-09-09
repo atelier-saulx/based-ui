@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react'
 import { DataEventHandler } from '../../../types'
-import { useColor } from '@based/theme'
+import { useColor, Color } from '@based/theme'
 import { Text } from '../../Text'
 
 export type AvatarProps = {
@@ -8,6 +8,7 @@ export type AvatarProps = {
   name?: string
   onClick?: DataEventHandler
   size?: number
+  color?: Color | [Color, Color]
 }
 
 const parseName = (name: string): string => {
@@ -37,7 +38,9 @@ const Avatar: FunctionComponent<AvatarProps> = ({
   name = '',
   onClick,
   size = 40,
+  color = { color: 'primary', tone: 2 },
 }) => {
+  const isArray = Array.isArray(color)
   const parsedName = parseName(name)
   return (
     <div
@@ -53,11 +56,16 @@ const Avatar: FunctionComponent<AvatarProps> = ({
           borderRadius: '50%',
           backgroundPosition: 'center',
           backgroundSize: 'cover',
-          backgroundImage: `url(${src})`,
+          backgroundImage: src
+            ? `url(${src})`
+            : isArray
+            ? useColor(color)
+            : null,
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          backgroundColor: useColor({ color: 'primary', tone: 2 }),
+          backgroundColor:
+            isArray && src ? useColor(color[0]) : useColor(color),
         }}
       >
         {!src && parsedName ? (

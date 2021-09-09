@@ -34,6 +34,7 @@ export type SideMenuItemProps = {
   label?: TextValue
   items?: SideMenuItemProps[]
   hidden?: boolean | undefined
+  inverseColor?: boolean
 }
 
 type SideMenuProps = {
@@ -42,6 +43,7 @@ type SideMenuProps = {
   Logo?: ComponentType<{ isSmall?: boolean }>
   footer?: FooterProps[] | ComponentType<{ isSmall?: boolean }>
   collapse?: number
+  inverseColor?: boolean
 }
 
 export const SideMenu: FunctionComponent<SideMenuProps> = ({
@@ -50,6 +52,7 @@ export const SideMenu: FunctionComponent<SideMenuProps> = ({
   Logo,
   footer,
   collapse = 1500,
+  inverseColor,
 }) => {
   const size = useWindowSize()
   const isSmall = collapse ? size.width < collapse : false
@@ -69,21 +72,31 @@ export const SideMenu: FunctionComponent<SideMenuProps> = ({
           noSelect
           singleLine
           weight="semibold"
-          color={{ color: 'foreground' }}
+          color={{ color: inverseColor ? 'background' : 'foreground' }}
           key={index}
         >
           {item.label}
         </Text>
       )
     }
-    return <SideMenuItem isSmall={isSmall} key={index} {...item} />
+    return (
+      <SideMenuItem
+        inverseColor={inverseColor}
+        isSmall={isSmall}
+        key={index}
+        {...item}
+      />
+    )
   })
 
   return (
     <div
       style={{
         height: '100%',
-        backgroundColor: useColor({ color: 'background', tone: 2 }),
+        backgroundColor: useColor({
+          color: inverseColor ? 'foreground' : 'background',
+          tone: inverseColor ? 1 : 2,
+        }),
         width: isSmall ? 60 : 240,
         minWidth: isSmall ? 60 : 240,
         overflowX: 'hidden',
@@ -144,7 +157,9 @@ export const SideMenu: FunctionComponent<SideMenuProps> = ({
                         marginBottom: 8,
                         marginTop: 8,
                       }}
-                      color={{ color: 'foreground' }}
+                      color={{
+                        color: inverseColor ? 'background' : 'foreground',
+                      }}
                       key={index}
                     >
                       {item.label}

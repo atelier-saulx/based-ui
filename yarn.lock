@@ -304,15 +304,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@based/get-service@npm:0.1.1":
-  version: 0.1.1
-  resolution: "@based/get-service@npm:0.1.1"
+"@based/get-service@portal:/Users/jim/saulx/based-core/packages/get-service::locator=%40based%2Fui-workspaces%40workspace%3A.":
+  version: 0.0.0-use.local
+  resolution: "@based/get-service@portal:/Users/jim/saulx/based-core/packages/get-service::locator=%40based%2Fui-workspaces%40workspace%3A."
   dependencies:
     cross-fetch: ^3.1.4
     timeout-signal: ^1.1.0
-  checksum: ab40869eb7acfeb79d311d4df591d56e378e389397ab8589240417220875cc8acbb298da4ec42af1afc928c6010ab3c210e5c3a7e84cd4fa330a66fbd5c6919f
   languageName: node
-  linkType: hard
+  linkType: soft
 
 "@based/icons@*, @based/icons@^0.1.0, @based/icons@workspace:packages/icons":
   version: 0.0.0-use.local
