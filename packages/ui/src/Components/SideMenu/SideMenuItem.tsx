@@ -37,17 +37,20 @@ export const SideMenuItem: FunctionComponent<SideMenuItemProps> = ({
     >
       <div
         {...useMultipleEvents(hover, tooltip)}
-        onClick={useCallback((e) => {
-          if (to) {
-            setLocation(to)
-          }
-          if (items) {
-            toggleExpand()
-          }
-          if (onClick) {
-            onClick(e, data)
-          }
-        }, [])}
+        onClick={useCallback(
+          (e) => {
+            if (to) {
+              setLocation(to)
+            }
+            if (items) {
+              toggleExpand()
+            }
+            if (onClick) {
+              onClick(e, data)
+            }
+          },
+          [onClick, to, !!items, data]
+        )}
         style={{
           paddingLeft: isSmall ? 9 : 14,
           paddingRight: isSmall ? 9 : 14,
