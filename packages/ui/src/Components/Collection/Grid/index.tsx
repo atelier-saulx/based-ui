@@ -43,10 +43,10 @@ export const Grid = (props: GridProps) => {
       <AutoSizer>
         {({ height, width }) => {
           const ratio = 220 / 232
-          let w = (large ? 440 : 220) + 16
+          let w = (large ? 400 : 220) + 16
           const columnCount = Math.floor(width / w)
           // - 4 for scrollbar
-          w = Math.floor((width - 16) / columnCount) - 4 / columnCount
+          w = Math.min(Math.floor((width - 16) / columnCount) - 4 / columnCount)
           const h = w * ratio + 16
           const context = {
             onOptions,

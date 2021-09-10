@@ -35,7 +35,7 @@ const Tab = ({
           // @ts-ignore
           onClick(tab, index)
         }
-      }, [tab])}
+      }, [tab, onClick, index])}
     >
       <Text
         noSelect
