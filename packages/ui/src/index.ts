@@ -17,6 +17,7 @@ import useInputValue from './hooks/useInputValue'
 import Avatar from './Components/Image/Avatar'
 import copyToClipboard from './util/copyToClipboard'
 export { SideMenuAlt } from './Components/SideMenu/SideMenuAlt'
+import ResultDot from './Components/Results/ResultDot'
 
 export {
   Overlay,
@@ -29,6 +30,7 @@ export {
 export * from './hooks/useSelect'
 
 export {
+  ResultDot,
   copyToClipboard,
   useContextualMenu,
   useOverlay,

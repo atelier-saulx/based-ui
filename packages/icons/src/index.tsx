@@ -7,6 +7,7 @@ import React, {
 
 import useHover from './useHover'
 
+import SleepSvg from './Components/Sleep'
 import KeySvg from './Components/Key'
 import LightningSvg from './Components/Lightning'
 import AddSvg from './Components/Add'
@@ -82,6 +83,7 @@ import WelcomeScreenSvg from './Components/WelcomeScreen'
 import useMultipleEvents from './useMultipleEvents'
 
 import { Color } from '@based/theme'
+import { wrap } from 'module'
 
 export type SvgProps = {
   color?: Color
@@ -217,6 +219,7 @@ const wrapIcon = (
   }
 }
 
+const Sleep = wrapIcon(SleepSvg)
 const Key = wrapIcon(KeySvg)
 const Lightning = wrapIcon(LightningSvg)
 const Add = wrapIcon(AddSvg)
@@ -292,6 +295,7 @@ const WelcomeScreen = wrapIcon(WelcomeScreenSvg)
 
 const icons = {
   Key,
+  Sleep,
   Add,
   Apple,
   Lightning,
@@ -368,6 +372,7 @@ const icons = {
 export type IconName =
   | keyof typeof icons
   | 'add'
+  | 'sleep'
   | 'apple'
   | 'key'
   | 'audioFile'
@@ -450,6 +455,7 @@ const iconFromString = (str: IconName): null | FunctionComponent<IconProps> => {
 
 export {
   Key,
+  Sleep,
   Lightning,
   Add,
   Apple,
