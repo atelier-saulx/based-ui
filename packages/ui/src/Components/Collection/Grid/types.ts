@@ -6,6 +6,7 @@ import {
   OptionsComponentProps,
   FooterProps,
 } from '../types'
+import { ComponentType } from 'react'
 
 export type GridProps = {
   header?: HeaderProps
@@ -13,7 +14,7 @@ export type GridProps = {
   itemProps?: CollectionitemProps
   items: Object[]
   large?: boolean
-  optionsIcon?: IconName
+  optionsIcon?: IconName | ComponentType<OptionsComponentProps>
   exportData?: ExportData
   onOptions?: DataEventHandler // select options
   onDrop?: DataEventHandler<

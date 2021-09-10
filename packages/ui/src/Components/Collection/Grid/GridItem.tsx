@@ -116,10 +116,14 @@ const GridItem = ({
     ),
     { readFiles: true }
   )
-  // isDragOver
 
   const Icon = iconName ? iconFromString(iconName) : null
-  const OptionsIcon = optionsIcon ? iconFromString(optionsIcon) : Settings
+  const OptionsIcon = optionsIcon
+    ? typeof optionsIcon === 'string'
+      ? // @ts-ignore
+        iconFromString(optionsIcon)
+      : optionsIcon
+    : Settings
 
   return (
     <div
@@ -214,10 +218,10 @@ const GridItem = ({
                 color={{
                   color: 'foreground',
                 }}
-                onClick={useCallback((e) => onOptions(e, wrappedData), [
-                  itemData,
-                  index,
-                ])}
+                onClick={useCallback(
+                  (e) => onOptions(e, wrappedData),
+                  [itemData, index]
+                )}
                 style={{
                   opacity: isHover ? 1 : 0,
                   transition: 'opacity 0.15s',
