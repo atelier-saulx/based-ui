@@ -19,6 +19,7 @@ export class OverlayCtx<P> {
 
   public update(props: PropsWithChildren<P>) {
     const children = props.children
+
     if (deepEqual(children, this.props && this.props.children)) {
       if (
         this.props &&
@@ -31,7 +32,7 @@ export class OverlayCtx<P> {
       }
     }
 
-    if (!deepEqual(this.props, props)) {
+    if (deepEqual(this.props, props) || this.props === undefined) {
       this.props = props
       global.requestAnimationFrame(() => {
         this.listeners.forEach((v) => {

@@ -38,7 +38,11 @@ export default function useTooltip(
     onMouseEnter: useCallback(
       (e, data) => {
         // @ts-ignore
-        if (ctx.children === null) {
+        if (
+          ctx.current &&
+          ctx.current.props &&
+          ctx.current.props.children === null
+        ) {
           return null
         }
 
