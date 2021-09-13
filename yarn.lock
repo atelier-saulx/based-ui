@@ -215,11 +215,11 @@ __metadata:
   linkType: hard
 
 "@babel/parser@npm:^7.14.9, @babel/parser@npm:^7.15.4, @babel/parser@npm:^7.15.5":
-  version: 7.15.5
-  resolution: "@babel/parser@npm:7.15.5"
+  version: 7.15.6
+  resolution: "@babel/parser@npm:7.15.6"
   bin:
     parser: ./bin/babel-parser.js
-  checksum: abc39a66b9bf6c861e25b07ad99830c4da6ce345135ebe08ee81a0e8d2f62cddc5f1fd825885fcd609a41b59531c856083d880f7836bd89c148136f834dfc3fe
+  checksum: 497c293f8260100940c3e2a1f939a94475779355d786b1685afa1ecdfba0843098c83b824e453c2cb30053c3e901a74427897e54f007862de4c81bb68cf84663
   languageName: node
   linkType: hard
 
@@ -295,18 +295,18 @@ __metadata:
   linkType: hard
 
 "@babel/types@npm:^7.13.0, @babel/types@npm:^7.13.17, @babel/types@npm:^7.15.4, @babel/types@npm:^7.8.3":
-  version: 7.15.4
-  resolution: "@babel/types@npm:7.15.4"
+  version: 7.15.6
+  resolution: "@babel/types@npm:7.15.6"
   dependencies:
     "@babel/helper-validator-identifier": ^7.14.9
     to-fast-properties: ^2.0.0
-  checksum: dac7d733edf2102e97f197929693fae6025161f3edda5a0f621f69e9d0741b8596c6f2152492bef869b55d0205e214867e8730f389283e85432b8f093e295c4b
+  checksum: 37f497dde10d238b5eb184efab83b415a86611e3d73dc0434de0cfb851b20ee606a3b7e1525e5b2d522fac1248d0345fea0468006f246262511b80cd3ed2419f
   languageName: node
   linkType: hard
 
-"@based/get-service@portal:/Users/jim/saulx/based-core/packages/get-service::locator=%40based%2Fui-workspaces%40workspace%3A.":
+"@based/get-service@portal:../based-core/packages/get-service::locator=%40based%2Fui-workspaces%40workspace%3A.":
   version: 0.0.0-use.local
-  resolution: "@based/get-service@portal:/Users/jim/saulx/based-core/packages/get-service::locator=%40based%2Fui-workspaces%40workspace%3A."
+  resolution: "@based/get-service@portal:../based-core/packages/get-service::locator=%40based%2Fui-workspaces%40workspace%3A."
   dependencies:
     cross-fetch: ^3.1.4
   languageName: node
@@ -650,9 +650,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@saulx/aristotle-build@npm:^2.0.1":
-  version: 2.0.1
-  resolution: "@saulx/aristotle-build@npm:2.0.1"
+"@saulx/aristotle-build@npm:^2.0.2":
+  version: 2.0.2
+  resolution: "@saulx/aristotle-build@npm:2.0.2"
   dependencies:
     "@babel/core": ^7.14.8
     "@babel/generator": ^7.14.9
@@ -676,20 +676,20 @@ __metadata:
     postcss: ^8.3.6
     postcss-default-unit: ^1.0.0
     postcss-flexbugs-fixes: ^5.0.2
-  checksum: f721eb3165d19c8c57824d81861318650205b10f18560b61e659a179236f3d052d631f8fcf300ca11f926e0e2c6fd4b1ba3f202ba3831c9218e90c5703b33132
+  checksum: c1e13c6a7f9b14d44dba8954e0f1f725fde2787a716a69481abb0007a2ad74444e3384bc86ca93153d96d30d46fc5871edf82545bae37889146849fe03682f24
   languageName: node
   linkType: hard
 
-"@saulx/aristotle-create-server-dist@npm:^2.0.1":
-  version: 2.0.1
-  resolution: "@saulx/aristotle-create-server-dist@npm:2.0.1"
+"@saulx/aristotle-create-server-dist@npm:^2.0.2":
+  version: 2.0.2
+  resolution: "@saulx/aristotle-create-server-dist@npm:2.0.2"
   dependencies:
-    "@saulx/aristotle-build": ^2.0.1
+    "@saulx/aristotle-build": ^2.0.2
     "@saulx/aristotle-server-utils": ^1.0.2
     "@saulx/get-package": ^1.0.7
     chalk: ^4.1.2
     fs-extra: ^10.0.0
-  checksum: 70c568fcdf90ed8e6b498faf59c7050e08e3dd2b5ef59f6bc0f8e3893c7320fbda901c28a58bd3b3df0b8740a4598fdc9f6028f612f92a9fe0c1aef480c47fca
+  checksum: 5be50d613c557903bdaffd572973406f061bbca287b8c6254d77632cb8ae2ba90b22723df3d86c9905ccf92709189c8d66da36ddd157041464ee2b7d86b674ec
   languageName: node
   linkType: hard
 
@@ -711,11 +711,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@saulx/aristotle-watcher@npm:^2.0.1":
-  version: 2.0.1
-  resolution: "@saulx/aristotle-watcher@npm:2.0.1"
+"@saulx/aristotle-watcher@npm:^2.0.2":
+  version: 2.0.2
+  resolution: "@saulx/aristotle-watcher@npm:2.0.2"
   dependencies:
-    "@saulx/aristotle-build": ^2.0.1
+    "@saulx/aristotle-build": ^2.0.2
     "@saulx/aristotle-server-utils": ^1.0.2
     "@saulx/aristotle-types": ^1.0.0
     "@saulx/utils": ^2.0.1
@@ -727,24 +727,24 @@ __metadata:
     murmurhash-native: ^3.5.0
     source-map: ^0.7.3
     ws: ^8.0.0
-  checksum: ec10b69a01af3ff4962833b0b418928b0f6666c5d8c95de6fbf61cc3988c50b31de3166136c8f03db103341e5dfcaf2ac7ad787a4ee9df3464b6efad26ae0b92
+  checksum: f10e242a229ab8c6900f411ae03c55a4bef1e4f64da8f056b9b0785c7a470bb120284f9d548d24e5c4918a8b78f693495a3ee3b90129a2c1bfad25e1373e0e8a
   languageName: node
   linkType: hard
 
 "@saulx/aristotle@npm:^4.0.1":
-  version: 4.0.1
-  resolution: "@saulx/aristotle@npm:4.0.1"
+  version: 4.0.2
+  resolution: "@saulx/aristotle@npm:4.0.2"
   dependencies:
-    "@saulx/aristotle-build": ^2.0.1
-    "@saulx/aristotle-create-server-dist": ^2.0.1
-    "@saulx/aristotle-watcher": ^2.0.1
+    "@saulx/aristotle-build": ^2.0.2
+    "@saulx/aristotle-create-server-dist": ^2.0.2
+    "@saulx/aristotle-watcher": ^2.0.2
     "@saulx/get-package": ^1.0.7
     chalk: ^4.1.2
     commander: ^8.1.0
     expand-home-dir: ^0.0.3
   bin:
     aristotle: bin/cmd.js
-  checksum: 053ab811ae0adc1a27ade957724c8be8a97d8a32a3be7df48c9957cfcd62a0922beb6220d54ae92e9bb0abb6673bd633c0e576e59568947d6e27af130e7359fa
+  checksum: c7ca7a111e6816577767fd091d8b8a3a0b5c947c5a22d56ba606ab1f2a3dafb68f0ceecd7185d1f436f30fb203ce249cdd9fc9546abe0196867d59c7021d9cd0
   languageName: node
   linkType: hard
 
@@ -923,9 +923,9 @@ __metadata:
   linkType: hard
 
 "@types/node@npm:*, @types/node@npm:^16.3.1":
-  version: 16.7.13
-  resolution: "@types/node@npm:16.7.13"
-  checksum: 15dc28aa44674d3f49dcca4a6523b6ab1ef9bbea5c659057bec13153e1873718d6b62ab0ea57a3d57ee37f0f1136ae30e3ea503df43b0afa3ae437c8750be7f5
+  version: 16.9.1
+  resolution: "@types/node@npm:16.9.1"
+  checksum: 41afcf183a22d59323a0199dd7e0f46591247f45fc08a4434edb26d56dc279ae4fdb80f37989ddd7a0f45e3857c4933e6e82057ede09c5a829f77e373e680375
   languageName: node
   linkType: hard
 
@@ -1571,9 +1571,9 @@ __metadata:
   linkType: hard
 
 "caniuse-lite@npm:^1.0.0, caniuse-lite@npm:^1.0.30001109, caniuse-lite@npm:^1.0.30001252, caniuse-lite@npm:^1.0.30001254":
-  version: 1.0.30001255
-  resolution: "caniuse-lite@npm:1.0.30001255"
-  checksum: 6889855b5e4d4496d183c52eb214327d8a8120b2c7b935948ae44cf64748c7b2f3c13d3917a10bb47697b9ba5e9a4bfd4b1ed8319f7f8e6609b3ebd3ba1184b3
+  version: 1.0.30001257
+  resolution: "caniuse-lite@npm:1.0.30001257"
+  checksum: d336d5bfaacc5be9d6ab1de3687e6cd88b124f9c3a2013ff40ab9f324cca249de5f93cc4589076c4414d65066ccaa35fc9894346735c3088ce5452c42baaf7db
   languageName: node
   linkType: hard
 
@@ -1771,9 +1771,9 @@ __metadata:
   linkType: hard
 
 "commander@npm:^8.1.0":
-  version: 8.1.0
-  resolution: "commander@npm:8.1.0"
-  checksum: 75abce64ed13cc7703606dbe9e6cfcabe04f382c6c3404c3054ac4f3917064c40ddbf3eecd8917594426d547a85b4cacbc15e986d55a7723a11494ec19b570da
+  version: 8.2.0
+  resolution: "commander@npm:8.2.0"
+  checksum: e868805bc266777f7a9c8a740e15b9e02b8148d8251f577ea9b9ef373ac0bdeb77b9b60cfc033592c9e1affea89993be08c13c623f0c619f9bf152c0e4d12cb0
   languageName: node
   linkType: hard
 
@@ -2486,9 +2486,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.3.830":
-  version: 1.3.832
-  resolution: "electron-to-chromium@npm:1.3.832"
-  checksum: eb2297408749078d40182f54e4059cd838d5358c8fd41c2db983a7f4d5a12177ed3d7afbb893a11fd9f9f51dff63a6617e67be0390d3c3ca20d328d2cd34ba90
+  version: 1.3.836
+  resolution: "electron-to-chromium@npm:1.3.836"
+  checksum: 81f65cd1ce8136df768130f6709587c4538c980b5ad0b975f5fa64180d69ed52ac0179de521a30b7ae7e1810a1a73c34df723ab5650a44a820085a9e4c5d50f0
   languageName: node
   linkType: hard
 
@@ -2578,11 +2578,11 @@ __metadata:
   linkType: hard
 
 "esbuild@npm:^0.12.17":
-  version: 0.12.25
-  resolution: "esbuild@npm:0.12.25"
+  version: 0.12.27
+  resolution: "esbuild@npm:0.12.27"
   bin:
     esbuild: bin/esbuild
-  checksum: fd92b0541c17e6d863d3b1cf628a35c9844831a1f1f2d16c3091bc7a130a601a8164083b84a65cd3178209e7c395fc61d454f92c8b1a4869d443fd0ca5a51a8d
+  checksum: b40a7098a51d9d74c50a5912477079ecbd96c211d00cbabde3cb4560609b383265c7bbb0f7e350cfc40ed0e13996be25405d14f560eeaad48105cb7c753e24f8
   languageName: node
   linkType: hard
 
@@ -2973,20 +2973,22 @@ __metadata:
   linkType: hard
 
 "fast-xml-parser@npm:^3.19.0":
-  version: 3.19.0
-  resolution: "fast-xml-parser@npm:3.19.0"
+  version: 3.20.0
+  resolution: "fast-xml-parser@npm:3.20.0"
+  dependencies:
+    strnum: ^1.0.3
   bin:
     xml2js: cli.js
-  checksum: d9da9145f73d90c05ee2746d80c78eca4da0249dea8c81ea8f1a6e1245e62988ed4a040dbd1c7229b1e0bdcbf69d33c882e0ac337d10c7eedb159a4dc9779327
+  checksum: 8408235898579ab41ac9689a7058507b3f53a88b3a347fec4ede235685a05b2b5e8efa4819abd107b39d799e9a1e1a3d897d6f4ba9c83ccf2d2fae5a0a1efd6c
   languageName: node
   linkType: hard
 
 "fastq@npm:^1.6.0":
-  version: 1.12.0
-  resolution: "fastq@npm:1.12.0"
+  version: 1.13.0
+  resolution: "fastq@npm:1.13.0"
   dependencies:
     reusify: ^1.0.4
-  checksum: 486db511686b5ab28b1d87170f05c3fa6c8d769cde6861ed34cf3756cdf356950ba9c7dde0bc976ad4308b85aa9ef6214c685887f9f724be72c054a7becb642a
+  checksum: 32cf15c29afe622af187d12fc9cd93e160a0cb7c31a3bb6ace86b7dea3b28e7b72acde89c882663f307b2184e14782c6c664fa315973c03626c7d4bff070bb0b
   languageName: node
   linkType: hard
 
@@ -6313,9 +6315,9 @@ fsevents@~2.3.2:
   linkType: hard
 
 "protocol-buffers-schema@npm:^3.3.1":
-  version: 3.5.2
-  resolution: "protocol-buffers-schema@npm:3.5.2"
-  checksum: 7702568a2bfe90e6c072f09aef9cc3a7e30f9aaa7685f3c4d4f3d7807c7b14649581591d0549f42c2780cecbc553d46d0ffcc3334e70d186e2566849bc5bd9a5
+  version: 3.6.0
+  resolution: "protocol-buffers-schema@npm:3.6.0"
+  checksum: 8713b5770f6745ddbcdf3bbd03ee020624d506233bb567927a6615a6f69a5bd620a5f49597f34f4115792b853a4c9cb9e2d5d6b930a1c04bf198023e45c1c349
   languageName: node
   linkType: hard
 
@@ -7175,6 +7177,13 @@ resolve@^2.0.0-next.3:
   languageName: node
   linkType: hard
 
+"strnum@npm:^1.0.3":
+  version: 1.0.3
+  resolution: "strnum@npm:1.0.3"
+  checksum: 490147087bb7c21b17208b6053b7b08df236ea4b3873c27e9dc0c7ad410ef11b073145c688e67e92be0a3a7d91ec3134d8e8078b553c252860094c29eed5e48d
+  languageName: node
+  linkType: hard
+
 "stylehacks@npm:^4.0.0":
   version: 4.0.3
   resolution: "stylehacks@npm:4.0.3"
@@ -7515,22 +7524,22 @@ resolve@^2.0.0-next.3:
   linkType: hard
 
 "typescript@^4.1.3, typescript@^4.3.5":
-  version: 4.4.2
-  resolution: "typescript@npm:4.4.2"
+  version: 4.4.3
+  resolution: "typescript@npm:4.4.3"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 194e08e9d1971d667d6fd1a0554616b7022312a2319d70e81a64e502a265992061ee7817ed9a69b52bbabe7a9b85e7938cb8c11c433e40a516b277f8c4dacd51
+  checksum: 05823f21796d450531a7e4ab299715d38fd9ded0e4ce7400876053f4b5166ca3dde7a68cecfe72d9086039f03c0b6edba36516fb10ed83c5837d9600532ea4c2
   languageName: node
   linkType: hard
 
 "typescript@patch:typescript@^4.1.3#~builtin<compat/typescript>, typescript@patch:typescript@^4.3.5#~builtin<compat/typescript>":
-  version: 4.4.2
-  resolution: "typescript@patch:typescript@npm%3A4.4.2#~builtin<compat/typescript>::version=4.4.2&hash=32657b"
+  version: 4.4.3
+  resolution: "typescript@patch:typescript@npm%3A4.4.3#~builtin<compat/typescript>::version=4.4.3&hash=32657b"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 3109ae25705746996007161cdd3271857db4f40356b894e34d4cabc216bf9e251f53e0bb6e48df2450b5e3fd948dcbee716a616a4ad4cf7251292025e6163cb1
+  checksum: 28ab98313afab46788ff41014fdb5932430ada6e03cf9e92ac47f406526a2cac1ae2894834e7da61e46b7429318e9c47f45ba8de323332f0cb9af99b72ebae74
   languageName: node
   linkType: hard
 
@@ -7751,8 +7760,8 @@ resolve@^2.0.0-next.3:
   linkType: hard
 
 "ws@npm:^8.0.0":
-  version: 8.2.1
-  resolution: "ws@npm:8.2.1"
+  version: 8.2.2
+  resolution: "ws@npm:8.2.2"
   peerDependencies:
     bufferutil: ^4.0.1
     utf-8-validate: ^5.0.2
@@ -7761,7 +7770,7 @@ resolve@^2.0.0-next.3:
       optional: true
     utf-8-validate:
       optional: true
-  checksum: 22906903c7952790a911627f99e3419d8f251a6a540d9ba4f334a7e0865d7ea7026d8ad23829c3c0f2843a9f15bdb91c646e7f8853a5a5ba25a57dea2cf7d416
+  checksum: 25e764c631141bdca45badc86e69437b8791e57e461f9a16c0f7cd779baf70c3fbba07ecdd9e0d34fea1155ddcf62ef165cd7f81b68ed545bc7d455c15a85fb0
   languageName: node
   linkType: hard
 
