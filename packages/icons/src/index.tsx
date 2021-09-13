@@ -220,7 +220,7 @@ const wrapIcon = (
   }
 }
 
-const Noticiations = wrapIcon(NoticiationsSvg)
+const Notifications = wrapIcon(NoticiationsSvg)
 const Sleep = wrapIcon(SleepSvg)
 const Key = wrapIcon(KeySvg)
 const Lightning = wrapIcon(LightningSvg)
@@ -296,7 +296,7 @@ const WaitingScreen = wrapIcon(WaitingScreenSvg)
 const WelcomeScreen = wrapIcon(WelcomeScreenSvg)
 
 const icons = {
-  Noticiations,
+  Notifications,
   Key,
   Sleep,
   Add,
@@ -377,7 +377,7 @@ export type IconName =
   | 'add'
   | 'sleep'
   | 'apple'
-  | 'noticiations'
+  | 'notifications'
   | 'key'
   | 'audioFile'
   | 'lightning'
@@ -458,7 +458,7 @@ const iconFromString = (str: IconName): null | FunctionComponent<IconProps> => {
 }
 
 export {
-  Noticiations,
+  Notifications,
   Key,
   Sleep,
   Lightning,
