@@ -1,5 +1,5 @@
 import React, { useCallback, FunctionComponent, CSSProperties } from 'react'
-import { Check } from '../Button/CheckBox'
+import { Check, CheckProps } from '../Button/CheckBox'
 import { Radio } from '../Button/Radio'
 import { Text } from '../Text'
 import { TextValue } from '@based/text'
@@ -18,7 +18,7 @@ export type ToggleInputProps = {
   children?: TextValue
 }
 
-export const CheckBox: FunctionComponent<ToggleInputProps> = ({
+export const CheckBox: FunctionComponent<ToggleInputProps & CheckProps> = ({
   style,
   children,
   onChange,

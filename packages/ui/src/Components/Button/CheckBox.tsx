@@ -43,6 +43,7 @@ export const Check: FunctionComponent<CheckProps> = ({
           opacity: 0.1,
         })
     : useColor({
+        // @ts-ignore
         color: (!enabled ? disabledColor || color : color).color,
         opacity: enabled ? 1 : 0.1,
       })
