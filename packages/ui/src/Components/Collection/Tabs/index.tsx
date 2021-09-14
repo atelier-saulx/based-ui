@@ -76,13 +76,13 @@ export const Tabs = ({
   indicatorMargin = 0,
   color = { color: 'primary' },
 }: TabsProps) => {
-  const [activeTab, setActive] = useState(active)
+  // const [activeTab, setActive] = useState(active)
   const [tabSizes, setTabsizes] = useState<TabSizes>()
   const ref = useRef()
 
   const onClick = useCallback(
     (active, index) => {
-      setActive(index)
+      // setActive(index)
       if (tabs[index].onClick) {
         // @ts-ignore
         tabs[index].onClick()
@@ -117,7 +117,7 @@ export const Tabs = ({
         setTabsizes(tabSizes)
       }
     })
-  }, [tabs, ref.current, activeTab])
+  }, [tabs, ref.current, active])
 
   return (
     <div
@@ -141,7 +141,7 @@ export const Tabs = ({
             tab={tab}
             onClick={onClick}
             noIndicator={noIndicator}
-            activeTab={activeTab}
+            activeTab={active}
             index={index}
             tabSizes={tabSizes}
             indicatorMargin={indicatorMargin}
@@ -153,11 +153,11 @@ export const Tabs = ({
           opacity: noIndicator ? 0 : 1,
           position: 'absolute',
           bottom: -1 * indicatorMargin,
-          width: tabSizes ? tabSizes[activeTab].width * 1.05 : 0,
+          width: tabSizes ? tabSizes[active].width * 1.05 : 0,
           left: 0,
           transition: 'width 0.25s, transform 0.2s ease-in-out',
           transform: `translate3d(${
-            tabSizes ? tabSizes[activeTab].x : 0
+            tabSizes ? tabSizes[active].x : 0
           }px,0px,0px)`,
           height: 4,
           backgroundColor: useColor(color),
