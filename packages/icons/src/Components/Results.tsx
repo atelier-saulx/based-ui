@@ -28,7 +28,7 @@ const Results: FunctionComponent<SvgProps> = ({
         height="12.3737"
         rx="0.48"
         fill={useColor(color)}
-        fill-opacity="0.7"
+        fillOpacity="0.7"
       />
       <rect
         x="5"
@@ -37,7 +37,7 @@ const Results: FunctionComponent<SvgProps> = ({
         height="7.07069"
         rx="0.48"
         fill={useColor(color)}
-        fill-opacity="0.4"
+        fillOpacity="0.4"
       />
     </svg>
   )
