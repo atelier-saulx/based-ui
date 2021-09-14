@@ -209,13 +209,18 @@ export const Button: FunctionComponent<ButtonProps> = ({
                 },
               ])
             : useColor({
+                // @ts-ignore
                 color: color.color,
+                // @ts-ignore
                 opacity: color.opacity,
                 tone: isActive
-                  ? color.tone + 2
+                  ? // @ts-ignore
+                    color.tone + 2
                   : isHover
-                  ? color.tone + 1
-                  : color.tone,
+                  ? // @ts-ignore
+                    color.tone + 1
+                  : // @ts-ignore
+                    color.tone,
               }),
         }}
         onClick={isLoading ? null : handler}
