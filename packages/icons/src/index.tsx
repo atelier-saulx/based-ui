@@ -7,15 +7,10 @@ import React, {
 
 import useHover from './useHover'
 
-import SleepSvg from './Components/Sleep'
-import KeySvg from './Components/Key'
-import LightningSvg from './Components/Lightning'
 import AddSvg from './Components/Add'
-import NoticiationsSvg from './Components/Notifications'
 import AppleSvg from './Components/Apple'
 import AudioFileSvg from './Components/AudioFile'
 import CheckedSvg from './Components/Checked'
-import ResultsSvg from './Components/Results'
 import ChevronLeftSvg from './Components/ChevronLeft'
 import ChevronRightSvg from './Components/ChevronRight'
 import ClapSvg from './Components/Clap'
@@ -44,6 +39,8 @@ import GraphSvg from './Components/Graph'
 import GridSvg from './Components/Grid'
 import HideSvg from './Components/Hide'
 import ImageFileSvg from './Components/ImageFile'
+import KeySvg from './Components/Key'
+import LightningSvg from './Components/Lightning'
 import ListSvg from './Components/List'
 import LockSvg from './Components/Lock'
 import LogicSvg from './Components/Logic'
@@ -55,11 +52,13 @@ import NetherlandsSvg from './Components/Netherlands'
 import NewFlowSvg from './Components/NewFlow'
 import NewTabSvg from './Components/NewTab'
 import NewUserSvg from './Components/NewUser'
+import NoticiationsSvg from './Components/Notifications'
 import OpenQuestionSvg from './Components/OpenQuestion'
 import OverviewSvg from './Components/Overview'
 import PolandSvg from './Components/Poland'
 import RegisterSvg from './Components/Register'
 import ResetSvg from './Components/Reset'
+import ResultsSvg from './Components/Results'
 import RussiaSvg from './Components/Russia'
 import ScaleQuestionSvg from './Components/ScaleQuestion'
 import SearchSvg from './Components/Search'
@@ -67,6 +66,7 @@ import SettingsSvg from './Components/Settings'
 import ShowSvg from './Components/Show'
 import ShowsSvg from './Components/Shows'
 import SkipSvg from './Components/Skip'
+import SleepSvg from './Components/Sleep'
 import SmartCopySvg from './Components/SmartCopy'
 import StarSvg from './Components/Star'
 import TabletSvg from './Components/Tablet'
@@ -221,15 +221,10 @@ const wrapIcon = (
   }
 }
 
-const Notifications = wrapIcon(NoticiationsSvg)
-const Sleep = wrapIcon(SleepSvg)
-const Key = wrapIcon(KeySvg)
-const Lightning = wrapIcon(LightningSvg)
 const Add = wrapIcon(AddSvg)
 const Apple = wrapIcon(AppleSvg)
 const AudioFile = wrapIcon(AudioFileSvg)
 const Checked = wrapIcon(CheckedSvg)
-const Results = wrapIcon(ResultsSvg)
 const ChevronLeft = wrapIcon(ChevronLeftSvg)
 const ChevronRight = wrapIcon(ChevronRightSvg)
 const Clap = wrapIcon(ClapSvg)
@@ -258,6 +253,8 @@ const Graph = wrapIcon(GraphSvg)
 const Grid = wrapIcon(GridSvg)
 const Hide = wrapIcon(HideSvg)
 const ImageFile = wrapIcon(ImageFileSvg)
+const Key = wrapIcon(KeySvg)
+const Lightning = wrapIcon(LightningSvg)
 const List = wrapIcon(ListSvg)
 const Lock = wrapIcon(LockSvg)
 const Logic = wrapIcon(LogicSvg)
@@ -269,11 +266,13 @@ const Netherlands = wrapIcon(NetherlandsSvg)
 const NewFlow = wrapIcon(NewFlowSvg)
 const NewTab = wrapIcon(NewTabSvg)
 const NewUser = wrapIcon(NewUserSvg)
+const Notifications = wrapIcon(NoticiationsSvg)
 const OpenQuestion = wrapIcon(OpenQuestionSvg)
 const Overview = wrapIcon(OverviewSvg)
 const Poland = wrapIcon(PolandSvg)
 const Register = wrapIcon(RegisterSvg)
 const Reset = wrapIcon(ResetSvg)
+const Results = wrapIcon(ResultsSvg)
 const Russia = wrapIcon(RussiaSvg)
 const ScaleQuestion = wrapIcon(ScaleQuestionSvg)
 const Search = wrapIcon(SearchSvg)
@@ -281,6 +280,7 @@ const Settings = wrapIcon(SettingsSvg)
 const Show = wrapIcon(ShowSvg)
 const Shows = wrapIcon(ShowsSvg)
 const Skip = wrapIcon(SkipSvg)
+const Sleep = wrapIcon(SleepSvg)
 const SmartCopy = wrapIcon(SmartCopySvg)
 const Star = wrapIcon(StarSvg)
 const Tablet = wrapIcon(TabletSvg)
@@ -298,15 +298,10 @@ const WaitingScreen = wrapIcon(WaitingScreenSvg)
 const WelcomeScreen = wrapIcon(WelcomeScreenSvg)
 
 const icons = {
-  Notifications,
-  Key,
-  Sleep,
   Add,
   Apple,
-  Lightning,
   AudioFile,
   Checked,
-  Results,
   ChevronLeft,
   ChevronRight,
   Clap,
@@ -335,6 +330,8 @@ const icons = {
   Grid,
   Hide,
   ImageFile,
+  Key,
+  Lightning,
   List,
   Lock,
   Logic,
@@ -346,11 +343,13 @@ const icons = {
   NewFlow,
   NewTab,
   NewUser,
+  Notifications,
   OpenQuestion,
   Overview,
   Poland,
   Register,
   Reset,
+  Results,
   Russia,
   ScaleQuestion,
   Search,
@@ -358,6 +357,7 @@ const icons = {
   Show,
   Shows,
   Skip,
+  Sleep,
   SmartCopy,
   Star,
   Tablet,
@@ -378,14 +378,9 @@ const icons = {
 export type IconName =
   | keyof typeof icons
   | 'add'
-  | 'sleep'
   | 'apple'
-  | 'notifications'
-  | 'key'
   | 'audioFile'
-  | 'lightning'
   | 'checked'
-  | 'results'
   | 'chevronLeft'
   | 'chevronRight'
   | 'clap'
@@ -414,6 +409,8 @@ export type IconName =
   | 'grid'
   | 'hide'
   | 'imageFile'
+  | 'key'
+  | 'lightning'
   | 'list'
   | 'lock'
   | 'logic'
@@ -425,11 +422,13 @@ export type IconName =
   | 'newFlow'
   | 'newTab'
   | 'newUser'
+  | 'notifications'
   | 'openQuestion'
   | 'overview'
   | 'poland'
   | 'register'
   | 'reset'
+  | 'results'
   | 'russia'
   | 'scaleQuestion'
   | 'search'
@@ -437,6 +436,7 @@ export type IconName =
   | 'show'
   | 'shows'
   | 'skip'
+  | 'sleep'
   | 'smartCopy'
   | 'star'
   | 'tablet'
@@ -462,15 +462,10 @@ const iconFromString = (str: IconName): null | FunctionComponent<IconProps> => {
 }
 
 export {
-  Notifications,
-  Key,
-  Sleep,
-  Lightning,
   Add,
   Apple,
   AudioFile,
   Checked,
-  Results,
   ChevronLeft,
   ChevronRight,
   Clap,
@@ -499,6 +494,8 @@ export {
   Grid,
   Hide,
   ImageFile,
+  Key,
+  Lightning,
   List,
   Lock,
   Logic,
@@ -510,11 +507,13 @@ export {
   NewFlow,
   NewTab,
   NewUser,
+  Notifications,
   OpenQuestion,
   Overview,
   Poland,
   Register,
   Reset,
+  Results,
   Russia,
   ScaleQuestion,
   Search,
@@ -522,6 +521,7 @@ export {
   Show,
   Shows,
   Skip,
+  Sleep,
   SmartCopy,
   Star,
   Tablet,
