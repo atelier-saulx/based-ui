@@ -6,5 +6,5 @@
     "emitDeclarationOnly": false
   },
   "references": [],
-  "exclude": ["node_modules", "test", "src/dist", "tmp"]
+  "exclude": ["node_modules", "test", "dist", "tmp"]
 }

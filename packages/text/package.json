@@ -1,12 +1,12 @@
 {
   "name": "@based/text",
-  "version": "0.1.5",
+  "version": "0.1.7",
   "repository": "https://github.com/atelier-saulx/based-ui",
   "license": "MIT",
   "main": "dist/index.js",
   "module": "src/index.ts",
   "scripts": {
-    "build": "yarn tsconfig && tsc -b",
+    "build": "tsc -b",
     "watch": "yarn build -w"
   },
   "devDependencies": {
@@ -16,6 +16,8 @@
     "typescript": "^4.3.5"
   },
   "dependencies": {
+    "@based/pretty-date": "1.0.3",
+    "@based/pretty-number": "1.0.3",
     "react": "^17.0.2"
   }
 }

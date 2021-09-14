@@ -6,10 +6,10 @@
   },
   "references": [
     {
-      "path": "../../packages/text"
+      "path": "../../packages/theme"
     },
     {
-      "path": "../../packages/theme"
+      "path": "../../packages/text"
     },
     {
       "path": "../../packages/icons"

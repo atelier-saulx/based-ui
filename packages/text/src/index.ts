@@ -1,7 +1,7 @@
 import { Language } from './types'
 import { useReducer, useEffect } from 'react'
-import parseDate, { DateFormat } from './dateString'
-import parseNumber, { NumberFormat } from './numberString'
+import { prettyDate, DateFormat } from '@based/pretty-date'
+import { prettyNumber, NumberFormat } from '@based/pretty-number'
 
 export type TextFormat =
   | DateFormat
@@ -124,7 +124,7 @@ const formatText = (
     format === 'time' ||
     format === 'time-precise'
   ) {
-    return parseDate(str, format)
+    return prettyDate(str, format)
   } else if (
     format === 'number-human' ||
     format === 'number-short' ||
@@ -134,7 +134,7 @@ const formatText = (
     format === 'number-dollar' ||
     format === 'number-pound'
   ) {
-    return parseNumber(str, format)
+    return prettyNumber(str, format)
   }
 
   // @ts-ignore
@@ -177,7 +177,7 @@ export function getStringValue(
   return x
 }
 
-export { parseNumber }
+export { prettyNumber }
 
 export function isTextValue(value: any): value is TextValue {
   return (
