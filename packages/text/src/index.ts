@@ -105,6 +105,7 @@ const formatText = (
 
   if (typeof str === 'string') {
     if (format === 'capitalize') {
+      if (str === '') return
       return str[0].toUpperCase() + str.slice(1)
     } else if (format === 'uppercase') {
       return str.toUpperCase()

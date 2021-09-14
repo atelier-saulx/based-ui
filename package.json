@@ -2,7 +2,8 @@
   "name": "@based/ui-workspaces",
   "version": "0.0.1",
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "tmp"
   ],
   "private": true,
   "repository": {
