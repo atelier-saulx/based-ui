@@ -28,7 +28,7 @@ export type ButtonProps = {
   iconColor?: Color
   children?: TextValue
   onSelectFile?: (r: { files: string[]; fileList: FileList }) => void
-  onClick?: GenericEventHandler | AsyncEvent
+  onClick: GenericEventHandler | AsyncEvent
   onHover?: GenericEventHandler
   onMouseEnter?: GenericEventHandler
   onContextMenu?: GenericEventHandler

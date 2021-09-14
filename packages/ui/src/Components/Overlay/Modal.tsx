@@ -25,7 +25,7 @@ export type ModalProps = {
   width?: number | 'string'
   header?: ModalHeaderProps | ((props: object) => ModalHeaderProps)
   confirmButton?: ConfirmButton | ((props: object) => ConfirmButton)
-}
+} & { [key: string]: any }
 
 export const ModalHeader: FunctionComponent<ModalHeaderProps> = ({
   closeButton,
@@ -114,6 +114,7 @@ export const Modal: FunctionComponent<ModalProps> = (initialProps) => {
         pointerEvents: 'none',
         width: '100%',
         height: '100%',
+        padding: 24,
       }}
     >
       <div
