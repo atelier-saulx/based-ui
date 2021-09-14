@@ -15,6 +15,7 @@ import NoticiationsSvg from './Components/Notifications'
 import AppleSvg from './Components/Apple'
 import AudioFileSvg from './Components/AudioFile'
 import CheckedSvg from './Components/Checked'
+import ResultsSvg from './Components/Results'
 import ChevronLeftSvg from './Components/ChevronLeft'
 import ChevronRightSvg from './Components/ChevronRight'
 import ClapSvg from './Components/Clap'
@@ -228,6 +229,7 @@ const Add = wrapIcon(AddSvg)
 const Apple = wrapIcon(AppleSvg)
 const AudioFile = wrapIcon(AudioFileSvg)
 const Checked = wrapIcon(CheckedSvg)
+const Results = wrapIcon(ResultsSvg)
 const ChevronLeft = wrapIcon(ChevronLeftSvg)
 const ChevronRight = wrapIcon(ChevronRightSvg)
 const Clap = wrapIcon(ClapSvg)
@@ -304,6 +306,7 @@ const icons = {
   Lightning,
   AudioFile,
   Checked,
+  Results,
   ChevronLeft,
   ChevronRight,
   Clap,
@@ -382,6 +385,7 @@ export type IconName =
   | 'audioFile'
   | 'lightning'
   | 'checked'
+  | 'results'
   | 'chevronLeft'
   | 'chevronRight'
   | 'clap'
@@ -466,6 +470,7 @@ export {
   Apple,
   AudioFile,
   Checked,
+  Results,
   ChevronLeft,
   ChevronRight,
   Clap,
