@@ -7,7 +7,9 @@ import { ComponentType, PropsWithChildren, SyntheticEvent } from 'react'
 
 export default function useMenu<P = PropsWithChildren<{ data: Data }>>(
   component: ComponentType<P>,
-  props?: PropsWithChildren<P & PositionProps & { data: Data }>,
+  props?: PropsWithChildren<
+    P & PositionProps & { data: Data } & { [key: string]: any }
+  >,
   handler?: (selection: Event | any) => OnClose | undefined
 ): (
   e: Event | SyntheticEvent,
