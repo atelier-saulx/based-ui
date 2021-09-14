@@ -314,7 +314,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@based/icons@*, @based/icons@^0.1.6, @based/icons@workspace:packages/icons":
+"@based/icons@*, @based/icons@^0.2.0, @based/icons@workspace:packages/icons":
   version: 0.0.0-use.local
   resolution: "@based/icons@workspace:packages/icons"
   dependencies:
@@ -395,7 +395,7 @@ __metadata:
   resolution: "@based/ui@workspace:packages/ui"
   dependencies:
     "@based/get-service": 0.1.0
-    "@based/icons": ^0.1.6
+    "@based/icons": ^0.2.0
     "@based/text": ^0.1.1
     "@based/theme": ^0.1.9
     "@based/tsconfig": "*"
