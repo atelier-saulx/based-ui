@@ -62,6 +62,7 @@ const RowField = ({ field, data, isLarge, isHover }) => {
             backgroundSize: 'cover',
             border: '1px solid ' + useColor({ color: 'background', tone: 3 }),
             backgroundImage: `url(${selectedData})`,
+            backgroundPosition: 'center center',
           }}
         />
       </div>
