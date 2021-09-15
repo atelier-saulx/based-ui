@@ -1,6 +1,6 @@
 import React, { CSSProperties, FunctionComponent } from 'react'
 import { useColor, Color } from '@based/theme'
-import { getTextValue, TextValue } from '@based/text'
+import { getTextValue, TextValue, isHtml } from '@based/text'
 import useDate from './useDate'
 
 type TextProps = {
@@ -22,6 +22,10 @@ export const Text: FunctionComponent<TextProps> = ({
   weight = 'regular',
 }) => {
   useDate(children)
+
+  const v = getTextValue(children)
+  const html = isHtml(v)
+
   return (
     <div
       style={{
@@ -37,8 +41,9 @@ export const Text: FunctionComponent<TextProps> = ({
         textOverflow: singleLine ? 'ellipsis' : null,
         ...style,
       }}
+      dangerouslySetInnerHTML={html ? { __html: v.html } : null}
     >
-      {getTextValue(children)}
+      {!html ? v : null}
     </div>
   )
 }

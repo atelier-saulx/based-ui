@@ -2,6 +2,13 @@ import { Language } from './types'
 import { useReducer, useEffect } from 'react'
 import { prettyDate, DateFormat } from '@based/pretty-date'
 import { prettyNumber, NumberFormat } from '@based/pretty-number'
+import snarkdown from 'snarkdown'
+
+export function isHtml(val: Value): val is { html: string } {
+  return val && typeof val === 'object' && 'html' in val
+}
+
+export default isHtml
 
 export type TextFormat =
   | DateFormat
@@ -10,6 +17,7 @@ export type TextFormat =
   | 'uppercase'
   | 'lowercase'
   | 'first-word'
+  | 'markdown'
 
 export type TextValueFormat = {
   value: TextValueSingle
@@ -21,7 +29,10 @@ export { Language }
 let fromDefault: boolean = true
 let lang: Language = 'en'
 
-type Value = undefined | (string | number) | (string | number)[]
+export type Value =
+  | undefined
+  | (string | number | { html: string })
+  | (string | number | { html: string })[]
 
 export type TextValueSingle = Value | Partial<Record<Language, Value>>
 
@@ -94,7 +105,7 @@ export function isTextFormat(value: any): value is TextValueFormat {
 const formatText = (
   { format, value }: TextValueFormat,
   language: Language = lang
-): string | number => {
+): string | number | { html: string } => {
   let str: string | number = ''
   if (typeof value === 'object') {
     // @ts-ignore
@@ -104,7 +115,10 @@ const formatText = (
   }
 
   if (typeof str === 'string') {
-    if (format === 'capitalize') {
+    if (format === 'markdown') {
+      // memoize?
+      return { html: snarkdown(str) }
+    } else if (format === 'capitalize') {
       if (str === '') return
       return str[0].toUpperCase() + str.slice(1)
     } else if (format === 'uppercase') {
@@ -155,7 +169,7 @@ export function getTextValue(
     if (isTextFormat(value)) {
       return formatText(value, language)
     } else {
-      return value[language] || value.en
+      return value[language] || (!('html' in value) && value.en)
     }
   }
 
@@ -174,6 +188,11 @@ export function getStringValue(
   if (typeof x === 'number') {
     return String(x)
   }
+
+  if (typeof x === 'object') {
+    return x.html
+  }
+
   return x
 }
 

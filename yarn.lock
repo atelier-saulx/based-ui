@@ -341,7 +341,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@based/text@*, @based/text@^0.1.7, @based/text@workspace:packages/text":
+"@based/text@*, @based/text@^0.2.0, @based/text@workspace:packages/text":
   version: 0.0.0-use.local
   resolution: "@based/text@workspace:packages/text"
   dependencies:
@@ -350,6 +350,7 @@ __metadata:
     "@based/tsconfig": "*"
     "@types/node": ^16.3.1
     react: ^17.0.2
+    snarkdown: ^2.0.0
     ts-node: ^10.1.0
     typescript: ^4.3.5
   languageName: unknown
@@ -412,7 +413,7 @@ __metadata:
   dependencies:
     "@based/get-service": 0.1.0
     "@based/icons": ^0.2.1
-    "@based/text": ^0.1.7
+    "@based/text": ^0.2.0
     "@based/theme": ^0.1.9
     "@based/tsconfig": "*"
     "@compiled/react": ^0.6.13
@@ -6907,6 +6908,13 @@ resolve@^2.0.0-next.3:
   version: 4.2.0
   resolution: "smart-buffer@npm:4.2.0"
   checksum: b5167a7142c1da704c0e3af85c402002b597081dd9575031a90b4f229ca5678e9a36e8a374f1814c8156a725d17008ae3bde63b92f9cfd132526379e580bec8b
+  languageName: node
+  linkType: hard
+
+"snarkdown@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "snarkdown@npm:2.0.0"
+  checksum: e92bb254aad8c50da610e2f5f770360542b8412cb1dd6512aaf1f213322f474acd71c882d557cfadb54c34dd1041ee8677bc44061568d60df7cee54134e047e5
   languageName: node
   linkType: hard
 

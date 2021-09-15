@@ -1,7 +1,7 @@
 import React, { useCallback, useReducer, FunctionComponent } from 'react'
 import { useColor } from '@based/theme'
 import { Text } from '../Text'
-import { Expand, iconFromString } from '@based/icons'
+import { ChevronRight as Expand, iconFromString } from '@based/icons'
 import useHover from '../../hooks/events/useHover'
 import { SideMenuItemProps } from './SideMenu'
 // import { useHub } from '@saulx/hub'
@@ -77,6 +77,7 @@ export const SideMenuItem: FunctionComponent<SideMenuItemProps> = ({
       >
         {ItemIcon ? (
           <ItemIcon
+            size={items ? 20 : 20}
             color={
               active
                 ? { color: inverseColor ? 'background' : 'foreground' }
