@@ -38,11 +38,13 @@ export type SideMenuItemProps = {
 }
 
 type SideMenuProps = {
+  width?: number
   style?: CSSProperties
   items: SideMenuItemProps[]
   Logo?: ComponentType<{ isSmall?: boolean }>
   footer?: FooterProps[] | ComponentType<{ isSmall?: boolean }>
   collapse?: number
+  Header?: FunctionComponent<{ isSmall: boolean }>
   inverseColor?: boolean
 }
 
@@ -50,7 +52,9 @@ export const SideMenu: FunctionComponent<SideMenuProps> = ({
   items,
   style,
   Logo,
+  width = 240,
   footer,
+  Header,
   collapse = 1500,
   inverseColor,
 }) => {
@@ -97,8 +101,8 @@ export const SideMenu: FunctionComponent<SideMenuProps> = ({
           color: inverseColor ? 'foreground' : 'background',
           tone: inverseColor ? 1 : 2,
         }),
-        width: isSmall ? 60 : 240,
-        minWidth: isSmall ? 60 : 240,
+        width: isSmall ? 60 : width,
+        minWidth: isSmall ? 60 : width,
         overflowX: 'hidden',
         padding: 8,
         overflowY: 'auto',
@@ -123,6 +127,7 @@ export const SideMenu: FunctionComponent<SideMenuProps> = ({
           <Logo isSmall={isSmall} />
         </div>
       ) : null}
+      {Header ? <Header isSmall={isSmall} /> : null}
       {items ? (
         footer ? (
           <div
