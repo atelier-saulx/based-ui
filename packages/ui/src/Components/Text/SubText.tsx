@@ -37,7 +37,7 @@ export const SubText: FunctionComponent<TitleProps> = ({
       }}
       dangerouslySetInnerHTML={html ? { __html: v.html } : null}
     >
-      {!isHtml ? v : null}
+      {!html ? v : null}
     </div>
   )
 }
