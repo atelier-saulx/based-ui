@@ -121,7 +121,7 @@ export const SideMenu: FunctionComponent<SideMenuProps> = ({
             marginTop: 16,
             minHeight: 60,
             paddingBottom: 8,
-            marginBottom: 32,
+            marginBottom: 8,
           }}
         >
           <Logo isSmall={isSmall} />
