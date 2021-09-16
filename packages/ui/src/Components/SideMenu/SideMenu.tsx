@@ -1,8 +1,12 @@
 import React, {
   FunctionComponent,
   CSSProperties,
+  useEffect,
+  useRef,
   SyntheticEvent,
   ComponentType,
+  useState,
+  useReducer,
 } from 'react'
 import { useColor } from '@based/theme'
 import { Text } from '../Text'
@@ -22,6 +26,7 @@ type FooterProps = {
 }
 
 export type SideMenuItemProps = {
+  checkResize?: () => void
   title?: TextValue
   icon?: IconName
   isSmall?: boolean
@@ -48,6 +53,10 @@ type SideMenuProps = {
   inverseColor?: boolean
 }
 
+const sizeReducer = (cnt) => {
+  return cnt + 1
+}
+
 export const SideMenu: FunctionComponent<SideMenuProps> = ({
   items,
   style,
@@ -60,6 +69,24 @@ export const SideMenu: FunctionComponent<SideMenuProps> = ({
 }) => {
   const size = useWindowSize()
   const isSmall = collapse ? size.width < collapse : false
+
+  // other metric to recalc -- pass it down
+  const elementRef = useRef<HTMLDivElement>()
+  const [isLarger, setIsLarger] = useState(false)
+  const [sizeCheck, checkResize] = useReducer(sizeReducer, 0)
+  useEffect(() => {
+    const elem = elementRef.current
+    const raf = global.requestAnimationFrame(() => {
+      if (elem.clientHeight < elem.scrollHeight) {
+        setIsLarger(true)
+      } else {
+        setIsLarger(false)
+      }
+    })
+    return () => {
+      global.cancelAnimationFrame(raf)
+    }
+  }, [sizeCheck, elementRef, isSmall, items && items.length, size])
 
   const wrapItems = items.map((item, index) => {
     if (item.hidden) return null
@@ -85,6 +112,7 @@ export const SideMenu: FunctionComponent<SideMenuProps> = ({
     }
     return (
       <SideMenuItem
+        checkResize={checkResize}
         inverseColor={inverseColor}
         isSmall={isSmall}
         key={index}
@@ -104,8 +132,6 @@ export const SideMenu: FunctionComponent<SideMenuProps> = ({
         width: isSmall ? 60 : width,
         minWidth: isSmall ? 60 : width,
         overflowX: 'hidden',
-        padding: 8,
-        overflowY: 'auto',
         display: 'flex',
         flexDirection: 'column',
         borderRight: '1px solid ' + useColor({ color: 'divider' }),
@@ -120,30 +146,62 @@ export const SideMenu: FunctionComponent<SideMenuProps> = ({
             maxHeight: 60,
             marginTop: 16,
             minHeight: 60,
+            padding: 8,
             paddingBottom: 8,
-            marginBottom: 24,
+            marginBottom: 16,
           }}
         >
           <Logo isSmall={isSmall} />
         </div>
       ) : null}
-      {Header ? <Header isSmall={isSmall} /> : null}
-      {items ? (
-        footer ? (
-          <div
-            style={{
-              flexGrow: 1,
-              flexBasis: '100%',
-              display: 'flex',
-              flexDirection: 'column',
-            }}
-          >
-            {wrapItems}
-          </div>
-        ) : (
-          wrapItems
-        )
+      {Header ? (
+        <div style={{ paddingLeft: 8, paddingRight: 8 }}>
+          <Header isSmall={isSmall} />
+        </div>
       ) : null}
+
+      <div
+        ref={elementRef}
+        style={{
+          padding: 8,
+          transition: 'border 0.25s',
+          borderTop: isLarger
+            ? '1px solid ' +
+              useColor({
+                color: inverseColor ? 'background' : 'foreground',
+                opacity: 0.2,
+              })
+            : '1px solid transparent',
+
+          borderBottom: isLarger
+            ? '1px solid ' +
+              useColor({
+                color: inverseColor ? 'background' : 'foreground',
+                opacity: 0.2,
+              })
+            : '1px solid transparent',
+
+          overflowY: 'auto',
+          flexGrow: 1,
+        }}
+      >
+        {items ? (
+          footer ? (
+            <div
+              style={{
+                flexGrow: 1,
+                flexBasis: '100%',
+                display: 'flex',
+                flexDirection: 'column',
+              }}
+            >
+              {wrapItems}
+            </div>
+          ) : (
+            wrapItems
+          )
+        ) : null}
+      </div>
       {footer ? (
         <div
           style={{

@@ -1,4 +1,10 @@
-import React, { useCallback, useReducer, FunctionComponent } from 'react'
+import React, {
+  useCallback,
+  useReducer,
+  FunctionComponent,
+  useEffect,
+  useRef,
+} from 'react'
 import { useColor } from '@based/theme'
 import { Text } from '../Text'
 import { ChevronRight as Expand, iconFromString } from '@based/icons'
@@ -15,6 +21,7 @@ export const SideMenuItem: FunctionComponent<SideMenuItemProps> = ({
   style,
   items,
   onClick,
+  checkResize,
   isSmall,
   to,
   inverseColor,
@@ -25,7 +32,21 @@ export const SideMenuItem: FunctionComponent<SideMenuItemProps> = ({
   const [expanded, toggleExpand] = useReducer((v) => !v, false)
   const [, setLocation] = useLocation()
   const ItemIcon = items ? Expand : icon ? iconFromString(icon) : null
-  // const hub = useHub()
+  const wasExpanded = useRef(false)
+
+  useEffect(() => {
+    if (expanded && !wasExpanded.current) {
+      wasExpanded.current = true
+      if (checkResize) {
+        checkResize()
+      }
+    } else if (!expanded && wasExpanded.current) {
+      wasExpanded.current = false
+      if (checkResize) {
+        checkResize()
+      }
+    }
+  }, [expanded])
 
   const tooltip = useTooltip(isSmall ? title : null)
 
@@ -107,7 +128,12 @@ export const SideMenuItem: FunctionComponent<SideMenuItemProps> = ({
       {expanded && items ? (
         <div style={{ marginLeft: 14 }}>
           {items.map((v, i) => (
-            <SideMenuItem key={i} {...v} />
+            <SideMenuItem
+              inverseColor={inverseColor}
+              checkResize={checkResize}
+              key={i}
+              {...v}
+            />
           ))}
         </div>
       ) : null}
