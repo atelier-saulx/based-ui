@@ -19,6 +19,7 @@ import CollapseSvg from './Components/Collapse'
 import CustomSvg from './Components/Custom'
 import DashboardSvg from './Components/Dashboard'
 import DateSvg from './Components/Date'
+import DotSvg from './Components/Dot'
 import DeleteSvg from './Components/Delete'
 import DesktopSvg from './Components/Desktop'
 import DownSvg from './Components/Down'
@@ -235,6 +236,7 @@ const Dashboard = wrapIcon(DashboardSvg)
 const Date = wrapIcon(DateSvg)
 const Delete = wrapIcon(DeleteSvg)
 const Desktop = wrapIcon(DesktopSvg)
+const Dot = wrapIcon(DotSvg)
 const Down = wrapIcon(DownSvg)
 const DownThick = wrapIcon(DownThickSvg)
 const Drag = wrapIcon(DragSvg)
@@ -312,6 +314,7 @@ const icons = {
   Date,
   Delete,
   Desktop,
+  Dot,
   Down,
   DownThick,
   Drag,
@@ -391,6 +394,7 @@ export type IconName =
   | 'date'
   | 'delete'
   | 'desktop'
+  | 'dot'
   | 'down'
   | 'downThick'
   | 'drag'
