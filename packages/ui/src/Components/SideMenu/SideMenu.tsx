@@ -164,6 +164,8 @@ export const SideMenu: FunctionComponent<SideMenuProps> = ({
         ref={elementRef}
         style={{
           padding: 8,
+          paddingTop: 16,
+          paddingBottom: isLarger ? 16 : 8,
           transition: 'border 0.25s',
           borderTop: isLarger
             ? '1px solid ' +
