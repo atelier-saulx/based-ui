@@ -189,6 +189,8 @@ export const Dropdown: FunctionComponent<PositionPropsFn & DropdownProps> = (
       ref={elementRef}
       style={{
         minWidth: filterValue ? minWidth : null,
+        overflowY: 'auto',
+        maxHeight: 'calc(100vh - 32px)',
       }}
     >
       {filter ? (
