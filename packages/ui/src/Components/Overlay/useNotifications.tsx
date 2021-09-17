@@ -135,8 +135,8 @@ const Notification = ({ value, close }) => {
         borderRadius: 8,
         padding: 24,
         backgroundColor: useColor({
-          color: 'foreground',
-          opacity: 0.9,
+          color: value.type === 'error' ? 'error' : 'foreground',
+          opacity: value.type === 'error' ? 0.9 : 1,
         }),
         display: 'flex',
         justifyContent: 'space-between',
