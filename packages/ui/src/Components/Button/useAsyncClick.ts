@@ -22,6 +22,8 @@ export default (
 
   const handler = useCallback(
     (e) => {
+      e.stopPropagation()
+
       if (!r.current) {
         setLoading(true)
       }

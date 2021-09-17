@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react'
 import { TextValue } from '@based/text'
 import { useColor } from '@based/theme'
 import { Text } from '../Text'
+import { Button } from '../Button'
 
 const NOTIFICATION_HEIGHT = 68 + 12 + 16
 const NOTIFICATION_SPACING = 16
@@ -12,10 +13,13 @@ type Notification = {
   title: TextValue
   info?: TextValue
   type?: 'error' | 'info'
-  id: number
-  y: number
+  id?: number
+  y?: number
   deleting?: boolean
   starting?: boolean
+  time?: number
+  onClick?: () => void
+  close?: () => void
 }
 
 type NotifictionListener = (notification: Notification) => void
@@ -34,7 +38,9 @@ const updateNotificationsY = (notifications: Notification[]) => {
   notifications
     // .filter((v) => !v.deleting)
     .forEach((n: any, i: number) => {
-      n.y = i * (NOTIFICATION_HEIGHT + NOTIFICATION_SPACING)
+      n.y =
+        global.innerHeight -
+        ((i + 1) * (NOTIFICATION_HEIGHT + NOTIFICATION_SPACING) + 16)
     })
 }
 
@@ -47,36 +53,42 @@ export const useNotifications = ({ update }) => {
       const id = ++notificationCount
       const notificationValue = {
         ...notification,
-        y: notifictionsRef.current.length * NOTIFICATION_HEIGHT,
+        y:
+          global.innerHeight -
+          notifictionsRef.current.length * NOTIFICATION_HEIGHT,
         id,
         starting: true,
       }
       notifictionsRef.current.push(notificationValue)
       updateNotificationsY(notifictionsRef.current)
       update()
-      const animate = () => {
-        const t0 = setTimeout(() => {
-          notificationValue.starting = false
-          update()
-        }, 20)
-        timers.add(t0)
-        const t = setTimeout(() => {
-          const i = notifictionsRef.current.findIndex((v) => v.id === id)
-          notificationValue.deleting = true
-          updateNotificationsY(notifictionsRef.current)
-          update()
-
-          if (i !== -1) {
-            const t2 = setTimeout(() => {
-              const i = notifictionsRef.current.findIndex((v) => v.id === id)
-              notifictionsRef.current.splice(i, 1)
-              updateNotificationsY(notifictionsRef.current)
-              update()
-            }, 510)
-            timers.add(t2)
-          }
-        }, 5000)
-        timers.add(t)
+      const animate = (time?: number) => {
+        if (!notificationValue.deleting) {
+          const t0 = setTimeout(() => {
+            notificationValue.starting = false
+            update()
+          }, 20)
+          timers.add(t0)
+          const t = setTimeout(() => {
+            const i = notifictionsRef.current.findIndex((v) => v.id === id)
+            notificationValue.deleting = true
+            updateNotificationsY(notifictionsRef.current)
+            update()
+            if (i !== -1) {
+              const t2 = setTimeout(() => {
+                const i = notifictionsRef.current.findIndex((v) => v.id === id)
+                notifictionsRef.current.splice(i, 1)
+                updateNotificationsY(notifictionsRef.current)
+                update()
+              }, 510)
+              timers.add(t2)
+            }
+          }, time || notificationValue.time || 5000)
+          timers.add(t)
+        }
+      }
+      notificationValue.close = () => {
+        animate(50)
       }
       animate()
     }
@@ -97,16 +109,20 @@ export const useNotifications = ({ update }) => {
       }}
     >
       {notifictionsRef.current.map((v, i) => (
-        <Notification i={i} key={v.id} value={v} />
+        <Notification
+          i={i}
+          key={v.id}
+          value={v}
+          close={() => {
+            v.close()
+          }}
+        />
       ))}
     </div>
   )
 }
 
-const Notification = ({ value, i }) => {
-  // const y = Math.cos(value.id) * window.innerHeight + window.innerHeight / 2
-  // const x = Math.sin(value.id) * window.innerWidth + window.innerWidth / 2 + 200
-
+const Notification = ({ value, close }) => {
   return (
     <div
       style={{
@@ -139,6 +155,13 @@ const Notification = ({ value, i }) => {
             : `translate3d(${0}px,${value.y}px,0px) scale(1)`,
         opacity: value.deleting || value.starting ? 0 : 1,
       }}
+      onClick={
+        value.onClick
+          ? () => {
+              value.onClick()
+            }
+          : null
+      }
     >
       <div>
         <Text
@@ -153,7 +176,28 @@ const Notification = ({ value, i }) => {
           {value.message}
         </Text>
       </div>
-      {value.info ? <Text>{value.info}</Text> : null}
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'flex-end',
+          flexDirection: 'column',
+        }}
+      >
+        <Button
+          style={{
+            marginRight: -16,
+            marginTop: -16,
+            height: '100%',
+          }}
+          foregroundColor={{ color: 'foreground' }}
+          color={{ color: 'background', opacity: 0 }}
+          onClick={(e) => {
+            close()
+          }}
+          icon="close"
+        />
+        {value.info ? <Text>{value.info}</Text> : null}
+      </div>
     </div>
   )
 }
