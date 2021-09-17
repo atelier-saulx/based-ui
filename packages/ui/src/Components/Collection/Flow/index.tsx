@@ -13,8 +13,8 @@ import { FlowProps } from './types'
 import { useColor } from '@based/theme'
 import useHover from '../../../hooks/events/useHover'
 import { Loader } from '../../Loader/Loader'
-
 import getData from '../getData'
+import '@compiled/react'
 
 const FooterBottom = ({
   context,
@@ -61,20 +61,22 @@ const FooterBottom = ({
   return (
     <div
       {...drop}
-      style={{
+      css={{
         position: 'relative',
       }}
     >
       <div
-        style={{
+        css={{
           top: 0,
           paddingTop: 15,
-          borderLeft: '1px solid ' + useColor({ color: 'divider' }),
-          borderRight: '1px solid ' + useColor({ color: 'divider' }),
           left: 0,
           right: 0,
           position: 'absolute',
+        }}
+        style={{
           borderBottom: isFooterDragOver ? '2px solid blue' : null,
+          borderLeft: '1px solid ' + useColor({ color: 'divider' }),
+          borderRight: '1px solid ' + useColor({ color: 'divider' }),
         }}
       />
       <Footer
@@ -82,9 +84,11 @@ const FooterBottom = ({
         items={seqItems}
         {...footer}
         data={wrappedData}
+        css={{
+          transition: 'opacity 0.15s, transform 0.2s',
+        }}
         style={{
           opacity: isDragOver || isFooterDragOver ? 0 : 1,
-          transition: 'opacity 0.15s, transform 0.2s',
           transform:
             isDragOverSeq ||
             isDropLoading ||

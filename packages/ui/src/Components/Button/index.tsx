@@ -16,6 +16,7 @@ import { useKeyUp, Key } from '../../hooks/events/useKeyboard'
 import { Loader } from '../Loader/Loader'
 import useAsyncClick from './useAsyncClick'
 import { AsyncEvent } from '../../types'
+import '@compiled/react'
 
 type GenericEventHandler = EventHandler<SyntheticEvent>
 
@@ -62,7 +63,7 @@ const UploadOverlay: FunctionComponent<{
 
         e.target.value = ''
       }, [])}
-      style={{
+      css={{
         position: 'absolute',
         left: 0,
         top: 0,
@@ -168,20 +169,14 @@ export const Button: FunctionComponent<ButtonProps> = ({
   const Icon = icon && iconFromString(icon)
 
   return (
-    <div style={{ display: 'flex', ...style, position: 'relative' }}>
+    <div style={style} css={{ display: 'flex', position: 'relative' }}>
       <div
         ref={ref}
         style={{
-          display: 'flex',
-          transition: 'width 0.15s',
-          width: 'auto',
-          flexDirection: 'row',
           flexGrow: fullWidth ? 1 : null,
           justifyContent: centered ? 'center' : null,
-          cursor: 'pointer',
           alignItems: centered ? 'center' : 'flex-start',
           padding: children && icon ? '4px 8px 4px 4px' : '4px 8px',
-          borderRadius: '4px',
           borderStyle: border ? 'solid' : null,
           borderWidth: border ? 1 : null,
           borderColor: borderColor
@@ -223,18 +218,28 @@ export const Button: FunctionComponent<ButtonProps> = ({
                     color.tone,
               }),
         }}
+        css={{
+          display: 'flex',
+          transition: 'width 0.15s',
+          width: 'auto',
+          flexDirection: 'row',
+          cursor: 'pointer',
+          borderRadius: '4px',
+        }}
         onClick={isLoading ? null : handler}
         {...hover}
         onContextMenu={onContextMenu}
       >
         {isLoading ? (
           <div
-            style={{
+            css={{
               width: 24,
               height: 24,
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
+            }}
+            style={{
               marginRight: !children ? 0 : 4,
             }}
           >

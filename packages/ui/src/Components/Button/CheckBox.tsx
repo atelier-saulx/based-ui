@@ -6,6 +6,7 @@ import React, {
 } from 'react'
 import { useColor, Color } from '@based/theme'
 import { Checked as CheckIcon } from '@based/icons'
+import '@compiled/react'
 
 export type CheckProps = {
   onChange?: (value: boolean | void) => void
@@ -51,6 +52,12 @@ export const Check: FunctionComponent<CheckProps> = ({
   return (
     <div
       style={{
+        border: '1px solid ' + parsedColor,
+        boxShadow: `0 0 1px 0 ${parsedColor} inset, 0 0 1px 0 ` + parsedColor,
+        background: bgColor,
+        ...style,
+      }}
+      css={{
         display: 'flex',
         cursor: 'pointer',
         width: 20,
@@ -59,10 +66,6 @@ export const Check: FunctionComponent<CheckProps> = ({
         borderRadius: 4,
         alignItems: 'center',
         justifyContent: 'center',
-        border: '1px solid ' + parsedColor,
-        boxShadow: `0 0 1px 0 ${parsedColor} inset, 0 0 1px 0 ` + parsedColor,
-        background: bgColor,
-        ...style,
       }}
       onClick={useCallback(() => {
         if (overrideValue !== undefined) {
