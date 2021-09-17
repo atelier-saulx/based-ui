@@ -6,6 +6,7 @@ import { TextValue } from '@based/text'
 import { Text } from '../Text'
 import { SubText } from '../Text/SubText'
 import { Switch } from './Switch'
+import '@compiled/react'
 
 export type SwitchExtendedProps = {
   onChange: OnValueChange<boolean>
@@ -32,12 +33,14 @@ export const SwitchExtended: FunctionComponent<SwitchExtendedProps> = ({
 
   return (
     <div
-      style={{
+      css={{
         cursor: 'pointer',
         display: 'flex',
         justifyContent: 'space-between',
         paddingTop: 16,
         paddingBottom: 8,
+      }}
+      style={{
         marginTop: noBorder ? 0 : 8,
         borderTop: noBorder
           ? null
@@ -52,7 +55,7 @@ export const SwitchExtended: FunctionComponent<SwitchExtendedProps> = ({
       }}
     >
       <div
-        style={{
+        css={{
           flexGrow: 1,
         }}
       >
@@ -69,7 +72,7 @@ export const SwitchExtended: FunctionComponent<SwitchExtendedProps> = ({
         <SubText noSelect>{info}</SubText>
       </div>
       <div
-        style={{
+        css={{
           display: 'flex',
           alignItems: 'center',
         }}

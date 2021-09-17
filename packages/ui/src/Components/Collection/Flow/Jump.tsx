@@ -4,6 +4,7 @@ import { Data, DataEventHandler } from '../../../types'
 import { SubText } from '../../Text/SubText'
 import { Text } from '../../Text'
 import { useColor, Color } from '@based/theme'
+import '@compiled/react'
 
 export type JumpProps<T> = {
   items: Data<T>[]
@@ -16,7 +17,7 @@ export type JumpProps<T> = {
 const Dot = ({ isHover }) => {
   return (
     <div
-      style={{
+      css={{
         borderRadius: '50%',
         width: 26,
         display: 'flex',
@@ -25,29 +26,30 @@ const Dot = ({ isHover }) => {
         animationTimingFunction: 'linear',
         animationIterationCount: 'infinite',
         animationDirection: 'alternate',
-        // @ts-ignore
-        '@keyframes': {
+        alignItems: 'center',
+        height: 26,
+        '@keyframes fade': {
           from: {
             opacity: 0.5,
-            // backgroundColor: useColor({ color: 'primary', opacity: 0.1 }),
           },
           to: {
             opacity: 1,
-            // backgroundColor: useColor({ color: 'primary', opacity: 0.75 }),
           },
         },
-        alignItems: 'center',
-        height: 26,
+      }}
+      style={{
         backgroundColor: useColor({ color: 'primary', opacity: 0.1 }),
       }}
     >
       <div
-        style={{
+        css={{
           width: 12,
           borderRadius: '50%',
-          border: '2px solid ' + useColor({ color: 'primary' }),
           height: 12,
+        }}
+        style={{
           backgroundColor: useColor({ color: 'background' }),
+          border: '2px solid ' + useColor({ color: 'primary' }),
         }}
       />
     </div>
@@ -93,7 +95,7 @@ const Jump: FunctionComponent<JumpProps<any>> = ({
   const str = items.map((v) => v.index || v.id).join(', ')
   return (
     <div
-      style={{
+      css={{
         display: 'flex',
         alignItems: 'center',
       }}

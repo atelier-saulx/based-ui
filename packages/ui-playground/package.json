@@ -2,7 +2,7 @@
   "name": "@based/ui-playground",
   "version": "0.0.1",
   "devDependencies": {
-    "@saulx/aristotle": "^4.0.1"
+    "@saulx/aristotle": "^4.0.4"
   },
   "dependencies": {
     "@based/icons": "*",
