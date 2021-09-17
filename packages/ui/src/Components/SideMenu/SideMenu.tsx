@@ -8,7 +8,7 @@ import React, {
   useState,
   useReducer,
 } from 'react'
-import { useColor } from '@based/theme'
+import { useColor, Color } from '@based/theme'
 import { Text } from '../Text'
 import { SideMenuItem } from './SideMenuItem'
 import { TextValue } from '@based/text'
@@ -40,6 +40,7 @@ export type SideMenuItemProps = {
   items?: SideMenuItemProps[]
   hidden?: boolean | undefined
   inverseColor?: boolean
+  color?: Color
 }
 
 type SideMenuProps = {

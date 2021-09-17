@@ -10,7 +10,7 @@ let notificationCount = 0
 type Notification = {
   message?: TextValue
   title: TextValue
-  time?: number
+  info?: TextValue
   type?: 'error' | 'info'
   id: number
   y: number
@@ -122,6 +122,8 @@ const Notification = ({ value, i }) => {
           color: 'background',
           opacity: 0.9,
         }),
+        display: 'flex',
+        justifyContent: 'space-between',
         backdropFilter: 'blur(6px)',
         position: 'absolute',
         marginBottom: NOTIFICATION_SPACING,
@@ -138,17 +140,20 @@ const Notification = ({ value, i }) => {
         opacity: value.deleting || value.starting ? 0 : 1,
       }}
     >
-      <Text
-        color={{ color: 'foreground' }}
-        noSelect
-        weight="semibold"
-        singleLine
-      >
-        {value.title}
-      </Text>
-      <Text color={{ color: 'foreground' }} noSelect singleLine>
-        {value.message}
-      </Text>
+      <div>
+        <Text
+          color={{ color: 'foreground' }}
+          noSelect
+          weight="semibold"
+          singleLine
+        >
+          {value.title}
+        </Text>
+        <Text color={{ color: 'foreground' }} noSelect singleLine>
+          {value.message}
+        </Text>
+      </div>
+      {value.info ? <Text>{value.info}</Text> : null}
     </div>
   )
 }
