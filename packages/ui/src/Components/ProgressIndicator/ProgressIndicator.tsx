@@ -1,5 +1,6 @@
 import React, { FunctionComponent, CSSProperties } from 'react'
 import { useColor } from '@based/theme'
+import '@compiled/react'
 
 const calcSvg = (val) => {
   const r = 84
@@ -29,11 +30,13 @@ export const ProgressIndicator: FunctionComponent<ProgressIndicatorProps> = ({
       style={{
         width: size,
         height: size,
-        animationDuration: '0.5s',
         animationIterationCount: value > 99 ? 'infinite' : null,
-        // @ts-ignore
-        '@keyframes': {
-          // fade: {
+        ...style,
+      }}
+      css={{
+        animationDuration: '0.5s',
+        animationName: 'fade-in-out',
+        '@keyframes fade-in-out': {
           '0%': {
             opacity: 0.5,
           },
@@ -43,9 +46,7 @@ export const ProgressIndicator: FunctionComponent<ProgressIndicatorProps> = ({
           '100%': {
             opacity: 0.5,
           },
-          // },
         },
-        ...style,
       }}
     >
       <svg

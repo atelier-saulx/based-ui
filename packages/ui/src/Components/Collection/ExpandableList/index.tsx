@@ -8,6 +8,7 @@ import { Expand, iconFromString, Settings } from '@based/icons'
 import getData from '../getData'
 import useHover from '../../../hooks/events/useHover'
 import renderChildren from '../../../util/renderChildren'
+import '@compiled/react'
 
 const defaultitemProps = {
   title: {
@@ -19,7 +20,6 @@ export const ExpandableItem = ({ context, paddingItemLeft, item, index }) => {
   const itemProps = context.itemProps || defaultitemProps
   const [hover, isHover] = useHover()
   const [isExpanded, setExpanded] = useReducer((x) => !x, false)
-
   const { onOptions, options, optionsIcon, items, isNested, onClick } = context
 
   const wrappedData = {
@@ -55,17 +55,19 @@ export const ExpandableItem = ({ context, paddingItemLeft, item, index }) => {
       <div
         {...hover}
         style={{
+          paddingLeft: paddingItemLeft,
+          borderBottom: '1px solid ' + useColor({ color: 'divider' }),
+          backgroundColor: isHover
+            ? useColor({ color: 'background', tone: 2 })
+            : null,
+        }}
+        css={{
           height: 56,
           display: 'flex',
           cursor: 'pointer',
           alignItems: 'center',
           paddingTop: 16,
-          paddingLeft: paddingItemLeft,
           paddingBottom: 16,
-          borderBottom: '1px solid ' + useColor({ color: 'divider' }),
-          backgroundColor: isHover
-            ? useColor({ color: 'background', tone: 2 })
-            : null,
         }}
         onClick={(e) => {
           if (!isNested || isNested(wrappedData)) {
@@ -84,7 +86,7 @@ export const ExpandableItem = ({ context, paddingItemLeft, item, index }) => {
             color={{ color: 'foreground' }}
           />
         ) : (
-          <div style={{ width: 24 }} />
+          <div css={{ width: 24 }} />
         )}
         {Icon ? <Icon style={{ marginLeft: 20 }} {...iconProps} /> : null}
         <Text
@@ -98,7 +100,7 @@ export const ExpandableItem = ({ context, paddingItemLeft, item, index }) => {
           {title}
         </Text>
         <div
-          style={{
+          css={{
             flexGrow: 1,
             paddingRight: 15,
             display: 'flex',
@@ -163,11 +165,11 @@ export const ExpandableList: FunctionComponent<ExpandableListProps> = (
       {({ height, width }) => {
         return (
           <div
-            style={{
+            style={style}
+            css={{
               paddingLeft,
               width,
               height,
-              ...style,
             }}
           >
             {header ? (
@@ -184,6 +186,8 @@ export const ExpandableList: FunctionComponent<ExpandableListProps> = (
               style={{
                 width,
                 height: height - (header ? 48 : 0),
+              }}
+              css={{
                 overflowY: 'auto',
                 overflowX: 'hidden',
               }}

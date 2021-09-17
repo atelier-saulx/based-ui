@@ -8,6 +8,7 @@ import { TextValue } from '@based/text'
 import { Loader } from '../Loader/Loader'
 import { AsyncEvent } from '../../types'
 import useAsyncClick from './useAsyncClick'
+import '@compiled/react'
 
 type GenericEventHandler = EventHandler<SyntheticEvent>
 
@@ -38,18 +39,20 @@ export const Card: FunctionComponent<{
       onClick={isLoading ? null : handler}
       style={{
         width,
-        padding: 20,
         border: isHover
           ? '1px solid ' + useColor({ color: 'primary' })
           : '1px solid ' + useColor({ color: 'divider' }),
+        backgroundColor: isHover
+          ? useColor({ color: 'primary', opacity: 0.05 })
+          : null,
+      }}
+      css={{
+        padding: 20,
         alignItems: 'center',
         position: 'relative',
         cursor: 'pointer',
         borderRadius: 4,
         transition: 'hover 0.15s, background-color 0.15s',
-        backgroundColor: isHover
-          ? useColor({ color: 'primary', opacity: 0.05 })
-          : null,
       }}
     >
       {isLoading ? (

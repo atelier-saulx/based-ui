@@ -9,6 +9,7 @@ import { Color, useColor } from '@based/theme'
 import useHover from '../../hooks/events/useHover'
 import { TextValue } from '@based/text'
 import { Check } from './CheckBox'
+import '@compiled/react'
 
 type GenericEventHandler = EventHandler<SyntheticEvent>
 
@@ -29,16 +30,19 @@ export const CardOption: FunctionComponent<{
       }}
       style={{
         padding: value || isHover ? 11 : 12,
-        display: 'flex',
         border:
           value || isHover
             ? '2px solid ' + useColor({ color: 'primary' })
             : '1px solid ' + useColor({ color: 'divider' }),
+
+        ...style,
+      }}
+      css={{
+        display: 'flex',
         alignItems: 'center',
         cursor: 'pointer',
         borderRadius: 4,
         transition: 'hover 0.15s, background-color 0.15s',
-        ...style,
       }}
     >
       <Check
