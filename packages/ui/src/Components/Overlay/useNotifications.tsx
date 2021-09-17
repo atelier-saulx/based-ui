@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import { TextValue } from '@based/text'
 import { useColor } from '@based/theme'
+import { SubText } from '../Text/SubText'
 import { Text } from '../Text'
 import { Button } from '../Button'
 
@@ -110,7 +111,6 @@ export const useNotifications = ({ update }) => {
     >
       {notifictionsRef.current.map((v, i) => (
         <Notification
-          i={i}
           key={v.id}
           value={v}
           close={() => {
@@ -135,7 +135,7 @@ const Notification = ({ value, close }) => {
         borderRadius: 8,
         padding: 24,
         backgroundColor: useColor({
-          color: 'background',
+          color: 'foreground',
           opacity: 0.9,
         }),
         display: 'flex',
@@ -145,7 +145,7 @@ const Notification = ({ value, close }) => {
         marginBottom: NOTIFICATION_SPACING,
         top: 0,
         right: 0,
-        width: 400,
+        width: 420,
         height: NOTIFICATION_HEIGHT + 'px',
         overflow: 'hidden',
         transition: 'transform 0.5s, opacity 0.5s',
@@ -163,16 +163,18 @@ const Notification = ({ value, close }) => {
           : null
       }
     >
-      <div>
-        <Text
-          color={{ color: 'foreground' }}
-          noSelect
-          weight="semibold"
-          singleLine
-        >
+      <div
+        style={{
+          height: '100%',
+          flexDirection: 'column',
+          display: 'flex',
+          justifyContent: 'space-between',
+        }}
+      >
+        <Text color={{ color: 'background' }} noSelect singleLine>
           {value.title}
         </Text>
-        <Text color={{ color: 'foreground' }} noSelect singleLine>
+        <Text color={{ color: 'background' }} noSelect singleLine>
           {value.message}
         </Text>
       </div>
@@ -186,17 +188,26 @@ const Notification = ({ value, close }) => {
         <Button
           style={{
             marginRight: -16,
-            marginTop: -16,
-            height: '100%',
+            marginTop: -6,
+            marginBottom: 0,
           }}
-          foregroundColor={{ color: 'foreground' }}
+          foregroundColor={{ color: 'background' }}
           color={{ color: 'background', opacity: 0 }}
           onClick={(e) => {
             close()
           }}
           icon="close"
         />
-        {value.info ? <Text>{value.info}</Text> : null}
+        {value.info ? (
+          <SubText
+            color={{ color: 'background' }}
+            style={{
+              opacity: 0.5,
+            }}
+          >
+            {value.info}
+          </SubText>
+        ) : null}
       </div>
     </div>
   )
