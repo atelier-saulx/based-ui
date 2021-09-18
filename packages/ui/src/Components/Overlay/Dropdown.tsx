@@ -3,6 +3,7 @@ import React, {
   FunctionComponent,
   PropsWithChildren,
   ReactNode,
+  useRef,
   useState,
 } from 'react'
 import useOverlayPosition, {
@@ -34,10 +35,36 @@ export type OptionProps = {
   isActive: boolean
   onChange: OnValueChange
   index: number
+  registerDoubleClick?: boolean
+}
+
+const DoubleClicker = ({ onClick, onDoubleClick = null, ...props }) => {
+  const timer = useRef() as { current: Timeout }
+  return (
+    <div
+      onClick={
+        onDoubleClick
+          ? () => {
+              clearTimeout(timer.current)
+              timer.current = setTimeout(onClick, 200)
+            }
+          : onClick
+      }
+      onDoubleClick={
+        onDoubleClick
+          ? (e) => {
+              clearTimeout(timer.current)
+              onDoubleClick(e)
+            }
+          : null
+      }
+      {...props}
+    />
+  )
 }
 
 const Option: FunctionComponent<OptionProps> = (props) => {
-  let { option, isActive, onChange, index } = props
+  let { option, isActive, onChange, index, registerDoubleClick } = props
   const [hover, isHover] = useHover()
   const Icon: FunctionComponent<IconProps> = iconFromString(option.icon)
   let isSelectNone: boolean
@@ -96,7 +123,7 @@ const Option: FunctionComponent<OptionProps> = (props) => {
   }
 
   return (
-    <div
+    <DoubleClicker
       {...hover}
       style={{
         opacity: isSelectNone ? 0.5 : 1,
@@ -115,6 +142,15 @@ const Option: FunctionComponent<OptionProps> = (props) => {
           onChange(option, index)
         }
       }}
+      onDoubleClick={
+        registerDoubleClick
+          ? (e) => {
+              if (!option.action) {
+                onChange(option, index, e)
+              }
+            }
+          : null
+      }
     >
       {Icon ? <Icon style={{ marginRight: 8 }} framed={option.framed} /> : null}
       <div
@@ -136,7 +172,7 @@ const Option: FunctionComponent<OptionProps> = (props) => {
           />
         ) : null}
       </div>
-    </div>
+    </DoubleClicker>
   )
 }
 
@@ -145,6 +181,7 @@ export type DropdownProps = {
   onChange: OnValueChange<DropdownOption>
   value?: DropdownOption | DropdownOption[]
   filter?: boolean
+  registerDoubleClick?: boolean
 }
 
 export const dropdownOptionIsEqual = (
@@ -212,7 +249,7 @@ export const Dropdown: FunctionComponent<PositionPropsFn & DropdownProps> = (
             type="search"
             noBackground
             onChange={(v) => {
-              setFilter(v ? String(v) : '')
+              setFilter(v ? String(v).toLowerCase() : '')
             }}
             noBorder
             noBordeRadius
@@ -239,6 +276,7 @@ export const Dropdown: FunctionComponent<PositionPropsFn & DropdownProps> = (
                 : false
             }
             onChange={onChange}
+            registerDoubleClick={props.registerDoubleClick}
           />
         )
       })}

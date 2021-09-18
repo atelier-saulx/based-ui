@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react'
-import { TextValue } from '@based/text'
+import { TextFormat, TextValue } from '@based/text'
 import { Text } from '../../Text'
 import { useColor } from '@based/theme'
 import useHover from '../../../hooks/events/useHover'
@@ -11,9 +11,19 @@ export type BarGraphProps = {
   label?: TextValue
   legend?: { [key: string]: TextValue }
   value?: TextValue
+  format?: TextFormat
 }
 
-const BarSegment = ({ total, len, value, index, legend, label, left }) => {
+const BarSegment = ({
+  total,
+  len,
+  value,
+  index,
+  legend,
+  label,
+  left,
+  format,
+}) => {
   const [hover, isHover] = useHover()
   const barSegment = (
     <div
@@ -37,7 +47,7 @@ const BarSegment = ({ total, len, value, index, legend, label, left }) => {
                 justifyContent: 'space-between',
               }}
             >
-              <Text>{{ value, format: 'number-short' }}</Text>
+              <Text>{{ value, format }}</Text>
               <Text color={{ color: 'primary' }}>
                 {`${(((value || 0) / total) * 100).toFixed()}%`}
               </Text>
@@ -71,6 +81,7 @@ const BarGraph: FunctionComponent<BarGraphProps> = ({
   label,
   value,
   legend,
+  format = 'number-short',
 }) => {
   let t = 0
   let high
@@ -178,6 +189,7 @@ const BarGraph: FunctionComponent<BarGraphProps> = ({
                       index={i}
                       len={len}
                       value={v.value[k]}
+                      format={format}
                     />
                   )
                   add += v.value[k]
@@ -195,6 +207,7 @@ const BarGraph: FunctionComponent<BarGraphProps> = ({
                     index={i}
                     len={len}
                     value={largest.value}
+                    format={format}
                   />
                 )
               }
@@ -239,7 +252,7 @@ const BarGraph: FunctionComponent<BarGraphProps> = ({
                   }}
                 >
                   {[
-                    { format: 'number-short', value: value },
+                    { format, value },
                     ` (${(((value || 0) / t) * 100).toFixed()}%)`,
                   ]}
                 </Text>

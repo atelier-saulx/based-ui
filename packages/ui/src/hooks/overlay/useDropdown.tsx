@@ -5,13 +5,14 @@ import {
   dropdownOptionIsEqual,
 } from '../../Components/Overlay/Dropdown'
 import { PositionProps } from './useOverlayPosition'
-import React, { useCallback } from 'react'
+import React, { SyntheticEvent, useCallback } from 'react'
 import { OverlayContext, createOverlayContextRef } from './useOverlayProps'
 import { DataEventHandler } from '../../types'
 
 export type OnSelect = (
   value: DropdownOption | DropdownOption[],
-  index: number | number[]
+  index: number | number[],
+  e?: Event | SyntheticEvent
 ) => void
 
 const findOptionIndex = (
@@ -27,7 +28,11 @@ export default (
   items: DropdownOption[],
   onSelect: OnSelect,
   value?: DropdownOption | DropdownOption[] | undefined,
-  props: PositionProps & { multi?: boolean; filter?: boolean } = {},
+  props: PositionProps & {
+    registerDoubleClick?: boolean
+    multi?: boolean
+    filter?: boolean
+  } = {},
   handler?: () => () => void
 ): DataEventHandler => {
   const ctx = createOverlayContextRef({
@@ -49,7 +54,7 @@ export default (
             // @ts-ignore
             target={e.currentTarget}
             items={items}
-            onChange={(option, index) => {
+            onChange={(option, index, e) => {
               if (ctx.current.props.multi) {
                 let value = ctx.current.props.value
                 if (!Array.isArray(value)) {
@@ -62,15 +67,19 @@ export default (
                 } else {
                   value.push(option)
                 }
-                onSelect(
+                const res = onSelect(
                   value,
-                  value.map((v) => findOptionIndex(ctx.current.props.items, v))
+                  value.map((v) => findOptionIndex(ctx.current.props.items, v)),
+                  e
                 )
+                if (Array.isArray(res)) {
+                  value = res
+                }
                 ctx.current.update({ ...ctx.current.props, value })
               } else {
                 removeOverlay(dropdown)
                 ctx.current.update({ ...ctx.current.props, value: option })
-                onSelect(option, index)
+                onSelect(option, index, e)
               }
             }}
             {...props}

@@ -33,7 +33,11 @@ export type MultiDataEventHandler<T = {}> = (
   data?: Data<T>[]
 ) => void | Promise<void>
 
-export type OnValueChange<T = any> = (value: T, index?: number) => void
+export type OnValueChange<T = any> = (
+  value: T,
+  index?: number,
+  e?: Event | SyntheticEvent
+) => void
 
 export type Timestamp = number
 

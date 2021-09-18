@@ -18,6 +18,7 @@ export type TextFormat =
   | 'lowercase'
   | 'first-word'
   | 'markdown'
+  | 'none'
 
 export type TextValueFormat = {
   value: TextValueSingle

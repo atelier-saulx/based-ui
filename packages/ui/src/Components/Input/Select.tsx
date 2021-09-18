@@ -36,6 +36,7 @@ type SelectInputProps = {
   items?: DropdownOption[]
   color?: Color
   weight?: 'semibold' | 'medium' | 'regular'
+  registerDoubleClick?: boolean
 }
 
 export const Select: FunctionComponent<SelectInputProps> = ({
@@ -52,6 +53,7 @@ export const Select: FunctionComponent<SelectInputProps> = ({
   identifier,
   value = multi ? [] : undefined,
   style,
+  registerDoubleClick,
 }) => {
   if (typeof value === 'string') {
     value = { value }
@@ -68,9 +70,9 @@ export const Select: FunctionComponent<SelectInputProps> = ({
     ? iconFromString(value.icon)
     : ''
   const update = useCallback(
-    (value, index) => {
+    (value, index, e) => {
       setValue(value)
-      onChange(value, index)
+      return onChange(value, index, e)
     },
     [setValue, onChange]
   )
@@ -100,19 +102,14 @@ export const Select: FunctionComponent<SelectInputProps> = ({
       {...hover}
       onClick={useDropdown(
         items,
-        (value, index) => {
-          if (multi) {
-            if (index !== undefined) {
-              update(value, index)
-            }
-          } else {
-            if (index !== undefined) {
-              update(value, index)
-            }
+        (value, index, e) => {
+          if (index !== undefined) {
+            return update(value, index, e)
           }
         },
         stateValue,
         {
+          registerDoubleClick,
           multi,
           filter,
           align: 'flex-end',
