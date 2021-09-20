@@ -39,7 +39,7 @@ export type OptionProps = {
 }
 
 const DoubleClicker = ({ onClick, onDoubleClick = null, ...props }) => {
-  const timer = useRef() as { current: Timeout }
+  const timer = useRef() as { current: NodeJS.Timeout }
   return (
     <div
       onClick={
