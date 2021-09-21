@@ -10,6 +10,7 @@ import useHover from './useHover'
 import AddSvg from './Components/Add'
 import AppleSvg from './Components/Apple'
 import AudioFileSvg from './Components/AudioFile'
+import CaptchaSvg from './Components/Captcha'
 import CheckedSvg from './Components/Checked'
 import ChevronLeftSvg from './Components/ChevronLeft'
 import ChevronRightSvg from './Components/ChevronRight'
@@ -225,6 +226,7 @@ const wrapIcon = (
 const Add = wrapIcon(AddSvg)
 const Apple = wrapIcon(AppleSvg)
 const AudioFile = wrapIcon(AudioFileSvg)
+const Captcha = wrapIcon(CaptchaSvg)
 const Checked = wrapIcon(CheckedSvg)
 const ChevronLeft = wrapIcon(ChevronLeftSvg)
 const ChevronRight = wrapIcon(ChevronRightSvg)
@@ -303,6 +305,7 @@ const icons = {
   Add,
   Apple,
   AudioFile,
+  Captcha,
   Checked,
   ChevronLeft,
   ChevronRight,
