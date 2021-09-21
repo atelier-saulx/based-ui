@@ -1,6 +1,6 @@
 {
   "name": "@based/icons",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "repository": "https://github.com/atelier-saulx/based-ui",
   "description": "A front-end library of icons for Based",
   "main": "dist/index.js",
