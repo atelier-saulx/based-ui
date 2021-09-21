@@ -17,10 +17,9 @@ const Category = ({ category }) => {
 const App = () => {
   const themeid = useTheme('light')
   const lang = useLanguage()
-
   const [filter, setFilter] = useState(window.location.hash.slice(1))
-
   const [loaded, setLoaded] = useState(false)
+
   if (!loaded) {
     setTimeout(() => {
       setLoaded(true)

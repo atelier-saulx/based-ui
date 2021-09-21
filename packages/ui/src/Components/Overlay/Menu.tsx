@@ -195,7 +195,6 @@ export const ContextualMenuItem: FunctionComponent<ContextualMenuItemProps> = ({
 
 export const Menu: FunctionComponent<GenericOverlayProps> = (initialProps) => {
   const props = useOverlayProps(initialProps)
-
   const { align, target, selectTarget, width = 256, y, x, maxY, maxX } = props
   const [elementRef, position, resize] = useOverlayPosition({
     align,
