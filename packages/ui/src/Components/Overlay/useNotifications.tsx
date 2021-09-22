@@ -168,46 +168,54 @@ const Notification = ({ value, close }) => {
           height: '100%',
           flexDirection: 'column',
           display: 'flex',
+          width: '100%',
           justifyContent: 'space-between',
         }}
       >
-        <Text color={{ color: 'background' }} noSelect singleLine>
-          {value.title}
-        </Text>
+        <div
+          style={{
+            display: 'flex',
+            width: '100%',
+            justifyContent: 'space-between',
+          }}
+        >
+          <Text color={{ color: 'background' }} noSelect singleLine>
+            {value.title}
+          </Text>
+          <div
+            style={{
+              marginRight: -16,
+              display: 'flex',
+            }}
+          >
+            {value.info ? (
+              <SubText
+                color={{ color: 'background' }}
+                style={{
+                  opacity: 0.5,
+                }}
+              >
+                {value.info}
+              </SubText>
+            ) : null}
+            <Button
+              style={{
+                marginTop: -6,
+                marginBottom: 0,
+              }}
+              foregroundColor={{ color: 'background' }}
+              color={{ color: 'background', opacity: 0 }}
+              onClick={(e) => {
+                close()
+              }}
+              icon="close"
+            />
+          </div>
+        </div>
+
         <Text color={{ color: 'background' }} noSelect singleLine>
           {value.message}
         </Text>
-      </div>
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'flex-end',
-          flexDirection: 'column',
-        }}
-      >
-        <Button
-          style={{
-            marginRight: -16,
-            marginTop: -6,
-            marginBottom: 0,
-          }}
-          foregroundColor={{ color: 'background' }}
-          color={{ color: 'background', opacity: 0 }}
-          onClick={(e) => {
-            close()
-          }}
-          icon="close"
-        />
-        {value.info ? (
-          <SubText
-            color={{ color: 'background' }}
-            style={{
-              opacity: 0.5,
-            }}
-          >
-            {value.info}
-          </SubText>
-        ) : null}
       </div>
     </div>
   )
