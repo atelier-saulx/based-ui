@@ -29,7 +29,7 @@ export const InnerShared = forwardRef<
             opacity: 0.05,
           }),
         paddingBottom: 10,
-        maxHeight: 'calc(100vh-30px)',
+        maxHeight: 'calc(100vh - 30px)',
         boxShadow: `0px 3px 16px 1px ${useColor({
           color: 'foreground',
           tone: 2,
