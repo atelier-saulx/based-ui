@@ -84,7 +84,10 @@ const Header: FunctionComponent<HeaderProps> = ({
           }}
         >
           {indicator ? (
-            <Text weight="semibold" style={{ marginRight: 0 }}>
+            <Text
+              weight="semibold"
+              style={{ marginRight: onEditTitle ? 0 : 10 }}
+            >
               {indicator}
             </Text>
           ) : null}
