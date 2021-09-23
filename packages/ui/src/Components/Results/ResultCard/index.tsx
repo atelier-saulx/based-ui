@@ -2,12 +2,13 @@ import React, { FunctionComponent, CSSProperties } from 'react'
 import { TextValue } from '@based/text'
 import { Text } from '../../Text'
 import { Title } from '../../Text/Title'
-import { useColor } from '@based/theme'
+import { useColor, Color } from '@based/theme'
 
 export type ResultCardProps = {
   label: TextValue
   value: string | number
   style?: CSSProperties
+  color?: Color
 }
 
 export const ResultCard: FunctionComponent<ResultCardProps> = ({

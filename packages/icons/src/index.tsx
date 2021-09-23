@@ -79,6 +79,9 @@ import ToggleOnSvg from './Components/ToggleOn'
 import UnitedKingdomSvg from './Components/UnitedKingdom'
 import UnlockSvg from './Components/Unlock'
 import UpSvg from './Components/Up'
+import UpTriangleSvg from './Components/UpTriangle'
+import UpArrowSvg from './Components/UpArrow'
+
 import UploadSvg from './Components/Upload'
 import VideoFileSvg from './Components/VideoFile'
 import VideoSvg from './Components/Video'
@@ -295,6 +298,8 @@ const ToggleOn = wrapIcon(ToggleOnSvg)
 const UnitedKingdom = wrapIcon(UnitedKingdomSvg)
 const Unlock = wrapIcon(UnlockSvg)
 const Up = wrapIcon(UpSvg)
+const UpArrow = wrapIcon(UpArrowSvg)
+const UpTriangle = wrapIcon(UpTriangleSvg)
 const Upload = wrapIcon(UploadSvg)
 const Video = wrapIcon(VideoSvg)
 const VideoFile = wrapIcon(VideoFileSvg)
@@ -374,6 +379,8 @@ const icons = {
   UnitedKingdom,
   Unlock,
   Up,
+  UpArrow,
+  UpTriangle,
   Upload,
   Video,
   VideoFile,
@@ -454,7 +461,9 @@ export type IconName =
   | 'unitedKingdom'
   | 'unlock'
   | 'up'
+  | 'upArrow'
   | 'upload'
+  | 'upTriangle'
   | 'video'
   | 'videoFile'
   | 'waitingScreen'
@@ -539,6 +548,7 @@ export {
   UnitedKingdom,
   Unlock,
   Up,
+  UpTriangle,
   Upload,
   Video,
   VideoFile,

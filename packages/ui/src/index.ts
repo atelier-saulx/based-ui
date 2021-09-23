@@ -19,6 +19,8 @@ import copyToClipboard from './util/copyToClipboard'
 export { SideMenuAlt } from './Components/SideMenu/SideMenuAlt'
 import ResultDot from './Components/Results/ResultDot'
 
+export { ResultCardGrid } from './Components/Results/ResultCardGrid'
+
 export {
   Overlay,
   notify,
