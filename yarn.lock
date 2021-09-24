@@ -366,13 +366,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@based/get-service@npm:0.1.1":
-  version: 0.1.1
-  resolution: "@based/get-service@npm:0.1.1"
+"@based/get-service@npm:0.1.2":
+  version: 0.1.2
+  resolution: "@based/get-service@npm:0.1.2"
   dependencies:
     cross-fetch: ^3.1.4
-    timeout-signal: ^1.1.0
-  checksum: ab40869eb7acfeb79d311d4df591d56e378e389397ab8589240417220875cc8acbb298da4ec42af1afc928c6010ab3c210e5c3a7e84cd4fa330a66fbd5c6919f
+  checksum: 4bbaf518a4103b546f6374c396725165b7122c51b09e0e1f2dcdfffe4627d13a0319e5a5e864e28e9ed5218de09ab1215341887fe0db689195932215dc694ea7
   languageName: node
   linkType: hard
 
@@ -473,7 +472,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@based/ui@workspace:packages/ui"
   dependencies:
-    "@based/get-service": 0.1.1
+    "@based/get-service": 0.1.2
     "@based/icons": ^0.2.3
     "@based/text": ^0.2.0
     "@based/theme": ^0.1.9
@@ -1156,15 +1155,6 @@ __metadata:
   version: 1.1.1
   resolution: "abbrev@npm:1.1.1"
   checksum: a4a97ec07d7ea112c517036882b2ac22f3109b7b19077dc656316d07d308438aac28e4d9746dc4d84bf6b1e75b4a7b0a5f3cb30592419f128ca9a8cee3bcfa17
-  languageName: node
-  linkType: hard
-
-"abort-controller@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "abort-controller@npm:3.0.0"
-  dependencies:
-    event-target-shim: ^5.0.0
-  checksum: 170bdba9b47b7e65906a28c8ce4f38a7a369d78e2271706f020849c1bfe0ee2067d4261df8bbb66eb84f79208fd5b710df759d64191db58cfba7ce8ef9c54b75
   languageName: node
   linkType: hard
 
@@ -2880,13 +2870,6 @@ __metadata:
   dependencies:
     require-like: ">= 0.1.1"
   checksum: 0e9246bb16256eef07afa7f31408310a784407d2fec2ddd2d7fe1f885a45b7cf37e30739e658a65d000c3dcff8d5b5c96f9819188b00e1f667b6638e75eaf23c
-  languageName: node
-  linkType: hard
-
-"event-target-shim@npm:^5.0.0":
-  version: 5.0.1
-  resolution: "event-target-shim@npm:5.0.1"
-  checksum: 1ffe3bb22a6d51bdeb6bf6f7cf97d2ff4a74b017ad12284cc9e6a279e727dc30a5de6bb613e5596ff4dc3e517841339ad09a7eec44266eccb1aa201a30448166
   languageName: node
   linkType: hard
 
@@ -7130,15 +7113,6 @@ resolve@^2.0.0-next.3:
   version: 4.0.1
   resolution: "timed-out@npm:4.0.1"
   checksum: 98efc5d6fc0d2a329277bd4d34f65c1bf44d9ca2b14fd267495df92898f522e6f563c5e9e467c418e0836f5ca1f47a84ca3ee1de79b1cc6fe433834b7f02ec54
-  languageName: node
-  linkType: hard
-
-"timeout-signal@npm:^1.1.0":
-  version: 1.1.0
-  resolution: "timeout-signal@npm:1.1.0"
-  dependencies:
-    abort-controller: ^3.0.0
-  checksum: c5d4287a2fa4ac4fd1f9a8d35970c9654ce71c286b991d5deac58e40632ed6a3cc36ac7a35e8530c690668bf058050a68bea714180616e3552212f31a82b1767
   languageName: node
   linkType: hard
 
