@@ -70,6 +70,8 @@ export const CheckBox: FunctionComponent<ToggleInputProps & CheckProps> = ({
           noSelect
           style={{
             marginLeft: 15,
+            display: 'flex',
+            alignItems: 'center',
           }}
         >
           {children}
@@ -131,6 +133,8 @@ export const RadioButton: FunctionComponent<ToggleInputProps> = ({
           noSelect
           style={{
             marginLeft: 15,
+            display: 'flex',
+            alignItems: 'center',
           }}
         >
           {children}

@@ -37,7 +37,6 @@ export default (
   const handler = useCallback(
     (e) => {
       e.stopPropagation()
-
       if (!r.current) {
         setLoading(true)
       }
@@ -50,6 +49,7 @@ export default (
         }).catch((err) => {
           if (!r.current) {
             setError(err)
+            console.error(err)
             setLoading(false)
           }
         })

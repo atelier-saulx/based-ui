@@ -2,6 +2,7 @@ import React, { CSSProperties, FunctionComponent } from 'react'
 import { useColor, Color } from '@based/theme'
 import { getTextValue, TextValue, isHtml } from '@based/text'
 import useDate from './useDate'
+import '@compiled/react'
 
 type TextProps = {
   style?: CSSProperties
@@ -28,6 +29,11 @@ export const Text: FunctionComponent<TextProps> = ({
 
   return (
     <div
+      css={{
+        strong: {
+          fontWeight: 600,
+        },
+      }}
       style={{
         fontSize: '15px',
         lineHeight: '24px',

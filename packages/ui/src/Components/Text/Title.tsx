@@ -2,6 +2,7 @@ import React, { CSSProperties, FunctionComponent } from 'react'
 import { useColor, Color } from '@based/theme'
 import { getTextValue, TextValue, isHtml } from '@based/text'
 import useDate from './useDate'
+import '@compiled/react'
 
 type TitleProps = {
   style?: CSSProperties
@@ -25,6 +26,11 @@ export const Title: FunctionComponent<TitleProps> = ({
   const html = isHtml(v)
   return (
     <div
+      css={{
+        strong: {
+          fontWeight: 'bold',
+        },
+      }}
       style={{
         fontSize:
           size === 'large' ? '28px' : size === 'small' ? '17px' : '19px',
