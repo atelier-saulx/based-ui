@@ -11,14 +11,28 @@ type GenericEventHandler = EventHandler<SyntheticEvent>
 
 export default (
   onClick: GenericEventHandler | AsyncEvent
-): [boolean, GenericEventHandler] => {
-  const [loading, setLoading] = useState(false)
+): [boolean, GenericEventHandler, Error] => {
+  const [loading, setLoading] = useState<boolean>(false)
+  const [err, setError] = useState<Error>()
+
   const r = useRef<boolean>(false)
   useEffect(() => {
     return () => {
       r.current = true
     }
   }, [])
+
+  useEffect(() => {
+    if (err) {
+      const timer = setTimeout(() => {
+        setError(null)
+      }, 1e3)
+
+      return () => {
+        clearTimeout(timer)
+      }
+    }
+  }, [err])
 
   const handler = useCallback(
     (e) => {
@@ -33,8 +47,9 @@ export default (
           if (!r.current) {
             setLoading(false)
           }
-        }).catch((v) => {
+        }).catch((err) => {
           if (!r.current) {
+            setError(err)
             setLoading(false)
           }
         })
@@ -46,5 +61,5 @@ export default (
     },
     [onClick]
   )
-  return [loading, handler]
+  return [loading, handler, err]
 }

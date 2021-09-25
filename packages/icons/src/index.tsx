@@ -492,6 +492,7 @@ export {
   Date,
   Delete,
   Desktop,
+  Dot,
   Down,
   DownThick,
   Drag,

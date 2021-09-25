@@ -36,6 +36,7 @@ export type ButtonProps = {
   fullWidth?: boolean
   centered?: boolean
   border?: boolean
+  light?: boolean
   borderColor?: Color
 }
 
@@ -89,6 +90,7 @@ export const Button: FunctionComponent<ButtonProps> = ({
   onClick,
   onMouseEnter,
   onContextMenu,
+  light,
   fullWidth,
   centered,
   border,
@@ -96,7 +98,7 @@ export const Button: FunctionComponent<ButtonProps> = ({
 }) => {
   const [hover, isHover, isActive] = useHover(onHover || onMouseEnter)
   let ref
-  const [isLoading, handler] = useAsyncClick(onClick)
+  const [isLoading, handler, asyncError] = useAsyncClick(onClick)
 
   if (actionKeys && onClick) {
     ref = useRef()
@@ -175,7 +177,7 @@ export const Button: FunctionComponent<ButtonProps> = ({
         style={{
           flexGrow: fullWidth ? 1 : null,
           justifyContent: centered ? 'center' : null,
-          alignItems: centered ? 'center' : 'flex-start',
+          alignItems: light || centered ? 'center' : 'flex-start',
           padding: children && icon ? '4px 8px 4px 4px' : '4px 8px',
           borderStyle: border ? 'solid' : null,
           borderWidth: border ? 1 : null,
@@ -225,6 +227,17 @@ export const Button: FunctionComponent<ButtonProps> = ({
           flexDirection: 'row',
           cursor: 'pointer',
           borderRadius: '4px',
+          '@keyframes splur': {
+            '0%': { transform: 'translate3d(0px,0px,0px)' },
+            '25%': { transform: 'translate3d(-4px,0px,0px)' },
+            '50%': { transform: 'translate3d(4px,0px,0px)' },
+            '100%': { transform: 'translate3d(0px,0px,0px)' },
+          },
+          animationDuration: '0.25s',
+          transform: 'translate3d(0px,0px,0px)',
+          animationName: asyncError ? 'spin' : null,
+          animationTimingFunction: 'linear',
+          animationIterationCount: '10',
         }}
         onClick={isLoading ? null : handler}
         {...hover}
@@ -233,8 +246,8 @@ export const Button: FunctionComponent<ButtonProps> = ({
         {isLoading ? (
           <div
             css={{
-              width: 24,
-              height: 24,
+              width: light ? 20 : 24,
+              height: light ? 20 : 24,
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
@@ -247,12 +260,18 @@ export const Button: FunctionComponent<ButtonProps> = ({
           </div>
         ) : Icon ? (
           <Icon
+            size={light ? 20 : 24}
             style={{ marginRight: !children ? 0 : 4 }}
             color={iconColor || foregroundColor}
           />
         ) : null}
         {children ? (
-          <Text noSelect singleLine weight="medium" color={foregroundColor}>
+          <Text
+            noSelect
+            singleLine
+            weight={light ? 'regular' : 'medium'}
+            color={foregroundColor}
+          >
             {getTextValue(children)}
           </Text>
         ) : null}
