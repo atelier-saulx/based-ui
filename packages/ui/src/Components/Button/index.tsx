@@ -57,11 +57,8 @@ const UploadOverlay: FunctionComponent<{
       multiple
       onChange={useCallback(async (e) => {
         const files = e.target.files
-
         const x = await Promise.all([...files].map((f) => loadFile(f)))
-
         onSelectFile({ fileList: files, files: x })
-
         e.target.value = ''
       }, [])}
       css={{
@@ -235,7 +232,7 @@ export const Button: FunctionComponent<ButtonProps> = ({
           },
           animationDuration: '0.25s',
           transform: 'translate3d(0px,0px,0px)',
-          animationName: asyncError ? 'spin' : null,
+          animationName: asyncError ? 'splur' : null,
           animationTimingFunction: 'linear',
           animationIterationCount: '10',
         }}

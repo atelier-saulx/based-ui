@@ -1,4 +1,10 @@
-import React, { useCallback, FunctionComponent, CSSProperties } from 'react'
+import React, {
+  useCallback,
+  FunctionComponent,
+  CSSProperties,
+  SyntheticEvent,
+  EventHandler,
+} from 'react'
 import { Check, CheckProps } from '../Button/CheckBox'
 import { Radio } from '../Button/Radio'
 import { Text } from '../Text'
@@ -14,6 +20,7 @@ export type ToggleInputProps = {
   value?: boolean
   icon?: IconName
   border?: boolean
+  onMouseEnter?: EventHandler<SyntheticEvent>
   identifier?: any
   children?: TextValue
 }
@@ -26,6 +33,7 @@ export const CheckBox: FunctionComponent<ToggleInputProps & CheckProps> = ({
   border,
   icon,
   value = false,
+  onMouseEnter,
   ...rest
 }) => {
   const [stateValue, setValue] = useInputValue<boolean>(
@@ -51,6 +59,7 @@ export const CheckBox: FunctionComponent<ToggleInputProps & CheckProps> = ({
         justifyContent: 'space-between',
         ...style,
       }}
+      onMouseEnter={onMouseEnter}
       onClick={useCallback(() => {
         const v = !stateValue
         if (onChange) {
