@@ -35,6 +35,7 @@ hasTS()
         exclude: Array.from(
           new Set(['node_modules', 'test', 'dist', 'tmp', 'examples'])
         ),
+        references: [],
       }
 
       const map = {}
