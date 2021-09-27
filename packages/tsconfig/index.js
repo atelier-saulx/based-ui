@@ -31,8 +31,10 @@ hasTS()
           rootDir: 'src',
           outDir: 'dist',
         },
-        references: [],
-        exclude: ['node_modules', 'test', 'dist', 'tmp'],
+        include: ['src/**/*', 'src/**/*.json'],
+        exclude: Array.from(
+          new Set(['node_modules', 'test', 'dist', 'tmp', 'examples'])
+        ),
       }
 
       const map = {}
@@ -65,4 +67,7 @@ hasTS()
     }
   })
   .then(() => console.info('✅ tsconfig.json up to date'))
-  .catch(() => console.info('⚠️  no src/index.ts file'))
+  .catch((e) => {
+    console.log(e)
+    console.info('⚠️  no src/index.ts file')
+  })
