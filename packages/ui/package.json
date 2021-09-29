@@ -5,9 +5,9 @@
   "description": "A library of front-end React components for Based",
   "dependencies": {
     "@based/get-service": "0.1.2",
-    "@based/icons": "^0.2.3",
-    "@based/text": "^0.2.0",
-    "@based/theme": "^0.1.9",
+    "@based/icons": "^0.2.4",
+    "@based/text": "^0.2.1",
+    "@based/theme": "^0.1.10",
     "@compiled/react": "^0.7.0",
     "@saulx/utils": "^2.0.1",
     "@types/css-font-loading-module": "^0.0.6",

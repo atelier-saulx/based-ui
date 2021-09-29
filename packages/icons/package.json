@@ -7,7 +7,7 @@
   "module": "src/index.tsx",
   "sideEffects": false,
   "dependencies": {
-    "@based/theme": "^0.1.0",
+    "@based/theme": "^0.1.10",
     "react": "^17.0.2"
   },
   "scripts": {
