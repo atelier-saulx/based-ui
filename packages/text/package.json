@@ -1,10 +1,11 @@
 {
   "name": "@based/text",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "repository": "https://github.com/atelier-saulx/based-ui",
   "license": "MIT",
   "main": "dist/index.js",
   "module": "src/index.ts",
+  "sideEffects": false,
   "scripts": {
     "build": "tsc -b",
     "watch": "yarn build -w"

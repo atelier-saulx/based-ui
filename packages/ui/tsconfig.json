@@ -4,6 +4,17 @@
     "rootDir": "src",
     "outDir": "dist"
   },
+  "include": [
+    "src/**/*",
+    "src/**/*.json"
+  ],
+  "exclude": [
+    "node_modules",
+    "test",
+    "dist",
+    "tmp",
+    "examples"
+  ],
   "references": [
     {
       "path": "../../packages/text"
@@ -14,11 +25,5 @@
     {
       "path": "../../packages/icons"
     }
-  ],
-  "exclude": [
-    "node_modules",
-    "test",
-    "dist",
-    "tmp"
   ]
 }
