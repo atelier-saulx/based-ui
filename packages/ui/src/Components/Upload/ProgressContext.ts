@@ -1,4 +1,4 @@
-import {createContext} from "react"
+import { createContext } from 'react'
 
 const cache = {}
 
@@ -22,6 +22,7 @@ export type ProgressContextItem = {
   type: string
   removed?: boolean
   isComplete?: boolean
+  url?: string
 }
 
 export const createProgressContext = ({

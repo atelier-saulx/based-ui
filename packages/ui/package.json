@@ -25,7 +25,7 @@
     "rgb-hex": "^4.0.0",
     "svg-path-utils": "^0.0.3",
     "tarts": "^1.0.0",
-    "wouter": "^2.7.4"
+    "wouter": "^2.7.5"
   },
   "sideEffects": false,
   "prettier": "@saulx/prettier-config",

@@ -1,5 +1,5 @@
 import React, { FunctionComponent, CSSProperties } from 'react'
-import { useColor } from '@based/theme'
+import { ColorKey, useColor } from '@based/theme'
 import '@compiled/react'
 
 const calcSvg = (val) => {
@@ -18,12 +18,14 @@ type ProgressIndicatorProps = {
   value: number
   size?: number
   style?: CSSProperties
+  color?: ColorKey
 }
 
 export const ProgressIndicator: FunctionComponent<ProgressIndicatorProps> = ({
   value = 0,
   size = 25,
   style,
+  color,
 }) => {
   return (
     <div
@@ -65,7 +67,10 @@ export const ProgressIndicator: FunctionComponent<ProgressIndicatorProps> = ({
           fill="transparent"
           strokeDasharray="527.781333333"
           style={{
-            stroke: useColor({ color: 'foreground', opacity: 0.33 }),
+            stroke: useColor({
+              color: color ? color : 'foreground',
+              opacity: 0.33,
+            }),
           }}
         />
         <circle
@@ -78,7 +83,7 @@ export const ProgressIndicator: FunctionComponent<ProgressIndicatorProps> = ({
           strokeDashoffset={calcSvg(value) + 'px'}
           style={{
             transition: 'stroke-dashoffset 0.5s linear',
-            stroke: useColor({ color: 'primary' }),
+            stroke: useColor({ color: color ? color : 'primary' }),
           }}
         />
       </svg>

@@ -375,11 +375,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@based/icons@*, @based/icons@^0.2.3, @based/icons@workspace:packages/icons":
+"@based/icons@*, @based/icons@^0.2.4, @based/icons@workspace:packages/icons":
   version: 0.0.0-use.local
   resolution: "@based/icons@workspace:packages/icons"
   dependencies:
-    "@based/theme": ^0.1.0
+    "@based/theme": ^0.1.10
     "@based/tsconfig": "*"
     "@types/node": ^16.3.1
     react: ^17.0.2
@@ -402,7 +402,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@based/text@*, @based/text@^0.2.0, @based/text@workspace:packages/text":
+"@based/text@*, @based/text@^0.2.1, @based/text@workspace:packages/text":
   version: 0.0.0-use.local
   resolution: "@based/text@workspace:packages/text"
   dependencies:
@@ -417,7 +417,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@based/theme@*, @based/theme@^0.1.0, @based/theme@^0.1.9, @based/theme@workspace:packages/theme":
+"@based/theme@*, @based/theme@^0.1.10, @based/theme@workspace:packages/theme":
   version: 0.0.0-use.local
   resolution: "@based/theme@workspace:packages/theme"
   dependencies:
@@ -473,9 +473,9 @@ __metadata:
   resolution: "@based/ui@workspace:packages/ui"
   dependencies:
     "@based/get-service": 0.1.2
-    "@based/icons": ^0.2.3
-    "@based/text": ^0.2.0
-    "@based/theme": ^0.1.9
+    "@based/icons": ^0.2.4
+    "@based/text": ^0.2.1
+    "@based/theme": ^0.1.10
     "@based/tsconfig": "*"
     "@compiled/react": ^0.7.0
     "@saulx/eslint-config": ^1.1.0
@@ -500,7 +500,7 @@ __metadata:
     tarts: ^1.0.0
     ts-node: ^10.2.1
     typescript: ^4.4.3
-    wouter: ^2.7.4
+    wouter: ^2.7.5
   languageName: unknown
   linkType: soft
 
@@ -7478,12 +7478,12 @@ resolve@^2.0.0-next.3:
   languageName: node
   linkType: hard
 
-"wouter@npm:^2.7.4":
-  version: 2.7.4
-  resolution: "wouter@npm:2.7.4"
+"wouter@npm:^2.7.5":
+  version: 2.7.5
+  resolution: "wouter@npm:2.7.5"
   peerDependencies:
     react: ">=16.8.0"
-  checksum: 03fb517a186fe621f6985eebd9ca11b13d320f2e0ce166e7c11e22b5ccccf90cc5c5c24df8d4364bcec6b7abfbcc679a71864af540402d3b19e479c6bb05cc10
+  checksum: 6059e18642fb6d0b29fbc9e9d845d1efa1e540ba8e5d3af7c3d770554568e4bae08d675888eae8a1da842654aae4c3e556469b3e890f822d6374e65e11bc8c42
   languageName: node
   linkType: hard
 

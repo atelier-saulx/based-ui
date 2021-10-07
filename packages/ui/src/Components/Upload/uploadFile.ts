@@ -142,6 +142,7 @@ export const uploadFile: UploadFileScript = async (
                 item.isComplete = false
                 item.transcoding = true
                 item.progress = status.progress
+                item.url = status.url
                 progressContext.listeners.forEach((update) =>
                   update({ ...item })
                 )
