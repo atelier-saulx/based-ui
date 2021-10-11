@@ -276,7 +276,6 @@ const Sequence = ({ style, data: { items, context, width }, index }) => {
           value: getData(itemData, titleProps.path),
         }
       : getData(itemData, titleProps.path)
-    // const id = itemProps.id ? getData(itemData, itemProps.id) : index
 
     const isExpanded =
       !context.expandable ||
@@ -287,7 +286,6 @@ const Sequence = ({ style, data: { items, context, width }, index }) => {
         : null)
 
     const seqItems = getData(itemData, nestedItemProps.path) || []
-    // console.log('--', JSON.stringify(itemData, null, 2))
 
     const isLast = index === items.length - 2
 
