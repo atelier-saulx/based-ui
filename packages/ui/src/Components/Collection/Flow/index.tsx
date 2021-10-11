@@ -30,10 +30,8 @@ const FooterBottom = ({
       (e, { files, data }) => {
         const index = wrappedData.data.items.length
         if (data && data.length) {
-          const oldIndex = data[0].index
-          const newIndex = index > oldIndex ? index - 1 : index
           return context.onDrop(e, {
-            targetIndex: newIndex || index,
+            targetIndex: index,
             data,
           })
         } else if (files) {
