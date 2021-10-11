@@ -76,8 +76,8 @@ const TableRow = (props) => {
           : undefined
       )}
       style={{
-        paddingLeft: context.paddingLeft || 40,
-        paddingRight: context.paddingRight || 40,
+        paddingLeft: context.paddingLeft,
+        paddingRight: context.paddingRight,
         paddingTop: context.isLarge ? 10 : 5,
         cursor: context.onClick ? 'pointer' : 'default',
         height: context.isLarge ? 80 : 60,

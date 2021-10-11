@@ -459,11 +459,7 @@ const Sequence = ({ style, data: { items, context, width }, index }) => {
 
 export const Flow = (props: FlowProps) => {
   const { items = [], footer, paddingTop = 0, paddingBottom = 0 } = props
-
-  // make a ref...
-
   const autoFocusRef = useRef()
-
   const itemsWithNew = footer
     ? [
         ...items,
@@ -489,7 +485,7 @@ export const Flow = (props: FlowProps) => {
   }
 
   const expanded = expandedRef.current
-
+  console.log({ paddingTop, paddingBottom })
   return (
     <AutoSizer>
       {({ height, width }) => {
@@ -522,7 +518,7 @@ export const Flow = (props: FlowProps) => {
               width,
             }}
             itemSize={(index) => {
-              let x = 0
+              let x = 48 + 35
               if (index === 0 && paddingTop) {
                 x += paddingTop
               }
@@ -534,7 +530,7 @@ export const Flow = (props: FlowProps) => {
               }
 
               if (data['@@newSequence']) {
-                return 48 + 35 + x
+                return x
               }
 
               if (props.stepFooter) {
@@ -555,9 +551,9 @@ export const Flow = (props: FlowProps) => {
                 !props.expandable ||
                 (props.defaultIsExpanded ? !expanded[index] : expanded[index])
               ) {
-                return (items ? items.length : 0) * 48 + 48 + 35 + x
+                return (items ? items.length : 0) * 48 + x
               }
-              return 48 + 35 + x
+              return x
             }}
             {...useDragScroll(true)}
           >

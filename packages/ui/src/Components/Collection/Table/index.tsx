@@ -27,7 +27,12 @@ export const Table: FunctionComponent<TableProps> = (props) => {
           props.onOptions,
           true
         )
-        const context = { ...props, itemProps }
+        const context = {
+          paddingLeft: 32,
+          paddingRight: 32,
+          ...props,
+          itemProps,
+        }
         return (
           <SelectableCollection items={props.items}>
             <Fields onChange={props.onChange} width={width} context={context} />

@@ -133,12 +133,11 @@ const Fields = ({ onChange, width, context }) => {
   return (
     <div
       style={{
-        width,
+        width: width - context.paddingLeft - context.paddingRight,
         display: 'flex',
         paddingTop: 12,
         paddingBottom: 12,
-        paddingLeft: context.paddingLeft || 40,
-        paddingRight: context.paddingRight || 40,
+        marginLeft: context.paddingLeft,
         alignItems: 'center',
         borderBottom: '1px solid ' + useColor({ color: 'divider' }),
       }}

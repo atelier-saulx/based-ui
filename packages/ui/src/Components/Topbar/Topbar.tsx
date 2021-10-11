@@ -14,8 +14,8 @@ export const Topbar: FunctionComponent<TopbarProps> = ({ children, style }) => {
       style={{
         paddingTop: 12.5,
         paddingBottom: 12.5,
-        paddingLeft: 15,
-        paddingRight: 15,
+        paddingLeft: 32,
+        paddingRight: 32,
         height: 60,
         minHeight: 60,
         maxHeight: 60,
