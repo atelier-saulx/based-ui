@@ -31,6 +31,7 @@ type MultilineInputProps = {
   color?: Color
   validator?: Validator
   progress?: number
+  noBackground?: boolean
 }
 
 export const MultilineTextInput: FunctionComponent<MultilineInputProps> = ({
@@ -47,6 +48,7 @@ export const MultilineTextInput: FunctionComponent<MultilineInputProps> = ({
   color = { color: 'background', tone: 1 },
   border,
   identifier,
+  noBackground,
 }) => {
   const ref = useRef()
   const [isFocus, setFocus] = useState(false)
@@ -119,10 +121,12 @@ export const MultilineTextInput: FunctionComponent<MultilineInputProps> = ({
         autoFocus={autoFocus}
         style={{
           borderRadius: 8,
-          background: useColor({
-            color: color.color,
-            tone: isFocus || isHover ? color.tone + 1 : 1,
-          }),
+          background: noBackground
+            ? 'inherit'
+            : useColor({
+                color: color.color,
+                tone: isFocus || isHover ? color.tone + 1 : 1,
+              }),
           border: isFocus
             ? '2px solid ' +
               (isWrong
