@@ -196,7 +196,6 @@ const ListItem = ({
           ref.current.dragLayerActive = true
         }
       } else if (ref.current && ref.current.dragLayerActive) {
-        console.log('here we go')
         ref.current.dragLayerActive = false
         const el = ref.current
         const p = el.parentNode
