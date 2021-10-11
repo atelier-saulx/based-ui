@@ -16,7 +16,6 @@ const modifyImageElement = (el) => {
 
 const TableRow = (props) => {
   const context = props.data.context
-
   const { index, data } = props
   const itemData = data.items[index]
   const [hover, isHover] = useHover()
@@ -77,6 +76,8 @@ const TableRow = (props) => {
           : undefined
       )}
       style={{
+        paddingLeft: context.paddingLeft || 40,
+        paddingRight: context.paddingRight || 40,
         paddingTop: context.isLarge ? 10 : 5,
         cursor: context.onClick ? 'pointer' : 'default',
         height: context.isLarge ? 80 : 60,
@@ -121,9 +122,10 @@ const TableRow = (props) => {
             }}
           >
             <OptionsIcon
-              onClick={useCallback((e) => context.onOptions(e, wrappedData), [
-                wrappedData,
-              ])}
+              onClick={useCallback(
+                (e) => context.onOptions(e, wrappedData),
+                [wrappedData]
+              )}
               style={{ minWidth: 35 }}
             />
           </div>

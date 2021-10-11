@@ -137,6 +137,8 @@ const Fields = ({ onChange, width, context }) => {
         display: 'flex',
         paddingTop: 12,
         paddingBottom: 12,
+        paddingLeft: context.paddingLeft || 40,
+        paddingRight: context.paddingRight || 40,
         alignItems: 'center',
         borderBottom: '1px solid ' + useColor({ color: 'divider' }),
       }}
