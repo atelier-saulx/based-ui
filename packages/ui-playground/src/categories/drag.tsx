@@ -62,7 +62,6 @@ const Dragger = ({ data, index }) => {
       const type = file.type ? file.type : 'NOT SUPPORTED'
       // Unknown cross-browser support.
       const size = file.size ? file.size : 'NOT SUPPORTED'
-      console.log({ file, name, type, size })
 
       const x = await readFile(file)
 

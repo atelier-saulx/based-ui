@@ -6,9 +6,10 @@ import React, {
   useRef,
   useEffect,
   useCallback,
+  ReactElement,
 } from 'react'
 import { useColor, Color } from '@based/theme'
-import { getTextValue, TextValue } from '@based/text'
+import { isTextValue, TextValue } from '@based/text'
 import { iconFromString, IconName } from '@based/icons'
 import useHover from '../../hooks/events/useHover'
 import { Text } from '../Text'
@@ -27,7 +28,7 @@ export type ButtonProps = {
   actionKeys?: Key[] // adds a key event
   icon?: IconName
   iconColor?: Color
-  children?: TextValue
+  children?: TextValue | ReactElement
   onSelectFile?: (r: { files: string[]; fileList: FileList }) => void
   onClick: GenericEventHandler | AsyncEvent
   onHover?: GenericEventHandler
@@ -262,16 +263,18 @@ export const Button: FunctionComponent<ButtonProps> = ({
             color={iconColor || foregroundColor}
           />
         ) : null}
-        {children ? (
+        {isTextValue(children) ? (
           <Text
             noSelect
             singleLine
             weight={light ? 'regular' : 'medium'}
             color={foregroundColor}
           >
-            {getTextValue(children)}
+            {children}
           </Text>
-        ) : null}
+        ) : (
+          children
+        )}
       </div>
       {onSelectFile ? <UploadOverlay onSelectFile={onSelectFile} /> : null}
     </div>

@@ -2,28 +2,35 @@ import React, { CSSProperties, FunctionComponent } from 'react'
 import { useColor } from '@based/theme'
 import renderChildren from '../../util/renderChildren'
 import { Children } from '../../types'
+import '@compiled/react'
 
 type TopbarProps = {
   style?: CSSProperties
   children?: Children
+  className?: string
 }
 
-export const Topbar: FunctionComponent<TopbarProps> = ({ children, style }) => {
+export const Topbar: FunctionComponent<TopbarProps> = ({
+  children,
+  style,
+  className,
+}) => {
   return (
     <div
-      style={{
+      className={className}
+      style={style}
+      css={{
         paddingTop: 12.5,
         paddingBottom: 12.5,
         paddingLeft: 32,
         paddingRight: 32,
-        height: 60,
-        minHeight: 60,
-        maxHeight: 60,
+        height: 56,
+        minHeight: 56,
+        maxHeight: 56,
         alignItems: 'center',
         display: 'flex',
         justifyContent: 'space-between',
         borderBottom: '1px solid ' + useColor({ color: 'divider' }),
-        ...style,
       }}
     >
       {renderChildren(children, {})}

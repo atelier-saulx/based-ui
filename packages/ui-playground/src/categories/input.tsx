@@ -104,7 +104,6 @@ export default {
                 onClick={() => {
                   const value =
                     Date.now() + 1e3 * 60 * ~~(10000 * Math.random())
-                  console.log({ value })
                   updateExternal({
                     id: ~~(Math.random() * 1000),
                     value,

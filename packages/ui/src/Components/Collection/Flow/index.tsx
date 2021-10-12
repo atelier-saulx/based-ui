@@ -485,7 +485,6 @@ export const Flow = (props: FlowProps) => {
   }
 
   const expanded = expandedRef.current
-  console.log({ paddingTop, paddingBottom })
   return (
     <AutoSizer>
       {({ height, width }) => {
