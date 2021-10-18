@@ -33,9 +33,6 @@ export const TimeInput: FunctionComponent<TimeInputProps> = ({
   noHover,
   weight,
 }) => {
-  // const timeString = useRef(
-  //   milisecondsToTimeString(timeValueToMiliseconds(value), useSeconds) || ''
-  // )
   let timeString =
     milisecondsToTimeString(timeValueToMiliseconds(value), useSeconds) || ''
 
