@@ -256,14 +256,14 @@ export const increaseCurrentSectionValue = (
   el: HTMLInputElement,
   sections: Section[]
 ) =>
-  transformCurrentSectionValue(el, sections, (v) =>
-    !isNaN(Number(v)) ? String(Number(v) + 1) : v
+  transformCurrentSectionValue(el, sections, (value) =>
+    !isNaN(Number(value)) ? String(Number(value) + 1) : value
   )
 
 export const decreaseCurrentSectionValue = (
   el: HTMLInputElement,
   sections: Section[]
 ) =>
-  transformCurrentSectionValue(el, sections, (v) =>
-    !isNaN(Number(v)) ? String(Number(v) - 1) : v
+  transformCurrentSectionValue(el, sections, (value) =>
+    !isNaN(Number(value)) ? String(Number(value) - 1) : value
   )
