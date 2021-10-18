@@ -230,7 +230,7 @@ export const validAllSections = (el: HTMLInputElement, sections: Section[]) => {
     .every((_, index) => validSection(el, index, sections))
 }
 
-const transforCurrentSectionValue = (
+const transformCurrentSectionValue = (
   el: HTMLInputElement,
   sections: Section[],
   fn: (v: string) => string,
@@ -256,7 +256,7 @@ export const increaseCurrentSectionValue = (
   el: HTMLInputElement,
   sections: Section[]
 ) =>
-  transforCurrentSectionValue(el, sections, (v) =>
+  transformCurrentSectionValue(el, sections, (v) =>
     !isNaN(Number(v)) ? String(Number(v) + 1) : v
   )
 
@@ -264,6 +264,6 @@ export const decreaseCurrentSectionValue = (
   el: HTMLInputElement,
   sections: Section[]
 ) =>
-  transforCurrentSectionValue(el, sections, (v) =>
+  transformCurrentSectionValue(el, sections, (v) =>
     !isNaN(Number(v)) ? String(Number(v) - 1) : v
   )
