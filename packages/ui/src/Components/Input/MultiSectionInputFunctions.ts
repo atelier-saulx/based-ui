@@ -171,14 +171,14 @@ export const handleSectionChange = (
       fillDefaultsToTheRight(el, currentSectionIndex, sections)
     }
     if (validSection(el, currentSectionIndex, sections)) {
-      if (validAllSections(el, sections)) setValid(true)
       selectNextSection(el, currentSectionIndex, sections)
     } else {
-      setValid(false)
       el.setSelectionRange(currentPosition, currentPosition)
     }
+    setValid(validAllSections(el, sections))
     return
   }
+  setValid(validAllSections(el, sections))
   el.value = value
   return
 }
