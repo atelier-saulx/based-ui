@@ -87,7 +87,6 @@ const getSectionsBoundaries = (el: HTMLInputElement, sections: Section[]) => {
     }
     previousSeparatorIndex = separatorIndex
   }
-  console.log({ boundaries })
   return boundaries
 }
 
