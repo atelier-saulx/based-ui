@@ -59,34 +59,35 @@ const getSectionsBoundaries = (el: HTMLInputElement, sections: Section[]) => {
   const boundaries = []
   let previousSeparatorIndex = null
   for (let sectionIndex = 0; sectionIndex < sections.length; sectionIndex++) {
-    if (previousSeparatorIndex === -1) {
+    const start =
+      previousSeparatorIndex === null
+        ? 0
+        : previousSeparatorIndex +
+          (sections[sectionIndex - 1].separator?.length || 0)
+    const separatorIndex = value.indexOf(
+      sections[sectionIndex]?.separator,
+      start
+    )
+    const hasNextSeparator = separatorIndex > -1
+    const separator = hasNextSeparator
+      ? {
+          start: separatorIndex,
+          end: separatorIndex + sections[sectionIndex].separator.length,
+        }
+      : null
+    const end = hasNextSeparator ? separatorIndex : value.length
+    if (sectionIndex > 0 && previousSeparatorIndex === -1) {
       boundaries.push(null)
     } else {
-      const separatorIndex = value.indexOf(
-        sections[sectionIndex]?.separator,
-        !previousSeparatorIndex
-          ? 0
-          : previousSeparatorIndex + sections[sectionIndex - 1].separator.length
-      )
       boundaries.push({
-        start:
-          previousSeparatorIndex === null
-            ? 0
-            : previousSeparatorIndex +
-              sections[sectionIndex - 1].separator.length,
-        end: separatorIndex > -1 ? separatorIndex : value.length,
-        ...(separatorIndex > -1
-          ? {
-              separator: {
-                start: separatorIndex,
-                end: separatorIndex + sections[sectionIndex].separator.length,
-              },
-            }
-          : null),
+        start,
+        end,
+        separator,
       })
-      previousSeparatorIndex = separatorIndex
     }
+    previousSeparatorIndex = separatorIndex
   }
+  console.log({ boundaries })
   return boundaries
 }
 
