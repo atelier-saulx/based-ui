@@ -63,7 +63,7 @@ export const DateInput: FunctionComponent<DateInputProps> = ({
       default: ('00' + new Date().getDate()).substr(-2),
     },
     {
-      validation: /^(\d|1[0-2])$/,
+      validation: /^(0?\d|1[0-2])$/,
       maxSize: 2,
       preprocess: (v: string) => ('00' + v).substr(-2),
       separator: '/',
