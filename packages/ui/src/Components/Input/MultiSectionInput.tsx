@@ -209,9 +209,10 @@ export const MultiSectionInput: FunctionComponent<MultiSectionInputProps> = ({
             if (
               onChangeStrategy === 'onChangeAndValid' &&
               validAllSections(e.target, sections)
-            )
-              console.log('changing', e.target.value)
-            onChange(e.target.value)
+            ) {
+              setValid(true)
+              onChange(e.target.value)
+            }
           }}
           onKeyDown={(e: React.KeyboardEvent) => {
             const el = e.target as HTMLInputElement

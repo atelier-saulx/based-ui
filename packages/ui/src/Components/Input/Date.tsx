@@ -40,7 +40,6 @@ export const DateInput: FunctionComponent<DateInputProps> = ({
     const re = /^(\d{1,2})\/(\d{1,2})\/(\d{1,4})$/
     onChange(dateValueToTimestamp(v))
     if (re.test(v)) {
-      console.log('setting datepicker', v)
       setDatePickerDate(new Date(dateValueToTimestamp(v)))
     }
   }
