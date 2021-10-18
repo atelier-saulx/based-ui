@@ -30,9 +30,6 @@ export const DateInput: FunctionComponent<DateInputProps> = ({
   let [dateString, setDateString] = useState<string>(
     timestampToDateString(Number(value))
   )
-  // const setDateString = (v: string): void => {
-  //   dateString = v
-  // }
   const [datePickerDate, setDatePickerDate] = useState<Date>(
     value ? new Date(value) : new Date()
   )
