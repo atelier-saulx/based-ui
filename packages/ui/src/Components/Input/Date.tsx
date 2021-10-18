@@ -37,9 +37,12 @@ export const DateInput: FunctionComponent<DateInputProps> = ({
     value ? new Date(value) : new Date()
   )
   const update = (v: string): void => {
+    const re = /^(\d{1,2})\/(\d{1,2})\/(\d{1,4})$/
     onChange(dateValueToTimestamp(v))
-    console.log({ v })
-    setDatePickerDate(new Date(dateValueToTimestamp(dateString)))
+    if (re.test(v)) {
+      console.log('setting datepicker', v)
+      setDatePickerDate(new Date(dateValueToTimestamp(v)))
+    }
   }
 
   const initialValue = useRef<string | number>()
@@ -55,6 +58,28 @@ export const DateInput: FunctionComponent<DateInputProps> = ({
     }
   }, [value, identifier])
 
+  const sections = [
+    {
+      validation: /^(\d|[0-2]\d|3[0-1])$/,
+      maxSize: 2,
+      preprocess: (v: string) => ('00' + v).substr(-2),
+      separator: '/',
+      default: ('00' + new Date().getDate()).substr(-2),
+    },
+    {
+      validation: /^(\d|1[0-2])$/,
+      maxSize: 2,
+      preprocess: (v: string) => ('00' + v).substr(-2),
+      separator: '/',
+      default: ('00' + (new Date().getMonth() + 1)).substr(-2),
+    },
+    {
+      validation: /^([1-2]\d{3})$/,
+      maxSize: 4,
+      preprocess: (v: string) => v,
+      default: String(new Date().getFullYear()),
+    },
+  ]
   return (
     <MultiSectionInput
       onChange={update}
@@ -87,28 +112,7 @@ export const DateInput: FunctionComponent<DateInputProps> = ({
           }
         }
       )}
-      sections={[
-        {
-          validation: /^(\d|[0-2]\d|3[0-1])$/,
-          maxSize: 2,
-          preprocess: (v) => ('00' + v).substr(-2),
-          separator: '/',
-          default: '00',
-        },
-        {
-          validation: /^(\d|1[0-2])$/,
-          maxSize: 2,
-          preprocess: (v) => ('00' + v).substr(-2),
-          separator: '/',
-          default: '00',
-        },
-        {
-          validation: /^([1-2]\d{3})$/,
-          maxSize: 4,
-          preprocess: (v) => v,
-          default: '2001',
-        },
-      ]}
+      sections={sections}
     />
   )
 }
