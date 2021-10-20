@@ -9,7 +9,10 @@ import { DatePickerOverlay } from './DatePickerOverlay'
 import useOverlay from '../../hooks/overlay/useOverlay'
 import { MultiSectionInput, MultiSectionInputProps } from './MultiSectionInput'
 
-type DateInputProps = Omit<MultiSectionInputProps, 'icon'> & {
+type DateInputProps = Omit<
+  MultiSectionInputProps,
+  'icon' | 'value' | 'sections'
+> & {
   value: number
   onChange: OnValueChange<number | undefined>
 }
