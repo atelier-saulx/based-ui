@@ -8,7 +8,11 @@ import {
 import { MultiSectionInput, MultiSectionInputProps } from './MultiSectionInput'
 import { Section } from './MultiSectionInputFunctions'
 
-type TimeInputProps = Omit<MultiSectionInputProps, 'icon'> & {
+type TimeInputProps = Omit<
+  MultiSectionInputProps,
+  'icon' | 'value' | 'sections'
+> & {
+  value: Date | number | string | null
   onChange: OnValueChange<number | undefined>
   useSeconds?: boolean
 }
