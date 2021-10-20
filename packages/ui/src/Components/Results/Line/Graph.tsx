@@ -53,7 +53,7 @@ const Graph = ({
   const [paths] =
     data.length < 2
       ? []
-      : xWidth
+      : xWidth || pure
       ? genPath(svgWidth, svgHeight, data, minY, ySpread, spread, false)
       : [null, []]
 
@@ -64,7 +64,7 @@ const Graph = ({
         legend={false}
         width={svgWidth}
         height={svgHeight}
-        labelHeight={labelHeight}
+        // labelHeight={labelHeight}
         labels={labels}
         data={data}
         format={format}

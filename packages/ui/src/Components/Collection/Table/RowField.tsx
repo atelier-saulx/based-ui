@@ -45,6 +45,8 @@ const RowField = ({ field, data, isLarge, isHover }) => {
           src={selectedData}
           size={32}
           name={getData(data, field.textPath)}
+          color={field.color}
+          foregroundColor={field.foregroundColor}
         />
       </div>
     ) : (

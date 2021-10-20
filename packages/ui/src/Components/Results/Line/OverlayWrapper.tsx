@@ -246,7 +246,7 @@ const Overlay = ({
 export default ({
   width,
   height,
-  labelHeight,
+  labelHeight = 0,
   labels,
   children,
   data,
@@ -280,9 +280,6 @@ export default ({
         viewBox={`0 0 ${width} ${height}`}
         width={width}
         height={height}
-        style={{
-          borderBottom: '2px solid ' + useColor({ color: 'primary', tone: 5 }),
-        }}
       >
         {labels.map((v, i) => {
           const y = (i + 1) * labelHeight - 9

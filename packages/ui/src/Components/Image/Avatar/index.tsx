@@ -9,6 +9,7 @@ export type AvatarProps = {
   onClick?: DataEventHandler
   size?: number
   color?: Color | [Color, Color]
+  foregroundColor?: Color
 }
 
 const parseName = (name: string): string => {
@@ -39,6 +40,7 @@ const Avatar: FunctionComponent<AvatarProps> = ({
   onClick,
   size = 40,
   color = { color: 'primary', tone: 2 },
+  foregroundColor = { color: 'background' },
 }) => {
   const isArray = Array.isArray(color)
   const parsedName = parseName(name)
@@ -75,7 +77,7 @@ const Avatar: FunctionComponent<AvatarProps> = ({
               fontSize: (size < 32 ? 10 : size < 42 ? 13 : 16) + 'px',
             }}
             noSelect
-            color={{ color: 'background' }}
+            color={foregroundColor}
           >
             {parsedName}
           </Text>

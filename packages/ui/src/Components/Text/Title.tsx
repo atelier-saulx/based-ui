@@ -33,7 +33,7 @@ export const Title: FunctionComponent<TitleProps> = ({
       }}
       style={{
         fontSize:
-          size === 'large' ? '28px' : size === 'small' ? '17px' : '19px',
+          size === 'large' ? '24px' : size === 'small' ? '17px' : '19px',
         lineHeight: size === 'large' ? '32px' : '24px',
         fontWeight: size === 'small' ? 600 : 'bold',
         userSelect: noSelect ? 'none' : 'text',

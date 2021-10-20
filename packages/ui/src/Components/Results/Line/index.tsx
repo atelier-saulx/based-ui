@@ -66,7 +66,7 @@ const LineGraph: FunctionComponent<LineGraphProps> = ({
             height={height}
             width={width}
             valueFormat={valueFormat}
-            pure
+            pure={pure}
           />
         )
       }}
