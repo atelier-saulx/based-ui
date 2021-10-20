@@ -6,7 +6,16 @@ import XAxis from './XAxis'
 import OverlayWrapper from './OverlayWrapper'
 import Labels from './Labels'
 
-const Graph = ({ width, height, data, format, label, spread, valueFormat }) => {
+const Graph = ({
+  width,
+  height,
+  data,
+  format,
+  label,
+  spread,
+  valueFormat,
+  pure,
+}) => {
   const ref = useRef<any>()
   let maxY, minY
   let maxX, minX
@@ -30,13 +39,13 @@ const Graph = ({ width, height, data, format, label, spread, valueFormat }) => {
   }
 
   const svgWidth = width - xWidth
-
   const svgHeight = height - 50 - (label ? 36 : 0)
-
   const ySpread = maxY - minY
 
   useEffect(() => {
-    updateW(ref.current.getBoundingClientRect().width)
+    if (ref.current) {
+      updateW(ref.current.getBoundingClientRect().width)
+    }
   }, [ySpread])
 
   const { labels, labelHeight } = genLabels(svgHeight, ySpread, maxY)
@@ -48,6 +57,24 @@ const Graph = ({ width, height, data, format, label, spread, valueFormat }) => {
       ? genPath(svgWidth, svgHeight, data, minY, ySpread, spread, false)
       : [null, []]
 
+  if (pure) {
+    return (
+      <OverlayWrapper
+        isStacked={false}
+        legend={false}
+        width={svgWidth}
+        height={svgHeight}
+        labelHeight={labelHeight}
+        labels={labels}
+        data={data}
+        format={format}
+        valueFormat={valueFormat}
+      >
+        {paths}
+      </OverlayWrapper>
+    )
+  }
+
   return (
     <div
       style={{
@@ -56,12 +83,7 @@ const Graph = ({ width, height, data, format, label, spread, valueFormat }) => {
       }}
     >
       {label ? (
-        <Title
-          size="small"
-          style={{
-            marginBottom: 16,
-          }}
-        >
+        <Title size="small" style={{ marginBottom: 16 }}>
           {label}
         </Title>
       ) : null}

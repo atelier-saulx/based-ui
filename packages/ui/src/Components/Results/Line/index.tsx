@@ -24,6 +24,7 @@ export type LineGraphProps = {
   format?: 'date' | 'number' | 'date-time-human'
   valueFormat?: TextFormat
   spread?: boolean
+  pure?: boolean
   label?: TextValue
 }
 
@@ -36,6 +37,7 @@ const LineGraph: FunctionComponent<LineGraphProps> = ({
   format = 'number',
   valueFormat = 'number-short',
   legend,
+  pure,
 }) => {
   const isStacked = data && typeof data === 'object' && !Array.isArray(data)
 
@@ -64,6 +66,7 @@ const LineGraph: FunctionComponent<LineGraphProps> = ({
             height={height}
             width={width}
             valueFormat={valueFormat}
+            pure
           />
         )
       }}

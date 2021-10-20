@@ -52,11 +52,7 @@ export const SideMenuItem: FunctionComponent<SideMenuItemProps> = ({
   const tooltip = useTooltip(isSmall ? title : null)
 
   return (
-    <div
-      style={{
-        ...style,
-      }}
-    >
+    <div style={style}>
       <div
         {...useMultipleEvents(hover, tooltip)}
         onClick={useCallback(
@@ -74,8 +70,9 @@ export const SideMenuItem: FunctionComponent<SideMenuItemProps> = ({
           [onClick, to, !!items, data]
         )}
         style={{
-          paddingLeft: isSmall ? 9 : 14,
-          paddingRight: isSmall ? 9 : 14,
+          minHeight: 32,
+          paddingLeft: isSmall ? 6 : 14,
+          paddingRight: isSmall ? 6 : 14,
           paddingTop: 4,
           paddingBottom: 4,
           display: 'flex',

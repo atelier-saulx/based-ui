@@ -90,7 +90,9 @@ export const SideMenu: FunctionComponent<SideMenuProps> = ({
   }, [sizeCheck, elementRef, isSmall, items && items.length, size])
 
   const wrapItems = items.map((item, index) => {
-    if (item.hidden) return null
+    if (item.hidden) {
+      return null
+    }
     if (item.type === 'label') {
       return isSmall ? (
         <div key={index} style={{ height: 24 }} />
@@ -130,8 +132,8 @@ export const SideMenu: FunctionComponent<SideMenuProps> = ({
           color: inverseColor ? 'foreground' : 'background',
           tone: inverseColor ? 1 : 2,
         }),
-        width: isSmall ? 60 : width,
-        minWidth: isSmall ? 60 : width,
+        width: isSmall ? 48 : width,
+        minWidth: isSmall ? 48 : width,
         overflowX: 'hidden',
         display: 'flex',
         flexDirection: 'column',
