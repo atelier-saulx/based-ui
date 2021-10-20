@@ -12,6 +12,7 @@ type TextProps = {
   singleLine?: boolean
   overflow?: boolean
   weight?: 'regular' | 'medium' | 'semibold'
+  className?: string
 }
 
 export const Text: FunctionComponent<TextProps> = ({
@@ -21,6 +22,7 @@ export const Text: FunctionComponent<TextProps> = ({
   noSelect,
   singleLine,
   weight = 'regular',
+  className,
 }) => {
   useDate(children)
 
@@ -29,6 +31,7 @@ export const Text: FunctionComponent<TextProps> = ({
 
   return (
     <div
+      className={className}
       css={{
         strong: {
           fontWeight: 600,

@@ -164,7 +164,7 @@ const genPath = (
           <path
             d={p}
             fill="none"
-            stroke={useColor({ color: 'primary', tone: 4 })}
+            stroke={useColor({ color: 'primary' })}
             // @ts-ignore
             data="line"
             strokeWidth={2}
@@ -182,12 +182,12 @@ const genPath = (
               genPathCurve(maxs, stepSize / 2) +
               `\nL${mins[0][0]},${mins[0][1]}`
             }
-            fill={useColor({ color: 'primary', tone: 2, opacity: 0.2 })}
+            fill={useColor({ color: 'primary', opacity: 0.08 })}
           />
           <path
             d={p}
             fill="none"
-            stroke={useColor({ color: 'primary', tone: 4 })}
+            stroke={useColor({ color: 'primary' })}
             // @ts-ignore
             data="line"
             strokeWidth={2}
@@ -206,14 +206,14 @@ const genPath = (
                 points[points.length - 1][1]
               }L${points[points.length - 1][0]},${height},L0,${height}`
             }
-            fill={useColor({ color: 'primary', tone: 2, opacity: 0.2 })}
+            fill={useColor({ color: 'primary', opacity: 0.08 })}
           />
           <path
             d={p}
             fill="none"
             // @ts-ignore
             data="line"
-            stroke={useColor({ color: 'primary', tone: 4 })}
+            stroke={useColor({ color: 'primary' })}
             strokeWidth={2}
           />
         </>
@@ -279,7 +279,7 @@ const genPath = (
           <path
             d={p}
             fill="none"
-            stroke={useColor({ color: 'primary', tone: 4 })}
+            stroke={useColor({ color: 'primary' })}
             // @ts-ignore
             data="line"
             strokeWidth={2}
@@ -295,12 +295,12 @@ const genPath = (
         <>
           <path
             d={p + `L${width},${height},L0,${height}`}
-            fill={useColor({ color: 'primary', tone: 2, opacity: 0.2 })}
+            fill={useColor({ color: 'primary', opacity: 0.08 })}
           />
           <path
             d={p}
             fill="none"
-            stroke={useColor({ color: 'primary', tone: 4 })}
+            stroke={useColor({ color: 'primary' })}
             // @ts-ignore
             data="line"
             strokeWidth={2}

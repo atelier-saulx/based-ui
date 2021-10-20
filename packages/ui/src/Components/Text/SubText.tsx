@@ -4,20 +4,22 @@ import { getTextValue, TextValue, isHtml } from '@based/text'
 import useDate from './useDate'
 import '@compiled/react'
 
-type TitleProps = {
+type SubTextProps = {
   style?: CSSProperties
   color?: Color
   noSelect?: boolean
   singleLine?: boolean
   children?: TextValue
+  weight?: 'regular' | 'medium' | 'semibold'
 }
 
-export const SubText: FunctionComponent<TitleProps> = ({
+export const SubText: FunctionComponent<SubTextProps> = ({
   children,
   style,
   color = { color: 'foreground' },
   noSelect,
   singleLine,
+  weight = 'regular',
 }) => {
   useDate(children)
   const v = getTextValue(children)
@@ -30,9 +32,10 @@ export const SubText: FunctionComponent<TitleProps> = ({
         },
       }}
       style={{
+        fontWeight:
+          weight === 'semibold' ? 600 : weight === 'medium' ? 500 : 'normal',
         fontSize: '13px',
         lineHeight: '20px',
-        fontWeight: 'normal',
         userSelect: noSelect ? 'none' : 'text',
         color: useColor(color),
         letterSpacing: '-0.015em',

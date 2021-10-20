@@ -11,6 +11,7 @@ type TitleProps = {
   children?: TextValue
   singleLine?: boolean
   size?: 'regular' | 'small' | 'large'
+  className?: string
 }
 
 export const Title: FunctionComponent<TitleProps> = ({
@@ -20,20 +21,21 @@ export const Title: FunctionComponent<TitleProps> = ({
   noSelect,
   singleLine,
   size,
+  className,
 }) => {
   useDate(children)
   const v = getTextValue(children)
   const html = isHtml(v)
+
   return (
     <div
+      className={className}
       css={{
         strong: {
           fontWeight: 'bold',
         },
       }}
       style={{
-        fontSize:
-          size === 'large' ? '24px' : size === 'small' ? '17px' : '19px',
         lineHeight: size === 'large' ? '32px' : '24px',
         fontWeight: size === 'small' ? 600 : 'bold',
         userSelect: noSelect ? 'none' : 'text',
@@ -42,6 +44,8 @@ export const Title: FunctionComponent<TitleProps> = ({
         whiteSpace: singleLine ? 'nowrap' : null,
         overflow: singleLine ? 'hidden' : null,
         textOverflow: singleLine ? 'ellipsis' : null,
+        fontSize:
+          size === 'large' ? '24px' : size === 'small' ? '15px' : '19px',
         ...style,
       }}
       dangerouslySetInnerHTML={html ? { __html: v.html } : null}
