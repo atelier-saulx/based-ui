@@ -375,7 +375,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@based/icons@*, @based/icons@^0.2.4, @based/icons@workspace:packages/icons":
+"@based/icons@*, @based/icons@^0.3.0, @based/icons@workspace:packages/icons":
   version: 0.0.0-use.local
   resolution: "@based/icons@workspace:packages/icons"
   dependencies:
@@ -417,7 +417,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@based/theme@*, @based/theme@^0.1.10, @based/theme@workspace:packages/theme":
+"@based/theme@*, @based/theme@^0.2.0, @based/theme@workspace:packages/theme":
   version: 0.0.0-use.local
   resolution: "@based/theme@workspace:packages/theme"
   dependencies:
@@ -432,6 +432,16 @@ __metadata:
     typescript: ^4.3.5
   languageName: unknown
   linkType: soft
+
+"@based/theme@npm:^0.1.10":
+  version: 0.1.10
+  resolution: "@based/theme@npm:0.1.10"
+  dependencies:
+    "@saulx/hash": ^1.1.0
+    react: ^17.0.2
+  checksum: c3e60a5665ac54095277ca51cce23b2730e4e7f576dca48284f0b0ef196eacfa2204431cb867f3043295157abd3d209175b70fc6b8f4301a67690c3abcb70392
+  languageName: node
+  linkType: hard
 
 "@based/tsconfig@*, @based/tsconfig@workspace:packages/tsconfig":
   version: 0.0.0-use.local
@@ -473,9 +483,9 @@ __metadata:
   resolution: "@based/ui@workspace:packages/ui"
   dependencies:
     "@based/get-service": 0.1.2
-    "@based/icons": ^0.2.4
+    "@based/icons": ^0.3.0
     "@based/text": ^0.2.1
-    "@based/theme": ^0.1.10
+    "@based/theme": ^0.2.0
     "@based/tsconfig": "*"
     "@compiled/react": ^0.7.0
     "@saulx/eslint-config": ^1.1.0
