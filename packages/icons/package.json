@@ -1,13 +1,13 @@
 {
   "name": "@based/icons",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "repository": "https://github.com/atelier-saulx/based-ui",
   "description": "A front-end library of icons for Based",
   "main": "dist/index.js",
   "module": "src/index.tsx",
   "sideEffects": false,
   "dependencies": {
-    "@based/theme": "^0.1.10",
+    "@based/theme": "^0.2.0",
     "react": "^17.0.2"
   },
   "scripts": {
