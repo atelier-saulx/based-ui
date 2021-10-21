@@ -47,7 +47,7 @@ export const TimeInput: FunctionComponent<TimeInputProps> = ({
     onChange(timeValueToMiliseconds(v))
   }
 
-  const initialValue = useRef<string | number>()
+  const initialValue = useRef<Date | number | string | null>()
   const initialIdentifier = useRef<string | number | undefined>()
   useEffect(() => {
     if (
