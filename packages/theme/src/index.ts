@@ -167,27 +167,54 @@ export const useTheme = (active?: 'light' | 'dark'): string => {
   return themeVersion
 }
 
-export type Color = {
-  color: ColorKey
-  tone?: number
+interface ColorBase {
   opacity?: number
 }
 
-export const useColor = (color: Color | [Color, Color]): string => {
+export interface Color extends ColorBase {
+  color: ColorKey
+  tone?: number
+}
+
+export interface RgbColor extends ColorBase {
+  rgb: Rgb
+}
+
+export type GradientColor = [Color, Color]
+
+export const useColor = (color: Color | GradientColor | RgbColor): string => {
   if (Array.isArray(color)) {
-    const a = useColor(color[0])
-    const b = useColor(color[1])
-    const x = `linear-gradient(96.76deg, ${a} -85.47%, ${b} 104.14%)`
-    return x
+    return useGradientColor(color)
+  } else if (color.hasOwnProperty('rgb')) {
+    return useRgbColor(color as RgbColor)
   } else {
-    const { tone = 1, opacity = 1, color: c } = color || { color: 'foreground' }
-    const selector = theme.theme[theme.active][c]
-    const rgb = selector[tone - 1] || selector[selector.length - 1]
-    if (opacity !== 1) {
-      return `rgba(${rgb[0]},${rgb[1]},${rgb[2]}, ${opacity})`
-    } else {
-      return `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
-    }
+    return useColorActual(color as Color)
+  }
+}
+
+const useGradientColor = (color: GradientColor) => {
+  const a = useColor(color[0])
+  const b = useColor(color[1])
+  const x = `linear-gradient(96.76deg, ${a} -85.47%, ${b} 104.14%)`
+  return x
+}
+
+const useRgbColor = (color: RgbColor) => {
+  if (color.opacity && color.opacity !== 1) {
+    return `rgba(${color.rgb[0]},${color.rgb[1]},${color.rgb[2]}, ${color.opacity})`
+  } else {
+    return `rgb(${color.rgb[0]},${color.rgb[1]},${color.rgb[2]})`
+  }
+}
+
+const useColorActual = (color: Color) => {
+  const { tone = 1, opacity = 1, color: c } = color || { color: 'foreground' }
+  const selector = theme.theme[theme.active][c]
+  const rgb = selector[tone - 1] || selector[selector.length - 1]
+  if (opacity !== 1) {
+    return `rgba(${rgb[0]},${rgb[1]},${rgb[2]}, ${opacity})`
+  } else {
+    return `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
   }
 }
 
