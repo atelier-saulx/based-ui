@@ -8,6 +8,7 @@ import {
 } from '../../types'
 import { CSSProperties, PropsWithChildren } from 'react'
 import { Color } from '@based/theme'
+import { AvatarProps } from '../Image/Avatar'
 
 export type DataPath = (string | number)[]
 
@@ -17,6 +18,7 @@ export type ImgItemProps = {
   textPath?: DataPath
   color?: Color
   foregroundColor?: Color
+  avatarProps?: AvatarProps
 }
 
 export type IconItemProps = IconStyleProps & {
@@ -47,7 +49,11 @@ export type TableItemPropsField =
       sort?: 'asc' | 'desc' | undefined
       sortable?: 'asc' | 'desc'
     })
-  | (ImgItemProps & { type: 'img'; label?: TextValue; width?: number })
+  | (ImgItemProps & {
+      type: 'img'
+      label?: TextValue
+      width?: number
+    })
   | (IconItemProps & { type: 'icon'; label?: TextValue; width?: number })
 
 export type TableitemProps = {

@@ -38,6 +38,20 @@ export default {
           name: 'Joany Beer',
           src: 'https://whitleyaward-cdn.standfirst.com/content/uploads/2009/12/Angela-Maldonado-night-monkey.jpg',
         },
+        {
+          name: 'Nuno Frade',
+          icon: 'tally',
+        },
+        {
+          name: 'Nuno Frade',
+          icon: 'tally',
+          size: 50,
+        },
+        {
+          name: 'Nuno Frade',
+          icon: 'tally',
+          size: 200,
+        },
       ],
     },
   ],

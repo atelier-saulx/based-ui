@@ -1,15 +1,17 @@
 import React, { FunctionComponent } from 'react'
 import { DataEventHandler } from '../../../types'
-import { useColor, Color } from '@based/theme'
+import { useColor, Color, RgbColor } from '@based/theme'
 import { Text } from '../../Text'
+import { iconFromString, IconName } from '@based/icons'
 
 export type AvatarProps = {
   src?: string
   name?: string
   onClick?: DataEventHandler
   size?: number
-  color?: Color | [Color, Color]
+  color?: Color | [Color, Color] | RgbColor
   foregroundColor?: Color
+  icon?: IconName
 }
 
 const parseName = (name: string): string => {
@@ -41,9 +43,11 @@ const Avatar: FunctionComponent<AvatarProps> = ({
   size = 40,
   color = { color: 'primary', tone: 2 },
   foregroundColor = { color: 'background' },
+  icon,
 }) => {
   const isArray = Array.isArray(color)
   const parsedName = parseName(name)
+  const Icon = icon ? iconFromString(icon) : null
   return (
     <div
       onClick={onClick}
@@ -70,7 +74,7 @@ const Avatar: FunctionComponent<AvatarProps> = ({
             isArray && src ? useColor(color[0]) : useColor(color),
         }}
       >
-        {!src && parsedName ? (
+        {!src && !icon && parsedName ? (
           <Text
             weight="semibold"
             style={{
@@ -81,6 +85,11 @@ const Avatar: FunctionComponent<AvatarProps> = ({
           >
             {parsedName}
           </Text>
+        ) : !src && Icon ? (
+          <Icon
+            color={foregroundColor}
+            style={{ transform: `scale(${size * 0.03})` }}
+          />
         ) : null}
       </div>
     </div>
