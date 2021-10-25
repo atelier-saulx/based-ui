@@ -135,7 +135,7 @@ function useDrag<T>(
         holder.style.top = '0px'
         holder.style.left = '0px'
 
-        let cp
+        let cp: any
         if (s.length > 1) {
           render(<MultiDragInfo />, holder)
           cp = holder.firstChild
@@ -144,9 +144,9 @@ function useDrag<T>(
         } else {
           cp = t.cloneNode(true)
           cp.style.position = 'absolute'
-          cp.style.width = width
+          cp.style.width = width + 'px'
           cp.style.zIndex = 1000
-          cp.style.height = height
+          cp.style.height = height + 'px'
           cp.style.pointerEvents = 'none'
           if (props.style) {
             for (const style in props.style) {
