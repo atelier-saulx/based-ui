@@ -151,20 +151,15 @@ const EventIcon: Icon = ({
     }
   }
 
-  let events: any
+  let events: any = {}
 
-  if (onMouseEnter) {
-    if (!events) {
-      events = {}
-    }
-    events.onMouseEnter = onMouseEnter
-  }
-  if (onDown) {
-    if (!events) {
-      events = {}
-    }
-    events.onDown = onDown
-  }
+  if (onClick) events.onClick = onClick
+  if (onDown) events.onMouseDown = onDown
+  if (onDrag) events.onDrag = onDrag
+  if (onDragStart) events.onDragStart = onDragStart
+  if (onDragEnd) events.onDragEnd = onDragEnd
+  if (onMouseEnter) events.onMouseEnter = onMouseEnter
+  if (onHover) events.onHover = onHover
 
   return (
     <div
@@ -173,13 +168,7 @@ const EventIcon: Icon = ({
         cursor: (onDragStart || onDrag) && !onClick ? 'grab' : 'pointer',
         ...style,
       }}
-      onDrag={onDrag}
-      onDragStart={onDragStart}
-      onClick={onClick}
-      onDragEnd={onDragEnd}
-      onMouseDown={onDown}
-      onMouseEnter={onMouseEnter || onHover}
-      {...(events ? useMultipleEvents(events, h) : h)}
+      {...(Object.keys(events).length ? useMultipleEvents(events, h) : h)}
     >
       <Svg color={color} frameColor={frameColor} size={size} framed={framed} />
     </div>
