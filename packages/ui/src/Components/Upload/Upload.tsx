@@ -11,7 +11,7 @@ import useDrop from '../../hooks/drag/useDrop'
 import { ProgressContext } from './ProgressContext'
 import { uploadFile } from './uploadFile'
 import { Input } from '../Input/Text'
-import { TextValue, getTextValue } from '@based/text'
+import { TextValue, getTextValue } from '../../textParser'
 import { OnValueChange } from '../../types'
 
 type FileUploadProps = {

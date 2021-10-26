@@ -9,7 +9,7 @@ import React, {
   ReactElement,
 } from 'react'
 import { useColor, Color } from '../../theme'
-import { isTextValue, TextValue } from '@based/text'
+import { isTextValue, TextValue } from '../../textParser'
 import { iconFromString, IconName } from '../../icons'
 import useHover from '../../hooks/events/useHover'
 import { Text } from '../Text'

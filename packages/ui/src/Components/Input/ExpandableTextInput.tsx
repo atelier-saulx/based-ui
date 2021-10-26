@@ -11,7 +11,7 @@ import { IconName, Expand, iconFromString, Drag } from '../../icons'
 import { Validator } from './validators'
 import { DropdownOption } from '../Overlay/Dropdown'
 // import { useHub } from '@saulx/hub'
-import { TextValue } from '@based/text'
+import { TextValue } from '../../textParser'
 import {
   OnValueChange,
   DataEventHandler,

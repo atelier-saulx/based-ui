@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useRef, useState, useEffect } from 'react'
-import { TextValue, TextFormat } from '@based/text'
+import { TextValue, TextFormat } from '../../../textParser'
 import { Text } from '../../Text'
 import { SubText } from '../../Text/SubText'
 import { Title } from '../../Text/Title'

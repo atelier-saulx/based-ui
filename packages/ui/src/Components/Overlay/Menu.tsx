@@ -22,7 +22,7 @@ import useHover from '../../hooks/events/useHover'
 import Shared from './Shared'
 import { removeOverlay } from './index'
 import { GenericOverlayProps } from './GenericOverlay'
-import { TextValue } from '@based/text'
+import { TextValue } from '../../textParser'
 import renderChildren from '../../util/renderChildren'
 import { DataEventHandler } from '../../types'
 

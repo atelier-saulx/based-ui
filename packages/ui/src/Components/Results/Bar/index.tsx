@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react'
-import { TextFormat, TextValue } from '@based/text'
+import { TextFormat, TextValue } from '../../../textParser'
 import { Text } from '../../Text'
 import { useColor } from '../../../theme'
 import useHover from '../../../hooks/events/useHover'

@@ -1,5 +1,5 @@
 import React, { CSSProperties, FunctionComponent, useCallback } from 'react'
-import { TextValue } from '@based/text'
+import { TextValue } from '../../../textParser'
 import { Data, DataEventHandler } from '../../../types'
 import { SubText } from '../../Text/SubText'
 import { Text } from '../../Text'

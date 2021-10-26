@@ -1,4 +1,4 @@
-import { TextValue } from '@based/text'
+import { TextValue } from '../textParser'
 import {
   SyntheticEvent,
   ReactChild,

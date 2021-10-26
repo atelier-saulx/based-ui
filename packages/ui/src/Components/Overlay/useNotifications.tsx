@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react'
-import { TextValue } from '@based/text'
+import { TextValue } from '../../textParser'
 import { useColor } from '../../theme'
 import { SubText } from '../Text/SubText'
 import { Text } from '../Text'

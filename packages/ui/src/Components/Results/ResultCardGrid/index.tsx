@@ -1,5 +1,5 @@
 import React, { FunctionComponent, CSSProperties } from 'react'
-import { TextValue } from '@based/text'
+import { TextValue } from '../../../textParser'
 import { Color } from '../../../theme'
 
 import { ResultCard, Filler } from './Card'

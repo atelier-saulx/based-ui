@@ -21,6 +21,8 @@ import ResultDot from './Components/Results/ResultDot'
 
 import * as icons from './icons'
 
+export * from './textParser'
+
 export { icons }
 
 export { ResultCardGrid } from './Components/Results/ResultCardGrid'
