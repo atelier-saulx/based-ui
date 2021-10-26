@@ -491,7 +491,7 @@ export const Flow = (props: FlowProps) => {
         return (
           <VariableSizeList
             ref={listRef}
-            width={width}
+            width={props.width || width}
             style={{
               paddingTop,
               paddingBottom,
