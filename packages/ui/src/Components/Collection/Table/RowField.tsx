@@ -2,10 +2,10 @@ import React from 'react'
 import { useColor } from '@based/theme'
 import { Text } from '../../Text'
 import getData from '../getData'
-import { iconFromString } from '@based/icons'
+import { Icon, IconProps, IconName, iconFromString } from '@based/icons'
 import Avatar from '../../Image/Avatar'
 
-const RowField = ({ field, data, isLarge, isHover }) => {
+const RowField = ({ field, data, isLarge }) => {
   let selectedData = getData(data, field.path)
   if (field.format) {
     selectedData = {
@@ -13,9 +13,10 @@ const RowField = ({ field, data, isLarge, isHover }) => {
       format: field.format,
     }
   }
-  let Icon, iconProps
+  let avatarProps = data.avatarProps
+  let Icon: Icon, iconProps: IconProps
   if (field.type === 'icon') {
-    let iconName
+    let iconName: IconName
     if (selectedData && typeof selectedData === 'object') {
       iconName = selectedData.name
       iconProps = selectedData
@@ -47,6 +48,7 @@ const RowField = ({ field, data, isLarge, isHover }) => {
           name={getData(data, field.textPath)}
           color={field.color}
           foregroundColor={field.foregroundColor}
+          {...avatarProps}
         />
       </div>
     ) : (

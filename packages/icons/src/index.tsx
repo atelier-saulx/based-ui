@@ -20,9 +20,9 @@ import CollapseSvg from './Components/Collapse'
 import CustomSvg from './Components/Custom'
 import DashboardSvg from './Components/Dashboard'
 import DateSvg from './Components/Date'
-import DotSvg from './Components/Dot'
 import DeleteSvg from './Components/Delete'
 import DesktopSvg from './Components/Desktop'
+import DotSvg from './Components/Dot'
 import DownSvg from './Components/Down'
 import DownThickSvg from './Components/DownThick'
 import DragSvg from './Components/Drag'
@@ -72,15 +72,16 @@ import SleepSvg from './Components/Sleep'
 import SmartCopySvg from './Components/SmartCopy'
 import StarSvg from './Components/Star'
 import TabletSvg from './Components/Tablet'
+import TallySvg from './Components/Tally'
 import ThankYouSvg from './Components/ThankYou'
 import TimeSvg from './Components/Time'
 import ToggleOffScreenSvg from './Components/ToggleOff'
 import ToggleOnSvg from './Components/ToggleOn'
 import UnitedKingdomSvg from './Components/UnitedKingdom'
 import UnlockSvg from './Components/Unlock'
+import UpArrowSvg from './Components/UpArrow'
 import UpSvg from './Components/Up'
 import UpTriangleSvg from './Components/UpTriangle'
-import UpArrowSvg from './Components/UpArrow'
 
 import UploadSvg from './Components/Upload'
 import VideoFileSvg from './Components/VideoFile'
@@ -101,9 +102,7 @@ export type SvgProps = {
 
 type GenericEventHandler = EventHandler<SyntheticEvent>
 
-export type Icon = FunctionComponent<
-  IconProps & { Svg: FunctionComponent<SvgProps> }
->
+export type Icon = FunctionComponent<IconProps>
 
 export type IconStyleProps = {
   color?: Color
@@ -123,6 +122,7 @@ export type IconProps = IconStyleProps & {
   onDragEnd?: GenericEventHandler
   onDrag?: GenericEventHandler
   onDragStart?: GenericEventHandler
+  Svg?: FunctionComponent<SvgProps>
 }
 
 const EventIcon: Icon = ({
@@ -151,20 +151,15 @@ const EventIcon: Icon = ({
     }
   }
 
-  let events: any
+  let events: any = {}
 
-  if (onMouseEnter) {
-    if (!events) {
-      events = {}
-    }
-    events.onMouseEnter = onMouseEnter
-  }
-  if (onDown) {
-    if (!events) {
-      events = {}
-    }
-    events.onDown = onDown
-  }
+  if (onClick) events.onClick = onClick
+  if (onDown) events.onMouseDown = onDown
+  if (onDrag) events.onDrag = onDrag
+  if (onDragStart) events.onDragStart = onDragStart
+  if (onDragEnd) events.onDragEnd = onDragEnd
+  if (onMouseEnter) events.onMouseEnter = onMouseEnter
+  if (onHover) events.onHover = onHover
 
   return (
     <div
@@ -173,13 +168,7 @@ const EventIcon: Icon = ({
         cursor: (onDragStart || onDrag) && !onClick ? 'grab' : 'pointer',
         ...style,
       }}
-      onDrag={onDrag}
-      onDragStart={onDragStart}
-      onClick={onClick}
-      onDragEnd={onDragEnd}
-      onMouseDown={onDown}
-      onMouseEnter={onMouseEnter || onHover}
-      {...(events ? useMultipleEvents(events, h) : h)}
+      {...(Object.keys(events).length ? useMultipleEvents(events, h) : h)}
     >
       <Svg color={color} frameColor={frameColor} size={size} framed={framed} />
     </div>
@@ -291,6 +280,7 @@ const Sleep = wrapIcon(SleepSvg)
 const SmartCopy = wrapIcon(SmartCopySvg)
 const Star = wrapIcon(StarSvg)
 const Tablet = wrapIcon(TabletSvg)
+const Tally = wrapIcon(TallySvg)
 const ThankYou = wrapIcon(ThankYouSvg)
 const Time = wrapIcon(TimeSvg)
 const ToggleOff = wrapIcon(ToggleOffScreenSvg)
@@ -372,6 +362,7 @@ const icons = {
   SmartCopy,
   Star,
   Tablet,
+  Tally,
   ThankYou,
   Time,
   ToggleOff,
@@ -444,6 +435,7 @@ export type IconName =
   | 'reset'
   | 'results'
   | 'russia'
+  | 'tally'
   | 'scaleQuestion'
   | 'search'
   | 'settings'
@@ -462,8 +454,8 @@ export type IconName =
   | 'unlock'
   | 'up'
   | 'upArrow'
-  | 'upload'
   | 'upTriangle'
+  | 'upload'
   | 'video'
   | 'videoFile'
   | 'waitingScreen'
@@ -542,6 +534,7 @@ export {
   SmartCopy,
   Star,
   Tablet,
+  Tally,
   ThankYou,
   Time,
   ToggleOff,

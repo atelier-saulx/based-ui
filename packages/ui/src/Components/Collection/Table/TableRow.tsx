@@ -104,7 +104,6 @@ const TableRow = (props) => {
         {context.itemProps.fields.map((field, index) => {
           return (
             <RowField
-              isHover={isHover}
               data={data.items[props.index]}
               field={field}
               isLarge={context.large}
