@@ -6,10 +6,10 @@ import React, {
   useRef,
   useState,
 } from 'react'
-import { Color, useColor } from '@based/theme'
+import { Color, useColor } from '../../theme'
 import { OnValueChange } from '../../types'
 import useHover from '../../hooks/events/useHover'
-import { SvgProps } from '@based/icons'
+import { SvgProps } from '../../icons'
 import Clear from './Clear'
 import {
   Section,

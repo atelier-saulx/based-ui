@@ -1,8 +1,8 @@
 import React, { FunctionComponent, useCallback, useState } from 'react'
 import { Text } from '../Text'
 import { FooterProps } from './types'
-import { useColor } from '@based/theme'
-import { iconFromString } from '@based/icons'
+import { useColor } from '../../theme'
+import { iconFromString } from '../../icons'
 import useHover from '../../hooks/events/useHover'
 import { Loader } from '../Loader/Loader'
 

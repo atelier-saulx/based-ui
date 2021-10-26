@@ -1,8 +1,8 @@
 import React, { useState, FunctionComponent, useRef, useEffect } from 'react'
-import { TextValue } from '@based/text'
-import { useColor } from '@based/theme'
+import { TextValue } from '../../textParser'
+import { useColor } from '../../theme'
 import useHover from '../../hooks/events/useHover'
-import { EditName } from '@based/icons'
+import { EditName } from '../../icons'
 import useInputValue from '../../hooks/useInputValue'
 
 type ModalTitleProps = {

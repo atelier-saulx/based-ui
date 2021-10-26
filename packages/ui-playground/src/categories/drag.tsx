@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Text, useDrag, useSelect, useMultipleEvents, useDrop } from '@based/ui'
 import RenderComponents from '../RenderComponents'
-import { useColor } from '@based/theme'
+import { useColor } from '@based/ui'
 
 import jsonexport from 'jsonexport/dist'
 

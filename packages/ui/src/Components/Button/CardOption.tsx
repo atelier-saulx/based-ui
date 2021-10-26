@@ -5,9 +5,9 @@ import React, {
   CSSProperties,
 } from 'react'
 import { Text } from '../Text'
-import { Color, useColor } from '@based/theme'
+import { Color, useColor } from '../../theme'
 import useHover from '../../hooks/events/useHover'
-import { TextValue } from '@based/text'
+import { TextValue } from '../../textParser'
 import { Check } from './CheckBox'
 import '@compiled/react'
 

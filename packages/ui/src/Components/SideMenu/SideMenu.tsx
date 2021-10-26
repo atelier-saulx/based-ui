@@ -8,11 +8,11 @@ import React, {
   useState,
   useReducer,
 } from 'react'
-import { useColor, Color } from '@based/theme'
+import { useColor, Color } from '../../theme'
 import { Text } from '../Text'
 import { SideMenuItem } from './SideMenuItem'
-import { TextValue } from '@based/text'
-import { IconName } from '@based/icons'
+import { TextValue } from '../../textParser'
+import { IconName } from '../../icons'
 import useWindowSize from '../../hooks/events/useWindowSize'
 import { Data } from '../../types'
 import isComponent from '../../util/isComponent'

@@ -6,9 +6,9 @@ import React, {
   ReactChildren,
   ComponentType,
 } from 'react'
-import { ChevronLeft, ChevronRight } from '@based/icons'
+import { ChevronLeft, ChevronRight } from '../../icons'
 import useHover from '../../hooks/events/useHover'
-import { useColor } from '@based/theme'
+import { useColor } from '../../theme'
 
 type GenericEventHandler = EventHandler<SyntheticEvent>
 

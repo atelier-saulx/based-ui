@@ -1,8 +1,8 @@
 import React from 'react'
-import { useColor } from '@based/theme'
+import { useColor } from '../../../theme'
 import { Text } from '../../Text'
 import getData from '../getData'
-import { Icon, IconProps, IconName, iconFromString } from '@based/icons'
+import { Icon, IconProps, IconName, iconFromString } from '../../../icons'
 import Avatar from '../../Image/Avatar'
 
 const RowField = ({ field, data, isLarge }) => {

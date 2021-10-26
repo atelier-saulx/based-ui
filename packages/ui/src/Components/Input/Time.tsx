@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useRef, useEffect } from 'react'
 import { OnValueChange } from '../../types'
-import { Time } from '@based/icons'
+import { Time } from '../../icons'
 import {
   milisecondsToTimeString,
   timeValueToMiliseconds,

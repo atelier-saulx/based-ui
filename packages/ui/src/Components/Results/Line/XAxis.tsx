@@ -1,6 +1,6 @@
 import React from 'react'
 import { SubText } from '../../Text/SubText'
-import { useColor } from '@based/theme'
+import { useColor } from '../../../theme'
 
 const XAxis = ({ maxX, minX, format, width }) => {
   const d = maxX - minX

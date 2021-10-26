@@ -5,7 +5,7 @@ import React, {
   FunctionComponent,
   FocusEvent,
 } from 'react'
-import { useColor, Color } from '@based/theme'
+import { useColor, Color } from '../../theme'
 import Clear from './Clear'
 import {
   Search,
@@ -16,14 +16,14 @@ import {
   IconProps,
   iconFromString,
   IconName,
-} from '@based/icons'
+} from '../../icons'
 import { emailValidator, Validator } from './validators'
 import { SubText } from '../Text/SubText'
 import useDropdown from '../../hooks/overlay/useDropdown'
 import { DropdownOption } from '../Overlay/Dropdown'
 import useHover from '../../hooks/events/useHover'
 import { ProgressIndicator } from '../ProgressIndicator/ProgressIndicator'
-import { TextValue, getTextValue } from '@based/text'
+import { TextValue, getTextValue } from '../../textParser'
 import { OnValueChange } from '../../types'
 import useInputValue from '../../hooks/useInputValue'
 import './style.css'

@@ -2,7 +2,7 @@ import React, { FunctionComponent, createContext } from 'react'
 import AutoSizer from 'react-virtualized-auto-sizer'
 import Graph from './Graph'
 import StackedGraph from './StackedGraph'
-import { TextValue, TextFormat } from '@based/text'
+import { TextValue, TextFormat } from '../../../textParser'
 
 // console.log(datax)
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react'
-import { TextValue } from '@based/text'
-import { useColor } from '@based/theme'
+import { TextValue } from '../../textParser'
+import { useColor } from '../../theme'
 import { SubText } from '../Text/SubText'
 import { Text } from '../Text'
 import { Button } from '../Button'

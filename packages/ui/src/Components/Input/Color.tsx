@@ -4,12 +4,12 @@ import React, {
   CSSProperties,
   FunctionComponent,
 } from 'react'
-import { useColor, Color } from '@based/theme'
+import { useColor, Color } from '../../theme'
 import useHover from '../../hooks/events/useHover'
 import hexRgb from 'hex-rgb'
 import rgbHex from 'rgb-hex'
 import { OnValueChange } from '../../types'
-import { TextValue, getTextValue } from '@based/text'
+import { TextValue, getTextValue } from '../../textParser'
 import useInputValue from '../../hooks/useInputValue'
 import './style.css'
 

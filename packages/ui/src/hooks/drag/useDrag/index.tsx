@@ -1,4 +1,4 @@
-import { useColor } from '@based/theme'
+import { useColor } from '../../../theme'
 import React, {
   useCallback,
   useState,
@@ -10,7 +10,7 @@ import React, {
 } from 'react'
 import { getSelection } from '../../useSelect'
 import { Title } from '../../../Components/Text/Title'
-import { Add } from '@based/icons'
+import { Add } from '../../../icons'
 import { render } from 'react-dom'
 import isSafari from '../../../util/isSafari'
 import dragScroll from './dragScroll'

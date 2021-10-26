@@ -9,12 +9,10 @@ import {
   Button,
   RadioButton,
   ExpandableTextInput,
+  useColor,
 } from '@based/ui'
 import RenderComponents from '../RenderComponents'
 import { randomText } from './util'
-import { useColor } from '@based/theme'
-// import { DateInput } from '@based/ui/Components/Input/Date'
-// import { TimeInput } from '@based/ui/Components/Input/Time'
 
 export default {
   name: 'input',

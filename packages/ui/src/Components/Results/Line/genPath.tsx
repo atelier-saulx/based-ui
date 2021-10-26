@@ -1,5 +1,5 @@
 import React from 'react'
-import { useColor } from '@based/theme'
+import { useColor } from '../../../theme'
 import HoverPath from './HoverPath'
 
 const genPathCurve = (points, r) => {

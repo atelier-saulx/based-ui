@@ -13,7 +13,7 @@ import React, {
 } from 'react'
 
 import { DataEventHandler } from '../../types'
-import { TextValue } from '@based/text'
+import { TextValue } from '../../textParser'
 
 export type TooltipEvents = {
   onMouseEnter: DataEventHandler

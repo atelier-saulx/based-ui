@@ -9,20 +9,20 @@ import useOverlayPosition from '../../hooks/overlay/useOverlayPosition'
 import useOverlayProps, {
   OverlayContext,
 } from '../../hooks/overlay/useOverlayProps'
-import { useColor, Color } from '@based/theme'
+import { useColor, Color } from '../../theme'
 import {
   ChevronRight,
   ChevronLeft,
   iconFromString,
   IconName,
   IconProps,
-} from '@based/icons'
+} from '../../icons'
 import { Text } from '../Text'
 import useHover from '../../hooks/events/useHover'
 import Shared from './Shared'
 import { removeOverlay } from './index'
 import { GenericOverlayProps } from './GenericOverlay'
-import { TextValue } from '@based/text'
+import { TextValue } from '../../textParser'
 import renderChildren from '../../util/renderChildren'
 import { DataEventHandler } from '../../types'
 

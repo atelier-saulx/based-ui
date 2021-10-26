@@ -1,5 +1,5 @@
-import { IconStyleProps, IconName } from '@based/icons'
-import { TextFormat, TextValue } from '@based/text'
+import { IconStyleProps, IconName } from '../../icons'
+import { TextFormat, TextValue } from '../../textParser'
 import {
   DataEventHandler,
   MultiDataEventHandler,
@@ -7,7 +7,7 @@ import {
   Children,
 } from '../../types'
 import { CSSProperties, PropsWithChildren } from 'react'
-import { Color } from '@based/theme'
+import { Color } from '../../theme'
 import { AvatarProps } from '../Image/Avatar'
 
 export type DataPath = (string | number)[]

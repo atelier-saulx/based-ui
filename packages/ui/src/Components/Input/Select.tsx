@@ -5,12 +5,12 @@ import React, {
   ComponentType,
   FunctionComponent,
 } from 'react'
-import { useColor, Color } from '@based/theme'
-import { Down, IconName, iconFromString } from '@based/icons'
+import { useColor, Color } from '../../theme'
+import { Down, IconName, iconFromString } from '../../icons'
 import { Validator } from './validators'
 import './style.css'
 import { DropdownOption } from '../Overlay/Dropdown'
-import { getTextValue, TextValue } from '@based/text'
+import { getTextValue, TextValue } from '../../textParser'
 import useHover from '../../hooks/events/useHover'
 import { Text } from '../Text'
 import useDropdown, { OnSelect } from '../../hooks/overlay/useDropdown'

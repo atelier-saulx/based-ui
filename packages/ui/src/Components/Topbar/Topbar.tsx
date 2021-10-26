@@ -1,5 +1,5 @@
 import React, { CSSProperties, FunctionComponent } from 'react'
-import { useColor } from '@based/theme'
+import { useColor } from '../../theme'
 import renderChildren from '../../util/renderChildren'
 import { Children } from '../../types'
 import '@compiled/react'

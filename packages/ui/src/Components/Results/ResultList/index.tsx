@@ -1,5 +1,5 @@
 import React, { CSSProperties, FunctionComponent } from 'react'
-import { TextValue } from '@based/text'
+import { TextValue } from '../../../textParser'
 import { Text } from '../../Text'
 import { ExpandableList } from '../../Collection/ExpandableList'
 import { ResultListItemProps } from '../../Collection/types'

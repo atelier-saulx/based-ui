@@ -4,7 +4,7 @@ import React, {
   useCallback,
   useReducer,
 } from 'react'
-import { useColor, Color } from '@based/theme'
+import { useColor, Color } from '../../theme'
 import '@compiled/react'
 
 export type RadioProps = {

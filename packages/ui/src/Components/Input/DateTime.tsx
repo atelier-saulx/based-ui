@@ -6,7 +6,7 @@ import React, {
   useRef,
   useEffect,
 } from 'react'
-import { Color } from '@based/theme'
+import { Color } from '../../theme'
 import { OnValueChange, Timestamp } from '../../types'
 import { DateInput } from './Date'
 import { TimeInput } from './Time'

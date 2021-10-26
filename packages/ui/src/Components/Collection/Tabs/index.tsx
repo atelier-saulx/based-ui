@@ -1,5 +1,5 @@
 import React, { useCallback, useState, useEffect, useRef } from 'react'
-import { useColor } from '@based/theme'
+import { useColor } from '../../../theme'
 import { Text } from '../../Text'
 import { TabProps, TabSizes, TabsProps } from './types'
 import useLocation from 'wouter/use-location'

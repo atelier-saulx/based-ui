@@ -1,5 +1,5 @@
-import { TextValue } from '@based/text'
-import { Color } from '@based/theme'
+import { TextValue } from '../../../textParser'
+import { Color } from '../../../theme'
 import { CSSProperties } from 'react'
 import { DataEventHandler, OnValueChange } from '../../../types'
 

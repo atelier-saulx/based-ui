@@ -4,9 +4,9 @@ import React, {
   EventHandler,
   SyntheticEvent,
 } from 'react'
-import { Color } from '@based/theme'
+import { Color } from '../../theme'
 
-import { Close } from '@based/icons'
+import { Close } from '../../icons'
 
 type GenericEventHandler = EventHandler<SyntheticEvent>
 

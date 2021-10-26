@@ -375,19 +375,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@based/icons@*, @based/icons@^0.3.2, @based/icons@workspace:packages/icons":
-  version: 0.0.0-use.local
-  resolution: "@based/icons@workspace:packages/icons"
-  dependencies:
-    "@based/theme": ^0.2.0
-    "@based/tsconfig": "*"
-    "@types/node": ^16.3.1
-    react: ^17.0.2
-    ts-node: ^10.1.0
-    typescript: ^4.3.5
-  languageName: unknown
-  linkType: soft
-
 "@based/pretty-date@npm:1.0.3":
   version: 1.0.3
   resolution: "@based/pretty-date@npm:1.0.3"
@@ -417,22 +404,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@based/theme@*, @based/theme@^0.2.0, @based/theme@workspace:packages/theme":
-  version: 0.0.0-use.local
-  resolution: "@based/theme@workspace:packages/theme"
-  dependencies:
-    "@based/tsconfig": "*"
-    "@saulx/eslint-config": ^1.1.0
-    "@saulx/hash": ^1.1.0
-    "@saulx/prettier-config": ^1.0.0
-    "@types/node": ^16.3.1
-    "@types/react": ^17.0.14
-    react: ^17.0.2
-    ts-node: ^10.1.0
-    typescript: ^4.3.5
-  languageName: unknown
-  linkType: soft
-
 "@based/tsconfig@*, @based/tsconfig@workspace:packages/tsconfig":
   version: 0.0.0-use.local
   resolution: "@based/tsconfig@workspace:packages/tsconfig"
@@ -445,9 +416,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@based/ui-playground@workspace:packages/ui-playground"
   dependencies:
-    "@based/icons": "*"
     "@based/text": "*"
-    "@based/theme": "*"
     "@based/ui": "*"
     "@saulx/aristotle": ^4.0.4
     "@saulx/utils": 2.0.1
@@ -473,12 +442,11 @@ __metadata:
   resolution: "@based/ui@workspace:packages/ui"
   dependencies:
     "@based/get-service": 0.1.2
-    "@based/icons": ^0.3.2
     "@based/text": ^0.2.1
-    "@based/theme": ^0.2.0
     "@based/tsconfig": "*"
     "@compiled/react": ^0.7.0
     "@saulx/eslint-config": ^1.1.0
+    "@saulx/hash": ^1.1.0
     "@saulx/prettier-config": ^1.0.0
     "@saulx/utils": ^2.0.1
     "@types/css-font-loading-module": ^0.0.6
@@ -486,7 +454,7 @@ __metadata:
     "@types/node": ^16.9.4
     "@types/react": ^17.0.22
     csvtojson: ^2.0.10
-    escape-html: ^1.0.3
+    fs-extra: ^10.0.0
     hex-rgb: ^5.0.0
     jsonexport: ^3.2.0
     mapbox-gl: ^2.4.1
@@ -496,7 +464,6 @@ __metadata:
     react-window: ^1.8.6
     react-window-infinite-loader: ^1.0.7
     rgb-hex: ^4.0.0
-    svg-path-utils: ^0.0.3
     tarts: ^1.0.0
     ts-node: ^10.2.1
     typescript: ^4.4.3
@@ -1025,7 +992,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:^17.0.14, @types/react@npm:^17.0.22":
+"@types/react@npm:^17.0.22":
   version: 17.0.22
   resolution: "@types/react@npm:17.0.22"
   dependencies:
@@ -6984,13 +6951,6 @@ resolve@^2.0.0-next.3:
   dependencies:
     has-flag: ^4.0.0
   checksum: 3dda818de06ebbe5b9653e07842d9479f3555ebc77e9a0280caf5a14fb877ffee9ed57007c3b78f5a6324b8dbeec648d9e97a24e2ed9fdb81ddc69ea07100f4a
-  languageName: node
-  linkType: hard
-
-"svg-path-utils@npm:^0.0.3":
-  version: 0.0.3
-  resolution: "svg-path-utils@npm:0.0.3"
-  checksum: e68955c029a3ed85198c7808a69cc6c20c8abdcca6a5cd40a517b2b6f2d6b324eb1900b774b9a6526866265998d237f071210a443ca202ecc8a6c8c277861537
   languageName: node
   linkType: hard
 

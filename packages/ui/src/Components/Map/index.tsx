@@ -14,7 +14,7 @@ import {
   addCountries,
   fitToData,
 } from './mapActions'
-import { useColor } from '@based/theme'
+import { useColor } from '../../theme'
 
 mapboxgl.accessToken =
   'pk.eyJ1IjoibmZyYWRlIiwiYSI6ImNra3h0cDhtNjA0NWYyb21zcnBhN21ra28ifQ.m5mqJjuX7iK9Z8JvNNcnfg'

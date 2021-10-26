@@ -1,5 +1,5 @@
 import React, { useState, useRef, useContext } from 'react'
-import { useColor } from '@based/theme'
+import { useColor } from '../../../theme'
 import useHover from '../../../hooks/events/useHover'
 import useThrottledCallback from '../../../hooks/useThrottledCallback'
 import { InnerShared } from '../../Overlay/Shared'

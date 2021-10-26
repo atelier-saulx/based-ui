@@ -1,8 +1,8 @@
 import React, { FunctionComponent } from 'react'
 import { DataEventHandler } from '../../../types'
-import { useColor, Color, RgbColor } from '@based/theme'
+import { useColor, Color, RgbColor } from '../../../theme'
 import { Text } from '../../Text'
-import { iconFromString, IconName } from '@based/icons'
+import { iconFromString, IconName } from '../../../icons'
 
 export type AvatarProps = {
   src?: string

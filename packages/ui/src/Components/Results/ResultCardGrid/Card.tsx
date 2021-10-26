@@ -1,8 +1,8 @@
 import React, { FunctionComponent, CSSProperties } from 'react'
-import { TextValue } from '@based/text'
+import { TextValue } from '../../../textParser'
 import { Text } from '../../Text'
 import { Title } from '../../Text/Title'
-import { useColor, Color } from '@based/theme'
+import { useColor, Color } from '../../../theme'
 import { ResultCardGridItem } from './'
 
 export const Filler: FunctionComponent = () => {

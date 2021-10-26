@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect, useRef, useState } from 'react'
 import { OnValueChange } from '../../types'
-import { Date as DateIcon } from '@based/icons'
+import { Date as DateIcon } from '../../icons'
 import {
   dateValueToTimestamp,
   timestampToDateString,

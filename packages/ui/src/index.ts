@@ -19,7 +19,15 @@ import copyToClipboard from './util/copyToClipboard'
 export { SideMenuAlt } from './Components/SideMenu/SideMenuAlt'
 import ResultDot from './Components/Results/ResultDot'
 
+import * as icons from './icons'
+
+export * from './textParser'
+
+export { icons }
+
 export { ResultCardGrid } from './Components/Results/ResultCardGrid'
+
+export * from './theme'
 
 export {
   Overlay,
@@ -54,7 +62,6 @@ export {
   useInputValue,
 }
 export { EmbeddedMap } from './Components/Map'
-
 export { Label } from './Components/Text/Label'
 export { Code } from './Components/Text/Code'
 export { Text } from './Components/Text'

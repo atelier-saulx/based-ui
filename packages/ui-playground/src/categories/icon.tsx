@@ -1,6 +1,6 @@
 import React from 'react'
 import RenderComponents from '../RenderComponents'
-import { icons } from '@based/icons'
+import { icons } from '@based/ui'
 
 const iconsArray = []
 
@@ -21,7 +21,7 @@ const iconProps = [
   },
 ]
 
-for (const key in icons) {
+for (const key in icons.icons) {
   iconsArray.push({
     Component: icons[key],
     name: key,

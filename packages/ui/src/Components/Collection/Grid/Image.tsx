@@ -1,4 +1,4 @@
-import { useColor } from '@based/theme'
+import { useColor } from '../../../theme'
 import React from 'react'
 
 export const Image = ({ src }: { src?: string }) => {

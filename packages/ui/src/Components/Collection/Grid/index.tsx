@@ -6,7 +6,7 @@ import useDragScroll from '../../../hooks/drag/useDragScroll'
 import { GridProps } from './types'
 import { Header } from '../Header'
 import { Footer } from '../Footer'
-import { useColor } from '@based/theme'
+import { useColor } from '../../../theme'
 import GridItem from './GridItem'
 
 export const Grid = (props: GridProps) => {

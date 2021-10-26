@@ -8,7 +8,7 @@ import React, {
   ReactNode,
 } from 'react'
 
-import { useColor } from '@based/theme'
+import { useColor } from '../../theme'
 import { notify, useNotifications } from './useNotifications'
 
 export type OnClose = () => void

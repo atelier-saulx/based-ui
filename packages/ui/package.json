@@ -1,19 +1,17 @@
 {
   "name": "@based/ui",
-  "version": "1.5.4",
+  "version": "2.0.0",
   "repository": "https://github.com/atelier-saulx/based-ui",
   "description": "A library of front-end React components for Based",
   "dependencies": {
     "@based/get-service": "0.1.2",
-    "@based/icons": "^0.3.2",
     "@based/text": "^0.2.1",
-    "@based/theme": "^0.2.0",
     "@compiled/react": "^0.7.0",
+    "@saulx/hash": "^1.1.0",
     "@saulx/utils": "^2.0.1",
     "@types/css-font-loading-module": "^0.0.6",
     "@types/mapbox-gl": "^2.4.2",
     "csvtojson": "^2.0.10",
-    "escape-html": "^1.0.3",
     "hex-rgb": "^5.0.0",
     "jsonexport": "^3.2.0",
     "mapbox-gl": "^2.4.1",
@@ -23,7 +21,6 @@
     "react-window": "^1.8.6",
     "react-window-infinite-loader": "^1.0.7",
     "rgb-hex": "^4.0.0",
-    "svg-path-utils": "^0.0.3",
     "tarts": "^1.0.0",
     "wouter": "^2.7.5"
   },
@@ -42,6 +39,7 @@
     "@saulx/prettier-config": "^1.0.0",
     "@types/node": "^16.9.4",
     "@types/react": "^17.0.22",
+    "fs-extra": "^10.0.0",
     "ts-node": "^10.2.1",
     "typescript": "^4.4.3"
   },

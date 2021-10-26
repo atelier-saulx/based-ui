@@ -1,11 +1,11 @@
 import React, { CSSProperties } from 'react'
-import { useColor } from '@based/theme'
 import {
   SubText,
   useTooltip,
   Text,
   Code,
   useMultipleEvents,
+  useColor,
   useHover,
 } from '@based/ui'
 
@@ -88,6 +88,12 @@ const PropsInfo = ({ componentProps }) => {
 }
 
 const ComponentWrapper = ({ Component, grid, componentProps, children }) => {
+  if (Component === undefined) {
+    Component = () => 'CANNOT FIND'
+
+    console.log(Component, componentProps)
+  }
+
   const [hover, isHover] = useHover()
   return (
     <div

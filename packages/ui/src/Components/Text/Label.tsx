@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react'
-import { TextValue } from '@based/text'
+import { TextValue } from '../../textParser'
 import { Text } from './'
 
 export const Label: FunctionComponent<{ label: TextValue }> = ({

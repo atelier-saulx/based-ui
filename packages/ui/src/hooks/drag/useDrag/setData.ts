@@ -1,6 +1,6 @@
 import jsonexport from 'jsonexport/dist'
 import { ExportedData } from '../../../types'
-import { getStringValue } from '@based/text'
+import { getStringValue } from '../../../textParser'
 import Tar from 'tarts'
 
 const createFile = async (
