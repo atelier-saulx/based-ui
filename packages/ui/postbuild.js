@@ -26,5 +26,5 @@ const copyCssToDist = async (
 }
 
 copyCssToDist().then(() => {
-  copy(join(__dirname, '/dist/icons'), join(__dirname, '/icons'))
+  // copy(join(__dirname, '/dist/icons'), join(__dirname, '/icons'))
 })

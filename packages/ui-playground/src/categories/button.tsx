@@ -1,9 +1,17 @@
 import React from 'react'
-import { Button, Switch, SwitchTextButton, Card, CardOption } from '@based/ui'
+import {
+  Button,
+  Switch,
+  SwitchTextButton,
+  Card,
+  CardOption,
+  icons,
+} from '@based/ui'
 import RenderComponents from '../RenderComponents'
 import { randomIcon, randomTitle, randomText } from './util'
 import { wait } from '@saulx/utils'
-import { List, Grid } from '@based/ui/icons'
+// rly bad
+const { List, Grid } = icons
 
 const genButtonProps = () => {
   const props = []

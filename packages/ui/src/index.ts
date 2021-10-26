@@ -19,6 +19,10 @@ import copyToClipboard from './util/copyToClipboard'
 export { SideMenuAlt } from './Components/SideMenu/SideMenuAlt'
 import ResultDot from './Components/Results/ResultDot'
 
+import * as icons from './icons'
+
+export { icons }
+
 export { ResultCardGrid } from './Components/Results/ResultCardGrid'
 
 export * from './theme'

@@ -30,7 +30,7 @@
     "extends": "@saulx/eslint-config"
   },
   "scripts": {
-    "build": "yarn tsconfig && tsc -b",
+    "build": "yarn tsconfig && tsc -b && node postbuild.js",
     "watch": "yarn build -w"
   },
   "devDependencies": {
