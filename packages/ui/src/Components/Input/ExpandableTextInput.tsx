@@ -54,6 +54,7 @@ type ExpandTextProps = {
   }
   draggable?: boolean
   onDrop?: MultiDataEventHandler<Object> | DataEventHandler<Data<any>>
+  onKeyUp?: (e: React.KeyboardEvent<HTMLInputElement>) => void
 }
 
 const r = (x) => !x

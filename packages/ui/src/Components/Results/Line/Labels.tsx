@@ -2,7 +2,13 @@ import React from 'react'
 import { SubText } from '../../Text/SubText'
 
 export default ({ labels, labelHeight, valueFormat }) => {
+  // let prevValue
   return labels.map((v, i) => {
+    const value = v.label
+    // if (valueFormat === 'number-short' && ~~value === ~~prevValue) {
+    //   return <div style={{ height: labelHeight }} />
+    // }
+    // prevValue = value
     return (
       <div
         key={i}
@@ -19,9 +25,7 @@ export default ({ labels, labelHeight, valueFormat }) => {
             justifyContent: 'flex-end',
           }}
         >
-          <SubText singleLine>
-            {{ value: v.label, format: valueFormat }}
-          </SubText>
+          <SubText singleLine>{{ value, format: valueFormat }}</SubText>
         </div>
       </div>
     )

@@ -49,13 +49,12 @@ const Graph = ({
   }, [ySpread])
 
   const { labels, labelHeight } = genLabels(svgHeight, ySpread, maxY)
-
-  const [paths] =
-    data.length < 2
-      ? []
-      : xWidth || pure
-      ? genPath(svgWidth, svgHeight, data, minY, ySpread, spread, false)
-      : [null, []]
+  const notEnoughData = data.length < 2
+  const [paths] = notEnoughData
+    ? []
+    : xWidth || pure
+    ? genPath(svgWidth, svgHeight, data, minY, ySpread, spread, false)
+    : [null, []]
 
   if (pure) {
     return (
@@ -64,7 +63,6 @@ const Graph = ({
         legend={false}
         width={svgWidth}
         height={svgHeight}
-        // labelHeight={labelHeight}
         labels={labels}
         data={data}
         format={format}

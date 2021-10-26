@@ -33,6 +33,7 @@ export type FlowProps = {
   expandable?: boolean
   defaultIsExpanded?: boolean
   paddingBottom?: number
+  width?: number
   items: Object[]
   draggable?: boolean
   Actions?: ComponentType<OptionsComponentProps>
