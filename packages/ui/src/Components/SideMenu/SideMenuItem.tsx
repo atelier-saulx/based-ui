@@ -5,9 +5,9 @@ import React, {
   useEffect,
   useRef,
 } from 'react'
-import { useColor } from '@based/theme'
+import { useColor } from '../../theme'
 import { Text } from '../Text'
-import { ChevronRight as Expand, iconFromString } from '@based/icons'
+import { ChevronRight as Expand, iconFromString } from '../../icons'
 import useHover from '../../hooks/events/useHover'
 import { SideMenuItemProps } from './SideMenu'
 // import { useHub } from '@saulx/hub'

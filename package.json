@@ -18,10 +18,7 @@
     "saulx"
   ],
   "scripts": {
-    "start": "yarn workspace @based/ui-playground start",
-    "build": "yarn workspaces foreach run build",
-    "publish-all": "yarn workspaces run npm publish",
-    "force-publish-all": "yarn workspaces foreach npm publish --tolerate-republish"
+    "start": "yarn workspace @based/ui-playground start"
   },
   "prettier": "@saulx/prettier-config",
   "eslintConfig": {

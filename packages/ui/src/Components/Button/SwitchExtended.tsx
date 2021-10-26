@@ -1,5 +1,5 @@
 import React, { FunctionComponent, CSSProperties, useCallback } from 'react'
-import { useColor, Color } from '@based/theme'
+import { useColor, Color } from '../../theme'
 import { OnValueChange } from '../../types'
 import useInputValue from '../../hooks/useInputValue'
 import { TextValue } from '@based/text'

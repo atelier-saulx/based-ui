@@ -1,8 +1,8 @@
 import React, { useCallback } from 'react'
-import { useColor } from '@based/theme'
+import { useColor } from '../../../theme'
 import { Text } from '../../Text'
 import useHover from '../../../hooks/events/useHover'
-import { Down } from '@based/icons'
+import { Down } from '../../../icons'
 
 const SortableField = ({
   sort,

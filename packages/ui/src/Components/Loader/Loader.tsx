@@ -4,7 +4,7 @@ import React, {
   useEffect,
   useState,
 } from 'react'
-import { useColor, Color } from '@based/theme'
+import { useColor, Color } from '../../theme'
 import '@compiled/react'
 
 type LoaderProps = {

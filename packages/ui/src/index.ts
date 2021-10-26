@@ -21,6 +21,8 @@ import ResultDot from './Components/Results/ResultDot'
 
 export { ResultCardGrid } from './Components/Results/ResultCardGrid'
 
+export * from './theme'
+
 export {
   Overlay,
   notify,
@@ -54,7 +56,6 @@ export {
   useInputValue,
 }
 export { EmbeddedMap } from './Components/Map'
-
 export { Label } from './Components/Text/Label'
 export { Code } from './Components/Text/Code'
 export { Text } from './Components/Text'

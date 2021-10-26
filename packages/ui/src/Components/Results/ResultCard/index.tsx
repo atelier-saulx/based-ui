@@ -2,7 +2,7 @@ import React, { FunctionComponent, CSSProperties } from 'react'
 import { TextValue } from '@based/text'
 import { Text } from '../../Text'
 import { Title } from '../../Text/Title'
-import { useColor, Color } from '@based/theme'
+import { useColor, Color } from '../../../theme'
 
 export type ResultCardProps = {
   label: TextValue

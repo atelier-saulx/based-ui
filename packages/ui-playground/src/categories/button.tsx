@@ -3,7 +3,7 @@ import { Button, Switch, SwitchTextButton, Card, CardOption } from '@based/ui'
 import RenderComponents from '../RenderComponents'
 import { randomIcon, randomTitle, randomText } from './util'
 import { wait } from '@saulx/utils'
-import { List, Grid } from '@based/icons'
+import { List, Grid } from '@based/ui/icons'
 
 const genButtonProps = () => {
   const props = []

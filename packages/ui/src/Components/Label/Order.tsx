@@ -1,6 +1,6 @@
 import React, { CSSProperties, FunctionComponent } from 'react'
 import { Title } from '../Text/Title'
-import { useColor, Color } from '@based/theme'
+import { useColor, Color } from '../../theme'
 
 type OrderLabelProps = {
   style?: CSSProperties

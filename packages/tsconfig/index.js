@@ -6,6 +6,8 @@ const access = promisify(fs.access)
 const { join } = require('path')
 const cwd = process.cwd()
 
+// this can go
+
 const hasTS = async (base = cwd) => {
   try {
     await access(join(base, 'src/index.ts'))

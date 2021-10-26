@@ -1,8 +1,8 @@
 import React, { FunctionComponent } from 'react'
 import { Text } from '../Text'
 import { HeaderProps } from './types'
-import { useColor } from '@based/theme'
-import { iconFromString, Expand } from '@based/icons'
+import { useColor } from '../../theme'
+import { iconFromString, Expand } from '../../icons'
 import renderChildren from '../../util/renderChildren'
 import { ModalTitle } from '../Overlay/ModalTitle'
 

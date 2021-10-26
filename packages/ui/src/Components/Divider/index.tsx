@@ -1,5 +1,5 @@
 import React, { FunctionComponent, CSSProperties } from 'react'
-import { useColor, Color } from '@based/theme'
+import { useColor, Color } from '../../theme'
 
 const Divider: FunctionComponent<{
   color?: Color

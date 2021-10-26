@@ -1,5 +1,5 @@
 import React, { CSSProperties } from 'react'
-import { useColor } from '@based/theme'
+import { useColor } from '@based/ui'
 import {
   SubText,
   useTooltip,

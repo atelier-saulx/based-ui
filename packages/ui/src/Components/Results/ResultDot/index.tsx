@@ -1,8 +1,8 @@
 import React, { CSSProperties } from 'react'
 import { Text } from '../../Text'
 import { SubText } from '../../Text/SubText'
-import { useColor, Color } from '@based/theme'
-import { iconFromString } from '@based/icons'
+import { useColor, Color } from '../../../theme'
+import { iconFromString } from '../../../icons'
 import { Loader } from '../../Loader/Loader'
 
 const ResultDot = ({

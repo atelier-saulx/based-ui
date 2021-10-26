@@ -9,14 +9,14 @@ import useOverlayPosition from '../../hooks/overlay/useOverlayPosition'
 import useOverlayProps, {
   OverlayContext,
 } from '../../hooks/overlay/useOverlayProps'
-import { useColor, Color } from '@based/theme'
+import { useColor, Color } from '../../theme'
 import {
   ChevronRight,
   ChevronLeft,
   iconFromString,
   IconName,
   IconProps,
-} from '@based/icons'
+} from '../../icons'
 import { Text } from '../Text'
 import useHover from '../../hooks/events/useHover'
 import Shared from './Shared'

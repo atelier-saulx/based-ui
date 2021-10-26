@@ -1,5 +1,5 @@
 import { loremIpsum } from 'lorem-ipsum'
-import { icons } from '@based/icons'
+import { icons } from '@based/ui/icons'
 
 export const randomIcon = (): string => {
   const k = Object.keys(icons)

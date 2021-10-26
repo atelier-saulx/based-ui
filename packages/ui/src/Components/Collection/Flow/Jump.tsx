@@ -3,7 +3,7 @@ import { TextValue } from '@based/text'
 import { Data, DataEventHandler } from '../../../types'
 import { SubText } from '../../Text/SubText'
 import { Text } from '../../Text'
-import { useColor, Color } from '@based/theme'
+import { useColor, Color } from '../../../theme'
 import '@compiled/react'
 
 export type JumpProps<T> = {

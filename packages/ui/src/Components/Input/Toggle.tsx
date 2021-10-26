@@ -10,9 +10,9 @@ import { Radio } from '../Button/Radio'
 import { Text } from '../Text'
 import { TextValue } from '@based/text'
 import { OnValueChange } from '../../types'
-import { IconName, iconFromString } from '@based/icons'
+import { IconName, iconFromString } from '../../icons'
 import useInputValue from '../../hooks/useInputValue'
-import { useColor } from '@based/theme'
+import { useColor } from '../../theme'
 
 export type ToggleInputProps = {
   style?: CSSProperties

@@ -1,5 +1,5 @@
 import React, { FunctionComponent, CSSProperties } from 'react'
-import { ColorKey, useColor } from '@based/theme'
+import { ColorKey, useColor } from '../../theme'
 import '@compiled/react'
 
 const calcSvg = (val) => {

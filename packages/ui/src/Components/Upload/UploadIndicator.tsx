@@ -7,7 +7,7 @@ import {
 import { ProgressIndicator } from '../ProgressIndicator/ProgressIndicator'
 import { InnerShared } from '../Overlay/Shared'
 import { Title } from '../Text/Title'
-import { Close } from '@based/icons'
+import { Close } from '../../icons'
 
 const Inner = ({ visible, progress }) => {
   const items: ProgressContextItem[] = Object.values(progress.items)

@@ -1,5 +1,5 @@
 import React, { CSSProperties, forwardRef, PropsWithChildren } from 'react'
-import { useColor } from '@based/theme'
+import { useColor } from '../../theme'
 import { Position, Align } from '../../hooks/overlay/useOverlayPosition'
 
 export const InnerShared = forwardRef<

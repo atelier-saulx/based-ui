@@ -1,5 +1,5 @@
 import React, { CSSProperties, FunctionComponent } from 'react'
-import { useColor, Color } from '@based/theme'
+import { useColor, Color } from '../../theme'
 import { getTextValue, TextValue, isHtml } from '@based/text'
 import useDate from './useDate'
 import '@compiled/react'

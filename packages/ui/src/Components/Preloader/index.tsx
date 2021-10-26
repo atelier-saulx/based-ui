@@ -4,7 +4,7 @@ import React, {
   FunctionComponent,
   useReducer,
 } from 'react'
-import { useColor } from '@based/theme'
+import { useColor } from '../../theme'
 import { Loader } from '../Loader/Loader'
 
 export type PreloadProps = {

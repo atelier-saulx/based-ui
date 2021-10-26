@@ -5,7 +5,7 @@ import React, {
   FunctionComponent,
   FocusEvent,
 } from 'react'
-import { useColor, Color } from '@based/theme'
+import { useColor, Color } from '../../theme'
 import Clear from './Clear'
 import {
   Search,
@@ -16,7 +16,7 @@ import {
   IconProps,
   iconFromString,
   IconName,
-} from '@based/icons'
+} from '../../icons'
 import { emailValidator, Validator } from './validators'
 import { SubText } from '../Text/SubText'
 import useDropdown from '../../hooks/overlay/useDropdown'

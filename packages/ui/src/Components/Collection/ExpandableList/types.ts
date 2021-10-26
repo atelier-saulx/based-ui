@@ -1,4 +1,4 @@
-import { IconName } from '@based/icons'
+import { IconName } from '../../../icons'
 import { DataEventHandler, Data, Children } from '../../../types'
 import {
   HeaderProps,

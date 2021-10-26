@@ -1,6 +1,6 @@
 import React from 'react'
 import RenderComponents from '../RenderComponents'
-import { icons } from '@based/icons'
+import { icons } from '@based/ui/icons'
 
 const iconsArray = []
 

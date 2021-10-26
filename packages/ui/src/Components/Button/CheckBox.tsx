@@ -4,8 +4,8 @@ import React, {
   useCallback,
   useReducer,
 } from 'react'
-import { useColor, Color } from '@based/theme'
-import { Checked as CheckIcon } from '@based/icons'
+import { useColor, Color } from '../../theme'
+import { Checked as CheckIcon } from '../../icons'
 import '@compiled/react'
 
 export type CheckProps = {

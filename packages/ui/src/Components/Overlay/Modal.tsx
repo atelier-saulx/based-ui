@@ -1,6 +1,6 @@
 import React, { PropsWithChildren, FunctionComponent } from 'react'
-import { useColor } from '@based/theme'
-import { Close, IconName, iconFromString } from '@based/icons'
+import { useColor } from '../../theme'
+import { Close, IconName, iconFromString } from '../../icons'
 import { Button, ButtonProps } from '../Button'
 import useOverlayProps from '../../hooks/overlay/useOverlayProps'
 import { OnClose } from '.'

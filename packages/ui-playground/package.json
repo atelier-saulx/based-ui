@@ -5,9 +5,7 @@
     "@saulx/aristotle": "^4.0.4"
   },
   "dependencies": {
-    "@based/icons": "*",
     "@based/text": "*",
-    "@based/theme": "*",
     "@based/ui": "*",
     "@saulx/utils": "2.0.1",
     "csvtojson": "^2.0.10",

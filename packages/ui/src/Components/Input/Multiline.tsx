@@ -7,7 +7,7 @@ import React, {
   FocusEvent,
   CSSProperties,
 } from 'react'
-import { useColor, Color } from '@based/theme'
+import { useColor, Color } from '../../theme'
 import './style.css'
 import useHover from '../../hooks/events/useHover'
 import { Validator } from './validators'

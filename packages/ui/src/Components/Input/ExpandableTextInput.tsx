@@ -6,8 +6,8 @@ import React, {
   useReducer,
   // useEffect,
 } from 'react'
-import { Color, useColor } from '@based/theme'
-import { IconName, Expand, iconFromString, Drag } from '@based/icons'
+import { Color, useColor } from '../../theme'
+import { IconName, Expand, iconFromString, Drag } from '../../icons'
 import { Validator } from './validators'
 import { DropdownOption } from '../Overlay/Dropdown'
 // import { useHub } from '@saulx/hub'

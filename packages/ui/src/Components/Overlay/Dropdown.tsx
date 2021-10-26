@@ -10,8 +10,8 @@ import useOverlayPosition, {
   PositionPropsFn,
 } from '../../hooks/overlay/useOverlayPosition'
 import useOverlayProps from '../../hooks/overlay/useOverlayProps'
-import { useColor } from '@based/theme'
-import { Checked, iconFromString, IconName, IconProps } from '@based/icons'
+import { useColor } from '../../theme'
+import { Checked, iconFromString, IconName, IconProps } from '../../icons'
 import { Text } from '../Text'
 import useHover from '../../hooks/events/useHover'
 import Shared from './Shared'

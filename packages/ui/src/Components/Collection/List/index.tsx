@@ -6,7 +6,7 @@ import { SelectableCollection } from '../../../hooks/useSelect'
 import useDragScroll from '../../../hooks/drag/useDragScroll'
 import { ListItem } from './ListItem'
 import { ListProps } from './types'
-import { useColor } from '@based/theme'
+import { useColor } from '../../../theme'
 import { Footer } from '../Footer'
 
 const mem = {}

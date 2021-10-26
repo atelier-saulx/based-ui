@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { useColor } from '@based/theme'
+import { useColor } from '../../../theme'
 import { GraphContext } from '.'
 import useThrottledCallback from '../../../hooks/useThrottledCallback'
 

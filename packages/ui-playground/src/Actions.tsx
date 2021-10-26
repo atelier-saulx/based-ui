@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button, Select } from '@based/ui'
-import { updateTheme } from '@based/theme'
+import { updateTheme } from '@based/ui'
 import { getLanguage, updateLanguage } from '@based/text'
 import langs from '@based/text/languages.json'
 
