@@ -5,7 +5,7 @@ import { Button, ButtonProps } from '../Button'
 import useOverlayProps from '../../hooks/overlay/useOverlayProps'
 import { OnClose } from '.'
 import renderChildren from '../../util/renderChildren'
-import { TextValue } from '@based/text'
+import { TextValue } from '../../textParser'
 import { ModalTitle } from './ModalTitle'
 
 export type ModalHeaderProps = PropsWithChildren<{

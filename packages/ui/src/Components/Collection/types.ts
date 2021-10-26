@@ -1,5 +1,5 @@
 import { IconStyleProps, IconName } from '../../icons'
-import { TextFormat, TextValue } from '@based/text'
+import { TextFormat, TextValue } from '../../textParser'
 import {
   DataEventHandler,
   MultiDataEventHandler,

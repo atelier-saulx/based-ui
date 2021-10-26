@@ -3,7 +3,7 @@ import useHover from '../../hooks/events/useHover'
 import { useColor } from '../../theme'
 import { Text } from '../../Components/Text'
 // import { useHub } from '@saulx/hub'
-import { TextValue } from '@based/text'
+import { TextValue } from '../../textParser'
 import useLocation from 'wouter/use-location'
 
 const Button = ({ label, to, active, prefix }) => {

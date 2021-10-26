@@ -15,9 +15,5 @@
     "tmp",
     "examples"
   ],
-  "references": [
-    {
-      "path": "../../packages/text"
-    }
-  ]
+  "references": []
 }

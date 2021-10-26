@@ -1,5 +1,5 @@
 import { useEffect, useReducer } from 'react'
-import { isTextFormat, TextValue } from '@based/text'
+import { isTextFormat, TextValue } from '../../textParser'
 
 const timeUpdaters: Set<{
   fn: Function

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useColor, useTheme } from '@based/ui'
 import categories from './categories'
 import { Overlay, UploadIndicator, Input, Preloader } from '@based/ui'
-import { useLanguage } from '@based/text'
+import { useLanguage } from '@based/ui'
 import Actions from './Actions'
 
 const Category = ({ category }) => {
