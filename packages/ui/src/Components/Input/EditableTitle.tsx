@@ -117,17 +117,20 @@ export const EditableTitle: FunctionComponent<EditableTitle> = ({
           const el = event.target as HTMLElement
           el.classList.remove('showPlaceholder')
           const v = el.innerText
+          onEditTitle(v)
           if (v === '') {
             el.innerText = ''
             el.classList.add('showPlaceholder')
             return
           }
-          onEditTitle(v)
         }}
         onKeyDown={(event) => {
           if (event.key === 'Enter' || event.key === 'Escape') {
             event.preventDefault()
             ;(event.target as HTMLElement).blur()
+            const el = event.target as HTMLElement
+            const v = el.innerText
+            setInputText(v)
             setEditing(false)
           }
         }}

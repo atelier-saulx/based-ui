@@ -11,6 +11,7 @@ import useContextualMenu from '../../../hooks/events/useContextualMenu'
 import { Loader } from '../../Loader/Loader'
 import getData from '../getData'
 import renderChildren from '../../../util/renderChildren'
+import { EditableTitle } from '../../Input/EditableTitle'
 
 const Img = ({ src, size }) => {
   return (
@@ -138,6 +139,8 @@ const ListItem = ({
     data: itemData,
     exportData,
   }
+
+  const isNew = itemData.isNew
 
   let iconName, iconProps
   if (iconDef && typeof iconDef === 'object') {
@@ -310,9 +313,28 @@ const ListItem = ({
             marginLeft: 15,
           }}
         >
-          <Text noSelect weight="medium" singleLine>
-            {showIndex ? `${index + 1}. ${title}` : title}
-          </Text>
+          {typeof itemData.onTitleChange === 'function' ? (
+            <div style={{ display: 'flex' }}>
+              {showIndex ? (
+                <Text noSelect weight="medium" style={{ margin: '1px 0px' }}>
+                  {index + 1}.
+                </Text>
+              ) : null}
+              <EditableTitle
+                weight="medium"
+                onEditTitle={itemData.onTitleChange}
+                placeholder={itemData.editableTitlePlaceholder}
+                hoverTone={3}
+                horizontalPaddding={2}
+                value={title}
+                autoFocus={isNew}
+              />
+            </div>
+          ) : (
+            <Text noSelect weight="medium" singleLine>
+              {showIndex ? `${index + 1}. ${title}` : title}
+            </Text>
+          )}
           {info ? (
             <Text
               singleLine
