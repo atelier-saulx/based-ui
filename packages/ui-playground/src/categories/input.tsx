@@ -9,6 +9,7 @@ import {
   Button,
   RadioButton,
   ExpandableTextInput,
+  EditableTitle,
   useColor,
 } from '@based/ui'
 import RenderComponents from '../RenderComponents'
@@ -313,6 +314,29 @@ export default {
           placeholder: 'Put number',
           type: 'number',
           onChange: () => {},
+        },
+      ],
+    },
+    {
+      name: 'EditableTitle',
+      category: 'input',
+      Component: EditableTitle,
+      props: [
+        {
+          placeholder: 'Title. Put!',
+          onEditTitle: (v) => {
+            console.log('New value: ', v)
+          },
+        },
+        {
+          value: 'Existing value',
+          placeholder: 'Title. Put!',
+          onEditTitle: (v) => {
+            console.log('New value: ', v)
+          },
+        },
+        {
+          value: 'No value is just a normal Title',
         },
       ],
     },

@@ -6,7 +6,7 @@ import useOverlayProps from '../../hooks/overlay/useOverlayProps'
 import { OnClose } from '.'
 import renderChildren from '../../util/renderChildren'
 import { TextValue } from '../../textParser'
-import { ModalTitle } from './ModalTitle'
+import { EditableTitle } from '../Input/EditableTitle'
 
 export type ModalHeaderProps = PropsWithChildren<{
   closeButton?: boolean
@@ -67,7 +67,7 @@ export const ModalHeader: FunctionComponent<ModalHeaderProps> = ({
           />
         ) : null}
         {title ? (
-          <ModalTitle onEditTitle={onEditTitle} value={title} />
+          <EditableTitle onEditTitle={onEditTitle} value={title} />
         ) : (
           <div />
         )}

@@ -2,10 +2,10 @@ import React, { useState, FunctionComponent, useRef, useEffect } from 'react'
 import { TextValue } from '../../textParser'
 import { useColor } from '../../theme'
 import useHover from '../../hooks/events/useHover'
-import { EditName } from '../../icons'
+import { EditName as EditIcon } from '../../icons'
 import useInputValue from '../../hooks/useInputValue'
 
-type ModalTitleProps = {
+type EditableTitle = {
   value: TextValue
   placeholder?: TextValue
   identifier?: any
@@ -13,11 +13,11 @@ type ModalTitleProps = {
   autoFocus?: boolean
 }
 
-export const ModalTitle: FunctionComponent<ModalTitleProps> = (props: any) => {
+export const EditableTitle: FunctionComponent<EditableTitle> = (props: any) => {
   const { onEditTitle, value, autoFocus, identifier, placeholder = '' } = props
   const [hover, isHover] = !onEditTitle ? [{}, false] : useHover()
   const [isEditing, setEditing] = useState(false)
-  const [inputText] = useInputValue(value, identifier, isEditing)
+  const [inputText, setInputText] = useInputValue(value, identifier, isEditing)
   const ref = useRef(null)
 
   const editingFix = () => ref.current && ref.current.blur()
@@ -69,7 +69,10 @@ export const ModalTitle: FunctionComponent<ModalTitleProps> = (props: any) => {
           lineHeight: '24px',
           letterSpacing: '-0.015em',
           fontWeight: 600,
-          color: useColor({ color: 'foreground' }),
+          color:
+            inputText || isEditing
+              ? useColor({ color: 'foreground' })
+              : useColor({ color: 'foreground', tone: 3 }),
           boxShadow: isEditing
             ? `0px 3px 8px 1px ${useColor({
                 color: 'background',
@@ -86,14 +89,17 @@ export const ModalTitle: FunctionComponent<ModalTitleProps> = (props: any) => {
           }
           onEditTitle(v)
         }}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter' || e.key === 'Escape') {
-            e.preventDefault()
+        onKeyDown={(event) => {
+          if (event.key === 'Enter' || event.key === 'Escape') {
+            event.preventDefault()
             ;(event.target as HTMLElement).blur()
             setEditing(false)
           }
         }}
-        onBlur={() => {
+        onBlur={(event) => {
+          const el = event.target as HTMLElement
+          const v = el.innerText
+          setInputText(v)
           setEditing(false)
         }}
         onClick={(event) => {
@@ -107,7 +113,7 @@ export const ModalTitle: FunctionComponent<ModalTitleProps> = (props: any) => {
         {isEditing ? inputText : inputText || placeholder}
       </div>
       {onEditTitle && !isEditing && isHover ? (
-        <EditName color={{ color: 'foreground' }} />
+        <EditIcon color={{ color: 'foreground' }} />
       ) : null}
     </div>
   )
