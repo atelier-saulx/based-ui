@@ -4,7 +4,7 @@ import { HeaderProps } from './types'
 import { useColor } from '../../theme'
 import { iconFromString, Expand } from '../../icons'
 import renderChildren from '../../util/renderChildren'
-import { ModalTitle } from '../Overlay/ModalTitle'
+import { EditableTitle } from '../Input/EditableTitle'
 
 const Header: FunctionComponent<HeaderProps> = ({
   label,
@@ -92,7 +92,7 @@ const Header: FunctionComponent<HeaderProps> = ({
             </Text>
           ) : null}
           {onEditTitle ? (
-            <ModalTitle
+            <EditableTitle
               placeholder="Untitled"
               identifier={data && data.data.id}
               value={label}
