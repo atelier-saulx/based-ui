@@ -10,8 +10,10 @@ import {
   Flow,
   Jump,
   SwitchTextButton,
+  useModal,
+  Button,
 } from '@based/ui'
-import { randomIcon, randomLongText } from './util'
+import { randomIcon, randomLongText, randomTitle } from './util'
 import { Grid } from '@based/ui'
 import { Tabs } from '@based/ui'
 import { wait } from '@saulx/utils'
@@ -23,6 +25,33 @@ const randomDate = () => {
   return new Date(
     start.getTime() + Math.random() * (end.getTime() - start.getTime())
   ).getTime()
+}
+
+const modalsnurp = (update) => {
+  return useModal(
+    ({ data }) => {
+      console.info(data)
+      return (
+        <div>
+          <Button
+            onClick={() => {
+              data.text = randomTitle()
+              update()
+            }}
+          >
+            MAKE UPDATE
+          </Button>
+        </div>
+      )
+    },
+    {
+      header: ({ data }) => {
+        return {
+          title: data.text,
+        }
+      },
+    }
+  )
 }
 
 const listData = []
@@ -121,6 +150,7 @@ export default {
                 header={{
                   onEditTitle: () => {},
                   children: () => {
+                    // yes
                     return (
                       <SwitchTextButton
                         enabledText="Editable"
@@ -152,9 +182,7 @@ export default {
                     update()
                   },
                 }}
-                onClick={(data, index) => {
-                  console.info(data, index)
-                }}
+                onClick={modalsnurp(update)}
               >
                 {({ isHover, data, items }) => {
                   return (
