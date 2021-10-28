@@ -324,15 +324,15 @@ export default {
       props: [
         {
           placeholder: 'Title. Put!',
-          onEditTitle: (v) => {
-            console.log('New value: ', v)
+          onChange: (_: any, value: string) => {
+            console.log('New value: ', value)
           },
         },
         {
           value: 'Existing value',
           placeholder: 'Title. Put!',
-          onEditTitle: (v) => {
-            console.log('New value: ', v)
+          onChange: (_: any, value: string) => {
+            console.log('New value: ', value)
           },
         },
         {

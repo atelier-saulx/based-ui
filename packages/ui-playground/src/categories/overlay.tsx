@@ -173,7 +173,7 @@ export default {
                     icon: 'time',
                     framed: true,
                     title: editableTitle,
-                    onEditTitle: (value) => {
+                    onEditableTitleChange: (_: any, value: string) => {
                       console.log('Title changed:', value)
                       setEditableTitle(value)
                     },

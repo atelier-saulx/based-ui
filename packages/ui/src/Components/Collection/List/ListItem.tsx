@@ -313,7 +313,7 @@ const ListItem = ({
             marginLeft: 15,
           }}
         >
-          {typeof itemData.onTitleChange === 'function' ? (
+          {typeof itemData.onEditableTitleChange === 'function' ? (
             <div style={{ display: 'flex' }}>
               {showIndex ? (
                 <Text noSelect weight="medium" style={{ margin: '1px 0px' }}>
@@ -322,8 +322,12 @@ const ListItem = ({
               ) : null}
               <EditableTitle
                 weight="medium"
-                onEditTitle={itemData.onTitleChange}
+                onChange={itemData.onEditableTitleChange}
+                onBlur={itemData.onEditableTitleBlur}
                 placeholder={itemData.editableTitlePlaceholder}
+                placeholderAsDefault={
+                  itemData.editableTitlePlaceholderAsDefault
+                }
                 hoverTone={3}
                 horizontalPaddding={2}
                 value={title}

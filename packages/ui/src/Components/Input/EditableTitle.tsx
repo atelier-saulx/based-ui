@@ -16,7 +16,9 @@ type EditableTitle = {
   value?: TextValue
   placeholder?: TextValue
   identifier?: any
-  onEditTitle?: (value: string) => void
+  onChange?: (value: string) => void
+  onBlur?: (event: React.FormEvent<HTMLDivElement>) => void
+  placeholderAsDefault?: boolean
   autoFocus?: boolean
   weight?: 'regular' | 'medium' | 'semibold'
   hoverTone?: 1 | 2 | 3
@@ -24,8 +26,10 @@ type EditableTitle = {
 }
 
 export const EditableTitle: FunctionComponent<EditableTitle> = ({
-  onEditTitle,
   value,
+  onChange,
+  onBlur,
+  placeholderAsDefault,
   autoFocus,
   identifier,
   placeholder = '',
@@ -33,7 +37,7 @@ export const EditableTitle: FunctionComponent<EditableTitle> = ({
   hoverTone = 2,
   horizontalPaddding = 9,
 }) => {
-  const [hover, isHover] = !onEditTitle ? [{}, false] : useHover()
+  const [hover, isHover] = !onChange ? [{}, false] : useHover()
   const [isEditing, setEditing] = useState(false)
   const [inputText, setInputText] = useInputValue(value, identifier, isEditing)
   const ref = useRef(null)
@@ -61,7 +65,8 @@ export const EditableTitle: FunctionComponent<EditableTitle> = ({
     fontWeight:
       weight === 'semibold' ? 600 : weight === 'medium' ? 500 : 'normal',
   }
-  const placeholderColor = useColor({ color: 'foreground', tone: 3 })
+
+  const showPlaceholder = !inputText && placeholderAsDefault
 
   return (
     <div
@@ -73,23 +78,29 @@ export const EditableTitle: FunctionComponent<EditableTitle> = ({
     >
       <div
         ref={ref}
-        contentEditable={!!onEditTitle}
+        contentEditable={!!onChange}
         suppressContentEditableWarning
-        className={!inputText ? 'showPlaceholder' : undefined}
+        className={[
+          showPlaceholder ? 'showPlaceholder' : undefined,
+          placeholderAsDefault ? 'placeholderAsDefault' : undefined,
+        ]
+          .filter(Boolean)
+          .join(' ')}
         css={{
           '&.showPlaceholder::before': {
             content: '"' + getStringValue(placeholder) + '"',
-            color: String(placeholderColor),
+            color: String(useColor({ color: 'foreground', tone: 3 })),
             ...textProperties,
           },
+          '&.showPlaceholder.placeholderAsDefault::before': {
+            color: String(useColor({ color: 'foreground' })),
+          },
         }}
-        data-placeholdercolor={placeholderColor}
-        data-placeholder={placeholder}
         style={{
           minWidth: 20,
           minHeight: 24,
-          userSelect: !onEditTitle ? 'none' : null,
-          cursor: !onEditTitle ? 'default' : null,
+          userSelect: !onChange ? 'none' : null,
+          cursor: !onChange ? 'default' : null,
           background:
             !isEditing && isHover
               ? useColor({ color: 'background', tone: hoverTone })
@@ -117,7 +128,7 @@ export const EditableTitle: FunctionComponent<EditableTitle> = ({
           const el = event.target as HTMLElement
           el.classList.remove('showPlaceholder')
           const v = el.innerText
-          onEditTitle(v)
+          onChange(v)
           if (v === '') {
             el.innerText = ''
             el.classList.add('showPlaceholder')
@@ -132,6 +143,7 @@ export const EditableTitle: FunctionComponent<EditableTitle> = ({
             const v = el.innerText
             setInputText(v)
             setEditing(false)
+            if (typeof onBlur === 'function') onBlur(event)
           }
         }}
         onBlur={(event) => {
@@ -139,18 +151,24 @@ export const EditableTitle: FunctionComponent<EditableTitle> = ({
           const v = el.innerText
           setInputText(v)
           setEditing(false)
+          if (typeof onBlur === 'function') onBlur(event)
+          if (placeholderAsDefault) el.classList.add('placeholderAsDefault')
+        }}
+        onFocus={(event) => {
+          const el = event.target as HTMLElement
+          el.classList.remove('placeholderAsDefault')
         }}
         onClick={(event) => {
           event.stopPropagation()
-          if (onEditTitle && !isEditing) {
+          if (onChange && !isEditing) {
             setEditing(true)
             ;(event.target as HTMLElement).focus()
           }
         }}
       >
-        {getStringValue(inputText)}
+        {getStringValue(inputText) || ''}
       </div>
-      {onEditTitle && !isEditing && isHover ? (
+      {onChange && !isEditing && isHover ? (
         <EditIcon color={{ color: 'foreground' }} />
       ) : null}
     </div>
