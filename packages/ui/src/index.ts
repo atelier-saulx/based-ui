@@ -24,6 +24,7 @@ import * as icons from './icons'
 export * from './textParser'
 
 export { icons }
+export { IconName } from './icons'
 
 export { ResultCardGrid } from './Components/Results/ResultCardGrid'
 
