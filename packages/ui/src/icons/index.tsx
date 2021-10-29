@@ -53,6 +53,7 @@ import NetherlandsSvg from './Components/Netherlands'
 import NewFlowSvg from './Components/NewFlow'
 import NewTabSvg from './Components/NewTab'
 import NewUserSvg from './Components/NewUser'
+import NoInternetSvg from './Components/NoInternet'
 import NoticiationsSvg from './Components/Notifications'
 import OpenQuestionSvg from './Components/OpenQuestion'
 import OverviewSvg from './Components/Overview'
@@ -259,6 +260,7 @@ const Netherlands = wrapIcon(NetherlandsSvg)
 const NewFlow = wrapIcon(NewFlowSvg)
 const NewTab = wrapIcon(NewTabSvg)
 const NewUser = wrapIcon(NewUserSvg)
+const NoInternet = wrapIcon(NoInternetSvg)
 const Notifications = wrapIcon(NoticiationsSvg)
 const OpenQuestion = wrapIcon(OpenQuestionSvg)
 const Overview = wrapIcon(OverviewSvg)
@@ -341,6 +343,7 @@ const icons = {
   NewFlow,
   NewTab,
   NewUser,
+  NoInternet,
   Notifications,
   OpenQuestion,
   Overview,
@@ -424,6 +427,7 @@ export type IconName =
   | 'newFlow'
   | 'newTab'
   | 'newUser'
+  | 'noInternet'
   | 'notifications'
   | 'openQuestion'
   | 'overview'
@@ -432,7 +436,6 @@ export type IconName =
   | 'reset'
   | 'results'
   | 'russia'
-  | 'tally'
   | 'scaleQuestion'
   | 'search'
   | 'settings'
@@ -443,6 +446,7 @@ export type IconName =
   | 'smartCopy'
   | 'star'
   | 'tablet'
+  | 'tally'
   | 'thankYou'
   | 'time'
   | 'toggleOff'
@@ -514,6 +518,7 @@ export {
   NewFlow,
   NewTab,
   NewUser,
+  NoInternet,
   Notifications,
   OpenQuestion,
   Overview,
@@ -540,8 +545,8 @@ export {
   UnitedKingdom,
   Unlock,
   Up,
-  UpTriangle,
   UpArrow,
+  UpTriangle,
   Upload,
   Video,
   VideoFile,
