@@ -66,7 +66,7 @@ export const EditableTitle: FunctionComponent<EditableTitle> = ({
       weight === 'semibold' ? 600 : weight === 'medium' ? 500 : 'normal',
   }
 
-  const showPlaceholder = !inputText
+  const showPlaceholder = !inputText || (placeholderAsDefault && !inputText)
 
   return (
     <div
@@ -128,16 +128,16 @@ export const EditableTitle: FunctionComponent<EditableTitle> = ({
           const el = event.target as HTMLElement
           el.classList.remove('showPlaceholder')
           const v = el.innerText
-          onChange(v)
-          if (v === '') {
+          if (v === '' || v === '\n') {
             el.innerText = ''
             el.classList.add('showPlaceholder')
-            return
           }
+          onChange(v)
         }}
         onKeyDown={(event) => {
           if (event.key === 'Enter' || event.key === 'Escape') {
             event.preventDefault()
+            event.stopPropagation()
             ;(event.target as HTMLElement).blur()
             const el = event.target as HTMLElement
             const v = el.innerText
@@ -149,6 +149,10 @@ export const EditableTitle: FunctionComponent<EditableTitle> = ({
         onBlur={(event) => {
           const el = event.target as HTMLElement
           const v = el.innerText
+          if (v === '\n') {
+            el.innerText = ''
+            return
+          }
           setInputText(v)
           setEditing(false)
           if (typeof onBlur === 'function') onBlur(event)
