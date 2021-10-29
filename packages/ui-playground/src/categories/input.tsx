@@ -324,14 +324,21 @@ export default {
       props: [
         {
           placeholder: 'Title. Put!',
-          onChange: (_: any, value: string) => {
+          onChange: (value: string) => {
+            console.log('New value: ', value)
+          },
+        },
+        {
+          placeholder: 'placeholderAsDefault shows placehoder as title',
+          placeholderAsDefault: true,
+          onChange: (value: string) => {
             console.log('New value: ', value)
           },
         },
         {
           value: 'Existing value',
           placeholder: 'Title. Put!',
-          onChange: (_: any, value: string) => {
+          onChange: (value: string) => {
             console.log('New value: ', value)
           },
         },

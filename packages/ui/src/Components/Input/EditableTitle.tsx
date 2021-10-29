@@ -66,7 +66,7 @@ export const EditableTitle: FunctionComponent<EditableTitle> = ({
       weight === 'semibold' ? 600 : weight === 'medium' ? 500 : 'normal',
   }
 
-  const showPlaceholder = !inputText && placeholderAsDefault
+  const showPlaceholder = !inputText
 
   return (
     <div
