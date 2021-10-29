@@ -1,6 +1,6 @@
 {
   "name": "@based/ui",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "repository": "https://github.com/atelier-saulx/based-ui",
   "description": "A library of front-end React components for Based",
   "dependencies": {
