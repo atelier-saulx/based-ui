@@ -96,7 +96,7 @@ const Header: FunctionComponent<HeaderProps> = ({
               placeholder="Untitled"
               identifier={data && data.data.id}
               value={label}
-              onEditTitle={(value) => onEditTitle(value, data)}
+              onChange={(value) => onEditTitle(value, data)}
               autoFocus={autoFocusTitle}
             />
           ) : (

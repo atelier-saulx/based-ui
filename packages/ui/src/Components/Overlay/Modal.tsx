@@ -12,6 +12,8 @@ export type ModalHeaderProps = PropsWithChildren<{
   closeButton?: boolean
   title?: TextValue
   onEditTitle?: (value: string) => void
+  editableTitlePlaceholder?: string
+  editableTitlePlaceholderAsDefault?: boolean
   onClose?: OnClose
   icon?: IconName
   framed?: boolean
@@ -31,6 +33,8 @@ export const ModalHeader: FunctionComponent<ModalHeaderProps> = ({
   closeButton,
   title,
   onEditTitle,
+  editableTitlePlaceholder,
+  editableTitlePlaceholderAsDefault,
   noBorder,
   children,
   icon,
@@ -66,8 +70,13 @@ export const ModalHeader: FunctionComponent<ModalHeaderProps> = ({
             }}
           />
         ) : null}
-        {title ? (
-          <EditableTitle onEditTitle={onEditTitle} value={title} />
+        {title || editableTitlePlaceholderAsDefault ? (
+          <EditableTitle
+            onChange={onEditTitle}
+            placeholder={editableTitlePlaceholder}
+            placeholderAsDefault={editableTitlePlaceholderAsDefault}
+            value={title}
+          />
         ) : (
           <div />
         )}

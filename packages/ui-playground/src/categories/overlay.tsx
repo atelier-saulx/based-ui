@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import {
   Title,
   Button,
@@ -128,6 +128,51 @@ export default {
       category: 'overlay',
       props: [
         () => {
+          const d = useRef({ flap: 0 })
+          const [data, setData] = useState({ flap: 0 })
+
+          return (
+            <Button
+              onClick={useModal(
+                (props) => {
+                  console.info('props', props)
+
+                  return (
+                    <div>
+                      <Button
+                        onClick={() => {
+                          d.current.flap = Math.random()
+                          setData({
+                            flap: Math.random(),
+                          })
+                        }}
+                      >
+                        put update
+                      </Button>
+                    </div>
+                  )
+                },
+                {
+                  data: d.current,
+                  header: ({ data }) => {
+                    // flurpy
+                    return {
+                      icon: 'time',
+                      framed: true,
+                      title: data.flap,
+                      closeButton: true,
+                      children: <div>snurpy</div>,
+                    }
+                  },
+                }
+              )}
+            >
+              useModal + fn and update
+            </Button>
+          )
+        },
+
+        () => {
           return (
             <Button
               onClick={useModal(
@@ -173,7 +218,7 @@ export default {
                     icon: 'time',
                     framed: true,
                     title: editableTitle,
-                    onEditTitle: (value) => {
+                    onEditableTitleChange: (_: any, value: string) => {
                       console.log('Title changed:', value)
                       setEditableTitle(value)
                     },
