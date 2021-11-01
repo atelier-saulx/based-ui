@@ -108,7 +108,9 @@ const DragSeqLine = ({ index, width, onDropSequence, context }) => {
       useCallback(
         (e, { files, data }) => {
           if (data[0]) {
-            index = index + 1
+            if (data[0].index > index) {
+              index = index + 1
+            }
             return onDropSequence(e, {
               // todo clean
               targetIndex: index,
