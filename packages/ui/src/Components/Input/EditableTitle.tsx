@@ -74,6 +74,10 @@ export const EditableTitle: FunctionComponent<EditableTitle> = ({
       style={{
         display: 'flex',
         flexGrow: 1,
+        width: 'calc(100% - 30px)',
+        // overflow: 'hidden',
+        // textOverflow: 'ellipsis',
+        whiteSpace: 'nowrap',
       }}
     >
       <div
@@ -87,6 +91,8 @@ export const EditableTitle: FunctionComponent<EditableTitle> = ({
           .filter(Boolean)
           .join(' ')}
         css={{
+          minWidth: 20,
+          minHeight: 24,
           '&.showPlaceholder::before': {
             content: '"' + getStringValue(placeholder) + '"',
             color: String(useColor({ color: 'foreground', tone: 3 })),
@@ -95,10 +101,11 @@ export const EditableTitle: FunctionComponent<EditableTitle> = ({
           '&.showPlaceholder.placeholderAsDefault::before': {
             color: String(useColor({ color: 'foreground' })),
           },
+          '&.showPlaceholder::focus': {
+            textOverflow: 'unset',
+          },
         }}
         style={{
-          minWidth: 20,
-          minHeight: 24,
           userSelect: !onChange ? 'none' : null,
           cursor: !onChange ? 'default' : null,
           background:
@@ -123,6 +130,9 @@ export const EditableTitle: FunctionComponent<EditableTitle> = ({
                 tone: 2,
               })}`
             : null,
+          overflow: 'hidden',
+          textOverflow: !isEditing && !isHover ? 'ellipsis' : 'unset',
+          //textOverflow: 'ellipsis',
         }}
         onInput={(event) => {
           const el = event.target as HTMLElement
@@ -157,10 +167,19 @@ export const EditableTitle: FunctionComponent<EditableTitle> = ({
           setEditing(false)
           if (typeof onBlur === 'function') onBlur(event)
           if (placeholderAsDefault) el.classList.add('placeholderAsDefault')
+
+          //set the text overflow to ellipsis again
+          //so it doesn't break off all weird.
+          el.style.width = '100%'
+          el.style.textOverflow = 'ellipsis'
+          el.style.overflow = 'hidden'
         }}
         onFocus={(event) => {
           const el = event.target as HTMLElement
           el.classList.remove('placeholderAsDefault')
+          // unset the text overflow
+          el.style.textOverflow = 'unset'
+          el.style.overflow = 'visible'
         }}
         onClick={(event) => {
           event.stopPropagation()

@@ -83,12 +83,19 @@ const Header: FunctionComponent<HeaderProps> = ({
           style={{
             display: 'flex',
             alignItems: 'center',
+            width: '100%',
+            overflow: 'hidden',
+            whiteSpace: 'nowrap',
+            textOverflow: 'ellipsis',
           }}
         >
           {indicator ? (
             <Text
               weight="semibold"
-              style={{ marginRight: onEditTitle ? 0 : 10 }}
+              style={{
+                marginRight: onEditTitle ? 0 : 10,
+                width: '100%',
+              }}
             >
               {indicator}
             </Text>
@@ -115,6 +122,7 @@ const Header: FunctionComponent<HeaderProps> = ({
           display: 'flex',
           alignItems: 'center',
           paddingRight: 15,
+          paddingLeft: 8,
         }}
       >
         {renderChildren(children, { items, data, isHover })}
