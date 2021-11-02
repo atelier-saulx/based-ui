@@ -51,12 +51,14 @@ const Header: FunctionComponent<HeaderProps> = ({
     >
       <div
         style={{
-          padding: 15,
-          height: '100%',
-          flexGrow: 1,
-          display: 'flex',
-          cursor: onExpand ? 'pointer' : null,
           alignItems: 'center',
+          cursor: onExpand ? 'pointer' : null,
+          display: 'flex',
+          flexGrow: 1,
+          height: '100%',
+          overflow: 'hidden',
+          padding: 15,
+          whiteSpace: 'nowrap',
         }}
         onClick={onExpand || null}
       >
