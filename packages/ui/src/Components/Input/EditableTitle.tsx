@@ -41,6 +41,7 @@ export const EditableTitle: FunctionComponent<EditableTitle> = ({
   const [isEditing, setEditing] = useState(false)
   const [inputText, setInputText] = useInputValue(value, identifier, isEditing)
   const ref = useRef(null)
+  const [isFocused, setIsFocused] = useState(false)
 
   const editingFix = () => ref.current && ref.current.blur()
   useEffect(() => {
@@ -67,6 +68,7 @@ export const EditableTitle: FunctionComponent<EditableTitle> = ({
   }
 
   const showPlaceholder = !inputText || (placeholderAsDefault && !inputText)
+  const showEllipsis = !isEditing && !isHover
 
   return (
     <div
@@ -130,9 +132,8 @@ export const EditableTitle: FunctionComponent<EditableTitle> = ({
                 tone: 2,
               })}`
             : null,
-          overflow: 'hidden',
-          textOverflow: !isEditing && !isHover ? 'ellipsis' : 'unset',
-          //textOverflow: 'ellipsis',
+          overflow: isFocused ? 'visible' : 'hidden',
+          textOverflow: showEllipsis ? 'ellipsis' : 'unset',
         }}
         onInput={(event) => {
           const el = event.target as HTMLElement
@@ -167,19 +168,12 @@ export const EditableTitle: FunctionComponent<EditableTitle> = ({
           setEditing(false)
           if (typeof onBlur === 'function') onBlur(event)
           if (placeholderAsDefault) el.classList.add('placeholderAsDefault')
-
-          //set the text overflow to ellipsis again
-          //so it doesn't break off all weird.
-          el.style.width = '100%'
-          el.style.textOverflow = 'ellipsis'
-          el.style.overflow = 'hidden'
+          setIsFocused(false)
         }}
         onFocus={(event) => {
           const el = event.target as HTMLElement
           el.classList.remove('placeholderAsDefault')
-          // unset the text overflow
-          el.style.textOverflow = 'unset'
-          el.style.overflow = 'visible'
+          setIsFocused(true)
         }}
         onClick={(event) => {
           event.stopPropagation()
