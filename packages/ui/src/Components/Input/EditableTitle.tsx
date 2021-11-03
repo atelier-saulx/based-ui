@@ -77,9 +77,11 @@ export const EditableTitle: FunctionComponent<EditableTitle> = ({
         display: 'flex',
         flexGrow: 1,
         width: 'calc(100% - 30px)',
-        // overflow: 'hidden',
-        // textOverflow: 'ellipsis',
-        whiteSpace: 'nowrap',
+        borderRadius: '4px',
+        border: isEditing
+          ? '1px solid ' + useColor({ color: 'divider' })
+          : null,
+        overflow: 'hidden',
       }}
     >
       <div
@@ -114,10 +116,7 @@ export const EditableTitle: FunctionComponent<EditableTitle> = ({
             !isEditing && isHover
               ? useColor({ color: 'background', tone: hoverTone })
               : null,
-          borderRadius: '4px',
-          border: isEditing
-            ? '1px solid ' + useColor({ color: 'divider' })
-            : null,
+
           paddingLeft: !isEditing ? horizontalPaddding + 1 : horizontalPaddding,
           paddingRight: !isEditing
             ? horizontalPaddding + 1
@@ -134,6 +133,8 @@ export const EditableTitle: FunctionComponent<EditableTitle> = ({
             : null,
           overflow: isFocused ? 'visible' : 'hidden',
           textOverflow: showEllipsis ? 'ellipsis' : 'unset',
+
+          // backgroundColor: isEditing ? 'red' : 'yellow',
         }}
         onInput={(event) => {
           const el = event.target as HTMLElement
