@@ -94,10 +94,11 @@ const OverlayNested = ({
             height: 15,
           }}
         />
+
         <InnerShared
           style={{
             position: 'absolute',
-            left: 24,
+            left: isFlippedX ? -110 : 24,
             top: -30,
             minWidth: isStacked && extraInfo ? 175 : 100,
           }}
@@ -122,6 +123,8 @@ const OverlayNested = ({
     </div>
   )
 }
+
+let isFlippedX = false
 
 const getY = (
   x,
@@ -259,6 +262,9 @@ export default ({
   const [x, setCoord] = useState()
 
   const [hover, isHover] = useHover()
+
+  // const [isCloseToRightSide, setCloseToRight] = useState(false)
+
   const ref = useRef<any>()
   return (
     <div
@@ -270,6 +276,21 @@ export default ({
       // @ts-ignore
       onMouseMove={useThrottledCallback((e) => {
         const { x } = e.currentTarget.getBoundingClientRect()
+
+        let mousePosX = e.clientX
+        if (width - mousePosX < 175) {
+          console.log('checkit out')
+          isFlippedX = true
+          // setCloseToRight(true)
+        } else {
+          isFlippedX = false
+          // setCloseToRight(false)
+        }
+
+        console.log(width)
+        console.log(mousePosX)
+        console.log(isFlippedX)
+
         // @ts-ignore
         setCoord(e.pageX - x)
       }, [])}
