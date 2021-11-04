@@ -1,5 +1,5 @@
 export default ({ head, body }) => {
-  return `
+  return `<!DOCTYPE html>
     <html>
         <head>${head}</head>
         <body>
