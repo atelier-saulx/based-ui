@@ -263,8 +263,6 @@ export default ({
 
   const [hover, isHover] = useHover()
 
-  // const [isCloseToRightSide, setCloseToRight] = useState(false)
-
   const ref = useRef<any>()
   return (
     <div
@@ -281,10 +279,8 @@ export default ({
         if (width - mousePosX < 175) {
           console.log('checkit out')
           isFlippedX = true
-          // setCloseToRight(true)
         } else {
           isFlippedX = false
-          // setCloseToRight(false)
         }
 
         console.log(width)
