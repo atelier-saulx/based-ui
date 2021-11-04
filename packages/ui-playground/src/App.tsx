@@ -59,7 +59,9 @@ const App = () => {
           {categories
             .filter((c) => {
               if (categoryFilter) {
-                return c.name.includes(categoryFilter)
+                return c.name
+                  .toLowerCase()
+                  .includes(categoryFilter.toLowerCase())
               } else {
                 return true
               }
@@ -69,7 +71,7 @@ const App = () => {
                 const rc = {
                   ...c,
                   components: c.components.filter((v) => {
-                    return v.name.includes(filter)
+                    return v.name.toLowerCase().includes(filter.toLowerCase())
                   }),
                 }
                 if (rc.components.length === 0) {

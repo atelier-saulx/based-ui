@@ -223,7 +223,7 @@ const BarGraph: FunctionComponent<BarGraphProps> = ({
                   marginBottom: 8,
                   display: 'flex',
                   position: 'relative',
-                  justifyContent: 'flex-end',
+                  // justifyContent: 'flex-end',
                   marginTop: 8,
                   overflow: 'hidden',
                   borderRadius: 4,
@@ -248,7 +248,7 @@ const BarGraph: FunctionComponent<BarGraphProps> = ({
                     zIndex: 1,
                     marginTop: 4,
                     marginBottom: 4,
-                    marginRight: 8,
+                    marginLeft: 8,
                   }}
                 >
                   {[
