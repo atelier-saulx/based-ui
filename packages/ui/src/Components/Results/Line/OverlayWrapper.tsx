@@ -283,10 +283,6 @@ export default ({
           isFlippedX = false
         }
 
-        console.log(width)
-        console.log(mousePosX)
-        console.log(isFlippedX)
-
         // @ts-ignore
         setCoord(e.pageX - x)
       }, [])}
