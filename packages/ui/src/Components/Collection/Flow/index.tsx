@@ -291,9 +291,7 @@ const Sequence = ({ style, data: { items, context, width }, index }) => {
 
     const isLast = index === items.length - 2
 
-    const useAutoFocus =
-      itemData.name === 'New sequence' ||
-      (context.autoFocusRef.current === true && isLast)
+    const useAutoFocus = context.autoFocusRef.current === true && isLast
 
     return (
       <div
