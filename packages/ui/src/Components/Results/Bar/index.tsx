@@ -253,6 +253,7 @@ const BarGraph: FunctionComponent<BarGraphProps> = ({
                 >
                   {[
                     { format, value },
+
                     ` (${(((value || 0) / t) * 100).toFixed(1)}%)`,
                   ]}
                 </Text>
