@@ -94,7 +94,6 @@ const Header: FunctionComponent<HeaderProps> = ({
               weight="semibold"
               style={{
                 marginRight: onEditTitle ? 0 : 10,
-                width: '100%',
               }}
             >
               {indicator}
