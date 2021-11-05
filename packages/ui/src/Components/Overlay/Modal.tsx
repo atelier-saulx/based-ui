@@ -129,6 +129,9 @@ export const Modal: FunctionComponent<ModalProps> = (initialProps) => {
       <div
         style={{
           height: props.height || null,
+          maxHeight: 'calc(100% - 52px)',
+          display: 'flex',
+          flexDirection: 'column',
           pointerEvents: 'all',
           background: useColor({ color: 'background' }),
           borderRadius: '2px',
@@ -148,8 +151,9 @@ export const Modal: FunctionComponent<ModalProps> = (initialProps) => {
             paddingBottom: header ? 40 : 60,
             overflowY: 'auto',
             overflowX: 'hidden',
+            height: 'auto',
             position: 'relative',
-            maxHeight: 'calc(100% - 50px)',
+            maxHeight: '100%',
           }}
         >
           <div

@@ -241,27 +241,28 @@ export const Button: FunctionComponent<ButtonProps> = ({
         {...hover}
         onContextMenu={onContextMenu}
       >
-        {isLoading ? (
+        {isLoading || Icon ? (
           <div
-            css={{
-              width: light ? 20 : 24,
-              height: light ? 20 : 24,
+            style={{
+              minWidth: light ? 20 : 24,
+              minHeight: light ? 20 : 24,
+              maxWidth: light ? 20 : 24,
+              maxHeight: light ? 20 : 24,
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
-            }}
-            style={{
               marginRight: !children ? 0 : 4,
             }}
           >
-            <Loader color={foregroundColor} size={18} />
+            {isLoading ? (
+              <Loader color={foregroundColor} size={light ? 20 : 18} />
+            ) : (
+              <Icon
+                size={light ? 20 : 24}
+                color={iconColor || foregroundColor}
+              />
+            )}
           </div>
-        ) : Icon ? (
-          <Icon
-            size={light ? 20 : 24}
-            style={{ marginRight: !children ? 0 : 4 }}
-            color={iconColor || foregroundColor}
-          />
         ) : null}
         {isTextValue(children) ? (
           <Text
