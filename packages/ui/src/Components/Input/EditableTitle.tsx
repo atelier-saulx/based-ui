@@ -41,6 +41,7 @@ export const EditableTitle: FunctionComponent<EditableTitle> = ({
   const [isEditing, setEditing] = useState(false)
   const [inputText, setInputText] = useInputValue(value, identifier, isEditing)
   const ref = useRef(null)
+  const [isFocused, setIsFocused] = useState(false)
 
   const editingFix = () => ref.current && ref.current.blur()
   useEffect(() => {
@@ -67,6 +68,7 @@ export const EditableTitle: FunctionComponent<EditableTitle> = ({
   }
 
   const showPlaceholder = !inputText || (placeholderAsDefault && !inputText)
+  const showEllipsis = !isEditing && !isHover
 
   return (
     <div
@@ -74,6 +76,12 @@ export const EditableTitle: FunctionComponent<EditableTitle> = ({
       style={{
         display: 'flex',
         flexGrow: 1,
+        width: 'calc(100% - 30px)',
+        borderRadius: '4px',
+        border: isEditing
+          ? '1px solid ' + useColor({ color: 'divider' })
+          : null,
+        overflow: 'hidden',
       }}
     >
       <div
@@ -87,6 +95,8 @@ export const EditableTitle: FunctionComponent<EditableTitle> = ({
           .filter(Boolean)
           .join(' ')}
         css={{
+          minWidth: 20,
+          minHeight: 24,
           '&.showPlaceholder::before': {
             content: '"' + getStringValue(placeholder) + '"',
             color: String(useColor({ color: 'foreground', tone: 3 })),
@@ -95,20 +105,18 @@ export const EditableTitle: FunctionComponent<EditableTitle> = ({
           '&.showPlaceholder.placeholderAsDefault::before': {
             color: String(useColor({ color: 'foreground' })),
           },
+          '&.showPlaceholder::focus': {
+            textOverflow: 'unset',
+          },
         }}
         style={{
-          minWidth: 20,
-          minHeight: 24,
           userSelect: !onChange ? 'none' : null,
           cursor: !onChange ? 'default' : null,
           background:
             !isEditing && isHover
               ? useColor({ color: 'background', tone: hoverTone })
               : null,
-          borderRadius: '4px',
-          border: isEditing
-            ? '1px solid ' + useColor({ color: 'divider' })
-            : null,
+
           paddingLeft: !isEditing ? horizontalPaddding + 1 : horizontalPaddding,
           paddingRight: !isEditing
             ? horizontalPaddding + 1
@@ -123,6 +131,10 @@ export const EditableTitle: FunctionComponent<EditableTitle> = ({
                 tone: 2,
               })}`
             : null,
+          overflow: isFocused ? 'visible' : 'hidden',
+          textOverflow: showEllipsis ? 'ellipsis' : 'unset',
+
+          // backgroundColor: isEditing ? 'red' : 'yellow',
         }}
         onInput={(event) => {
           const el = event.target as HTMLElement
@@ -157,10 +169,12 @@ export const EditableTitle: FunctionComponent<EditableTitle> = ({
           setEditing(false)
           if (typeof onBlur === 'function') onBlur(event)
           if (placeholderAsDefault) el.classList.add('placeholderAsDefault')
+          setIsFocused(false)
         }}
         onFocus={(event) => {
           const el = event.target as HTMLElement
           el.classList.remove('placeholderAsDefault')
+          setIsFocused(true)
         }}
         onClick={(event) => {
           event.stopPropagation()

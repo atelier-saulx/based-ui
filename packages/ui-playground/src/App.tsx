@@ -17,7 +17,27 @@ const Category = ({ category }) => {
 const App = () => {
   const themeid = useTheme('light')
   const lang = useLanguage()
-  const [filter, setFilter] = useState(window.location.hash.slice(1))
+
+  let q = window.location.search
+  let qComponent
+  let qCategory
+
+  if (q) {
+    q = q.slice(1)
+    const params = q.split('&')
+    params.forEach((p) => {
+      const [field, value] = p.split('=')
+      if (field === 'component') {
+        qComponent = value
+      } else if (field === 'category') {
+        qCategory = value
+      }
+    })
+  }
+
+  const [categoryFilter, setCategoryFilter] = useState(qCategory)
+  const [filter, setFilter] = useState(qComponent)
+
   const [loaded, setLoaded] = useState(false)
 
   if (!loaded) {
@@ -35,31 +55,30 @@ const App = () => {
             marginBottom: '15px',
           }}
         >
-          <div
-            style={{
-              paddingBottom: 20,
-              marginBottom: 20,
-              borderBottom:
-                '1px solid ' + useColor({ color: 'foreground', opacity: 0.15 }),
-            }}
-          >
-            <Input
-              type="search"
-              placeholder="Filter categories"
-              border
-              value={window.location.hash.slice(1)}
-              onChange={(value) => {
-                window.location.hash = String(value)
-                setFilter(String(value))
-              }}
-            />
-            <Actions />
-          </div>
+          <Actions />
           {categories
             .filter((c) => {
-              return !filter || c.name.indexOf(filter) !== -1
+              if (categoryFilter) {
+                return c.name
+                  .toLowerCase()
+                  .includes(categoryFilter.toLowerCase())
+              } else {
+                return true
+              }
             })
             .map((c) => {
+              if (filter) {
+                const rc = {
+                  ...c,
+                  components: c.components.filter((v) => {
+                    return v.name.toLowerCase().includes(filter.toLowerCase())
+                  }),
+                }
+                if (rc.components.length === 0) {
+                  return null
+                }
+                return <Category key={rc.name} category={rc} />
+              }
               return <Category key={c.name} category={c} />
             })}
         </div>

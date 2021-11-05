@@ -137,13 +137,19 @@ const RenderComponents = ({ category, grid, bg = 'transparent' }) => {
         width: '100%',
       }}
     >
-      <SubText
-        style={{
-          marginBottom: '5px',
+      <div
+        onClick={() => {
+          window.location.search = '?category=' + category.name
         }}
       >
-        {category.name}
-      </SubText>
+        <SubText
+          style={{
+            marginBottom: '5px',
+          }}
+        >
+          {category.name}
+        </SubText>
+      </div>
       <div style={s}>
         {category.components.map((v, i) => {
           const x = {
@@ -165,13 +171,19 @@ const RenderComponents = ({ category, grid, bg = 'transparent' }) => {
                 marginRight: grid ? '15px' : '0px',
               }}
             >
-              <SubText
-                style={{
-                  marginBottom: '5px',
+              <div
+                onClick={() => {
+                  window.location.search = '?component=' + v.name
                 }}
               >
-                {v.name}
-              </SubText>
+                <SubText
+                  style={{
+                    marginBottom: '5px',
+                  }}
+                >
+                  {v.name}
+                </SubText>
+              </div>
               <div key={v.name} style={x}>
                 {v.props.map((p, i) => {
                   if (typeof p === 'function') {
