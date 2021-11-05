@@ -101,6 +101,8 @@ const OverlayNested = ({
             left: isFlippedX ? -110 : 24,
             top: -30,
             minWidth: isStacked && extraInfo ? 175 : 100,
+            transform:
+              isFlippedX && extraInfo ? 'translateX(-44%)' : 'translateX(0%)',
           }}
           width="auto"
         >
@@ -277,7 +279,6 @@ export default ({
 
         let mousePosX = e.clientX
         if (width - mousePosX < 175) {
-          console.log('checkit out')
           isFlippedX = true
         } else {
           isFlippedX = false
