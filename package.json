@@ -18,6 +18,7 @@
     "saulx"
   ],
   "scripts": {
+    "build": "yarn workspace @based/ui build",
     "start": "yarn workspace @based/ui-playground start"
   },
   "prettier": "@saulx/prettier-config",
