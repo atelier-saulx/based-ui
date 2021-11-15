@@ -14,7 +14,7 @@ import { getTextValue, TextValue } from '../../textParser'
 import useHover from '../../hooks/events/useHover'
 import { Text } from '../Text'
 import useDropdown, { OnSelect } from '../../hooks/overlay/useDropdown'
-import useInputValue from '../../hooks/useInputValue'
+import useScopedState from '../../hooks/useInputValue'
 import renderChildren from '../../util/renderChildren'
 
 type SelectInputProps = {
@@ -63,7 +63,7 @@ export const Select: FunctionComponent<SelectInputProps> = ({
 
   const [isFocus, setFocus] = useState(false)
 
-  const [stateValue, setValue] = useInputValue<
+  const [stateValue, setValue] = useScopedState<
     DropdownOption | DropdownOption[]
   >(value, identifier, isFocus)
 

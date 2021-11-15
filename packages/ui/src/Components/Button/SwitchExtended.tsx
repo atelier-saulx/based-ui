@@ -1,7 +1,7 @@
 import React, { FunctionComponent, CSSProperties, useCallback } from 'react'
 import { useColor, Color } from '../../theme'
 import { OnValueChange } from '../../types'
-import useInputValue from '../../hooks/useInputValue'
+import useScopedState from '../../hooks/useInputValue'
 import { TextValue } from '../../textParser'
 import { Text } from '../Text'
 import { SubText } from '../Text/SubText'
@@ -29,7 +29,7 @@ export const SwitchExtended: FunctionComponent<SwitchExtendedProps> = ({
   color,
   style,
 }) => {
-  const [enabled, setValue] = useInputValue(value, identifier, false)
+  const [enabled, setValue] = useScopedState(value, identifier, false)
 
   return (
     <div

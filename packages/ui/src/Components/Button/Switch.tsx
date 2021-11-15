@@ -1,7 +1,7 @@
 import React, { FunctionComponent, CSSProperties, useCallback } from 'react'
 import { useColor, Color } from '../../theme'
 import { OnValueChange } from '../../types'
-import useInputValue from '../../hooks/useInputValue'
+import useScopedState from '../../hooks/useInputValue'
 import { TextValue } from '../../textParser'
 import { Text } from '../Text'
 import '@compiled/react'
@@ -26,7 +26,7 @@ export const Switch: FunctionComponent<
 }) => {
   let enabled, setValue
   if (!ignoreInternal) {
-    ;[enabled, setValue] = useInputValue(value, identifier, false)
+    ;[enabled, setValue] = useScopedState(value, identifier)
   } else {
     enabled = value
   }
@@ -89,7 +89,7 @@ export const SwitchTextButton: FunctionComponent<
   style,
   color,
 }) => {
-  const [enabled, setValue] = useInputValue(value, identifier, false)
+  const [enabled, setValue] = useScopedState(value, identifier)
 
   return (
     <div

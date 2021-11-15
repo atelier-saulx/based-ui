@@ -10,7 +10,7 @@ import hexRgb from 'hex-rgb'
 import rgbHex from 'rgb-hex'
 import { OnValueChange } from '../../types'
 import { TextValue, getTextValue } from '../../textParser'
-import useInputValue from '../../hooks/useInputValue'
+import useScopedState from '../../hooks/useInputValue'
 import './style.css'
 
 const isHex = (value: string): boolean =>
@@ -79,10 +79,9 @@ export const ColorInput: FunctionComponent<ColorInputProps> = ({
   const [isFocus, setFocus] = useState(false)
   const [hover, isHover] = useHover()
 
-  const [stateValue, setValue] = useInputValue<string | undefined>(
+  const [stateValue, setValue] = useScopedState<string | undefined>(
     value,
-    identifier,
-    isFocus
+    identifier
   )
 
   const update = useCallback(

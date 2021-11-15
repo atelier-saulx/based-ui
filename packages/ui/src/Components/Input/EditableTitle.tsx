@@ -10,7 +10,7 @@ import { getStringValue, TextValue } from '../../textParser'
 import { useColor } from '../../theme'
 import useHover from '../../hooks/events/useHover'
 import { EditName as EditIcon } from '../../icons'
-import useInputValue from '../../hooks/useInputValue'
+import useScopedState from '../../hooks/useInputValue'
 
 type EditableTitle = {
   value?: TextValue
@@ -39,7 +39,7 @@ export const EditableTitle: FunctionComponent<EditableTitle> = ({
 }) => {
   const [hover, isHover] = !onChange ? [{}, false] : useHover()
   const [isEditing, setEditing] = useState(false)
-  const [inputText, setInputText] = useInputValue(value, identifier, isEditing)
+  const [inputText, setInputText] = useScopedState(value, identifier)
   const ref = useRef(null)
   const [isFocused, setIsFocused] = useState(false)
 
