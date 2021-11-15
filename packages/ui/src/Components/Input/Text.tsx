@@ -25,7 +25,7 @@ import useHover from '../../hooks/events/useHover'
 import { ProgressIndicator } from '../ProgressIndicator/ProgressIndicator'
 import { TextValue, getTextValue } from '../../textParser'
 import { OnValueChange } from '../../types'
-import useInputValue from '../../hooks/useInputValue'
+import useScopedState from '../../hooks/useScopedState'
 import './style.css'
 
 type InputProps = {
@@ -95,7 +95,7 @@ export const Input: FunctionComponent<InputProps> = ({
   const [isFocus, setFocus] = useState(false)
   const [isWrong, setWrong] = useState(false)
 
-  const [stateValue, setValue] = useInputValue(value, identifier, isFocus)
+  const [stateValue, setValue] = useScopedState(value, identifier)
 
   const update = useCallback(
     (e) => {

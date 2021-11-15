@@ -14,7 +14,7 @@ import { Validator } from './validators'
 import { OnValueChange } from '../../types'
 import { SubText } from '../Text/SubText'
 import { TextValue, getTextValue } from '../../textParser'
-import useInputValue from '../../hooks/useInputValue'
+import useScopedState from '../../hooks/useScopedState'
 
 type MultilineInputProps = {
   style?: CSSProperties
@@ -54,7 +54,7 @@ export const MultilineTextInput: FunctionComponent<MultilineInputProps> = ({
   const [isFocus, setFocus] = useState(false)
   const [isWrong, setWrong] = useState(false)
   const [hover, isHover] = useHover()
-  const [stateValue, setValue] = useInputValue(value, identifier, isFocus)
+  const [stateValue, setValue] = useScopedState(value, identifier)
 
   useEffect(() => {
     if (ref.current) {
