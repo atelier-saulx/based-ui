@@ -29,7 +29,7 @@ export const SwitchExtended: FunctionComponent<SwitchExtendedProps> = ({
   color,
   style,
 }) => {
-  const [enabled, setValue] = useScopedState(value, identifier, false)
+  const [enabled, setValue] = useScopedState(value, identifier)
 
   return (
     <div
