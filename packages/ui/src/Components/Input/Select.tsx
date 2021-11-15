@@ -39,6 +39,8 @@ type SelectInputProps = {
   registerDoubleClick?: boolean
 }
 
+let stringifiedValue = JSON.stringify('')
+
 export const Select: FunctionComponent<SelectInputProps> = ({
   placeholder = '',
   onChange,
@@ -64,6 +66,15 @@ export const Select: FunctionComponent<SelectInputProps> = ({
   const [stateValue, setValue] = useInputValue<
     DropdownOption | DropdownOption[]
   >(value, identifier, isFocus)
+
+  /**
+   * Force state-update when value is updated externally.
+   * This prevents an edge-case where component state is de-synced from consumer.
+   */
+  if (JSON.stringify(value) !== stringifiedValue) {
+    stringifiedValue = JSON.stringify(value)
+    setValue(value)
+  }
 
   const [hover, isHover] = useHover()
 
