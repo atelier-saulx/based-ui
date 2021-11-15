@@ -76,7 +76,7 @@ export const SideMenuItem: FunctionComponent<SideMenuItemProps> = ({
           paddingTop: 4,
           paddingBottom: 4,
           display: 'flex',
-          marginBottom: 8,
+          marginBottom: 4,
           cursor: 'pointer',
           alignItems: 'center',
           borderRadius: 4,
