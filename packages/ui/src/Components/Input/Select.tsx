@@ -58,17 +58,21 @@ export const Select: FunctionComponent<SelectInputProps> = ({
   if (typeof value === 'string') {
     value = { value }
   }
+
   const [isFocus, setFocus] = useState(false)
+
   const [stateValue, setValue] = useInputValue<
     DropdownOption | DropdownOption[]
   >(value, identifier, isFocus)
 
   const [hover, isHover] = useHover()
+
   const Icon = icon
     ? iconFromString(icon)
     : value && !Array.isArray(value) && value.icon
     ? iconFromString(value.icon)
     : ''
+
   const update = useCallback(
     (value, index, e) => {
       setValue(value)
@@ -77,25 +81,39 @@ export const Select: FunctionComponent<SelectInputProps> = ({
     [setValue, onChange]
   )
 
-  const displayValue = Label
-    ? null
-    : Array.isArray(stateValue)
-    ? stateValue.filter((v) => v.value !== undefined).length === 0
-      ? placeholder
-      : stateValue
-          .map((v) =>
-            // @ts-ignore
-            getTextValue(v.children ? renderChildren(v.children) : v.value)
-          )
-          .join(', ')
-    : !stateValue || stateValue.value === undefined
-    ? placeholder
-    : getTextValue(
-        // @ts-ignore
-        stateValue.children
-          ? renderChildren(stateValue.children)
-          : stateValue.value
+  let displayName: any = ''
+
+  if (Array.isArray(stateValue)) {
+    const displayNames = stateValue
+      .filter((value) => value.value !== undefined)
+      .map((value) =>
+        getTextValue(
+          // @ts-ignore
+          value.children ? renderChildren(value.children) : value.value
+        )
       )
+
+    /**
+     * On 2+ responses, show `${<firstDisplayName>, +<countRemaining>}`
+     */
+    if (displayNames.length >= 2) {
+      displayName = `${displayNames[0] ?? placeholder}, +${
+        stateValue.length - 1
+      }`
+    } else {
+      displayName = displayNames[0] ?? placeholder
+    }
+  } else {
+    displayName =
+      !stateValue || stateValue.value === undefined
+        ? placeholder
+        : getTextValue(
+            // @ts-ignore
+            stateValue.children
+              ? renderChildren(stateValue.children)
+              : stateValue.value
+          )
+  }
 
   return (
     <div
@@ -177,10 +195,10 @@ export const Select: FunctionComponent<SelectInputProps> = ({
             singleLine
             style={{
               userSelect: 'none',
-              opacity: displayValue === placeholder ? 0.6 : 1,
+              opacity: displayName === placeholder ? 0.6 : 1,
             }}
           >
-            {displayValue}
+            {displayName}
           </Text>
         )}
       </div>
