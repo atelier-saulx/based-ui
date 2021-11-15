@@ -104,14 +104,13 @@ export const Select: FunctionComponent<SelectInputProps> = ({
         )
       )
 
-    /**
-     * On 2+ responses, show `${<firstDisplayName>, +<countRemaining>}`
-     */
     if (displayNames.length >= 2) {
+      // On 2+ responses, show `${<firstDisplayName>, +<countRemaining>}`
       displayName = `${displayNames[0] ?? placeholder}, +${
         stateValue.length - 1
       }`
     } else {
+      // Otherwise just show first
       displayName = displayNames[0] ?? placeholder
     }
   } else {
