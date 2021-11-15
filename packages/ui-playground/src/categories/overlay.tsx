@@ -412,12 +412,7 @@ export default {
             </Button>
           )
         },
-      ],
-    },
-    {
-      name: 'modal',
-      category: 'overlay',
-      props: [
+
         () => {
           const d = useRef({ flap: 0 })
           const [data, setData] = useState({ flap: 0 })
@@ -462,244 +457,6 @@ export default {
             </Button>
           )
         },
-
-        () => {
-          return (
-            <Button
-              onClick={useModal(
-                (props) => {
-                  console.info('props', props)
-
-                  return <div>THIS IS SOMETHING</div>
-                },
-                {
-                  header: {
-                    icon: 'time',
-                    framed: true,
-                    title: randomTitle(),
-                    closeButton: true,
-                    children: (
-                      <div>
-                        <Button color={{ color: 'background' }}>Snurp</Button>
-                      </div>
-                    ),
-                  },
-                  confirmButton: {
-                    icon: 'time',
-                    label: 'No way josé',
-                    onConfirm: () => console.log('confirmed!'),
-                  },
-                }
-              )}
-            >
-              useModal + component
-            </Button>
-          )
-        },
-        () => {
-          const [editableTitle, setEditableTitle] = useState(randomTitle())
-          return (
-            <Button
-              onClick={useModal(
-                (props) => {
-                  return <div>Try to edit the title...</div>
-                },
-                {
-                  header: {
-                    icon: 'time',
-                    framed: true,
-                    title: editableTitle,
-                    onEditableTitleChange: (_: any, value: string) => {
-                      console.log('Title changed:', value)
-                      setEditableTitle(value)
-                    },
-                    closeButton: true,
-                    children: (
-                      <div>
-                        <Button color={{ color: 'background' }}>Snurp</Button>
-                      </div>
-                    ),
-                  },
-                }
-              )}
-            >
-              useModal + Editable title
-            </Button>
-          )
-        },
-        () => {
-          const [text, setText] = useState('useModal + input')
-
-          return (
-            <Button
-              onClick={useModal(
-                (props) => {
-                  return (
-                    <div>
-                      {/* @ts-ignore */}
-                      <Input border value={props.text} onChange={setText} />
-                    </div>
-                  )
-                },
-                {
-                  text,
-                  header: {
-                    icon: 'time',
-                    framed: true,
-                    // title: randomTitle(),
-                    closeButton: true,
-                    children: (
-                      <div>
-                        <Button color={{ color: 'background' }}>Snurp</Button>
-                      </div>
-                    ),
-                  },
-                  confirmButton: {
-                    icon: 'time',
-                    label: 'No way josé',
-                    onConfirm: () => console.log('confirmed!'),
-                  },
-                }
-              )}
-            >
-              useModal with input and updates
-            </Button>
-          )
-        },
-        () => {
-          const [text, setText] = useState('useModal')
-          useEffect(() => {
-            let cnt = 0
-            const timer = setInterval(() => {
-              ++cnt
-              setText('useModal ' + cnt)
-            }, 1000)
-            return () => clearInterval(timer)
-          }, [])
-          return (
-            <Button
-              onClick={useModal(<ModalChildren>{text}</ModalChildren>, {
-                header: {
-                  icon: 'time',
-                  framed: true,
-                  title: randomTitle(),
-                  closeButton: true,
-                  children: (
-                    <div>
-                      <Button color={{ color: 'background' }}>Snurp</Button>
-                    </div>
-                  ),
-                },
-                confirmButton: {
-                  icon: 'time',
-                  label: 'No way josé',
-                  onConfirm: () => console.log('confirmed!'),
-                },
-              })}
-            >
-              useModal
-            </Button>
-          )
-        },
-        () => {
-          const [text, setText] = useState('useModal Variant A')
-          useEffect(() => {
-            let cnt = 0
-            const timer = setInterval(() => {
-              ++cnt
-              setText('useModal Variant A ' + cnt)
-            }, 1000)
-            return () => clearInterval(timer)
-          }, [])
-          return (
-            <Button
-              onClick={useModal(<ModalChildren>{text}</ModalChildren>, {
-                header: {
-                  icon: 'time',
-                  title: randomTitle(),
-                  closeButton: true,
-                  children: (
-                    <div>
-                      <Button color={{ color: 'background' }}>Snurp</Button>
-                    </div>
-                  ),
-                },
-                confirmButton: {
-                  icon: 'time',
-                  label: 'No way josé',
-                  onConfirm: () => console.log('confirmed!'),
-                },
-              })}
-            >
-              useModal Variant A
-            </Button>
-          )
-        },
-        () => {
-          const [text, setText] = useState('useModal Variant B')
-          useEffect(() => {
-            let cnt = 0
-            const timer = setInterval(() => {
-              ++cnt
-              setText('useModal Variant B ' + cnt)
-            }, 1000)
-            return () => clearInterval(timer)
-          }, [])
-          return (
-            <Button
-              onClick={useModal(<ModalChildren>{text}</ModalChildren>, {
-                confirmButton: {
-                  icon: 'time',
-                  label: 'No way josé',
-                  onConfirm: () => console.log('confirmed!'),
-                },
-              })}
-            >
-              useModal Variant B
-            </Button>
-          )
-        },
-        () => {
-          const [text, setText] = useState('useModal Variant C')
-          useEffect(() => {
-            let cnt = 0
-            const timer = setInterval(() => {
-              ++cnt
-              setText('useModal Variant C ' + cnt)
-            }, 1000)
-            return () => clearInterval(timer)
-          }, [])
-          return (
-            <Button onClick={useModal(<ModalChildren>{text}</ModalChildren>)}>
-              useModal Variant C
-            </Button>
-          )
-        },
-        () => {
-          const [text, setText] = useState('useModal Variant D')
-          useEffect(() => {
-            let cnt = 0
-            const timer = setInterval(() => {
-              ++cnt
-              setText('useModal Variant D ' + cnt)
-            }, 1000)
-            return () => clearInterval(timer)
-          }, [])
-          return (
-            <Button
-              onClick={useModal(<ModalChildren>{text}</ModalChildren>, {
-                header: {
-                  icon: 'time',
-                  framed: true,
-                  title: randomTitle(),
-                  closeButton: true,
-                },
-              })}
-            >
-              useModal Variant D
-            </Button>
-          )
-        },
       ],
     },
 
@@ -739,6 +496,28 @@ export default {
               )}
             >
               Single dropdown
+            </Button>
+          )
+        },
+
+        () => {
+          return (
+            <Button
+              color={{ color: 'foreground', tone: 2 }}
+              onClick={useDropdown(
+                [
+                  { value: undefined, children: () => <div>FLURPY</div> },
+                  { value: 'snurk', icon: 'AudioFile' },
+                  { value: 'Selectings V!!!', icon: 'Close' },
+                ],
+                (value, index) => {
+                  console.log('-->', value, index)
+                },
+                null,
+                { multi: true }
+              )}
+            >
+              Dropdown w/ special values
             </Button>
           )
         },
