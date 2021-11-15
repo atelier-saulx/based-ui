@@ -96,7 +96,7 @@ export const SideMenuItem: FunctionComponent<SideMenuItemProps> = ({
       >
         {ItemIcon ? (
           <ItemIcon
-            size={items ? 20 : 20}
+            size={items ? 24 : 24}
             color={
               color ||
               (active
