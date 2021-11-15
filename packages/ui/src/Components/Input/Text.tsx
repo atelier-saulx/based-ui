@@ -25,7 +25,7 @@ import useHover from '../../hooks/events/useHover'
 import { ProgressIndicator } from '../ProgressIndicator/ProgressIndicator'
 import { TextValue, getTextValue } from '../../textParser'
 import { OnValueChange } from '../../types'
-import useScopedState from '../../hooks/useInputValue'
+import useScopedState from '../../hooks/useScopedState'
 import './style.css'
 
 type InputProps = {

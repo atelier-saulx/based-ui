@@ -14,7 +14,7 @@ import { Validator } from './validators'
 import { OnValueChange } from '../../types'
 import { SubText } from '../Text/SubText'
 import { TextValue, getTextValue } from '../../textParser'
-import useScopedState from '../../hooks/useInputValue'
+import useScopedState from '../../hooks/useScopedState'
 
 type MultilineInputProps = {
   style?: CSSProperties

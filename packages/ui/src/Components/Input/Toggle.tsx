@@ -11,7 +11,7 @@ import { Text } from '../Text'
 import { TextValue } from '../../textParser'
 import { OnValueChange } from '../../types'
 import { IconName, iconFromString } from '../../icons'
-import useScopedState from '../../hooks/useInputValue'
+import useScopedState from '../../hooks/useScopedState'
 import { useColor } from '../../theme'
 
 export type ToggleInputProps = {

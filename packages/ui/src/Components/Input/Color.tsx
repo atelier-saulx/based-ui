@@ -10,7 +10,7 @@ import hexRgb from 'hex-rgb'
 import rgbHex from 'rgb-hex'
 import { OnValueChange } from '../../types'
 import { TextValue, getTextValue } from '../../textParser'
-import useScopedState from '../../hooks/useInputValue'
+import useScopedState from '../../hooks/useScopedState'
 import './style.css'
 
 const isHex = (value: string): boolean =>

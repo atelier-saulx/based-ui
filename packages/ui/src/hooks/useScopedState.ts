@@ -1,11 +1,11 @@
 import { useState, useRef, useEffect } from 'react'
 import { deepEqual } from '@saulx/utils'
 
-export default function useScopedState<T = string | number | undefined>(
-  value: T,
+export default function useScopedState<TValue = string | number | undefined>(
+  value: TValue,
   identifier: any
-): [T, (value: T) => void] {
-  const [stateValue, setValue] = useState<T>(value)
+): [TValue, (value: TValue) => void] {
+  const [stateValue, setValue] = useState<TValue>(value)
   const identifierRef = useRef(identifier)
   const initialValue = useRef(value)
 

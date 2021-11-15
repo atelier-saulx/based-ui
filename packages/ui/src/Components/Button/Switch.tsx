@@ -1,7 +1,7 @@
 import React, { FunctionComponent, CSSProperties, useCallback } from 'react'
 import { useColor, Color } from '../../theme'
 import { OnValueChange } from '../../types'
-import useScopedState from '../../hooks/useInputValue'
+import useScopedState from '../../hooks/useScopedState'
 import { TextValue } from '../../textParser'
 import { Text } from '../Text'
 import '@compiled/react'

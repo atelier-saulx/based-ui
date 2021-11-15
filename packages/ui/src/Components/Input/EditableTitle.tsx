@@ -10,7 +10,7 @@ import { getStringValue, TextValue } from '../../textParser'
 import { useColor } from '../../theme'
 import useHover from '../../hooks/events/useHover'
 import { EditName as EditIcon } from '../../icons'
-import useScopedState from '../../hooks/useInputValue'
+import useScopedState from '../../hooks/useScopedState'
 
 type EditableTitle = {
   value?: TextValue
