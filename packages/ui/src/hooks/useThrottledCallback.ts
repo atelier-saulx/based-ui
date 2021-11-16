@@ -13,12 +13,11 @@ export default (
 
   const ref = useRef(null)
 
-  // Cleanup when destroyed
   useEffect(() => () => {
-    if (!ref.current) return
-    const cancelId = isMultiFrame ? ref.current.timer : ref.current
-    global.cancelAnimationFrame(cancelId)
-    ref.current = false
+    if (ref.current) {
+      global.cancelAnimationFrame(ref.current.timer)
+      ref.current = false
+    }
   })
 
   const handleMultiFrame = (event, data, target) => {
@@ -36,7 +35,7 @@ export default (
     }
 
     if (!ref.current) {
-      const throttle = () => {
+      const throttleAction = () => {
         ref.current.frames--
         if (ref.current.frames === 0) {
           if (isEvent) {
@@ -45,12 +44,12 @@ export default (
           ref.current = false
           fn(event, data)
         } else {
-          ref.current.timer = global.requestAnimationFrame(throttle)
+          ref.current.timer = global.requestAnimationFrame(throttleAction)
         }
       }
 
       ref.current = {
-        timer: global.requestAnimationFrame(throttle),
+        timer: global.requestAnimationFrame(throttleAction),
         frames,
       }
     }
@@ -69,13 +68,17 @@ export default (
     }
 
     if (!ref.current) {
-      ref.current = global.requestAnimationFrame(() => {
+      const action = () => {
         ref.current = false
         if (isEvent) {
           event.currentTarget = target
         }
         fn(event, data)
-      })
+      }
+
+      ref.current = {
+        timer: global.requestAnimationFrame(action),
+      }
     }
   }
 
