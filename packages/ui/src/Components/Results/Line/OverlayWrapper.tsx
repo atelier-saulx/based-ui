@@ -278,7 +278,8 @@ export default ({
         const { x } = e.currentTarget.getBoundingClientRect()
 
         let mousePosX = e.clientX
-        if (width - mousePosX < 175) {
+
+        if (window.innerWidth - mousePosX < 200) {
           isFlippedX = true
         } else {
           isFlippedX = false
