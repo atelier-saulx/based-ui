@@ -214,7 +214,7 @@ const RenderComponents = ({ category, grid, bg = 'transparent' }) => {
                   const { Component } = component
                   return (
                     <ComponentWrapper
-                      key={index}
+                      key={`ComponentWrapper-${index}`}
                       Component={Component}
                       grid={component.grid || grid}
                       componentProps={prop}
