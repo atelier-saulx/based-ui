@@ -114,11 +114,11 @@ export const RadioButton: FunctionComponent<ToggleInputProps> = ({
         ...style,
       }}
       onClick={useCallback(() => {
-        const value = !stateValue
+        const v = !stateValue
         if (onChange) {
-          onChange(value)
+          onChange(v)
         }
-        setValue(value)
+        setValue(v)
       }, [onChange, stateValue])}
     >
       <div

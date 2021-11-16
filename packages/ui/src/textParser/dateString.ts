@@ -1,3 +1,5 @@
+// import { getLanguage } from '../../text'
+
 export type DateFormat =
   | 'date'
   | 'date-time'
@@ -6,57 +8,51 @@ export type DateFormat =
   | 'time'
   | 'time-precise'
 
-const addZero = (input: number): string => {
-  const response = input + ''
-
-  if (response.length === 1) {
-    return '0' + response
+const addZero = (d: number): string => {
+  const s = d + ''
+  if (s.length === 1) {
+    return '0' + s
   }
-
-  return response
+  return s
 }
 
-export default (
-  input: number | string,
-  format: DateFormat = 'date'
-): string => {
-  if (typeof input === 'number') {
-    const date = new Date(input)
+export default (nr: number | string, format: DateFormat = 'date'): string => {
+  if (typeof nr === 'number') {
+    const d = new Date(nr)
     if (format === 'date') {
-      return (
-        date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear()
-      )
+      return d.getDate() + '/' + (d.getMonth() + 1) + '/' + d.getFullYear()
     } else if (format === 'time') {
-      return date.getHours() + ':' + addZero(date.getMinutes())
+      return d.getHours() + ':' + addZero(d.getMinutes())
     } else if (format === 'time-precise') {
       return (
-        date.getHours() +
+        d.getHours() +
         ':' +
-        addZero(date.getMinutes()) +
+        addZero(d.getMinutes()) +
         ':' +
-        addZero(date.getSeconds())
+        addZero(d.getSeconds())
       )
     } else if (format === 'date-time-text') {
-      return `${date.toLocaleDateString('default', {
+      return `${d.toLocaleDateString('default', {
         day: 'numeric',
         month: 'long',
         year: 'numeric',
-      })}, ${date.toLocaleTimeString()}`
+      })}, ${d.toLocaleTimeString()}`
     } else if (format === 'date-time') {
       return (
-        date.getHours() +
+        d.getHours() +
         ':' +
-        addZero(date.getMinutes()) +
+        addZero(d.getMinutes()) +
         ' ' +
-        date.getDate() +
+        d.getDate() +
         '/' +
-        (date.getMonth() + 1) +
+        (d.getMonth() + 1) +
         '/' +
-        date.getFullYear()
+        d.getFullYear()
       )
     } else if (format === 'date-time-human') {
       const now = new Date()
 
+      //
       const timeTable = [
         ['getFullYear', 'year', 'years'],
         ['getMonth', 'month', 'months'],
@@ -66,11 +62,12 @@ export default (
         ['getSeconds', 'second', 'seconds'],
       ]
 
-      if (now.getTime() > date.getTime()) {
+      if (now.getTime() > d.getTime()) {
         for (let i = 0; i < timeTable.length; i++) {
           const [m, single, plural] = timeTable[i]
+          // const lang = getLanguage()
           const a = now[m]()
-          const b = date[m]()
+          const b = d[m]()
           if (a > b) {
             const diff = a - b
             return `${a - b} ${diff > 1 ? plural : single} ago`
@@ -82,7 +79,7 @@ export default (
         for (let i = 0; i < timeTable.length; i++) {
           const [m, single, plural] = timeTable[i]
           // const lang = getLanguage()
-          const a = date[m]()
+          const a = d[m]()
           const b = now[m]()
           if (a > b) {
             const diff = a - b
@@ -93,9 +90,8 @@ export default (
         return 'Now'
       }
     }
-
-    return String(input)
+    return String(nr)
+  } else {
+    return nr
   }
-
-  return input
 }

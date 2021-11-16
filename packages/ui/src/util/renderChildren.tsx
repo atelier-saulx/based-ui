@@ -13,14 +13,12 @@ function renderChildren<T = PropsWithChildren<any>>(
   children: Children,
   props?: T
 ): Child {
-  const Component = children
-
-  const isValidComponent = isComponent(Component)
-  if (isValidComponent) {
-    return <Component {...props} />
+  if (children === undefined) {
+    return null
   }
-
-  return null
+  const Component = isComponent(children) ? children : null
+  // @ts-ignore
+  return Component ? <Component {...props} /> : children
 }
 
 export default renderChildren

@@ -45,7 +45,6 @@ export const Grid = (props: GridProps) => {
           const ratio = 220 / 232
           let w = (large ? 400 : 220) + 16
           const columnCount = Math.floor(width / w)
-
           // - 4 for scrollbar
           w = Math.min(Math.floor((width - 16) / columnCount) - 4 / columnCount)
           const h = w * ratio + 16

@@ -16,19 +16,7 @@ const defaultitemProps = {
   },
 }
 
-type ExpandableItemProps = {
-  context: any
-  paddingItemLeft: any
-  item: any
-  index: number
-}
-
-export const ExpandableItem: FunctionComponent<ExpandableItemProps> = ({
-  context,
-  paddingItemLeft,
-  item,
-  index,
-}) => {
+export const ExpandableItem = ({ context, paddingItemLeft, item, index }) => {
   const itemProps = context.itemProps || defaultitemProps
   const [hover, isHover] = useHover()
   const [isExpanded, setExpanded] = useReducer((x) => !x, false)
@@ -49,9 +37,7 @@ export const ExpandableItem: FunctionComponent<ExpandableItemProps> = ({
       }
     : getData(item, titleProps.path)
 
-  let iconName
-  let iconProps
-
+  let iconName, iconProps
   if (iconDef && typeof iconDef === 'object') {
     iconName = iconDef.name
     iconProps = iconDef
@@ -83,11 +69,11 @@ export const ExpandableItem: FunctionComponent<ExpandableItemProps> = ({
           paddingTop: 16,
           paddingBottom: 16,
         }}
-        onClick={(event) => {
+        onClick={(e) => {
           if (!isNested || isNested(wrappedData)) {
             setExpanded()
           } else if (onClick) {
-            onClick(event, wrappedData)
+            onClick(e, wrappedData)
           }
         }}
       >
@@ -137,7 +123,6 @@ export const ExpandableItem: FunctionComponent<ExpandableItemProps> = ({
               }}
             />
           ) : null}
-
           {options && options.children
             ? renderChildren(options.children, {
                 isHover,
@@ -152,7 +137,6 @@ export const ExpandableItem: FunctionComponent<ExpandableItemProps> = ({
             : null}
         </div>
       </div>
-
       {isExpanded
         ? renderChildren(context.children, {
             data: wrappedData,
@@ -198,7 +182,6 @@ export const ExpandableList: FunctionComponent<ExpandableListProps> = (
                 items={items}
               />
             ) : null}
-
             <div
               style={{
                 width,
@@ -209,14 +192,14 @@ export const ExpandableList: FunctionComponent<ExpandableListProps> = (
                 overflowX: 'hidden',
               }}
             >
-              {items.map((item, index) => {
+              {items.map((d, i) => {
                 return (
                   <ExpandableItem
                     paddingItemLeft={props.paddingItemLeft}
-                    key={`ExpandableItem-${index}`}
+                    key={i}
                     context={props}
-                    item={item}
-                    index={index}
+                    item={d}
+                    index={i}
                   />
                 )
               })}
@@ -237,15 +220,14 @@ export const ExpandableList: FunctionComponent<ExpandableListProps> = (
           items={items}
         />
       ) : null}
-
-      {items.map((item, index) => {
+      {items.map((d, i) => {
         return (
           <ExpandableItem
             paddingItemLeft={props.paddingItemLeft}
-            key={`ExpandableItem-${index}`}
+            key={i}
             context={props}
-            item={item}
-            index={index}
+            item={d}
+            index={i}
           />
         )
       })}

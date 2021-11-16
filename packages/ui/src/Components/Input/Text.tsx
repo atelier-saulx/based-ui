@@ -288,7 +288,6 @@ export const Input: FunctionComponent<InputProps> = ({
           onClick={clear}
         />
       ) : null}
-
       {isFocus && (errorText || helperText) ? (
         <SubText
           color={{

@@ -5,6 +5,7 @@ export const Image = ({ src }: { src?: string }) => {
   return (
     <div
       style={{
+        // weird behaviour with 100% height in safari
         position: 'absolute',
         top: 0,
         borderTopLeftRadius: 4,

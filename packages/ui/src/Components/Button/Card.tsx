@@ -12,7 +12,7 @@ import '@compiled/react'
 
 type GenericEventHandler = EventHandler<SyntheticEvent>
 
-type CardProps = {
+export const Card: FunctionComponent<{
   icon: IconName
   onClick?: AsyncEvent | GenericEventHandler
   label?: TextValue
@@ -20,9 +20,7 @@ type CardProps = {
   onHover?: GenericEventHandler
   frameColor?: Color
   children?: TextValue
-}
-
-export const Card: FunctionComponent<CardProps> = ({
+}> = ({
   onClick,
   children = '',
   label = '',

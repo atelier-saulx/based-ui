@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useCallback, useEffect, useRef } from 'react'
+import React, { useCallback, useEffect, useReducer, useRef } from 'react'
 import { VariableSizeList } from 'react-window'
 import AutoSizer from 'react-virtualized-auto-sizer'
 import useDragScroll from '../../../hooks/drag/useDragScroll'
@@ -16,17 +16,7 @@ import { Loader } from '../../Loader/Loader'
 import getData from '../getData'
 import '@compiled/react'
 
-type FooterBottomProps = {
-  context: any
-  seqItems: any
-  isDragOver: any
-  isDragOverSeq: any
-  isDropLoading: any
-  index: any
-  wrappedData: any
-}
-
-export const FooterBottom: FunctionComponent<FooterBottomProps> = ({
+const FooterBottom = ({
   context,
   seqItems,
   isDragOver,

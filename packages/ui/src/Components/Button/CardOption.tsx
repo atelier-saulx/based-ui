@@ -13,25 +13,15 @@ import '@compiled/react'
 
 type GenericEventHandler = EventHandler<SyntheticEvent>
 
-type CardOptionsProps = {
+export const CardOption: FunctionComponent<{
   onChange?: (value: boolean | void) => void
   label?: TextValue
   onHover?: GenericEventHandler
   value?: boolean
   style?: CSSProperties
   frameColor?: Color
-}
-
-export const CardOption: FunctionComponent<CardOptionsProps> = ({
-  children,
-  onChange,
-  value,
-  label = '',
-  onHover,
-  style,
-}) => {
+}> = ({ children, onChange, value, label = '', onHover, style }) => {
   const [hover, isHover] = useHover(onHover)
-
   return (
     <div
       {...hover}

@@ -462,11 +462,9 @@ export type IconName =
   | 'waitingScreen'
   | 'welcomeScreen'
 
-const iconFromString = (
-  input: IconName | string
-): null | FunctionComponent<IconProps> => {
-  if (input && typeof input === 'string') {
-    return icons[input[0].toUpperCase() + input.slice(1)]
+const iconFromString = (str: IconName): null | FunctionComponent<IconProps> => {
+  if (str && typeof str === 'string') {
+    return icons[str[0].toUpperCase() + str.slice(1)]
   } else {
     return null
   }

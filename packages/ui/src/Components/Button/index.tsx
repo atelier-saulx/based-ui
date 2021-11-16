@@ -95,9 +95,7 @@ export const Button: FunctionComponent<ButtonProps> = ({
   borderColor,
 }) => {
   const [hover, isHover, isActive] = useHover(onHover || onMouseEnter)
-
   let ref
-
   const [isLoading, handler, asyncError] = useAsyncClick(onClick)
 
   if (actionKeys && onClick) {
@@ -109,42 +107,41 @@ export const Button: FunctionComponent<ButtonProps> = ({
         clearTimeout(timeRef.current)
       }
     }, [])
-
     const onKeyUp = useCallback(
-      (event: any) => {
+      (x: any) => {
         if (hover.onMouseDown) {
-          hover.onMouseDown(event)
+          hover.onMouseDown(x)
           timeRef.current = setTimeout(() => {
-            hover.onMouseUp(event)
+            hover.onMouseUp(x)
           }, 100)
         }
-        handler(event)
+        handler(x)
       },
       [handler, timeRef]
     )
     useKeyUp(onKeyUp, ref, actionKeys)
   }
 
-  const isArray = Array.isArray(color)
+  const isArr = Array.isArray(color)
 
-  const pColor = isArray ? color[0] : color
+  const pColor = isArr ? color[0] : color
 
-  if (isArray) {
+  if (isArr) {
     if (!color[1].tone) {
       color[1].tone = 1
     }
   }
 
-  const targetColor = pColor.color
+  const c = pColor.color
 
   if (!foregroundColor) {
-    if (targetColor === 'primary' || targetColor === 'secondary') {
+    if (c === 'primary' || c === 'secondary') {
       foregroundColor = { color: 'background' }
-    } else if (targetColor === 'primaryAccent') {
+    } else if (c === 'primaryAccent') {
       foregroundColor = { color: 'primary' }
-    } else if (targetColor === 'foreground') {
+    } else if (c === 'foreground') {
       foregroundColor = { color: 'background' }
-    } else if (targetColor === 'secondaryAccent') {
+    } else if (c === 'secondaryAccent') {
       foregroundColor = { color: 'secondary' }
     }
   } else if (typeof foregroundColor !== 'object') {
@@ -171,42 +168,6 @@ export const Button: FunctionComponent<ButtonProps> = ({
 
   const Icon = icon && iconFromString(icon)
 
-  const backgroundColor = isArray
-    ? useColor([
-        {
-          color: pColor.color,
-          opacity: pColor.opacity,
-          tone: isActive
-            ? pColor.tone + 2
-            : isHover
-            ? pColor.tone + 1
-            : pColor.tone,
-        },
-        {
-          color: color[1].color,
-          opacity: color[1].opacity,
-          tone: isActive
-            ? color[1].tone + 2
-            : isHover
-            ? color[1].tone + 1
-            : color[1].tone,
-        },
-      ])
-    : useColor({
-        // @ts-ignore
-        color: color.color,
-        // @ts-ignore
-        opacity: color.opacity,
-        tone: isActive
-          ? // @ts-ignore
-            color.tone + 2
-          : isHover
-          ? // @ts-ignore
-            color.tone + 1
-          : // @ts-ignore
-            color.tone,
-      })
-
   return (
     <div style={style} css={{ display: 'flex', position: 'relative' }}>
       <div
@@ -221,7 +182,41 @@ export const Button: FunctionComponent<ButtonProps> = ({
           borderColor: borderColor
             ? useColor(borderColor)
             : useColor({ color: 'divider' }),
-          background: backgroundColor,
+          background: isArr
+            ? useColor([
+                {
+                  color: pColor.color,
+                  opacity: pColor.opacity,
+                  tone: isActive
+                    ? pColor.tone + 2
+                    : isHover
+                    ? pColor.tone + 1
+                    : pColor.tone,
+                },
+                {
+                  color: color[1].color,
+                  opacity: color[1].opacity,
+                  tone: isActive
+                    ? color[1].tone + 2
+                    : isHover
+                    ? color[1].tone + 1
+                    : color[1].tone,
+                },
+              ])
+            : useColor({
+                // @ts-ignore
+                color: color.color,
+                // @ts-ignore
+                opacity: color.opacity,
+                tone: isActive
+                  ? // @ts-ignore
+                    color.tone + 2
+                  : isHover
+                  ? // @ts-ignore
+                    color.tone + 1
+                  : // @ts-ignore
+                    color.tone,
+              }),
         }}
         css={{
           display: 'flex',

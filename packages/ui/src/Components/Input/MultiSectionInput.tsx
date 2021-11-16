@@ -42,6 +42,29 @@ export type MultiSectionInputProps = {
   sections: Section[]
 }
 
+// section example for HH:MM:SS
+//
+// {
+//   validation: /^(\d|[0-1]\d|2[0-3])$/,
+//   maxSize: 2,
+//   preprocess: (v) => ('00' + v).substr(-2),
+//   separator: ':',
+//   default: '00',
+// },
+// {
+//   validation: /^(\d|[0-5]\d|2\d)$/,
+//   maxSize: 2,
+//   preprocess: (v) => ('00' + v).substr(-2),
+//   separator: ':',
+//   default: '00',
+// },
+// {
+//   validation: /^(\d|[0-5]\d|2\d)$/,
+//   maxSize: 2,
+//   preprocess: (v) => ('00' + v).substr(-2),
+//   default: '00',
+// },
+
 export const MultiSectionInput: FunctionComponent<MultiSectionInputProps> = ({
   border,
   value,
@@ -59,10 +82,10 @@ export const MultiSectionInput: FunctionComponent<MultiSectionInputProps> = ({
   sections,
 }) => {
   const [valid, setValid] = useState(true)
-  const inputElement = useRef<HTMLInputElement>()
+  const inputEl = useRef<HTMLInputElement>()
 
   const clear = useCallback(() => {
-    inputElement.current.value = ''
+    inputEl.current.value = ''
     onChange(null)
   }, [onChange])
 
@@ -70,79 +93,8 @@ export const MultiSectionInput: FunctionComponent<MultiSectionInputProps> = ({
   const [isFocus, setFocus] = useState(hasFocus)
 
   useEffect(() => {
-    inputElement.current.value = value
+    inputEl.current.value = value
   }, [value])
-
-  /**
-   * Triggers when input is blurred
-   */
-  function handleOnBlur(event: React.FocusEvent<HTMLInputElement>) {
-    const currentSectionIndex = getSectionAtCursor(event.target, sections)
-
-    preprocessAllSections(event.target, sections)
-
-    handleSectionChange(event.target, currentSectionIndex, sections, setValid)
-
-    if (onChangeStrategy === 'onValid' && valid) {
-      onChange(event.target.value)
-    }
-
-    setFocus(false)
-  }
-
-  /**
-   * Triggers when input changes
-   */
-  function handleOnChange(event: React.ChangeEvent<HTMLInputElement>) {
-    const currentSectionIndex = getSectionAtCursor(event.target, sections)
-
-    handleSectionChange(event.target, currentSectionIndex, sections, setValid)
-
-    const hasValidChange =
-      onChangeStrategy === 'onChangeAndValid' &&
-      validAllSections(event.target, sections)
-
-    if (hasValidChange) {
-      setValid(true)
-      onChange(event.target.value)
-    }
-  }
-
-  /**
-   * Triggers when key is pressed
-   */
-  function handleKeydownEvent(event: React.KeyboardEvent) {
-    const element = event.target as HTMLInputElement
-    const currentSectionIndex = getSectionAtCursor(element, sections)
-
-    if (event.key === sections[currentSectionIndex]?.separator) {
-      event.preventDefault()
-      event.stopPropagation()
-      preprocessAllSections(element, sections)
-      handleSectionChange(element, currentSectionIndex, sections, setValid)
-      selectNextSection(element, currentSectionIndex, sections)
-    } else if (event.key === 'Tab') {
-      if (event.shiftKey && currentSectionIndex > 0) {
-        event.preventDefault()
-        event.stopPropagation()
-        selectPreviousSection(element, currentSectionIndex, sections)
-      } else if (!event.shiftKey && currentSectionIndex < sections.length - 1) {
-        event.preventDefault()
-        event.stopPropagation()
-        selectNextSection(element, currentSectionIndex, sections)
-      }
-    } else if (event.key === 'ArrowUp') {
-      event.preventDefault()
-      event.stopPropagation()
-      increaseCurrentSectionValue(element, sections)
-      selectSection(element, currentSectionIndex, sections)
-    } else if (event.key === 'ArrowDown') {
-      event.preventDefault()
-      event.stopPropagation()
-      decreaseCurrentSectionValue(element, sections)
-      selectSection(element, currentSectionIndex, sections)
-    }
-  }
 
   return (
     <div
@@ -198,7 +150,7 @@ export const MultiSectionInput: FunctionComponent<MultiSectionInputProps> = ({
           <div style={{ width: 28 }} />
         </>
         <input
-          ref={inputElement}
+          ref={inputEl}
           placeholder={placeholder}
           style={{
             width: '100%',
@@ -220,24 +172,78 @@ export const MultiSectionInput: FunctionComponent<MultiSectionInputProps> = ({
                 ? 500
                 : 'normal',
           }}
-          onFocus={(event) => {
+          onFocus={(e) => {
             setFocus(true)
-            if (onFocus) {
-              onFocus(event)
+            if (onFocus) onFocus(e)
+          }}
+          onBlur={(e) => {
+            const currentSectionIndex = getSectionAtCursor(e.target, sections)
+            preprocessAllSections(e.target, sections)
+            handleSectionChange(
+              e.target,
+              currentSectionIndex,
+              sections,
+              setValid
+            )
+            if (onChangeStrategy === 'onValid' && valid) {
+              onChange(e.target.value)
+            }
+            setFocus(false)
+          }}
+          onChange={(e) => {
+            const currentSectionIndex = getSectionAtCursor(e.target, sections)
+            handleSectionChange(
+              e.target,
+              currentSectionIndex,
+              sections,
+              setValid
+            )
+            if (
+              onChangeStrategy === 'onChangeAndValid' &&
+              validAllSections(e.target, sections)
+            ) {
+              setValid(true)
+              onChange(e.target.value)
             }
           }}
-          onBlur={(event) => {
-            handleOnBlur(event)
-          }}
-          onChange={(event) => {
-            handleOnChange(event)
-          }}
-          onKeyDown={(event) => {
-            handleKeydownEvent(event)
+          onKeyDown={(e: React.KeyboardEvent) => {
+            const el = e.target as HTMLInputElement
+            const currentSectionIndex = getSectionAtCursor(el, sections)
+            if (e.key === sections[currentSectionIndex]?.separator) {
+              e.preventDefault()
+              e.stopPropagation()
+              preprocessAllSections(el, sections)
+              handleSectionChange(el, currentSectionIndex, sections, setValid)
+              selectNextSection(el, currentSectionIndex, sections)
+            } else if (e.key === 'Tab') {
+              if (e.shiftKey && currentSectionIndex > 0) {
+                e.preventDefault()
+                e.stopPropagation()
+                selectPreviousSection(el, currentSectionIndex, sections)
+              } else if (
+                !e.shiftKey &&
+                currentSectionIndex < sections.length - 1
+              ) {
+                e.preventDefault()
+                e.stopPropagation()
+                selectNextSection(el, currentSectionIndex, sections)
+              }
+            } else if (e.key === 'ArrowUp') {
+              e.preventDefault()
+              e.stopPropagation()
+              increaseCurrentSectionValue(el, sections)
+              selectSection(el, currentSectionIndex, sections)
+            } else if (e.key === 'ArrowDown') {
+              e.preventDefault()
+              e.stopPropagation()
+              decreaseCurrentSectionValue(el, sections)
+              selectSection(el, currentSectionIndex, sections)
+            }
           }}
         />
         <Clear
           style={{
+            // @ts-ignore
             opacity: isHover && value ? 1 : 0,
           }}
           onClick={clear}

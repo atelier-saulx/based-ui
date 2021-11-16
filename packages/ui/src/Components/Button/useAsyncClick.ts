@@ -7,65 +7,59 @@ import {
   useEffect,
   useRef,
 } from 'react'
-
 type GenericEventHandler = EventHandler<SyntheticEvent>
 
 export default (
   onClick: GenericEventHandler | AsyncEvent
 ): [boolean, GenericEventHandler, Error] => {
   const [loading, setLoading] = useState<boolean>(false)
-  const [error, setError] = useState<Error>()
+  const [err, setError] = useState<Error>()
 
-  const reference = useRef<boolean>(false)
-
+  const r = useRef<boolean>(false)
   useEffect(() => {
     return () => {
-      reference.current = true
+      r.current = true
     }
   }, [])
 
   useEffect(() => {
-    if (error) {
+    if (err) {
       const timer = setTimeout(() => {
         setError(null)
-      }, 1000)
+      }, 1e3)
 
       return () => {
         clearTimeout(timer)
       }
     }
-  }, [error])
+  }, [err])
 
   const handler = useCallback(
-    (event) => {
-      event.stopPropagation()
-
-      if (!reference.current) {
+    (e) => {
+      e.stopPropagation()
+      if (!r.current) {
         setLoading(true)
       }
-
-      const response = onClick(event)
-      if (response instanceof Promise) {
-        response
-          .then((value) => {
-            if (!reference.current) {
-              setLoading(false)
-            }
-          })
-          .catch((errorResponse) => {
-            if (!reference.current) {
-              setError(errorResponse)
-              console.error(errorResponse)
-              setLoading(false)
-            }
-          })
+      const p = onClick(e)
+      if (p instanceof Promise) {
+        p.then((v) => {
+          if (!r.current) {
+            setLoading(false)
+          }
+        }).catch((err) => {
+          if (!r.current) {
+            setError(err)
+            console.error(err)
+            setLoading(false)
+          }
+        })
       } else {
-        if (!reference.current) {
+        if (!r.current) {
           setLoading(false)
         }
       }
     },
     [onClick]
   )
-  return [loading, handler, error]
+  return [loading, handler, err]
 }

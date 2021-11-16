@@ -35,7 +35,7 @@ const DateTimeInput: FunctionComponent<DateTimeProps> = ({
 
   // TODO: confusing amount of hooks
 
-  const [time, updateTime] = useReducer((state: Date, action) => {
+  const [s, update] = useReducer((state: Date, action) => {
     if (action.type === 'reset') {
       return action.value
     } else if (action.type === 'time') {
@@ -74,23 +74,23 @@ const DateTimeInput: FunctionComponent<DateTimeProps> = ({
   const initialValue = useRef(value)
 
   useEffect(() => {
-    if (value !== Number(time) && value !== initialValue.current) {
+    if (value !== Number(s) && value !== initialValue.current) {
       initialValue.current = value
-      updateTime({ type: 'reset', value: new Date(value) })
+      update({ type: 'reset', value: new Date(value) })
     } else if (identifierRef.current !== identifier) {
       identifierRef.current = identifier
-      updateTime({ type: 'reset', value: new Date(value) })
+      update({ type: 'reset', value: new Date(value) })
     } else if (!initialValue.current) {
       initialValue.current = value
-      if (time === undefined && value) {
-        updateTime({ type: 'reset', value: new Date(value) })
+      if (s === undefined && value) {
+        update({ type: 'reset', value: new Date(value) })
       }
     }
   }, [value, identifier])
 
   if (identifierRef.current !== identifier) {
     identifierRef.current = identifier
-    updateTime({ type: 'reset', value: new Date(value) })
+    update({ type: 'reset', value: new Date(value) })
   }
 
   return (
@@ -108,12 +108,13 @@ const DateTimeInput: FunctionComponent<DateTimeProps> = ({
       >
         <DateInput
           color={color}
-          value={time && time.getTime()}
+          value={s && s.getTime()}
           style={{ marginRight: 20 }}
           identifier={identifier}
           border={border}
           onChange={(value) => {
-            updateTime({
+            update({
+              // @ts-ignore
               type: 'date',
               value,
             })
@@ -128,11 +129,11 @@ const DateTimeInput: FunctionComponent<DateTimeProps> = ({
         <TimeInput
           color={color}
           value={
-            time
+            s
               ? new Date().setUTCHours(
-                  time.getHours(),
-                  time.getMinutes(),
-                  time.getSeconds()
+                  s.getHours(),
+                  s.getMinutes(),
+                  s.getSeconds()
                 )
               : null
           }
@@ -140,7 +141,8 @@ const DateTimeInput: FunctionComponent<DateTimeProps> = ({
           border={border}
           useSeconds={useSeconds}
           onChange={(value) => {
-            updateTime({
+            update({
+              // @ts-ignore
               type: 'time',
               value,
             })
