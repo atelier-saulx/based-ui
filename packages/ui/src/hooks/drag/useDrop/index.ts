@@ -10,7 +10,7 @@ import readFiles from './readFiles'
 import { Data, File } from '../../../types'
 import { deepEqual } from '@saulx/utils'
 
-const preventDefault = (e) => e.preventDefault()
+const preventDefault = (event) => event.preventDefault()
 
 type DropEventHandler = (
   e: DragEvent,
@@ -37,8 +37,8 @@ const useDrop = (
   props: DropProps = {}
 ): [DropEvents, boolean, boolean] => {
   const [isDragOver, setDragOver] = useState(false)
-  const ref = useRef(null)
-  const ref2 = useRef(null)
+  const dragRef = useRef(null)
+  const dropRef = useRef(null)
 
   const [isDropLoading, setDropLoading] = useState(false)
 
@@ -46,107 +46,116 @@ const useDrop = (
     props.validate = defValidate
   }
 
+  const handleOnDrop = useCallback(
+    (event) => {
+      if (dropRef.current === event.nativeEvent) {
+        return // do nothing
+      }
+
+      event.preventDefault()
+
+      const nativeEvent = event.nativeEvent
+      dropRef.current = nativeEvent
+      const baseTarget = event.target
+
+      if (props.validate(event)) {
+        dragRef.current = 0
+        setDragOver(false)
+
+        if (onDrop) {
+          const dataTransfer = event.dataTransfer.getData('application/based')
+
+          let parsedData: Data
+          let data: Data[]
+
+          if (dataTransfer) {
+            parsedData = JSON.parse(dataTransfer)
+            const targetSelection = getSelection()
+
+            const useSelection = targetSelection.find((selectionData) =>
+              deepEqual(selectionData.data, parsedData.data)
+            )
+
+            if (useSelection) {
+              data = targetSelection
+
+              clearSelection()
+            } else {
+              data = [parsedData]
+            }
+          }
+
+          let promise
+          setDropLoading(true)
+
+          if (props.readFiles) {
+            event.stopPropagation()
+            readFiles(event.dataTransfer).then((files) => {
+              if (data) {
+                promise = onDrop(event, { files, data })
+              } else {
+                promise = onDrop(event, { files })
+              }
+
+              if (promise instanceof Promise) {
+                promise.then(() => {
+                  setDropLoading(false)
+                  global.requestAnimationFrame(() => {
+                    baseTarget.dispatchEvent(nativeEvent)
+                  })
+                })
+              } else {
+                setDropLoading(false)
+                global.requestAnimationFrame(() => {
+                  baseTarget.dispatchEvent(nativeEvent)
+                })
+              }
+            })
+          } else {
+            if (data) {
+              promise = onDrop(event, { data, files: [] })
+            } else {
+              promise = onDrop(event, { files: [] })
+            }
+            if (promise instanceof Promise) {
+              event.stopPropagation()
+              promise.then(() => {
+                setDropLoading(false)
+                global.requestAnimationFrame(() => {
+                  baseTarget.dispatchEvent(nativeEvent)
+                })
+              })
+            } else {
+              setDropLoading(false)
+            }
+          }
+        }
+      }
+    },
+    [onDrop]
+  )
+
   return [
     {
-      onDragEnter: useCallback((e) => {
-        if (!ref.current) {
-          ref.current = 0
+      onDragEnter: useCallback((event) => {
+        if (!dragRef.current) {
+          dragRef.current = 0
         }
-        ref.current++
-        if (props.validate(e)) {
+        dragRef.current++
+        if (props.validate(event)) {
           setDragOver(true)
         }
       }, []),
-      onDragLeave: useCallback((e) => {
-        ref.current--
-        if (ref.current === 0) {
+
+      onDragLeave: useCallback(() => {
+        dragRef.current--
+        if (dragRef.current === 0) {
           setDragOver(false)
         }
       }, []),
+
       onDragOver: preventDefault,
-      onDrop: useCallback(
-        (e) => {
-          if (ref2.current === e.nativeEvent) {
-            // do nothing
-          } else {
-            e.preventDefault()
-
-            const ev = e.nativeEvent
-            ref2.current = ev
-            const t = e.target
-
-            if (props.validate(e)) {
-              ref.current = 0
-              setDragOver(false)
-              if (onDrop) {
-                const dx = e.dataTransfer.getData('application/based')
-                let d: Data
-                let data: Data[]
-                if (dx) {
-                  d = JSON.parse(dx)
-                  const s = getSelection()
-
-                  const useSelection = s.find((ds) =>
-                    deepEqual(ds.data, d.data)
-                  )
-
-                  if (useSelection) {
-                    data = s
-
-                    clearSelection()
-                  } else {
-                    data = [d]
-                  }
-                }
-
-                let p
-                setDropLoading(true)
-                if (props.readFiles) {
-                  e.stopPropagation()
-                  readFiles(e.dataTransfer).then((files) => {
-                    if (data) {
-                      p = onDrop(e, { files, data })
-                    } else {
-                      p = onDrop(e, { files })
-                    }
-                    if (p instanceof Promise) {
-                      p.then((v) => {
-                        setDropLoading(false)
-                        global.requestAnimationFrame(() => {
-                          t.dispatchEvent(ev)
-                        })
-                      })
-                    } else {
-                      setDropLoading(false)
-                      global.requestAnimationFrame(() => {
-                        t.dispatchEvent(ev)
-                      })
-                    }
-                  })
-                } else {
-                  if (data) {
-                    p = onDrop(e, { data, files: [] })
-                  } else {
-                    p = onDrop(e, { files: [] })
-                  }
-                  if (p instanceof Promise) {
-                    e.stopPropagation()
-                    p.then((v) => {
-                      setDropLoading(false)
-                      global.requestAnimationFrame(() => {
-                        t.dispatchEvent(ev)
-                      })
-                    })
-                  } else {
-                    setDropLoading(false)
-                  }
-                }
-              }
-            }
-          }
-        },
-        [onDrop]
-      ),
+      onDrop: handleOnDrop,
     },
     isDragOver,
     isDropLoading,
