@@ -42,29 +42,6 @@ export type MultiSectionInputProps = {
   sections: Section[]
 }
 
-// section example for HH:MM:SS
-//
-// {
-//   validation: /^(\d|[0-1]\d|2[0-3])$/,
-//   maxSize: 2,
-//   preprocess: (v) => ('00' + v).substr(-2),
-//   separator: ':',
-//   default: '00',
-// },
-// {
-//   validation: /^(\d|[0-5]\d|2\d)$/,
-//   maxSize: 2,
-//   preprocess: (v) => ('00' + v).substr(-2),
-//   separator: ':',
-//   default: '00',
-// },
-// {
-//   validation: /^(\d|[0-5]\d|2\d)$/,
-//   maxSize: 2,
-//   preprocess: (v) => ('00' + v).substr(-2),
-//   default: '00',
-// },
-
 export const MultiSectionInput: FunctionComponent<MultiSectionInputProps> = ({
   border,
   value,
