@@ -65,7 +65,7 @@ export const Select: FunctionComponent<SelectInputProps> = ({
 
   const [stateValue, setValue] = useScopedState<
     DropdownOption | DropdownOption[]
-  >(value, identifier)
+  >(value, identifier, isFocus)
 
   /**
    * Force state-update when value is updated externally.

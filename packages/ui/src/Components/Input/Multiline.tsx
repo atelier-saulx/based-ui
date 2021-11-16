@@ -54,7 +54,7 @@ export const MultilineTextInput: FunctionComponent<MultilineInputProps> = ({
   const [isFocus, setFocus] = useState(false)
   const [isWrong, setWrong] = useState(false)
   const [hover, isHover] = useHover()
-  const [stateValue, setValue] = useScopedState(value, identifier)
+  const [stateValue, setValue] = useScopedState(value, identifier, isFocus)
 
   useEffect(() => {
     if (ref.current) {
