@@ -82,9 +82,9 @@ export const FileUpload: FunctionComponent<FileUploadProps> = ({
 
   // TODO: drop not triggereing
   const [drop, isDrop] = useDrop(
-    useCallback((e) => {
+    useCallback((event) => {
       uploadFile(
-        e.dataTransfer.files,
+        event.dataTransfer.files,
         progress,
         progressId,
         video ? 'video' : null,
@@ -140,8 +140,8 @@ export const FileUpload: FunctionComponent<FileUploadProps> = ({
       />
       <input
         type="file"
-        onChange={useCallback(async (e) => {
-          const files = e.target.files
+        onChange={useCallback(async (event) => {
+          const files = event.target.files
           uploadFile(
             files,
             progress,
@@ -149,7 +149,7 @@ export const FileUpload: FunctionComponent<FileUploadProps> = ({
             video ? 'video' : undefined,
             fake
           )
-          e.target.value = ''
+          event.target.value = ''
           updateInProgress(true)
         }, [])}
         style={{

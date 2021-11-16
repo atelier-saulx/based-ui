@@ -10,7 +10,6 @@ import { Text } from '../Text'
 import { ChevronRight as Expand, iconFromString } from '../../icons'
 import useHover from '../../hooks/events/useHover'
 import { SideMenuItemProps } from './SideMenu'
-// import { useHub } from '@saulx/hub'
 import useLocation from 'wouter/use-location'
 import useTooltip from '../../hooks/overlay/useTooltip'
 import useMultipleEvents from '../../hooks/events/useMultipleEvents'
@@ -56,7 +55,7 @@ export const SideMenuItem: FunctionComponent<SideMenuItemProps> = ({
       <div
         {...useMultipleEvents(hover, tooltip)}
         onClick={useCallback(
-          (e) => {
+          (event) => {
             if (to) {
               setLocation(to)
             }
@@ -64,7 +63,7 @@ export const SideMenuItem: FunctionComponent<SideMenuItemProps> = ({
               toggleExpand()
             }
             if (onClick) {
-              onClick(e, data)
+              onClick(event, data)
             }
           },
           [onClick, to, !!items, data]

@@ -274,10 +274,10 @@ export default ({
         position: 'relative',
       }}
       // @ts-ignore
-      onMouseMove={useThrottledCallback((e) => {
-        const { x } = e.currentTarget.getBoundingClientRect()
+      onMouseMove={useThrottledCallback((event) => {
+        const { x } = event.currentTarget.getBoundingClientRect()
 
-        let mousePosX = e.clientX
+        let mousePosX = event.clientX
 
         if (window.innerWidth - mousePosX < 200) {
           isFlippedX = true
@@ -286,7 +286,7 @@ export default ({
         }
 
         // @ts-ignore
-        setCoord(e.pageX - x)
+        setCoord(event.pageX - x)
       }, [])}
       {...hover}
     >
