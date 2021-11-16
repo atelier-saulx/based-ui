@@ -42,9 +42,9 @@ const parseProps = (p) => {
       }
     }
 
-    children.push(
+    const targetChild = (
       <div
-        key={key}
+        key={`parseProp-${key}`}
         style={{
           width: '100%',
           display: 'flex',
@@ -60,6 +60,8 @@ const parseProps = (p) => {
         {body}
       </div>
     )
+
+    children.push(targetChild)
   }
 
   return (
@@ -121,7 +123,7 @@ const ComponentWrapper = ({ Component, grid, componentProps, children }) => {
 }
 
 const RenderComponents = ({ category, grid, bg = 'transparent' }) => {
-  const s: CSSProperties = {
+  const styles: CSSProperties = {
     border: '1px dashed ' + useColor({ color: 'foreground', opacity: 0.2 }),
     padding: '20px',
     borderRadius: '7px',
@@ -130,6 +132,7 @@ const RenderComponents = ({ category, grid, bg = 'transparent' }) => {
     backgroundColor: bg,
     flexDirection: grid ? 'row' : 'column',
   }
+
   return (
     <div
       style={{
@@ -150,22 +153,23 @@ const RenderComponents = ({ category, grid, bg = 'transparent' }) => {
           {category.name}
         </SubText>
       </div>
-      <div style={s}>
-        {category.components.map((v, i) => {
-          const x = {
+
+      <div style={styles}>
+        {category.components.map((component, index) => {
+          const innerStyles: CSSProperties = {
             width: '100%',
             border:
               '1px dashed ' + useColor({ color: 'foreground', opacity: 0.2 }),
             padding: 20,
             borderRadius: '7px',
             display: 'flex',
-            flexDirection: v.grid || grid ? 'row' : 'column',
-            flexWrap: v.grid || grid ? 'wrap' : 'nowrap',
+            flexDirection: component.grid || grid ? 'row' : 'column',
+            flexWrap: component.grid || grid ? 'wrap' : 'nowrap',
           }
 
           return (
             <div
-              key={i}
+              key={`wrapper-${index}`}
               style={{
                 marginBottom: '15px',
                 marginRight: grid ? '15px' : '0px',
@@ -173,7 +177,7 @@ const RenderComponents = ({ category, grid, bg = 'transparent' }) => {
             >
               <div
                 onClick={() => {
-                  window.location.search = '?component=' + v.name
+                  window.location.search = '?component=' + component.name
                 }}
               >
                 <SubText
@@ -181,38 +185,39 @@ const RenderComponents = ({ category, grid, bg = 'transparent' }) => {
                     marginBottom: '5px',
                   }}
                 >
-                  {v.name}
+                  {component.name}
                 </SubText>
               </div>
-              <div key={v.name} style={x}>
-                {v.props.map((p, i) => {
-                  if (typeof p === 'function') {
+
+              <div key={component.name} style={innerStyles}>
+                {component.props.map((prop, index) => {
+                  if (typeof prop === 'function') {
                     return (
                       <div
-                        key={i}
+                        key={`inner-${index}`}
                         style={{
                           marginBottom: '15px',
                           marginRight: grid ? '15px' : '0px',
                         }}
                       >
-                        {React.createElement(p)}
+                        {React.createElement(prop)}
                       </div>
                     )
                   }
 
-                  let { children } = p
+                  let { children } = prop
                   if (children) {
                     if (typeof children === 'function') {
                       children = children()
                     }
                   }
-                  const { Component } = v
+                  const { Component } = component
                   return (
                     <ComponentWrapper
-                      key={i}
+                      key={index}
                       Component={Component}
-                      grid={v.grid || grid}
-                      componentProps={p}
+                      grid={component.grid || grid}
+                      componentProps={prop}
                     >
                       {children}
                     </ComponentWrapper>

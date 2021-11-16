@@ -249,8 +249,8 @@ export const Dropdown: FunctionComponent<PositionPropsFn & DropdownProps> = (
             iconColor={{ color: 'foreground' }}
             type="search"
             noBackground
-            onChange={(v) => {
-              setFilter(v ? String(v).toLowerCase() : '')
+            onChange={(value) => {
+              setFilter(value ? String(value).toLowerCase() : '')
             }}
             noBorder
             noBordeRadius
@@ -260,12 +260,12 @@ export const Dropdown: FunctionComponent<PositionPropsFn & DropdownProps> = (
       ) : null}
 
       {(filterValue
-        ? items.filter((v) => filterFunction(v, filterValue))
+        ? items.filter((item) => filterFunction(item, filterValue))
         : items
       ).map((option, index) => {
         return (
           <Option
-            key={index}
+            key={`Option-${index}`}
             option={option}
             index={index}
             isActive={

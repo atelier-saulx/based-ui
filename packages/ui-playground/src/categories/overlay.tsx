@@ -784,7 +784,7 @@ export default {
                   return data.map(({ id, name }, index) => {
                     return (
                       <ContextualMenuItem
-                        key={id}
+                        key={`ContextualMenuItem-${id}`}
                         label={`${index + 1}. ${name}`}
                       />
                     )

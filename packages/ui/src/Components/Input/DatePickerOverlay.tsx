@@ -97,18 +97,18 @@ export const DatePickerOverlay: FunctionComponent<DatePickerOverlayProps> = ({
     <DayCell key={i}>&nbsp;</DayCell>
   ))
 
-  const days = [...Array(amountDaysInMonth).keys()].map((v, i) => {
+  const days = [...Array(amountDaysInMonth).keys()].map((value, index) => {
     return (
       <DayCell
-        key={i + startWeekDay}
+        key={`DayCell-${index + startWeekDay}`}
         onClick={() => {
           if (onChange) {
-            onChange(new Date(date.getFullYear(), date.getMonth(), v + 1))
+            onChange(new Date(date.getFullYear(), date.getMonth(), value + 1))
           }
         }}
-        highlight={v + 1 === date.getDate()}
+        highlight={value + 1 === date.getDate()}
       >
-        {v + 1}
+        {value + 1}
       </DayCell>
     )
   })
