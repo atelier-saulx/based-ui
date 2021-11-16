@@ -30,27 +30,31 @@ export const DateInput: FunctionComponent<DateInputProps> = ({
   weight,
 }) => {
   const [hasFocus, setHasFocus] = useState(false)
+
   let [dateString, setDateString] = useState<string>(
     timestampToDateString(Number(value))
   )
+
   const [datePickerDate, setDatePickerDate] = useState<Date>(
     value ? new Date(value) : new Date()
   )
-  const update = (v: string): void => {
+
+  const update = (value: string): void => {
     const re = /^(\d{1,2})\/(\d{1,2})\/(\d{1,4})$/
-    onChange(dateValueToTimestamp(v))
-    if (re.test(v)) {
-      setDatePickerDate(new Date(dateValueToTimestamp(v)))
+    onChange(dateValueToTimestamp(value))
+    if (re.test(value)) {
+      setDatePickerDate(new Date(dateValueToTimestamp(value)))
     }
   }
 
   const initialValue = useRef<string | number>()
   const initialIdentifier = useRef<string | number | undefined>()
+
   useEffect(() => {
-    if (
-      value !== initialValue.current ||
-      identifier !== initialIdentifier.current
-    ) {
+    const shouldSetValue =
+      value !== initialValue.current || identifier !== initialIdentifier.current
+
+    if (shouldSetValue) {
       setDateString(timestampToDateString(dateValueToTimestamp(value)))
       initialValue.current = value
       initialIdentifier.current = identifier
@@ -61,21 +65,21 @@ export const DateInput: FunctionComponent<DateInputProps> = ({
     {
       validation: /^(\d|[0-2]\d|3[0-1])$/,
       maxSize: 2,
-      preprocess: (v: string) => ('00' + v).substr(-2),
+      preprocess: (value: string) => ('00' + value).substr(-2),
       separator: '/',
       default: ('00' + new Date().getDate()).substr(-2),
     },
     {
       validation: /^(0?\d|1[0-2])$/,
       maxSize: 2,
-      preprocess: (v: string) => ('00' + v).substr(-2),
+      preprocess: (value: string) => ('00' + value).substr(-2),
       separator: '/',
       default: ('00' + (new Date().getMonth() + 1)).substr(-2),
     },
     {
       validation: /^([1-2]\d{3})$/,
       maxSize: 4,
-      preprocess: (v: string) => v,
+      preprocess: (value: string) => value,
       default: String(new Date().getFullYear()),
     },
   ]

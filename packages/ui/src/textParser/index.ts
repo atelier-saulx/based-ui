@@ -28,7 +28,7 @@ export type TextValueFormat = {
 export { Language }
 
 let fromDefault: boolean = true
-let lang: Language = 'en'
+let defaultLanguage: Language = 'en'
 
 export type Value =
   | undefined
@@ -61,24 +61,24 @@ const readLang = (lang: string): Language => {
 }
 
 export const getLanguage = (): Language => {
-  return lang
+  return defaultLanguage
 }
 
 export const updateLanguage = (language: Language) => {
   fromDefault = false
-  lang = language
+  defaultLanguage = language
   listeners.forEach((fn) => {
-    fn(lang)
+    fn(defaultLanguage)
   })
 }
 
 export const useLanguage = (language?: Language) => {
   if (fromDefault) {
     if (language) {
-      lang = language
+      defaultLanguage = language
     } else if (typeof window !== 'undefined') {
       const language = navigator.language
-      lang = readLang(language)
+      defaultLanguage = readLang(language)
     }
   }
   const [, update] = useReducer((x: number) => x + 1, 0)
@@ -88,7 +88,7 @@ export const useLanguage = (language?: Language) => {
       listeners.delete(update)
     }
   }, [])
-  return lang
+  return defaultLanguage
 }
 
 export function isTextFormat(value: any): value is TextValueFormat {
@@ -105,42 +105,41 @@ export function isTextFormat(value: any): value is TextValueFormat {
 
 const formatText = (
   { format, value }: TextValueFormat,
-  language: Language = lang
+  language: Language = defaultLanguage
 ): string | number | { html: string } => {
-  let str: string | number = ''
+  let formattedString: string | number = ''
+
   if (typeof value === 'object') {
-    // @ts-ignore
-    str = getTextValue(value, language)
+    formattedString = getTextValue(value, language) as string
   } else {
-    str = value
+    formattedString = value
   }
 
-  if (typeof str === 'string') {
+  if (typeof formattedString === 'string') {
     if (format === 'markdown') {
       // memoize?
-      return { html: snarkdown(str) }
+      return { html: snarkdown(formattedString) }
     } else if (format === 'capitalize') {
-      if (str === '') return
-      return str[0].toUpperCase() + str.slice(1)
+      if (formattedString === '') return
+      return formattedString[0].toUpperCase() + formattedString.slice(1)
     } else if (format === 'uppercase') {
-      return str.toUpperCase()
+      return formattedString.toUpperCase()
     } else if (format === 'lowercase') {
-      return str.toLowerCase()
+      return formattedString.toLowerCase()
     } else if (format === 'first-word') {
-      return str.split(' ')[0]
+      return formattedString.split(' ')[0]
     }
   }
 
-  if (
+  const isDateTimeFormat =
     format === 'date' ||
     format === 'date-time' ||
     format === 'date-time-human' ||
     format === 'date-time-text' ||
     format === 'time' ||
     format === 'time-precise'
-  ) {
-    return prettyDate(str, format)
-  } else if (
+
+  const isNumberFormat =
     format === 'number-human' ||
     format === 'number-short' ||
     format === 'number-ratio' ||
@@ -148,22 +147,24 @@ const formatText = (
     format === 'number-euro' ||
     format === 'number-dollar' ||
     format === 'number-pound'
-  ) {
-    return prettyNumber(str, format)
+
+  if (isDateTimeFormat) {
+    return prettyDate(formattedString, format)
+  } else if (isNumberFormat) {
+    return prettyNumber(formattedString, format)
   }
 
-  // @ts-ignore
-  return str
+  return formattedString
 }
 
 export function getTextValue(
-  value: TextValue,
-  language: Language = lang
+  value: TextValue | any,
+  language: Language = defaultLanguage
 ): Value {
   if (Array.isArray(value)) {
     // @ts-ignore
-    return value.map((v: TextValueSingle) => {
-      return getTextValue(v, language)
+    return value.map((item: TextValueSingle) => {
+      return getTextValue(item, language)
     })
   }
   if (typeof value === 'object' && value && !('$$typeof' in value)) {
@@ -180,7 +181,7 @@ export function getTextValue(
 
 export function getStringValue(
   value: TextValue,
-  language: Language = lang
+  language: Language = defaultLanguage
 ): string {
   const x = getTextValue(value, language)
   if (Array.isArray(x)) {

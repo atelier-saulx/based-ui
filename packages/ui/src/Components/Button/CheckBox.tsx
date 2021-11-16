@@ -30,13 +30,13 @@ export const Check: FunctionComponent<CheckProps> = ({
     enabled = overrideValue
   }
 
-  const isArr = Array.isArray(color)
+  const isArray = Array.isArray(color)
 
-  const parsedColor = isArr
+  const parsedColor = isArray
     ? useColor(!enabled ? disabledColor : color)
     : useColor(!enabled ? disabledColor || color : color)
 
-  const bgColor = isArr
+  const bgColor = isArray
     ? enabled
       ? useColor(color)
       : useColor({

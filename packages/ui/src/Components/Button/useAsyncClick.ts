@@ -7,59 +7,65 @@ import {
   useEffect,
   useRef,
 } from 'react'
+
 type GenericEventHandler = EventHandler<SyntheticEvent>
 
 export default (
   onClick: GenericEventHandler | AsyncEvent
 ): [boolean, GenericEventHandler, Error] => {
   const [loading, setLoading] = useState<boolean>(false)
-  const [err, setError] = useState<Error>()
+  const [error, setError] = useState<Error>()
 
-  const r = useRef<boolean>(false)
+  const reference = useRef<boolean>(false)
+
   useEffect(() => {
     return () => {
-      r.current = true
+      reference.current = true
     }
   }, [])
 
   useEffect(() => {
-    if (err) {
+    if (error) {
       const timer = setTimeout(() => {
         setError(null)
-      }, 1e3)
+      }, 1000)
 
       return () => {
         clearTimeout(timer)
       }
     }
-  }, [err])
+  }, [error])
 
   const handler = useCallback(
-    (e) => {
-      e.stopPropagation()
-      if (!r.current) {
+    (event) => {
+      event.stopPropagation()
+
+      if (!reference.current) {
         setLoading(true)
       }
-      const p = onClick(e)
-      if (p instanceof Promise) {
-        p.then((v) => {
-          if (!r.current) {
-            setLoading(false)
-          }
-        }).catch((err) => {
-          if (!r.current) {
-            setError(err)
-            console.error(err)
-            setLoading(false)
-          }
-        })
+
+      const response = onClick(event)
+      if (response instanceof Promise) {
+        response
+          .then((value) => {
+            if (!reference.current) {
+              setLoading(false)
+            }
+          })
+          .catch((errorResponse) => {
+            if (!reference.current) {
+              setError(errorResponse)
+              console.error(errorResponse)
+              setLoading(false)
+            }
+          })
       } else {
-        if (!r.current) {
+        if (!reference.current) {
           setLoading(false)
         }
       }
     },
     [onClick]
   )
-  return [loading, handler, err]
+  return [loading, handler, error]
 }
