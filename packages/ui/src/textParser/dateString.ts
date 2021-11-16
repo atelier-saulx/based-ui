@@ -16,43 +16,47 @@ const addZero = (input: number): string => {
   return response
 }
 
-export default (nr: number | string, format: DateFormat = 'date'): string => {
-  if (typeof nr === 'number') {
-    const d = new Date(nr)
+export default (
+  input: number | string,
+  format: DateFormat = 'date'
+): string => {
+  if (typeof input === 'number') {
+    const date = new Date(input)
     if (format === 'date') {
-      return d.getDate() + '/' + (d.getMonth() + 1) + '/' + d.getFullYear()
+      return (
+        date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear()
+      )
     } else if (format === 'time') {
-      return d.getHours() + ':' + addZero(d.getMinutes())
+      return date.getHours() + ':' + addZero(date.getMinutes())
     } else if (format === 'time-precise') {
       return (
-        d.getHours() +
+        date.getHours() +
         ':' +
-        addZero(d.getMinutes()) +
+        addZero(date.getMinutes()) +
         ':' +
-        addZero(d.getSeconds())
+        addZero(date.getSeconds())
       )
     } else if (format === 'date-time-text') {
-      return `${d.toLocaleDateString('default', {
+      return `${date.toLocaleDateString('default', {
         day: 'numeric',
         month: 'long',
         year: 'numeric',
-      })}, ${d.toLocaleTimeString()}`
+      })}, ${date.toLocaleTimeString()}`
     } else if (format === 'date-time') {
       return (
-        d.getHours() +
+        date.getHours() +
         ':' +
-        addZero(d.getMinutes()) +
+        addZero(date.getMinutes()) +
         ' ' +
-        d.getDate() +
+        date.getDate() +
         '/' +
-        (d.getMonth() + 1) +
+        (date.getMonth() + 1) +
         '/' +
-        d.getFullYear()
+        date.getFullYear()
       )
     } else if (format === 'date-time-human') {
       const now = new Date()
 
-      //
       const timeTable = [
         ['getFullYear', 'year', 'years'],
         ['getMonth', 'month', 'months'],
@@ -62,12 +66,11 @@ export default (nr: number | string, format: DateFormat = 'date'): string => {
         ['getSeconds', 'second', 'seconds'],
       ]
 
-      if (now.getTime() > d.getTime()) {
+      if (now.getTime() > date.getTime()) {
         for (let i = 0; i < timeTable.length; i++) {
           const [m, single, plural] = timeTable[i]
-          // const lang = getLanguage()
           const a = now[m]()
-          const b = d[m]()
+          const b = date[m]()
           if (a > b) {
             const diff = a - b
             return `${a - b} ${diff > 1 ? plural : single} ago`
@@ -79,7 +82,7 @@ export default (nr: number | string, format: DateFormat = 'date'): string => {
         for (let i = 0; i < timeTable.length; i++) {
           const [m, single, plural] = timeTable[i]
           // const lang = getLanguage()
-          const a = d[m]()
+          const a = date[m]()
           const b = now[m]()
           if (a > b) {
             const diff = a - b
@@ -90,8 +93,9 @@ export default (nr: number | string, format: DateFormat = 'date'): string => {
         return 'Now'
       }
     }
-    return String(nr)
-  } else {
-    return nr
+
+    return String(input)
   }
+
+  return input
 }

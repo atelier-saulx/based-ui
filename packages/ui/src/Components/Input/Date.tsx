@@ -65,21 +65,21 @@ export const DateInput: FunctionComponent<DateInputProps> = ({
     {
       validation: /^(\d|[0-2]\d|3[0-1])$/,
       maxSize: 2,
-      preprocess: (v: string) => ('00' + v).substr(-2),
+      preprocess: (value: string) => ('00' + value).substr(-2),
       separator: '/',
       default: ('00' + new Date().getDate()).substr(-2),
     },
     {
       validation: /^(0?\d|1[0-2])$/,
       maxSize: 2,
-      preprocess: (v: string) => ('00' + v).substr(-2),
+      preprocess: (value: string) => ('00' + value).substr(-2),
       separator: '/',
       default: ('00' + (new Date().getMonth() + 1)).substr(-2),
     },
     {
       validation: /^([1-2]\d{3})$/,
       maxSize: 4,
-      preprocess: (v: string) => v,
+      preprocess: (value: string) => value,
       default: String(new Date().getFullYear()),
     },
   ]

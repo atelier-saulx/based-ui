@@ -43,10 +43,10 @@ const Inner = ({ visible, progress }) => {
           background: 'white',
         }}
       >
-        {items.map((v: ProgressContextItem) => {
+        {items.map((item: ProgressContextItem) => {
           return (
             <div
-              key={v.id}
+              key={item.id}
               style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -63,14 +63,14 @@ const Inner = ({ visible, progress }) => {
                 }}
               >
                 <ProgressIndicator
-                  value={v.progress}
+                  value={item.progress}
                   style={{ marginRight: 20 }}
                 />
                 <Title size="small">
                   {`${
-                    v.type === 'video' && v.progress > 99
+                    item.type === 'video' && item.progress > 99
                       ? 'Transcoding...'
-                      : v.name
+                      : item.name
                   }`}
                 </Title>
               </div>
@@ -79,16 +79,16 @@ const Inner = ({ visible, progress }) => {
                   marginRight: 10,
                 }}
                 onClick={() => {
-                  if (v.xhr) {
-                    v.xhr.abort()
-                    delete v.xhr
+                  if (item.xhr) {
+                    item.xhr.abort()
+                    delete item.xhr
                   }
-                  v.removed = true
-                  delete progress.items[v.id]
+                  item.removed = true
+                  delete progress.items[item.id]
                   if (!Object.keys(progress.items).length) {
                     progress.inProgress = false
                   }
-                  progress.listeners.forEach((update) => update({ ...v }))
+                  progress.listeners.forEach((update) => update({ ...item }))
                 }}
               />
             </div>
