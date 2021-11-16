@@ -40,8 +40,8 @@ export const EditableTitle: FunctionComponent<EditableTitle> = ({
   const [hover, isHover] = !onChange ? [{}, false] : useHover()
   const [isEditing, setEditing] = useState(false)
   const [inputText, setInputText] = useScopedState(value, identifier, isEditing)
-  const ref = useRef(null)
   const [isFocused, setIsFocused] = useState(false)
+  const ref = useRef(null)
 
   const editingFix = () => ref.current && ref.current.blur()
   useEffect(() => {
@@ -54,7 +54,6 @@ export const EditableTitle: FunctionComponent<EditableTitle> = ({
   useEffect(() => {
     if (ref.current && autoFocus) {
       setEditing(true)
-      // @ts-ignore
       ref.current.focus()
     }
   }, [autoFocus])
@@ -159,21 +158,30 @@ export const EditableTitle: FunctionComponent<EditableTitle> = ({
           }
         }}
         onBlur={(event) => {
-          const el = event.target as HTMLElement
-          const v = el.innerText
-          if (v === '\n') {
-            el.innerText = ''
+          const element = event.target as HTMLElement
+
+          const value = element.innerText
+          if (value === '\n') {
+            element.innerText = ''
             return
           }
-          setInputText(v)
+
+          setInputText(value)
           setEditing(false)
-          if (typeof onBlur === 'function') onBlur(event)
-          if (placeholderAsDefault) el.classList.add('placeholderAsDefault')
+
+          if (typeof onBlur === 'function') {
+            onBlur(event)
+          }
+
+          if (placeholderAsDefault) {
+            element.classList.add('placeholderAsDefault')
+          }
+
           setIsFocused(false)
         }}
         onFocus={(event) => {
-          const el = event.target as HTMLElement
-          el.classList.remove('placeholderAsDefault')
+          const element = event.target as HTMLElement
+          element.classList.remove('placeholderAsDefault')
           setIsFocused(true)
         }}
         onClick={(event) => {
