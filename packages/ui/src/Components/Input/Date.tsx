@@ -30,27 +30,31 @@ export const DateInput: FunctionComponent<DateInputProps> = ({
   weight,
 }) => {
   const [hasFocus, setHasFocus] = useState(false)
+
   let [dateString, setDateString] = useState<string>(
     timestampToDateString(Number(value))
   )
+
   const [datePickerDate, setDatePickerDate] = useState<Date>(
     value ? new Date(value) : new Date()
   )
-  const update = (v: string): void => {
+
+  const update = (value: string): void => {
     const re = /^(\d{1,2})\/(\d{1,2})\/(\d{1,4})$/
-    onChange(dateValueToTimestamp(v))
-    if (re.test(v)) {
-      setDatePickerDate(new Date(dateValueToTimestamp(v)))
+    onChange(dateValueToTimestamp(value))
+    if (re.test(value)) {
+      setDatePickerDate(new Date(dateValueToTimestamp(value)))
     }
   }
 
   const initialValue = useRef<string | number>()
   const initialIdentifier = useRef<string | number | undefined>()
+
   useEffect(() => {
-    if (
-      value !== initialValue.current ||
-      identifier !== initialIdentifier.current
-    ) {
+    const shouldSetValue =
+      value !== initialValue.current || identifier !== initialIdentifier.current
+
+    if (shouldSetValue) {
       setDateString(timestampToDateString(dateValueToTimestamp(value)))
       initialValue.current = value
       initialIdentifier.current = identifier
