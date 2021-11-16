@@ -11,7 +11,7 @@ const cwd = process.cwd()
 const hasTS = async (base = cwd) => {
   try {
     await access(join(base, 'src/index.ts'))
-  } catch (e) {
+  } catch (error) {
     await access(join(base, 'src/index.tsx'))
   }
 }
@@ -57,8 +57,9 @@ hasTS()
         target.workspaceDependencies.map(async (location) => {
           if (map[location].name in dependencies) {
             const exists = await hasTS(join(cwd, '../../', location))
-              .then((r) => true)
-              .catch((e) => false)
+              .then(() => true)
+              .catch(() => false)
+
             if (exists) {
               tsconfig.references.push({ path: join('../../', location) })
             }
@@ -70,7 +71,7 @@ hasTS()
     }
   })
   .then(() => console.info('✅ tsconfig.json up to date'))
-  .catch((e) => {
-    console.log(e)
+  .catch((error) => {
+    console.log(error)
     console.info('⚠️  no src/index.ts file')
   })

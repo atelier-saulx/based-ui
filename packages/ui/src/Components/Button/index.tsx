@@ -56,11 +56,11 @@ const UploadOverlay: FunctionComponent<{
     <input
       type="file"
       multiple
-      onChange={useCallback(async (e) => {
-        const files = e.target.files
-        const x = await Promise.all([...files].map((f) => loadFile(f)))
+      onChange={useCallback(async (event) => {
+        const files = event.target.files
+        const x = await Promise.all([...files].map((file) => loadFile(file)))
         onSelectFile({ fileList: files, files: x })
-        e.target.value = ''
+        event.target.value = ''
       }, [])}
       css={{
         position: 'absolute',
@@ -155,11 +155,10 @@ export const Button: FunctionComponent<ButtonProps> = ({
     pColor.tone = 1
   }
 
-  if (
-    isHover &&
-    typeof foregroundColor === 'object' &&
-    foregroundColor.tone > 1
-  ) {
+  const shouldSetForeground =
+    isHover && typeof foregroundColor === 'object' && foregroundColor.tone > 1
+
+  if (shouldSetForeground) {
     foregroundColor = {
       ...foregroundColor,
       tone: Math.max(

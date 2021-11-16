@@ -194,21 +194,21 @@ const Sequence = ({ style, data: { items, context, width }, index }) => {
 
   if (itemData['@@newSequence']) {
     let onClick = context.footer.onClick
+
     if (
       context.footer.onClick &&
       context.header &&
       context.header.onEditTitle
     ) {
-      onClick = async (e, data) => {
+      onClick = async (event, data) => {
         // allow expand in here
         // maybe add on autofocus ref
-
         context.autoFocusRef.current = true
         // where to put this...
         setTimeout(() => {
           context.autoFocusRef.current = false
         }, 500)
-        await context.footer.onClick(e, data)
+        await context.footer.onClick(event, data)
       }
     }
 
@@ -243,11 +243,12 @@ const Sequence = ({ style, data: { items, context, width }, index }) => {
 
     if (context.onDrop) {
       const onDrop = context.onDrop
+
       context = {
         ...context,
         onDrop: useCallback(
-          (e, d) => {
-            return onDrop(e, { ...d, targetData: itemData })
+          (event, dropData) => {
+            return onDrop(event, { ...dropData, targetData: itemData })
           },
           [onDrop, itemData]
         ),
@@ -256,15 +257,19 @@ const Sequence = ({ style, data: { items, context, width }, index }) => {
 
     const [drag, isDragging] =
       context.draggable !== false ? useDrag(wrappedData) : [{}, false]
+
     const [drop, isDragOver] =
       context.draggable !== false ? useDrop() : [{}, false]
 
-    let dropSeq, isDragOverSeq, isDropLoading
+    let dropSeq
+    let isDragOverSeq
+    let isDropLoading
+
     if (index === 0 && context.onDropSequence && context.draggable !== false) {
       ;[dropSeq, isDragOverSeq, isDropLoading] = useDrop(
         useCallback(
-          (e, { files, data }) => {
-            return context.onDropSequence(e, {
+          (event, { files, data }) => {
+            return context.onDropSequence(event, {
               targetIndex: 0,
               data,
               files,
@@ -495,6 +500,7 @@ export const Flow = (props: FlowProps) => {
   }
 
   const expanded = expandedRef.current
+
   return (
     <AutoSizer>
       {({ height, width }) => {
