@@ -4,7 +4,7 @@ import { GraphContext } from '.'
 import useThrottledCallback from '../../../hooks/useThrottledCallback'
 
 const HoverPath = ({ amount, i, code, d, legend, points }) => {
-  const ctx = useContext(GraphContext)
+  const context = useContext(GraphContext)
   const s = i % 3
 
   return (
@@ -13,15 +13,17 @@ const HoverPath = ({ amount, i, code, d, legend, points }) => {
         // @ts-ignore
         onMouseEnter={useThrottledCallback(() => {
           // @ts-ignore
-          ctx.v = code
-          global.requestAnimationFrame(() => ctx.hover && ctx.hover(code))
-        }, [ctx])}
+          context.v = code
+          global.requestAnimationFrame(
+            () => context.hover && context.hover(code)
+          )
+        }, [context])}
         // @ts-ignore
         onMouseLeave={useThrottledCallback(() => {
           // @ts-ignore
-          ctx.v = ''
-          global.requestAnimationFrame(() => ctx.hover && ctx.hover(''))
-        }, [ctx])}
+          context.v = ''
+          global.requestAnimationFrame(() => context.hover && context.hover(''))
+        }, [context])}
         d={d}
         style={{
           opacity: s === 1 ? 0.3 : s === 2 ? 0.4 : 0.1,

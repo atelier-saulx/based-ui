@@ -4,17 +4,15 @@ import Graph from './Graph'
 import StackedGraph from './StackedGraph'
 import { TextValue, TextFormat } from '../../../textParser'
 
-// console.log(datax)
-
 type Data = { x: number; y: number }[]
 
-type Ctx = { hover?: (key: string) => void }
+type Context = { hover?: (key: string) => void }
 
-const defCtx: Ctx = {
-  hover: (a) => {},
+const defaultContext: Context = {
+  hover: () => {},
 }
 
-export const GraphContext = createContext(defCtx)
+export const GraphContext = createContext(defaultContext)
 
 GraphContext.displayName = 'GraphContext'
 
@@ -27,8 +25,6 @@ export type LineGraphProps = {
   pure?: boolean
   label?: TextValue
 }
-
-// multi line
 
 const LineGraph: FunctionComponent<LineGraphProps> = ({
   data,

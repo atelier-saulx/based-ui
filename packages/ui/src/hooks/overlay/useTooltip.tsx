@@ -26,22 +26,22 @@ export default function useTooltip(
   > = {},
   handler?: (selection: Event | any) => OnClose | undefined
 ): TooltipEvents {
-  const ctx = createOverlayContextRef({ children, ...props })
+  const context = createOverlayContextRef({ children, ...props })
 
   useEffect(() => {
-    if (ctx.current.timer) {
-      clearTimeout(ctx.current.timer)
+    if (context.current.timer) {
+      clearTimeout(context.current.timer)
     }
   }, [])
 
   return {
     onMouseEnter: useCallback(
-      (e, data) => {
+      (event, data) => {
         // @ts-ignore
         if (
-          ctx.current &&
-          ctx.current.props &&
-          ctx.current.props.children === null
+          context.current &&
+          context.current.props &&
+          context.current.props.children === null
         ) {
           return null
         }
@@ -49,24 +49,24 @@ export default function useTooltip(
         let cancel: OnClose
         let tooltip: ReactNode
         if (handler) {
-          cancel = handler(e)
+          cancel = handler(event)
         }
-        const target = e.currentTarget
+        const target = event.currentTarget
         const removeListeners = () => {
-          clearTimeout(ctx.current.timer)
+          clearTimeout(context.current.timer)
           target.removeEventListener('mouseleave', leave)
           target.removeEventListener('click', leave)
         }
         const leave = () => {
           removeListeners()
-          clearTimeout(ctx.current.timer)
+          clearTimeout(context.current.timer)
           if (tooltip) removeOverlay(tooltip)
         }
         target.addEventListener('mouseleave', leave)
         target.addEventListener('click', leave)
-        ctx.current.timer = setTimeout(() => {
+        context.current.timer = setTimeout(() => {
           tooltip = (
-            <OverlayContext.Provider value={ctx}>
+            <OverlayContext.Provider value={context}>
               <GenericOverlay target={target} {...props} {...data}>
                 {children}
               </GenericOverlay>
@@ -82,7 +82,7 @@ export default function useTooltip(
           )
         }, props.initialTimer || 500)
       },
-      [ctx]
+      [context]
     ),
   }
 }

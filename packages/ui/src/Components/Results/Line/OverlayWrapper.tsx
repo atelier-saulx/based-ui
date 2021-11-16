@@ -21,8 +21,9 @@ const OverlayNested = ({
 
   if (isStacked) {
     const [selectedKey, setSelected] = useState<string>('')
-    const ctx = useContext(GraphContext)
-    ctx.hover = setSelected
+    const context = useContext(GraphContext)
+
+    context.hover = setSelected
 
     extraInfo = (
       <div

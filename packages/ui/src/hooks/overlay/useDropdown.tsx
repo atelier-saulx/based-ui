@@ -12,15 +12,15 @@ import { DataEventHandler } from '../../types'
 export type OnSelect = (
   value: DropdownOption | DropdownOption[],
   index: number | number[],
-  e?: Event | SyntheticEvent
+  event?: Event | SyntheticEvent
 ) => void
 
 const findOptionIndex = (
   options: DropdownOption[],
   option: DropdownOption
 ): number => {
-  return options.findIndex((o) => {
-    return dropdownOptionIsEqual(option, o)
+  return options.findIndex((item) => {
+    return dropdownOptionIsEqual(option, item)
   })
 }
 
@@ -35,28 +35,28 @@ export default (
   } = {},
   handler?: () => () => void
 ): DataEventHandler => {
-  const ctx = createOverlayContextRef({
+  const context = createOverlayContextRef({
     value,
     items,
     ...props,
   })
 
   return useCallback(
-    (e, extraProps) => {
-      e.preventDefault()
-      e.stopPropagation()
+    (event, extraProps) => {
+      event.preventDefault()
+      event.stopPropagation()
       const cancel = handler && handler()
       const dropdown = (
-        <OverlayContext.Provider value={ctx}>
+        <OverlayContext.Provider value={context}>
           <Dropdown
             filter={props.filter}
             value={value}
             // @ts-ignore
-            target={e.currentTarget}
+            target={event.currentTarget}
             items={items}
-            onChange={(option, index, e) => {
-              if (ctx.current.props.multi) {
-                let value = ctx.current.props.value
+            onChange={(option, index, event) => {
+              if (context.current.props.multi) {
+                let value = context.current.props.value
                 if (!Array.isArray(value)) {
                   value = []
                 }
@@ -69,17 +69,22 @@ export default (
                 }
                 const res = onSelect(
                   value,
-                  value.map((v) => findOptionIndex(ctx.current.props.items, v)),
-                  e
+                  value.map((selectValue) =>
+                    findOptionIndex(context.current.props.items, selectValue)
+                  ),
+                  event
                 )
                 if (Array.isArray(res)) {
                   value = res
                 }
-                ctx.current.update({ ...ctx.current.props, value })
+                context.current.update({ ...context.current.props, value })
               } else {
                 removeOverlay(dropdown)
-                ctx.current.update({ ...ctx.current.props, value: option })
-                onSelect(option, index, e)
+                context.current.update({
+                  ...context.current.props,
+                  value: option,
+                })
+                onSelect(option, index, event)
               }
             }}
             {...props}
@@ -90,6 +95,6 @@ export default (
       addOverlay(dropdown, cancel, { transparent: true })
       return true
     },
-    [ctx]
+    [context]
   )
 }

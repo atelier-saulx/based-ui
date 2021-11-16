@@ -59,35 +59,43 @@ export const OverlayContext = React.createContext(def)
 export function createOverlayContextRef<P>(
   props: PropsWithChildren<P>
 ): RefObject<OverlayCtx<P>> {
-  const ctx: RefObject<OverlayCtx<P>> = useRef(
+  const context: RefObject<OverlayCtx<P>> = useRef(
     useMemo(() => {
       return new OverlayCtx()
     }, [])
   )
+
   if (props) {
-    ctx.current.update(props)
+    context.current.update(props)
   }
-  return ctx
+
+  return context
 }
 
-type Props = PropsWithChildren<any>
+export default function useOverlayProps<TProps = PropsWithChildren<any>>(
+  overlayProps?: TProps
+): TProps {
+  const context = useContext(OverlayContext)
 
-export default function useOverlayProps<P = Props>(p?: P): P {
-  const ctx = useContext(OverlayContext)
-  if (!ctx || !ctx.current) {
+  if (!context || !context.current) {
     throw new Error(
       'Cannot useOverlayProps outside of an overlay (missing overlay context)'
     )
   }
-  const [props, update] = useState(ctx.current.props)
+
+  const [contextProps, updateContextProps] = useState(context.current.props)
+
   useEffect(() => {
-    ctx.current.listeners.add(update)
+    context.current.listeners.add(updateContextProps)
+
     return () => {
-      ctx.current.listeners.delete(update)
+      context.current.listeners.delete(updateContextProps)
     }
-  }, [update])
-  if (p) {
-    return { ...p, ...props }
+  }, [updateContextProps])
+
+  if (overlayProps) {
+    return { ...overlayProps, ...contextProps }
   }
-  return props
+
+  return contextProps
 }

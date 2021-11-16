@@ -23,7 +23,7 @@ export default function useOverlay<P>(
   e: Event | SyntheticEvent,
   selectionProps?: PropsWithChildren<any>
 ) => void {
-  const ctx = createOverlayContextRef(props)
+  const context = createOverlayContextRef(props)
   return useCallback(
     (e: Event | SyntheticEvent, selectionProps) => {
       let cancel: OnClose
@@ -31,7 +31,7 @@ export default function useOverlay<P>(
         cancel = handler(e)
       }
       const reactNode = (
-        <OverlayContext.Provider value={ctx}>
+        <OverlayContext.Provider value={context}>
           <Overlay
             Component={component}
             target={e.currentTarget}
@@ -47,7 +47,7 @@ export default function useOverlay<P>(
         options
       )
     },
-    [ctx]
+    [context]
   )
 }
 `

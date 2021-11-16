@@ -8,21 +8,23 @@ export default (
   children: Children,
   props: PropsWithChildren<ModalProps> = {}
 ): DataEventHandler => {
-  const ctx = createOverlayContextRef({ children, ...props })
+  const context = createOverlayContextRef({ children, ...props })
+
   useEffect(() => {
-    if (ctx.current.timer) {
-      clearTimeout(ctx.current.timer)
+    if (context.current.timer) {
+      clearTimeout(context.current.timer)
     }
   }, [])
+
   return useCallback(
-    (e, extraProps) => {
-      if (e) {
-        e.preventDefault()
-        e.stopPropagation()
+    (event, extraProps) => {
+      if (event) {
+        event.preventDefault()
+        event.stopPropagation()
       }
 
       const modal = (
-        <OverlayContext.Provider value={ctx}>
+        <OverlayContext.Provider value={context}>
           <Modal
             {...props}
             {...extraProps}
@@ -41,6 +43,6 @@ export default (
 
       return true
     },
-    [ctx]
+    [context]
   )
 }

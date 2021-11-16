@@ -20,20 +20,21 @@ export default function useOverlay<P, T = PropsWithChildren<any>>(
   Overlay: ComponentType<GenericOverlayProps & T> = GenericOverlay,
   options: OverlayOptions = { transparent: true }
 ): DataEventHandler {
-  const ctx = createOverlayContextRef(props)
+  const context = createOverlayContextRef(props)
+
   return useCallback(
-    (e: Event | SyntheticEvent, selectionProps) => {
-      e.stopPropagation()
-      e.preventDefault()
+    (event: Event | SyntheticEvent, selectionProps) => {
+      event.stopPropagation()
+      event.preventDefault()
       let cancel: OnClose
       if (handler) {
-        cancel = handler(e)
+        cancel = handler(event)
       }
       const reactNode = (
-        <OverlayContext.Provider value={ctx}>
+        <OverlayContext.Provider value={context}>
           <Overlay
             Component={component}
-            target={e.currentTarget}
+            target={event.currentTarget}
             {...selectionProps}
           />
         </OverlayContext.Provider>
@@ -46,6 +47,6 @@ export default function useOverlay<P, T = PropsWithChildren<any>>(
         options
       )
     },
-    [ctx]
+    [context]
   )
 }
