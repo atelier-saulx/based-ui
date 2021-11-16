@@ -1,13 +1,7 @@
 import { useCallback, useRef, useEffect, MouseEventHandler } from 'react'
 
-const isEventCheck = (e) => {
-  return !!e
-  // return (
-  //   (e &&
-  //     (e.constructor.name === 'SyntheticBaseEvent' ||
-  //       e.constructor.name === 'SyntheticEvent')) ||
-  //   e instanceof Event
-  // )
+const isEventCheck = (event) => {
+  return !!event
 }
 
 export default (
@@ -16,6 +10,7 @@ export default (
   frames: number = 1
 ): Function => {
   const ref = useRef(null)
+
   useEffect(
     frames > 1
       ? () => () => {
@@ -34,24 +29,28 @@ export default (
 
   const throttledFn = useCallback(
     frames > 1
-      ? (e, data, t) => {
+      ? (event, data, target) => {
           let isEvent = false
-          if (isEventCheck(e)) {
-            if (!t) t = e.currentTarget
-            if (e.persists) {
-              e.persist()
+
+          if (isEventCheck(event)) {
+            if (!target) {
+              target = event.currentTarget
+            }
+            if (event.persists) {
+              event.persist()
             }
             isEvent = true
           }
+
           if (!ref.current) {
             const throttle = () => {
               ref.current.frames--
               if (ref.current.frames === 0) {
                 if (isEvent) {
-                  e.currentTarget = t
+                  event.currentTarget = target
                 }
                 ref.current = false
-                fn(e, data)
+                fn(event, data)
               } else {
                 ref.current.timer = global.requestAnimationFrame(throttle)
               }
@@ -62,24 +61,25 @@ export default (
             }
           }
         }
-      : (e, data) => {
+      : (event, data) => {
           let isEvent = false
-          let t
+          let target
 
-          if (isEventCheck(e)) {
+          if (isEventCheck(event)) {
             isEvent = true
-            t = e.currentTarget
-            if (e.persists) {
-              e.persist()
+            target = event.currentTarget
+            if (event.persists) {
+              event.persist()
             }
           }
+
           if (!ref.current) {
             ref.current = global.requestAnimationFrame(() => {
               ref.current = false
               if (isEvent) {
-                e.currentTarget = t
+                event.currentTarget = target
               }
-              fn(e, data)
+              fn(event, data)
             })
           }
         },
