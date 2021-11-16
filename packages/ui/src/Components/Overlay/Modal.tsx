@@ -99,18 +99,15 @@ export const ModalHeader: FunctionComponent<ModalHeaderProps> = ({
   )
 }
 
-// let cnt = 0
 export const Modal: FunctionComponent<ModalProps> = (initialProps) => {
   const props = useOverlayProps(initialProps)
   let { onClose, confirmButton, children, header } = props
 
   if (typeof header === 'function') {
-    // @ts-ignore
     header = header(props)
   }
 
   if (typeof confirmButton === 'function') {
-    // @ts-ignore
     confirmButton = confirmButton(props)
   }
 
@@ -178,9 +175,9 @@ export const Modal: FunctionComponent<ModalProps> = (initialProps) => {
             >
               <Button
                 {...confirmButton}
-                onClick={(e) => {
+                onClick={(event) => {
                   // @ts-ignore
-                  confirmButton.onClick(e, props)
+                  confirmButton.onClick(event, props)
                   onClose()
                 }}
                 color={confirmButton.color || { color: 'primary' }}

@@ -43,22 +43,21 @@ const Slider: FunctionComponent<{
   index: number
   width: number
 }> = ({ width, data, isDragging, setDragging, index, setIndex }) => {
-  // use effect for on mouse move
-
   const ref = useRef<{ x: number; index: number }>()
 
   useEffect(() => {
     let moveHandler
     let up
+
     if (isDragging) {
-      up = (e) => {
+      up = () => {
         setDragging(false)
       }
-      moveHandler = (e) => {
+
+      moveHandler = (event) => {
         if (isDragging) {
-          // const { x } = e.currentTarget.getBoundingClientRect()
           const xx =
-            e.pageX -
+            event.pageX -
             ref.current.x +
             ref.current.index * ((width - 120) / data.length)
 
@@ -70,13 +69,12 @@ const Slider: FunctionComponent<{
           setIndex(index)
         }
       }
-      document.addEventListener('mouseup', up)
 
+      document.addEventListener('mouseup', up)
       document.addEventListener('mousemove', moveHandler)
     }
     return () => {
       document.removeEventListener('mouseup', up)
-
       document.removeEventListener('mousemove', moveHandler)
     }
   }, [isDragging, ref])
@@ -123,8 +121,8 @@ const Slider: FunctionComponent<{
             height: 20,
             background: useColor({ color: 'primary' }),
           }}
-          onMouseDown={(e) => {
-            ref.current = { x: e.pageX, index }
+          onMouseDown={(event) => {
+            ref.current = { x: event.pageX, index }
             setDragging(true)
           }}
         />
@@ -167,11 +165,7 @@ const ScatterInner: FunctionComponent<
   let minX
   let maxX
 
-  // if (index === 'last') {
-  //   selectedData = data[data.length - 1].points
-  // } else {
   const points = data[index].points
-  // }
 
   for (let i = 0; i < points.length; i++) {
     const d = points[i]
@@ -205,6 +199,7 @@ const ScatterInner: FunctionComponent<
   const labelW = 150
   const labelamount = (graphWidth + 50) / labelW
   const spread = (maxX - minX) / labelamount
+
   for (let i = 0; i < labelamount; i++) {
     // xLabel format
     // yLabel format
