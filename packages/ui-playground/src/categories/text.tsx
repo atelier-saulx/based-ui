@@ -20,15 +20,15 @@ export default function useOverlay<P>(
   Overlay: ComponentType = GenericOverlay,
   options: OverlayOptions = { transparent: true }
 ): (
-  e: Event | SyntheticEvent,
+  event: Event | SyntheticEvent,
   selectionProps?: PropsWithChildren<any>
 ) => void {
   const context = createOverlayContextRef(props)
   return useCallback(
-    (e: Event | SyntheticEvent, selectionProps) => {
+    (event: Event | SyntheticEvent, selectionProps) => {
       let cancel: OnClose
       if (handler) {
-        cancel = handler(e)
+        cancel = handler(event)
       }
       const reactNode = (
         <OverlayContext.Provider value={context}>

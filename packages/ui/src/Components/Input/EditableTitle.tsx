@@ -136,31 +136,36 @@ export const EditableTitle: FunctionComponent<EditableTitle> = ({
           // backgroundColor: isEditing ? 'red' : 'yellow',
         }}
         onInput={(event) => {
-          const el = event.target as HTMLElement
-          el.classList.remove('showPlaceholder')
-          const v = el.innerText
-          if (v === '' || v === '\n') {
-            el.innerText = ''
-            el.classList.add('showPlaceholder')
+          const element = event.target as HTMLElement
+          element.classList.remove('showPlaceholder')
+
+          const value = element.innerText
+          if (value === '' || value === '\n') {
+            element.innerText = ''
+            element.classList.add('showPlaceholder')
           }
-          onChange(v)
+
+          onChange(value)
         }}
         onKeyDown={(event) => {
-          if (event.key === 'Enter' || event.key === 'Escape') {
-            event.preventDefault()
-            event.stopPropagation()
-            ;(event.target as HTMLElement).blur()
-            const el = event.target as HTMLElement
-            const v = el.innerText
-            setInputText(v)
-            setEditing(false)
-            if (typeof onBlur === 'function') onBlur(event)
+          const shouldAction = event.key === 'Enter' || event.key === 'Escape'
+          if (!shouldAction) return
+
+          event.preventDefault()
+          event.stopPropagation()
+          ;(event.target as HTMLElement).blur()
+          const element = event.target as HTMLElement
+          const value = element.innerText
+          setInputText(value)
+          setEditing(false)
+          if (typeof onBlur === 'function') {
+            onBlur(event)
           }
         }}
         onBlur={(event) => {
           const element = event.target as HTMLElement
-
           const value = element.innerText
+
           if (value === '\n') {
             element.innerText = ''
             return

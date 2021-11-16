@@ -116,37 +116,7 @@ export default {
         },
       ],
     },
-    // {
-    //   name: 'DateInput',
-    //   Component: DateInput,
-    //   props: [
-    //     {
-    //       border: true,
-    //       onChange: (v) => {
-    //         console.log(v)
-    //       },
-    //     },
-    //   ],
-    // },
-    // {
-    //   name: 'TimeInput',
-    //   Component: TimeInput,
-    //   props: [
-    //     {
-    //       border: true,
-    //       onChange: (v) => {
-    //         console.log(v)
-    //       },
-    //     },
-    //     {
-    //       border: true,
-    //       useSeconds: true,
-    //       onChange: (v) => {
-    //         console.log(v)
-    //       },
-    //     },
-    //   ],
-    // },
+
     {
       name: 'MultilineTextInput',
       Component: MultilineTextInput,
@@ -169,6 +139,7 @@ export default {
         },
       ],
     },
+
     {
       name: 'Select',
       Component: Select,

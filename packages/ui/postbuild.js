@@ -16,7 +16,7 @@ const copyCssToDist = async (
         return copyCssToDist(join(srcPath, file), join(destPath, file))
       }
       if (/\.css$/.test(file) || /\.woff2?$/.test(file)) {
-        ensureDir(dirname(join(destPath, file))).then((v) => {
+        ensureDir(dirname(join(destPath, file))).then(() => {
           return copyFile(join(srcPath, file), join(destPath, file))
         })
       }
