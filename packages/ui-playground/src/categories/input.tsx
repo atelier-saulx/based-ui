@@ -15,12 +15,25 @@ import {
 import RenderComponents from '../RenderComponents'
 import { randomText } from './util'
 
+// Why u not in other @based/ui??
+// ????
+import RichText from '@based/ui/src/Components/Input/RichText'
+
 export default {
   name: 'input',
   Render: ({ category }) => (
     <RenderComponents grid={false} category={category} />
   ),
   components: [
+    {
+      name: 'RichText Editor',
+      Component: RichText,
+      props: [
+        () => {
+          return <RichText />
+        },
+      ],
+    },
     {
       name: 'ExpandableTextInput',
       Component: ExpandableTextInput,
