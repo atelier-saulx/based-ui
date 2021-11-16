@@ -17,11 +17,11 @@ const useHover = (onHover?: EventHandler<SyntheticEvent>): Hover => {
   const [isHover, setHover] = useState(false)
   const [isActive, setActive] = useState(false)
 
-  const handleMouseOver = useCallback((e) => {
+  const handleMouseOver = useCallback((event) => {
     if (!isDragging()) {
       setHover(true)
       if (onHover) {
-        onHover(e)
+        onHover(event)
       }
     }
   }, [])

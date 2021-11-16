@@ -19,7 +19,7 @@ import setData from './setData'
 import { deepEqual } from '@saulx/utils'
 
 const drag = {
-  cnt: 0,
+  count: 0,
 }
 
 const MultiDragInfo = () => {
@@ -39,7 +39,7 @@ const MultiDragInfo = () => {
 }
 
 export const isDragging = () => {
-  if (drag.cnt) {
+  if (drag.count) {
     return true
   }
   return false
@@ -92,7 +92,6 @@ function useDrag<T>(
   let addRef: boolean = false
 
   // need this else the ref is removed in this use effect...
-
   const extraRef = useRef<any>()
 
   if (!ref) {
@@ -105,11 +104,11 @@ function useDrag<T>(
     return () => {
       if (endListener.current) {
         // nessecary when an item gets removed (else the drag event stops working)
-        const el = ref.current || extraRef.current
-        isRemoved.current = el
+        const element = ref.current || extraRef.current
+        isRemoved.current = element
         global.requestAnimationFrame(() => {
-          el.style.display = 'none'
-          document.body.appendChild(el)
+          element.style.display = 'none'
+          document.body.appendChild(element)
         })
       }
     }
@@ -119,14 +118,14 @@ function useDrag<T>(
     draggable: true,
     current: null,
     onDragStart: useCallback(
-      (e) => {
+      (event) => {
         setDrag(true)
-        const t = ref ? ref.current : e.currentTarget
+        const target = ref ? ref.current : event.currentTarget
 
-        const { width, height } = t.getBoundingClientRect()
-        drag.cnt++
+        const { width, height } = target.getBoundingClientRect()
+        drag.count++
 
-        const s = getSelection()
+        const selection = getSelection()
 
         const holder = document.createElement('div')
         holder.style.position = 'fixed'
@@ -135,28 +134,31 @@ function useDrag<T>(
         holder.style.top = '0px'
         holder.style.left = '0px'
 
-        let cp: any
-        if (s.length > 1) {
+        let copy: any
+        if (selection.length > 1) {
           render(<MultiDragInfo />, holder)
-          cp = holder.firstChild
+          copy = holder.firstChild
 
-          cp.children[1].innerHTML = `${s.length} items`
+          copy.children[1].innerHTML = `${selection.length} items`
         } else {
-          cp = t.cloneNode(true)
-          cp.style.position = 'absolute'
-          cp.style.width = width + 'px'
-          cp.style.zIndex = 1000
-          cp.style.height = height + 'px'
-          cp.style.pointerEvents = 'none'
+          copy = target.cloneNode(true)
+          copy.style.position = 'absolute'
+          copy.style.width = width + 'px'
+          copy.style.zIndex = 1000
+          copy.style.height = height + 'px'
+          copy.style.pointerEvents = 'none'
+
           if (props.style) {
             for (const style in props.style) {
-              cp.style[style] = props.style[style]
+              copy.style[style] = props.style[style]
             }
           }
+
           if (props.modifyImageElement) {
-            props.modifyImageElement(cp)
+            props.modifyImageElement(copy)
           }
-          holder.appendChild(cp)
+
+          holder.appendChild(copy)
         }
 
         // remove the sneaky copy
@@ -165,39 +167,44 @@ function useDrag<T>(
         })
 
         // allow adding file data for example for images
-        e.dataTransfer.setDragImage(cp, 0, 0)
-
-        e.dataTransfer.setData('application/based', JSON.stringify(data))
+        event.dataTransfer.setDragImage(copy, 0, 0)
+        event.dataTransfer.setData('application/based', JSON.stringify(data))
 
         // need to check to use selection or not
+        const useSelection = selection.find((ds) =>
+          deepEqual(ds.data, data.data)
+        )
 
-        const useSelection = s.find((ds) => deepEqual(ds.data, data.data))
         Promise.all(
           useSelection
-            ? s.filter((s) => !!s.exportData).map((s) => s.exportData(s))
+            ? selection
+                .filter((s) => !!s.exportData)
+                .map((s) => s.exportData(s))
             : [
                 data.exportData
                   ? data.exportData(data)
                   : { text: JSON.stringify(data.data) },
               ]
-        ).then(async (v) => {
-          await setData(e.dataTransfer, v)
+        ).then(async (value) => {
+          await setData(event.dataTransfer, value)
         })
 
         let cancelDragScroll
         if (isSafari()) {
-          cancelDragScroll = dragScroll(t)
+          cancelDragScroll = dragScroll(target)
         }
 
         const end = () => {
-          drag.cnt--
+          drag.count--
           endListener.current = null
           document.body.removeEventListener('dragend', end)
+
           if (!isRemoved.current) {
             setDrag(false)
           } else {
             document.body.removeChild(isRemoved.current)
           }
+
           if (cancelDragScroll) {
             cancelDragScroll()
           }

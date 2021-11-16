@@ -6,21 +6,23 @@ export type ContextualMenuEvent = {
 }
 
 const useContextualMenu = (fn: EventHandler<SyntheticEvent>) => {
-  const eventHandler = useCallback((e) => {
-    if (e.type === 'contextmenu') {
-      e.preventDefault()
+  const eventHandler = useCallback((event) => {
+    if (event.type === 'contextmenu') {
+      event.preventDefault()
 
       // make this cleaner
       // special value to override using current target in overlay
-      e.currentTarget.rect = {
-        x: e.pageX,
-        y: e.pageY,
+      event.currentTarget.rect = {
+        x: event.pageX,
+        y: event.pageY,
         width: 0,
         height: 0,
       }
-      fn(e)
+
+      fn(event)
     }
   }, [])
+
   return {
     onClick: eventHandler,
     onContextMenu: eventHandler,
