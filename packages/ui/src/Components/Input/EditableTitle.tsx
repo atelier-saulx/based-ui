@@ -39,7 +39,7 @@ export const EditableTitle: FunctionComponent<EditableTitle> = ({
 }) => {
   const [hover, isHover] = !onChange ? [{}, false] : useHover()
   const [isEditing, setEditing] = useState(false)
-  const [inputText, setInputText] = useScopedState(value, identifier)
+  const [inputText, setInputText] = useScopedState(value, identifier, isEditing)
   const ref = useRef(null)
   const [isFocused, setIsFocused] = useState(false)
 
