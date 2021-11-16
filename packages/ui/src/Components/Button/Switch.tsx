@@ -14,9 +14,11 @@ export type SwitchProps = {
   identifier?: any
 }
 
-export const Switch: FunctionComponent<
-  SwitchProps & { ignoreInternal?: boolean }
-> = ({
+type SwitchBaseProps = SwitchProps & {
+  ignoreInternal?: boolean
+}
+
+export const Switch: FunctionComponent<SwitchBaseProps> = ({
   onChange,
   color = { color: 'primary' },
   ignoreInternal,
@@ -75,12 +77,12 @@ export const Switch: FunctionComponent<
   )
 }
 
-export const SwitchTextButton: FunctionComponent<
-  SwitchProps & {
-    enabledText?: TextValue
-    disabledText?: TextValue
-  }
-> = ({
+export type SwitchTextButtonProps = SwitchProps & {
+  enabledText?: TextValue
+  disabledText?: TextValue
+}
+
+export const SwitchTextButton: FunctionComponent<SwitchTextButtonProps> = ({
   enabledText = 'Enabled',
   disabledText = 'Disabled',
   onChange,
@@ -99,11 +101,11 @@ export const SwitchTextButton: FunctionComponent<
         alignItems: 'center',
         ...style,
       }}
-      onClick={(e) => {
-        e.stopPropagation()
-        const v = !enabled
-        setValue(v)
-        onChange(v)
+      onClick={(event) => {
+        event.stopPropagation()
+        const value = !enabled
+        setValue(value)
+        onChange(value)
       }}
     >
       <Switch
@@ -111,9 +113,9 @@ export const SwitchTextButton: FunctionComponent<
         value={enabled}
         ignoreInternal
         onChange={useCallback(
-          (v) => {
-            setValue(v)
-            onChange(v)
+          (value) => {
+            setValue(value)
+            onChange(value)
           },
           [onChange]
         )}

@@ -40,15 +40,17 @@ export const TimeInput: FunctionComponent<TimeInputProps> = ({
   let timeString =
     milisecondsToTimeString(timeValueToMiliseconds(value), useSeconds) || ''
 
-  const setTimeString = (v: string): void => {
-    timeString = v
+  const setTimeString = (value: string): void => {
+    timeString = value
   }
-  const update = (v: string) => {
-    onChange(timeValueToMiliseconds(v))
+
+  const update = (value: string) => {
+    onChange(timeValueToMiliseconds(value))
   }
 
   const initialValue = useRef<Date | number | string | null>()
   const initialIdentifier = useRef<string | number | undefined>()
+
   useEffect(() => {
     if (
       value !== initialValue.current ||
