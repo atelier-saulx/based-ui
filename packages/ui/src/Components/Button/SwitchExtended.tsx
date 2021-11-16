@@ -47,11 +47,11 @@ export const SwitchExtended: FunctionComponent<SwitchExtendedProps> = ({
           : '1px solid ' + useColor({ color: 'divider' }),
         ...style,
       }}
-      onClick={(e) => {
-        e.stopPropagation()
-        const v = !enabled
-        setValue(v)
-        onChange(v)
+      onClick={(event) => {
+        event.stopPropagation()
+        const value = !enabled
+        setValue(value)
+        onChange(value)
       }}
     >
       <div
@@ -82,9 +82,9 @@ export const SwitchExtended: FunctionComponent<SwitchExtendedProps> = ({
           value={enabled}
           ignoreInternal
           onChange={useCallback(
-            (v) => {
-              setValue(v)
-              onChange(v)
+            (value) => {
+              setValue(value)
+              onChange(value)
             },
             [onChange]
           )}
