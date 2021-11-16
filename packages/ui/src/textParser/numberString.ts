@@ -1,5 +1,3 @@
-// import { getLanguage } from '../../text'
-
 export type NumberFormat =
   | 'number-short'
   | 'number-human'
@@ -9,17 +7,17 @@ export type NumberFormat =
   | 'number-dollar'
   | 'number-pound'
 
-const parseNumber = (nr: number | string, format: NumberFormat): string => {
+const parseNumber = (input: number | string, format: NumberFormat): string => {
   // if number === number-bytes
   // if number === number-percentage
 
-  if (typeof nr === 'number') {
+  if (typeof input === 'number') {
     if (
       format === 'number-euro' ||
       format === 'number-dollar' ||
       format === 'number-pound'
     ) {
-      const p = parseNumber(nr, 'number-short')
+      const p = parseNumber(input, 'number-short')
       // const thousandSeperator = format === 'number-euro' ? '.' : ','
       const fraction = format === 'number-euro' ? ',' : '.'
 
@@ -37,7 +35,7 @@ const parseNumber = (nr: number | string, format: NumberFormat): string => {
           : ''
       }${s}${f ? `${fraction}${f}` : ''}`
     } else if (format === 'number-bytes') {
-      const kb = nr / 1024
+      const kb = input / 1024
       const mb = kb / 1024
       const gb = mb / 1024
 
@@ -48,37 +46,37 @@ const parseNumber = (nr: number | string, format: NumberFormat): string => {
       } else if (kb > 1) {
         return `${kb.toFixed(2)} kb`
       } else {
-        return `${nr} ${nr === 1 ? 'byte' : 'bytes'}`
+        return `${input} ${input === 1 ? 'byte' : 'bytes'}`
       }
     } else if (format === 'number-ratio') {
-      return `${Math.round(nr * 10000) / 100}%`
+      return `${Math.round(input * 10000) / 100}%`
     } else if (format === 'number-short') {
-      if (nr >= 1e6) {
-        nr = nr / 1e6
-        nr = nr.toFixed(1)
-        if (nr[nr.length - 1] === '0') {
-          nr = nr.slice(0, -2)
+      if (input >= 1e6) {
+        input = input / 1e6
+        input = input.toFixed(1)
+        if (input[input.length - 1] === '0') {
+          input = input.slice(0, -2)
         }
-        return nr + 'm'
-      } else if (nr >= 1e3) {
-        nr = nr / 1e3
-        nr = nr.toFixed(1)
-        if (nr[nr.length - 1] === '0') {
-          nr = nr.slice(0, -2)
+        return input + 'm'
+      } else if (input >= 1e3) {
+        input = input / 1e3
+        input = input.toFixed(1)
+        if (input[input.length - 1] === '0') {
+          input = input.slice(0, -2)
         }
-        return nr + 'k'
+        return input + 'k'
       }
-      nr = nr.toFixed(2)
-      if (nr[nr.length - 1] === '0') {
-        nr = nr.slice(0, -3)
+      input = input.toFixed(2)
+      if (input[input.length - 1] === '0') {
+        input = input.slice(0, -3)
       }
-      return String(nr)
+      return String(input)
     } else if (format === 'number-human') {
-      return nr.toFixed(2)
+      return input.toFixed(2)
     }
-    return String(nr)
+    return String(input)
   } else {
-    return nr
+    return input
   }
 }
 

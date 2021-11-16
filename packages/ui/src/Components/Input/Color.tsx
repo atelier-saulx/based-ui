@@ -22,11 +22,12 @@ const isRgb = (value: string): boolean => {
 
 const toRgb = (value: string): string => {
   if (value && isHex(value)) {
-    const x = hexRgb(value)
-    if (x) {
-      return `rgb(${x.red},${x.green},${x.blue})`
+    const hex = hexRgb(value)
+    if (hex) {
+      return `rgb(${hex.red},${hex.green},${hex.blue})`
     }
   }
+
   return value
 }
 
@@ -41,7 +42,21 @@ type ColorInputProps = {
   color?: Color
 }
 
-const Text = ({ onChange, value, placeholder, focus, blur }) => {
+type TextProps = {
+  onChange: any
+  value: any
+  placeholder: any
+  focus: any
+  blur: any
+}
+
+const Text: FunctionComponent<TextProps> = ({
+  onChange,
+  value,
+  placeholder,
+  focus,
+  blur,
+}) => {
   return (
     <input
       type="text"
@@ -85,8 +100,8 @@ export const ColorInput: FunctionComponent<ColorInputProps> = ({
   )
 
   const update = useCallback(
-    (e) => {
-      const newvalue = toRgb(e.target.value)
+    (event) => {
+      const newvalue = toRgb(event.target.value)
       setValue(newvalue)
       onChange(newvalue)
     },
