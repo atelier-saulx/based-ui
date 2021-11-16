@@ -45,15 +45,15 @@ function readFile(file) {
 }
 
 const Dragger = ({ data, index }) => {
-  const [things, setThings] = useState()
-
   const [drop, isDragOver] = useDrop(async (transfer) => {
     const fileList = transfer.dataTransfer.files
 
-    console.log(
-      'x',
-      JSON.parse(transfer.dataTransfer.getData('application/json'))
-    )
+    try {
+      console.log(
+        'x',
+        JSON.parse(transfer.dataTransfer.getData('application/json'))
+      )
+    } catch (error) {}
 
     for (const file of fileList) {
       // Not supported in Safari for iOS.
