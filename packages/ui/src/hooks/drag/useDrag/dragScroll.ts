@@ -1,54 +1,63 @@
-const animateScroll = (animation, el, p, x, y) => {
-  const rect = p.getBoundingClientRect()
-  if (
+const animateScroll = (animation, element, scroller, x, y) => {
+  const rect = scroller.getBoundingClientRect()
+
+  const shouldAnimate =
     y > rect.y &&
     y < rect.height + rect.y &&
     x > rect.x &&
     x < rect.width + rect.x
-  ) {
-    const hasVerticalScrollbar = p.scrollHeight > rect.height
-    const overflowY =
-      hasVerticalScrollbar && global.getComputedStyle(p)['overflow-y']
-    if (
-      hasVerticalScrollbar &&
-      (overflowY === 'scroll' || overflowY === 'auto')
-    ) {
-      if (!el.tmpp) {
-        el.tmpp = p
-      }
-      if (animation.elem && animation.elem !== p) {
-        delete animation.elem
-        animation.amount = 0
-        animation.frames = 0
-      }
 
-      const scrollArea = Math.min(Math.max(40, 0.1 * rect.height), 125)
-      const ratio = 40 / scrollArea
-
-      if (y > rect.y + rect.height - scrollArea) {
-        const delta = rect.y + rect.height - y
-        animation.amount = (scrollArea - delta) * ratio
-        animation.elem = p
-        animation.start()
-      } else if (y < rect.y + scrollArea) {
-        const delta = y - (rect.y + scrollArea)
-        animation.elem = p
-        animation.amount = delta * ratio
-        animation.start()
-      } else if (animation.elem) {
-        delete animation.elem
-        animation.amount = 0
-        animation.frames = 0
-        animation.stop()
-      } else {
-        animation.stop()
-      }
-      return true
-    }
+  if (!shouldAnimate) {
+    return false
   }
+
+  const hasVerticalScrollbar = scroller.scrollHeight > rect.height
+  const overflowY =
+    hasVerticalScrollbar && global.getComputedStyle(scroller)['overflow-y']
+
+  const shouldUpdate =
+    hasVerticalScrollbar && (overflowY === 'scroll' || overflowY === 'auto')
+
+  if (!shouldUpdate) {
+    return false
+  }
+
+  if (!element.reference) {
+    element.reference = scroller
+  }
+
+  if (animation.elem && animation.elem !== scroller) {
+    delete animation.elem
+    animation.amount = 0
+    animation.frames = 0
+  }
+
+  const scrollArea = Math.min(Math.max(40, 0.1 * rect.height), 125)
+  const ratio = 40 / scrollArea
+
+  if (y > rect.y + rect.height - scrollArea) {
+    const delta = rect.y + rect.height - y
+    animation.amount = (scrollArea - delta) * ratio
+    animation.elem = scroller
+    animation.start()
+  } else if (y < rect.y + scrollArea) {
+    const delta = y - (rect.y + scrollArea)
+    animation.elem = scroller
+    animation.amount = delta * ratio
+    animation.start()
+  } else if (animation.elem) {
+    delete animation.elem
+    animation.amount = 0
+    animation.frames = 0
+    animation.stop()
+  } else {
+    animation.stop()
+  }
+
+  return true
 }
 
-const dragScroll = (t) => {
+const dragScroll = (target) => {
   const animation: {
     loop?: any
     animating?: boolean
@@ -61,8 +70,9 @@ const dragScroll = (t) => {
     animating: false,
     loop: false,
   }
-  // easiest way of doing it for now
+
   const dragScrollers = document.querySelectorAll('[data-dragscroll="true"]')
+
   const nextFrame = () => {
     animation.loop = global.requestAnimationFrame(() => {
       if (animation.elem) {
@@ -78,6 +88,7 @@ const dragScroll = (t) => {
           animation.amount *
           (animation.frames * animation.frames * 0.002 + 0.05)
       }
+
       nextFrame()
     })
   }
@@ -88,32 +99,39 @@ const dragScroll = (t) => {
       nextFrame()
     }
   }
+
   animation.stop = () => {
     animation.animating = false
     global.cancelAnimationFrame(animation.loop)
   }
 
-  const dragListener = (e) => {
-    const el = t
-    let p = el.tmpp || el
-    const y = e.pageY
-    const x = e.pageX
-    for (const p of dragScrollers) {
-      const el = t
-      if (animateScroll(animation, el, p, x, y)) {
+  const dragListener = (event) => {
+    const element = target
+
+    let refence = element.reference || element
+
+    const y = event.pageY
+    const x = event.pageX
+
+    for (const scroller of dragScrollers) {
+      if (animateScroll(animation, element, scroller, x, y)) {
         return
       }
     }
-    while (p && p.getBoundingClientRect) {
-      if (animateScroll(animation, el, p, x, y)) {
+
+    while (refence && refence.getBoundingClientRect) {
+      if (animateScroll(animation, element, refence, x, y)) {
         return
       }
-      p = p.parentNode
+
+      refence = refence.parentNode
     }
+
     animation.stop()
   }
 
   document.body.addEventListener('drag', dragListener)
+
   return () => {
     animation.stop()
     document.body.removeEventListener('drag', dragListener)
