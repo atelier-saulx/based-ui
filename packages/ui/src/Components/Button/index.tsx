@@ -58,8 +58,11 @@ const UploadOverlay: FunctionComponent<{
       multiple
       onChange={useCallback(async (event) => {
         const files = event.target.files
-        const x = await Promise.all([...files].map((file) => loadFile(file)))
-        onSelectFile({ fileList: files, files: x })
+        const selectedFiles = await Promise.all(
+          [...files].map((file) => loadFile(file))
+        )
+
+        onSelectFile({ fileList: files, files: selectedFiles })
         event.target.value = ''
       }, [])}
       css={{

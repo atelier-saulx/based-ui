@@ -125,9 +125,9 @@ export const ExpandableItem: FunctionComponent<ExpandableItemProps> = ({
             <OptionsIcon
               color={{ color: 'foreground', opacity: isHover ? 0.5 : 0 }}
               onClick={useCallback(
-                (e) => {
-                  e.stopPropagation()
-                  onOptions(e, wrappedData)
+                (event) => {
+                  event.stopPropagation()
+                  onOptions(event, wrappedData)
                 },
                 [wrappedData]
               )}

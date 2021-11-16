@@ -52,8 +52,8 @@ export const Switch: FunctionComponent<SwitchBaseProps> = ({
         paddingRight: 2,
         borderRadius: 28,
       }}
-      onClick={(e) => {
-        e.stopPropagation()
+      onClick={(event) => {
+        event.stopPropagation()
         const value = !enabled
         if (setValue) {
           setValue(value)

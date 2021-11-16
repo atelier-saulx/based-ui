@@ -46,12 +46,12 @@ const Footer: FunctionComponent<FooterProps> = ({
         ...style,
       }}
       onClick={useCallback(
-        (e) => {
+        (event) => {
           setLoading(true)
-          // @ts-ignore
-          const p = onClick(e, data || items)
-          if (p instanceof Promise) {
-            p.then((v) => {
+
+          const response = onClick(event, data || items)
+          if (response instanceof Promise) {
+            response.then(() => {
               setLoading(false)
             })
           } else {

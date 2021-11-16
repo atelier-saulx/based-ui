@@ -201,8 +201,8 @@ const GridItem: FunctionComponent<GridItemProps> = ({
           onClick
             ? {
                 onClick: useClick(
-                  (e) => {
-                    onClick(e, wrappedData)
+                  (event) => {
+                    onClick(event, wrappedData)
                   },
                   [onClick, itemData, index]
                 ),
@@ -252,7 +252,7 @@ const GridItem: FunctionComponent<GridItemProps> = ({
                   color: 'foreground',
                 }}
                 onClick={useCallback(
-                  (e) => onOptions(e, wrappedData),
+                  (event) => onOptions(event, wrappedData),
                   [itemData, index]
                 )}
                 style={{

@@ -31,12 +31,15 @@ const Img = ({ src, size }) => {
 const Action = ({ icon, onClick, isHover }) => {
   const [clicky, setClicky] = useState(false)
   const ref = useRef<any>()
+
   useEffect(() => {
     return () => {
       clearTimeout(ref.current)
     }
   }, [])
+
   const ActionIcon = iconFromString(icon)
+
   return (
     <div
       style={{
@@ -45,12 +48,12 @@ const Action = ({ icon, onClick, isHover }) => {
         transition: 'transform 0.15s',
         transform: clicky ? 'scale(1.3)' : 'scale(1)',
       }}
-      onClick={(e) => {
+      onClick={(event) => {
         setClicky(true)
         ref.current = setTimeout(() => {
           setClicky(false)
         }, 150)
-        onClick(e)
+        onClick(event)
       }}
     >
       <ActionIcon />
