@@ -65,7 +65,38 @@ export default {
       name: 'SideMenu',
       category: 'sidemenu',
       Component: SideMenu,
+      inverseColor: true,
+      collapse: 600,
+      width: 300,
       props: [
+        () => {
+          return (
+            <div style={{ display: 'flex', height: '30vh', width: '100%' }}>
+              <SideMenu
+                inverseColor
+                collapse={600}
+                items={[
+                  {
+                    icon: 'Add',
+                    title: 'xxx',
+                  },
+                  {
+                    icon: 'Captcha',
+                    title: 'xxx',
+                  },
+                ]}
+              />
+              <div
+                style={{
+                  backgroundColor: 'red',
+                  flexGrow: 1,
+                }}
+              >
+                SideMenuProps
+              </div>
+            </div>
+          )
+        },
         {
           items: [
             {
@@ -80,7 +111,9 @@ export default {
             {
               title: 'Settings',
               icon: 'Settings',
+              label: 'settings',
             },
+
             {
               title: 'SubItems',
               items: [
@@ -103,6 +136,7 @@ export default {
         },
       ],
     },
+
     {
       name: 'FileUpload',
       category: 'misc',
