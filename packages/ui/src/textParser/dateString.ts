@@ -1,5 +1,3 @@
-// import { getLanguage } from '../../text'
-
 export type DateFormat =
   | 'date'
   | 'date-time'
@@ -8,12 +6,14 @@ export type DateFormat =
   | 'time'
   | 'time-precise'
 
-const addZero = (d: number): string => {
-  const s = d + ''
-  if (s.length === 1) {
-    return '0' + s
+const addZero = (input: number): string => {
+  const response = input + ''
+
+  if (response.length === 1) {
+    return '0' + response
   }
-  return s
+
+  return response
 }
 
 export default (nr: number | string, format: DateFormat = 'date'): string => {
