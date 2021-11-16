@@ -96,7 +96,8 @@ export const ColorInput: FunctionComponent<ColorInputProps> = ({
 
   const [stateValue, setValue] = useScopedState<string | undefined>(
     value,
-    identifier
+    identifier,
+    isFocus
   )
 
   const update = useCallback(

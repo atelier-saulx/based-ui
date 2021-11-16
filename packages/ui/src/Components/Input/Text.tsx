@@ -95,7 +95,7 @@ export const Input: FunctionComponent<InputProps> = ({
   const [isFocus, setFocus] = useState(false)
   const [isWrong, setWrong] = useState(false)
 
-  const [stateValue, setValue] = useScopedState(value, identifier)
+  const [stateValue, setValue] = useScopedState(value, identifier, isFocus)
 
   const update = useCallback(
     (e) => {

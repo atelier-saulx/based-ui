@@ -28,7 +28,7 @@ export default function useScopedState<TValue = string | number | undefined>(
         setValue(value)
       }
     }
-  }, [value, identifier])
+  }, [value, identifier, noExternalUpdate])
 
   return [stateValue, setValue]
 }
