@@ -277,10 +277,9 @@ export default ({
       onMouseMove={useThrottledCallback((e) => {
         const { x } = e.currentTarget.getBoundingClientRect()
 
-        let windowInnerWidth = window.innerWidth
-
         let mousePosX = e.clientX
-        if (windowInnerWidth - mousePosX < 200) {
+
+        if (window.innerWidth - mousePosX < 200) {
           isFlippedX = true
         } else {
           isFlippedX = false
