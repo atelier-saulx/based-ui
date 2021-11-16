@@ -72,18 +72,18 @@ export const MultilineTextInput: FunctionComponent<MultilineInputProps> = ({
   }, [stateValue])
 
   const update = useCallback(
-    (e) => {
-      const newvalue = e.target.value
-      setValue(newvalue)
+    (event) => {
+      const newValue = event.target.value
+      setValue(newValue)
       if (validator) {
-        if (validator(newvalue) || !newvalue) {
+        if (validator(newValue) || !newValue) {
           setWrong(false)
-          onChange(newvalue)
+          onChange(newValue)
         } else {
           setWrong(true)
         }
       } else {
-        onChange(newvalue)
+        onChange(newValue)
       }
     },
     [setValue, onChange, validator]
