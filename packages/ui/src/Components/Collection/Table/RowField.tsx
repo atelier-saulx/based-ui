@@ -7,14 +7,17 @@ import Avatar from '../../Image/Avatar'
 
 const RowField = ({ field, data, isLarge }) => {
   let selectedData = getData(data, field.path)
+
   if (field.format) {
     selectedData = {
       value: selectedData,
       format: field.format,
     }
   }
-  let avatarProps = data.avatarProps
+
+  let avatarProps = data?.avatarProps
   let Icon: Icon, iconProps: IconProps
+
   if (field.type === 'icon') {
     let iconName: IconName
     if (selectedData && typeof selectedData === 'object') {
