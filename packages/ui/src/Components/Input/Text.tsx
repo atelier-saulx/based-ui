@@ -98,23 +98,24 @@ export const Input: FunctionComponent<InputProps> = ({
   const [stateValue, setValue] = useScopedState(value, identifier)
 
   const update = useCallback(
-    (e) => {
-      let newvalue = e.target ? e.target.value : e
-      if (newvalue && type === 'number') {
-        newvalue = Number(newvalue)
+    (event) => {
+      let newValue = event.target ? event.target.value : event
+      if (newValue && type === 'number') {
+        newValue = Number(newValue)
       }
-      setValue(newvalue)
+
+      setValue(newValue)
       if (validator) {
-        if (validator(newvalue) || !newvalue) {
+        if (validator(newValue) || !newValue) {
           setWrong(false)
           if (onValid) onValid(true)
-          onChange(newvalue)
+          onChange(newValue)
         } else {
           setWrong(true)
           if (onValid) onValid(false)
         }
       } else {
-        onChange(newvalue)
+        onChange(newValue)
       }
     },
     [setValue, onChange, validator]

@@ -137,7 +137,7 @@ export const Tabs = ({
       {tabs.map((tab, index) => {
         return (
           <Tab
-            key={index}
+            key={`Tab-${index}`}
             tab={tab}
             onClick={onClick}
             noIndicator={noIndicator}

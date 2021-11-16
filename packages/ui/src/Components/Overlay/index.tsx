@@ -63,8 +63,8 @@ const OverlayItem: FunctionComponent<OverlayItemProps> = ({
       onMouseDown={
         hidden
           ? null
-          : useCallback((e) => {
-              if (e.target === ref.current) {
+          : useCallback((event) => {
+              if (event.target === ref.current) {
                 setVisible(false)
                 setTimeout(() => {
                   removeOverlay(children)
@@ -83,15 +83,15 @@ const Overlay = () => {
 
   useEffect(() => {
     listeners.push(update)
-    const remove = (e: KeyboardEvent) => {
-      if (e.code === 'Esc' || e.keyCode === 27) {
+    const remove = (event: KeyboardEvent) => {
+      if (event.code === 'Esc' || event.keyCode === 27) {
         removeOverlay()
       }
     }
     document.addEventListener('keydown', remove)
     return () => {
       document.removeEventListener('keydown', remove)
-      listeners = listeners.filter((u) => u !== update)
+      listeners = listeners.filter((listener) => listener !== update)
     }
   }, [])
 
@@ -104,10 +104,10 @@ const Overlay = () => {
         left: 0,
       }}
     >
-      {overlays.map((c, i) => {
+      {overlays.map((overlay, index) => {
         return (
-          <OverlayItem key={i} options={c[2]}>
-            {c[0]}
+          <OverlayItem key={`OverlayItem-${index}`} options={overlay[2]}>
+            {overlay[0]}
           </OverlayItem>
         )
       })}

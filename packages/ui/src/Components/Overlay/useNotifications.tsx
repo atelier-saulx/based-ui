@@ -7,6 +7,7 @@ import { Button } from '../Button'
 
 const NOTIFICATION_HEIGHT = 68 + 12 + 16
 const NOTIFICATION_SPACING = 16
+
 let notificationCount = 0
 
 type Notification = {
@@ -36,13 +37,11 @@ export const notify = (payload: Notification) => {
 }
 
 const updateNotificationsY = (notifications: Notification[]) => {
-  notifications
-    // .filter((v) => !v.deleting)
-    .forEach((n: any, i: number) => {
-      n.y =
-        global.innerHeight -
-        ((i + 1) * (NOTIFICATION_HEIGHT + NOTIFICATION_SPACING) + 16)
-    })
+  notifications.forEach((notification: any, index: number) => {
+    notification.y =
+      global.innerHeight -
+      ((index + 1) * (NOTIFICATION_HEIGHT + NOTIFICATION_SPACING) + 16)
+  })
 }
 
 export const useNotifications = ({ update }) => {
@@ -50,8 +49,10 @@ export const useNotifications = ({ update }) => {
 
   useEffect(() => {
     const timers: Set<NodeJS.Timeout> = new Set()
+
     const listener = (notification: Notification) => {
       const id = ++notificationCount
+
       const notificationValue = {
         ...notification,
         y:
@@ -60,43 +61,59 @@ export const useNotifications = ({ update }) => {
         id,
         starting: true,
       }
+
       notifictionsRef.current.push(notificationValue)
       updateNotificationsY(notifictionsRef.current)
       update()
+
       const animate = (time?: number) => {
         if (!notificationValue.deleting) {
-          const t0 = setTimeout(() => {
+          const timeout0 = setTimeout(() => {
             notificationValue.starting = false
             update()
           }, 20)
-          timers.add(t0)
-          const t = setTimeout(() => {
-            const i = notifictionsRef.current.findIndex((v) => v.id === id)
+
+          timers.add(timeout0)
+
+          const timeout = setTimeout(() => {
+            const targetIndex = notifictionsRef.current.findIndex(
+              (value) => value.id === id
+            )
+
             notificationValue.deleting = true
             updateNotificationsY(notifictionsRef.current)
             update()
-            if (i !== -1) {
-              const t2 = setTimeout(() => {
-                const i = notifictionsRef.current.findIndex((v) => v.id === id)
-                notifictionsRef.current.splice(i, 1)
+
+            if (targetIndex !== -1) {
+              const timeout2 = setTimeout(() => {
+                const targetIndex = notifictionsRef.current.findIndex(
+                  (value) => value.id === id
+                )
+
+                notifictionsRef.current.splice(targetIndex, 1)
                 updateNotificationsY(notifictionsRef.current)
                 update()
               }, 510)
-              timers.add(t2)
+              timers.add(timeout2)
             }
           }, time || notificationValue.time || 5000)
-          timers.add(t)
+
+          timers.add(timeout)
         }
       }
+
       notificationValue.close = () => {
         animate(50)
       }
+
       animate()
     }
+
     notifictionObject.listeners.add(listener)
+
     return () => {
       notifictionObject.listeners.delete(listener)
-      timers.forEach((t) => clearTimeout(t))
+      timers.forEach((timer) => clearTimeout(timer))
     }
   }, [notifictionsRef])
 
@@ -109,12 +126,12 @@ export const useNotifications = ({ update }) => {
         top: 16,
       }}
     >
-      {notifictionsRef.current.map((v, i) => (
+      {notifictionsRef.current.map((reference) => (
         <Notification
-          key={v.id}
-          value={v}
+          key={`Notification-${reference.id}`}
+          value={reference}
           close={() => {
-            v.close()
+            reference.close()
           }}
         />
       ))}
@@ -205,7 +222,7 @@ const Notification = ({ value, close }) => {
               }}
               foregroundColor={{ color: 'background' }}
               color={{ color: 'background', opacity: 0 }}
-              onClick={(e) => {
+              onClick={() => {
                 close()
               }}
               icon="close"

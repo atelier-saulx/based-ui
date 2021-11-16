@@ -8,9 +8,9 @@ import useDrag from '../../../hooks/drag/useDrag'
 import useContextualMenu from '../../../hooks/events/useContextualMenu'
 import RowField from './RowField'
 
-const modifyImageElement = (el) => {
-  while (el.children[4]) {
-    el.removeChild(el.children[4])
+const modifyImageElement = (element) => {
+  while (element.children[4]) {
+    element.removeChild(element.children[4])
   }
 }
 
@@ -57,8 +57,8 @@ const TableRow = (props) => {
         context.contextualMenu
           ? useContextualMenu(
               useCallback(
-                (e) => {
-                  context.onOptions(e, wrappedData)
+                (event) => {
+                  context.onOptions(event, wrappedData)
                 },
                 [context.onOptions, wrappedData]
               )
@@ -67,8 +67,8 @@ const TableRow = (props) => {
         context.onClick
           ? {
               onClick: useClick(
-                (e) => {
-                  context.onClick(e, wrappedData)
+                (event) => {
+                  context.onClick(event, wrappedData)
                 },
                 [context.onClick, wrappedData]
               ),
@@ -107,7 +107,7 @@ const TableRow = (props) => {
               data={data.items[props.index]}
               field={field}
               isLarge={context.large}
-              key={index}
+              key={`RowField-${index}`}
             />
           )
         })}
@@ -122,7 +122,7 @@ const TableRow = (props) => {
           >
             <OptionsIcon
               onClick={useCallback(
-                (e) => context.onOptions(e, wrappedData),
+                (event) => context.onOptions(event, wrappedData),
                 [wrappedData]
               )}
               style={{ minWidth: 35 }}

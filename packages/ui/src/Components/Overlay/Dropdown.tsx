@@ -52,9 +52,9 @@ const DoubleClicker = ({ onClick, onDoubleClick = null, ...props }) => {
       }
       onDoubleClick={
         onDoubleClick
-          ? (e) => {
+          ? (event) => {
               clearTimeout(timer.current)
-              onDoubleClick(e)
+              onDoubleClick(event)
             }
           : null
       }
@@ -65,6 +65,7 @@ const DoubleClicker = ({ onClick, onDoubleClick = null, ...props }) => {
 
 const Option: FunctionComponent<OptionProps> = (props) => {
   let { option, isActive, onChange, index, registerDoubleClick } = props
+
   const [hover, isHover] = useHover()
   const Icon: FunctionComponent<IconProps> = iconFromString(option.icon)
   let isSelectNone: boolean
@@ -144,9 +145,9 @@ const Option: FunctionComponent<OptionProps> = (props) => {
       }}
       onDoubleClick={
         registerDoubleClick
-          ? (e) => {
+          ? (event) => {
               if (!option.action) {
-                onChange(option, index, e)
+                onChange(option, index, event)
               }
             }
           : null

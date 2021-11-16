@@ -429,7 +429,7 @@ const Sequence = ({ style, data: { items, context, width }, index }) => {
                     }
                     return (
                       <ListItem
-                        key={index}
+                        key={`ListItem-${index}`}
                         data={{ items: seqItems, context }}
                         index={index}
                         styleOverride={s}

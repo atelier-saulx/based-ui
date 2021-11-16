@@ -130,6 +130,7 @@ const Field = ({
 
 const Fields = ({ onChange, width, context }) => {
   const options = context.onOptions
+
   return (
     <div
       style={{
@@ -144,11 +145,13 @@ const Fields = ({ onChange, width, context }) => {
     >
       {context.itemProps.fields.map((field, index) => {
         let correction = 0
-        if (
+
+        const shouldUpdate =
           index === 1 &&
           (context.itemProps.fields[0].type === 'img' ||
             context.itemProps.fields[0].type === 'icon')
-        ) {
+
+        if (shouldUpdate) {
           correction = context.itemProps.fields[0].width
         }
 
@@ -156,7 +159,7 @@ const Fields = ({ onChange, width, context }) => {
           <Field
             {...field}
             correction={correction}
-            key={index}
+            key={`Field-${index}`}
             onChange={onChange}
           />
         )

@@ -10,15 +10,6 @@ import getFieldSizes from './getFieldSizes'
 
 export const Table: FunctionComponent<TableProps> = (props) => {
   return (
-    // <div
-    //   style={{
-    //     width: '100%',
-    //     paddingLeft: props.paddingLeft === undefined ? 40 : props.paddingLeft,
-    //     paddingRight:
-    //       props.paddingRight === undefined ? 40 : props.paddingRight,
-    //     height: '100%',
-    //   }}
-    // >
     <AutoSizer>
       {({ height, width }) => {
         const itemProps = getFieldSizes(
@@ -44,7 +35,7 @@ export const Table: FunctionComponent<TableProps> = (props) => {
               itemSize={props.large ? 80 : 60}
               {...useDragScroll(true)}
               onScroll={
-                props.onScroll ? (e) => props.onScroll(e, height) : null
+                props.onScroll ? (event) => props.onScroll(event, height) : null
               }
             >
               {TableRow}
@@ -53,6 +44,5 @@ export const Table: FunctionComponent<TableProps> = (props) => {
         )
       }}
     </AutoSizer>
-    // </div>
   )
 }

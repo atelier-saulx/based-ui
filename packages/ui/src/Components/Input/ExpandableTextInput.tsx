@@ -4,13 +4,12 @@ import React, {
   FocusEvent,
   useRef,
   useReducer,
-  // useEffect,
 } from 'react'
 import { Color, useColor } from '../../theme'
 import { IconName, Expand, iconFromString, Drag } from '../../icons'
 import { Validator } from './validators'
 import { DropdownOption } from '../Overlay/Dropdown'
-// import { useHub } from '@saulx/hub'
+
 import { TextValue } from '../../textParser'
 import {
   OnValueChange,
@@ -83,23 +82,11 @@ const ExpandableTextInput: FunctionComponent<ExpandTextProps> = ({
     console.warn(
       'shift functionality does not work currently (after removing @saulx/hub)'
     )
-    // hub = useHub()
-
-    // useEffect(() => {
-    //   const flap = (x) => {
-    //     setExpanded()
-    //   }
-    //   hub.on('device.expandAll', flap)
-    //   return () => {
-    //     hub.removeEventListener('device.expandAll', flap)
-    //   }
-    // }, [])
   }
 
   let drop, isDragOver
   if (onDrop) {
-    // @ts-ignore
-    ;[drop, isDragOver] = useDrop(onDrop)
+    ;[drop, isDragOver] = useDrop(onDrop as any)
   }
 
   return (
@@ -146,12 +133,8 @@ const ExpandableTextInput: FunctionComponent<ExpandTextProps> = ({
           color={{ color: 'foreground' }}
           onClick={
             expandAllOnShift
-              ? (e) => {
-                  // if (e.shiftKey) {
-                  //   // hub.emit('device.expandAll', !isExpanded)
-                  // } else {
+              ? () => {
                   setExpanded()
-                  // }
                 }
               : setExpanded
           }

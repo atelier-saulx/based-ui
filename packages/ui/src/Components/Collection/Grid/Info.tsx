@@ -8,7 +8,7 @@ export default ({ data }) => {
       {values.map((value, index) => {
         return (
           <SubText
-            key={index}
+            key={`SubText-${index}`}
             singleLine
             style={{
               marginRight: 5,

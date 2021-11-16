@@ -286,8 +286,8 @@ const ListItem = ({
           onClick
             ? {
                 onClick: useClick(
-                  (e) => {
-                    onClick(e, wrappedData)
+                  (event) => {
+                    onClick(event, wrappedData)
                   },
                   [onClick, wrappedData]
                 ),
@@ -296,8 +296,8 @@ const ListItem = ({
           contextualMenu
             ? useContextualMenu(
                 useCallback(
-                  (e) => {
-                    onOptions(e, wrappedData)
+                  (event) => {
+                    onOptions(event, wrappedData)
                   },
                   [onOptions, wrappedData]
                 )
@@ -373,10 +373,10 @@ const ListItem = ({
             isHover={isHover}
             icon={actionIcon}
             onClick={useCallback(
-              (e) => {
-                e.stopPropagation()
+              (event) => {
+                event.stopPropagation()
                 if (onAction) {
-                  onAction(e, wrappedData)
+                  onAction(event, wrappedData)
                 }
               },
               [itemData]
@@ -404,9 +404,9 @@ const ListItem = ({
             <OptionsIcon
               color={{ color: 'foreground', opacity: isHover ? 0.5 : 0 }}
               onClick={useCallback(
-                (e) => {
-                  e.stopPropagation()
-                  onOptions(e, wrappedData)
+                (event) => {
+                  event.stopPropagation()
+                  onOptions(event, wrappedData)
                 },
                 [wrappedData]
               )}
