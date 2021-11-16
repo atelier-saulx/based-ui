@@ -14,9 +14,11 @@ export type SwitchProps = {
   identifier?: any
 }
 
-export const Switch: FunctionComponent<
-  SwitchProps & { ignoreInternal?: boolean }
-> = ({
+type SwitchBaseProps = SwitchProps & {
+  ignoreInternal?: boolean
+}
+
+export const Switch: FunctionComponent<SwitchBaseProps> = ({
   onChange,
   color = { color: 'primary' },
   ignoreInternal,
