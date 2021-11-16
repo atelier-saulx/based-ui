@@ -12,19 +12,19 @@ import { deepEqual } from '@saulx/utils'
 
 import isComponent from '../../util/isComponent'
 
-export class OverlayCtx<P> {
-  public props: PropsWithChildren<P>
+class OverlayContextFactory<TProps> {
+  public props: PropsWithChildren<TProps>
 
   public timer: NodeJS.Timeout
 
-  public update(props: PropsWithChildren<P>) {
+  public update(props: PropsWithChildren<TProps>) {
     const children = props.children
+
     if (deepEqual(children, this.props && this.props.children)) {
-      if (
-        this.props &&
-        this.props.children &&
-        isComponent(this.props.children)
-      ) {
+      const shouldSetChildren =
+        this.props && this.props.children && isComponent(this.props.children)
+
+      if (shouldSetChildren) {
         if (children.toString() === this.props.children.toString()) {
           props.children = this.props.children
         }
@@ -33,9 +33,10 @@ export class OverlayCtx<P> {
 
     if (!deepEqual(this.props, props)) {
       this.props = props
+
       global.requestAnimationFrame(() => {
-        this.listeners.forEach((v) => {
-          v(props)
+        this.listeners.forEach((listener) => {
+          listener(props)
         })
       })
     }
@@ -43,25 +44,29 @@ export class OverlayCtx<P> {
 
   public merge(props: Object) {
     this.props = { ...this.props, ...props }
+
     global.requestAnimationFrame(() => {
-      this.listeners.forEach((v) => {
-        v(this.props)
+      this.listeners.forEach((listener) => {
+        listener(this.props)
       })
     })
   }
 
-  public listeners: Set<(props: PropsWithChildren<P>) => void> = new Set()
+  public listeners: Set<(props: PropsWithChildren<TProps>) => void> = new Set()
 }
 
-const def: RefObject<OverlayCtx<any>> = { current: new OverlayCtx() }
-export const OverlayContext = React.createContext(def)
+const overlayContext: RefObject<OverlayContextFactory<any>> = {
+  current: new OverlayContextFactory(),
+}
 
-export function createOverlayContextRef<P>(
-  props: PropsWithChildren<P>
-): RefObject<OverlayCtx<P>> {
-  const context: RefObject<OverlayCtx<P>> = useRef(
+const OverlayContext = React.createContext(overlayContext)
+
+function createOverlayContextRef<TProps>(
+  props: PropsWithChildren<TProps>
+): RefObject<OverlayContextFactory<TProps>> {
+  const context: RefObject<OverlayContextFactory<TProps>> = useRef(
     useMemo(() => {
-      return new OverlayCtx()
+      return new OverlayContextFactory()
     }, [])
   )
 
@@ -99,3 +104,5 @@ export default function useOverlayProps<TProps = PropsWithChildren<any>>(
 
   return contextProps
 }
+
+export { OverlayContextFactory, OverlayContext, createOverlayContextRef }
