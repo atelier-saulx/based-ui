@@ -4,8 +4,8 @@ import { prettyDate, DateFormat } from '@based/pretty-date'
 import { prettyNumber, NumberFormat } from '@based/pretty-number'
 import snarkdown from 'snarkdown'
 
-export function isHtml(val: Value): val is { html: string } {
-  return val && typeof val === 'object' && 'html' in val
+export function isHtml(input: Value): input is { html: string } {
+  return input && typeof input === 'object' && 'html' in input
 }
 
 export default isHtml

@@ -24,8 +24,9 @@ export const Title: FunctionComponent<TitleProps> = ({
   className,
 }) => {
   useDate(children)
-  const v = getTextValue(children)
-  const html = isHtml(v)
+
+  const textValue = getTextValue(children)
+  const html = isHtml(textValue)
 
   return (
     <div
@@ -48,9 +49,9 @@ export const Title: FunctionComponent<TitleProps> = ({
           size === 'large' ? '24px' : size === 'small' ? '15px' : '19px',
         ...style,
       }}
-      dangerouslySetInnerHTML={html ? { __html: v.html } : null}
+      dangerouslySetInnerHTML={html ? { __html: textValue.html } : null}
     >
-      {!html ? v : null}
+      {!html ? textValue : null}
     </div>
   )
 }

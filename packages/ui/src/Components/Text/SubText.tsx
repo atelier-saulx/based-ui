@@ -22,8 +22,10 @@ export const SubText: FunctionComponent<SubTextProps> = ({
   weight = 'regular',
 }) => {
   useDate(children)
-  const v = getTextValue(children)
-  const html = isHtml(v)
+
+  const textValue = getTextValue(children)
+  const html = isHtml(textValue)
+
   return (
     <div
       css={{
@@ -44,9 +46,9 @@ export const SubText: FunctionComponent<SubTextProps> = ({
         textOverflow: singleLine ? 'ellipsis' : null,
         ...style,
       }}
-      dangerouslySetInnerHTML={html ? { __html: v.html } : null}
+      dangerouslySetInnerHTML={html ? { __html: textValue.html } : null}
     >
-      {!html ? v : null}
+      {!html ? textValue : null}
     </div>
   )
 }

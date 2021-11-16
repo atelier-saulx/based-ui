@@ -29,7 +29,7 @@ export const SideMenuItem: FunctionComponent<SideMenuItemProps> = ({
   data,
 }) => {
   const [hover, isHover] = useHover()
-  const [expanded, toggleExpand] = useReducer((v) => !v, false)
+  const [expanded, toggleExpand] = useReducer((value) => !value, false)
   const [, setLocation] = useLocation()
   const ItemIcon = items ? Expand : icon ? iconFromString(icon) : null
   const wasExpanded = useRef(false)
