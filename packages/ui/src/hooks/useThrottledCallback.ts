@@ -1,4 +1,4 @@
-import { useCallback, useRef, useEffect, MouseEventHandler } from 'react'
+import { useCallback, useRef, useEffect } from 'react'
 
 const isEventCheck = (event) => {
   return !!event
@@ -9,82 +9,83 @@ export default (
   refs: any[] = [],
   frames: number = 1
 ): Function => {
+  const isMultiFrame = frames > 1
+
   const ref = useRef(null)
 
-  useEffect(
-    frames > 1
-      ? () => () => {
-          if (ref.current) {
-            global.cancelAnimationFrame(ref.current.timer)
-            ref.current = false
+  // Cleanup when destroyed
+  useEffect(() => () => {
+    if (!ref.current) return
+    const cancelId = isMultiFrame ? ref.current.timer : ref.current
+    global.cancelAnimationFrame(cancelId)
+    ref.current = false
+  })
+
+  const handleMultiFrame = (event, data, target) => {
+    let isEvent = false
+
+    if (isEventCheck(event)) {
+      if (!target) {
+        target = event.currentTarget
+      }
+      if (event.persists) {
+        event.persist()
+      }
+
+      isEvent = true
+    }
+
+    if (!ref.current) {
+      const throttle = () => {
+        ref.current.frames--
+        if (ref.current.frames === 0) {
+          if (isEvent) {
+            event.currentTarget = target
           }
+          ref.current = false
+          fn(event, data)
+        } else {
+          ref.current.timer = global.requestAnimationFrame(throttle)
         }
-      : () => () => {
-          if (ref.current) {
-            global.cancelAnimationFrame(ref.current)
-            ref.current = false
-          }
+      }
+
+      ref.current = {
+        timer: global.requestAnimationFrame(throttle),
+        frames,
+      }
+    }
+  }
+
+  const handleSingleFrame = (event, data) => {
+    let isEvent = false
+    let target
+
+    if (isEventCheck(event)) {
+      isEvent = true
+      target = event.currentTarget
+      if (event.persists) {
+        event.persist()
+      }
+    }
+
+    if (!ref.current) {
+      ref.current = global.requestAnimationFrame(() => {
+        ref.current = false
+        if (isEvent) {
+          event.currentTarget = target
         }
-  )
+        fn(event, data)
+      })
+    }
+  }
 
-  const throttledFn = useCallback(
-    frames > 1
-      ? (event, data, target) => {
-          let isEvent = false
-
-          if (isEventCheck(event)) {
-            if (!target) {
-              target = event.currentTarget
-            }
-            if (event.persists) {
-              event.persist()
-            }
-            isEvent = true
-          }
-
-          if (!ref.current) {
-            const throttle = () => {
-              ref.current.frames--
-              if (ref.current.frames === 0) {
-                if (isEvent) {
-                  event.currentTarget = target
-                }
-                ref.current = false
-                fn(event, data)
-              } else {
-                ref.current.timer = global.requestAnimationFrame(throttle)
-              }
-            }
-            ref.current = {
-              timer: global.requestAnimationFrame(throttle),
-              frames,
-            }
-          }
-        }
-      : (event, data) => {
-          let isEvent = false
-          let target
-
-          if (isEventCheck(event)) {
-            isEvent = true
-            target = event.currentTarget
-            if (event.persists) {
-              event.persist()
-            }
-          }
-
-          if (!ref.current) {
-            ref.current = global.requestAnimationFrame(() => {
-              ref.current = false
-              if (isEvent) {
-                event.currentTarget = target
-              }
-              fn(event, data)
-            })
-          }
-        },
-    refs
-  )
+  const throttledFn = useCallback((event, data, target) => {
+    if (isMultiFrame) {
+      return handleMultiFrame(event, data, target)
+    } else {
+      return handleSingleFrame(event, data)
+    }
+  }, refs)
 
   return throttledFn
 }
