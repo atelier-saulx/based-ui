@@ -1,32 +1,39 @@
 export default (...args: { [key: string]: any }[]): { [key: string]: any } => {
-  const x = args[0]
-  for (let i = 1; i < args.length; i++) {
-    for (const key in args[i]) {
-      if (x[key]) {
-        if (typeof x[key] === 'function') {
-          const p = x[key]
-          const n = args[i][key]
-          if (n) {
-            x[key] = (e) => {
-              let r, r1
-              r1 = p(e)
+  const item = args[0]
+
+  for (let index = 1; index < args.length; index++) {
+    for (const key in args[index]) {
+      if (item[key]) {
+        if (typeof item[key] === 'function') {
+          const prop = item[key]
+
+          const target = args[index][key]
+          if (target) {
+            item[key] = (event) => {
+              let response
+              let r1
+
+              r1 = prop(event)
               if (r1 !== undefined) {
-                r = r1
+                response = r1
               }
-              r1 = n(e) !== undefined
+
+              r1 = target(event) !== undefined
               if (r1 !== undefined) {
-                r = r1
+                response = r1
               }
-              return r
+
+              return response
             }
           }
         } else {
-          x[key] = args[i][key]
+          item[key] = args[index][key]
         }
       } else {
-        x[key] = args[i][key]
+        item[key] = args[index][key]
       }
     }
   }
-  return x
+
+  return item
 }
