@@ -60,23 +60,28 @@ export default (
                 if (!Array.isArray(value)) {
                   value = []
                 }
+
                 const index = findOptionIndex(value, option)
                 value = [...value]
+
                 if (index !== -1) {
                   value.splice(index, 1)
                 } else {
                   value.push(option)
                 }
-                const res = onSelect(
+
+                const response = onSelect(
                   value,
                   value.map((selectValue) =>
                     findOptionIndex(context.current.props.items, selectValue)
                   ),
                   event
                 )
-                if (Array.isArray(res)) {
-                  value = res
+
+                if (Array.isArray(response)) {
+                  value = response
                 }
+
                 context.current.update({ ...context.current.props, value })
               } else {
                 removeOverlay(dropdown)
@@ -92,6 +97,7 @@ export default (
           />
         </OverlayContext.Provider>
       )
+
       addOverlay(dropdown, cancel, { transparent: true })
       return true
     },
