@@ -13,16 +13,12 @@ type SideMenuProps = {
 }
 
 const SideMenu: FC<SideMenuProps> = ({ style = {}, items = [], onClick }) => {
-  function menuClicked(item: SideMenuItem) {
-    onClick(item)
-  }
-
   const sideMenuItems = items.map((itemProps, index) => {
     return (
       <SideMenuItem
         key={`SideMenuItem-${index}`}
+        onClick={() => onClick(itemProps)}
         {...itemProps}
-        onClick={() => menuClicked(itemProps)}
       />
     )
   })
