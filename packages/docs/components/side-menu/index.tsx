@@ -1,5 +1,5 @@
 import React from 'react'
-import { Logo } from '../logo'
+import { LogoWithTitle } from '../logo'
 import { SideMenu as Menu, MenuItem } from '@based/ui-next/dist'
 import { useRouter } from 'next/router'
 
@@ -22,22 +22,16 @@ const SideMenu = () => {
   ]
 
   const Header = (
-    <div
-      onClick={() => {
-        router.push('/')
-      }}
-    >
-      <Logo />
+    <div onClick={() => router.push('/')}>
+      <LogoWithTitle />
     </div>
   )
 
   return (
     <Menu
-      items={menuItems}
+      menuItems={menuItems}
       Header={Header}
-      onClick={({ route }) => {
-        router.push(route)
-      }}
+      onClick={({ route }) => router.push(route)}
     />
   )
 }

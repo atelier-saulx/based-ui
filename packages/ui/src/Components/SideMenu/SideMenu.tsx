@@ -8,25 +8,28 @@ export type MenuItem = {
 }
 
 type SideMenuProps = {
-  style?: CSSProperties
-  items: MenuItem[]
+  menuItems: MenuItem[]
   Header?: JSX.Element
   Footer?: JSX.Element
   onClick?: (value: MenuItem) => void
+  style?: CSSProperties
 }
 
 const SideMenu: FunctionComponent<SideMenuProps> = ({
   style = {},
-  items = [],
+  menuItems = [],
   Header = null,
   Footer = null,
   onClick,
 }) => {
-  const SideMenuItems = items.map((itemProps, index) => {
+  const SideMenuItems = menuItems.map((itemProps, index) => {
     return (
       <SideMenuItem
         key={`SideMenuItem-${index}`}
         onClick={() => onClick(itemProps)}
+        style={{
+          marginBottom: index !== menuItems.length - 1 ? '6px' : null,
+        }}
         {...itemProps}
       />
     )

@@ -79,7 +79,7 @@ const BaseLogo: FunctionComponent<BaseLogoProps> = ({
   )
 }
 
-const Logo = () => {
+const LogoWithTitle = () => {
   return (
     <div
       style={{
@@ -94,6 +94,7 @@ const Logo = () => {
       >
         <BaseLogo />
       </div>
+
       <Text
         fontWeight="bold"
         style={{
@@ -109,4 +110,4 @@ const Logo = () => {
   )
 }
 
-export { Logo }
+export { BaseLogo, LogoWithTitle }

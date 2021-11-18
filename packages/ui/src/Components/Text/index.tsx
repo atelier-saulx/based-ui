@@ -12,7 +12,7 @@ export const Text: FunctionComponent<TextProps> = ({
   style = {},
   fontWeight = 'normal',
 }) => {
-  const weight =
+  const targetWeight =
     fontWeight === 'bold'
       ? 700
       : fontWeight === 'semibold'
@@ -28,7 +28,7 @@ export const Text: FunctionComponent<TextProps> = ({
         lineHeight: '24px',
         letterSpacing: '-0.015em',
         userSelect: 'text',
-        fontWeight: weight,
+        fontWeight: targetWeight,
         ...style,
       }}
     >

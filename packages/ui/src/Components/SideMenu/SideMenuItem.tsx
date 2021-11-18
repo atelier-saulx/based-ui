@@ -1,12 +1,13 @@
-import React, { FC } from 'react'
+import React, { CSSProperties, FC } from 'react'
 import { Text } from '../Text'
 
 export type SideMenuItemProps = {
   title: string
   onClick?: (value) => void
+  style?: CSSProperties
 }
 
-const SideMenuItem: FC<SideMenuItemProps> = ({ title, onClick }) => {
+const SideMenuItem: FC<SideMenuItemProps> = ({ title, onClick, style }) => {
   return (
     <div
       style={{
@@ -15,6 +16,7 @@ const SideMenuItem: FC<SideMenuItemProps> = ({ title, onClick }) => {
         width: 200,
         minWidth: 200,
         cursor: 'pointer',
+        ...style,
       }}
       onClick={onClick}
     >
