@@ -6,13 +6,13 @@ import { Title } from '@based/ui-next/dist'
 const Home: NextPage = () => {
   const ExamplesLink = (
     <Link href="/examples">
-      <a style={{ color: 'blue' }}>Examples</a>
+      <a style={{ color: 'orange' }}>Examples</a>
     </Link>
   )
 
   const PlaygroundLink = (
     <Link href="/playground">
-      <a style={{ color: 'blue' }}>Playground</a>
+      <a style={{ color: 'orange' }}>Playground</a>
     </Link>
   )
 
