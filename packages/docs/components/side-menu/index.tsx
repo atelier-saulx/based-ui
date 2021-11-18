@@ -22,7 +22,12 @@ const SideMenu = () => {
   ]
 
   const Header = (
-    <div onClick={() => router.push('/')}>
+    <div
+      onClick={() => router.push('/')}
+      style={{
+        padding: '10px',
+      }}
+    >
       <LogoWithTitle />
     </div>
   )
