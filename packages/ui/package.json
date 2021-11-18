@@ -17,6 +17,7 @@
   },
   "devDependencies": {
     "@saulx/eslint-config": "^1.1.0",
+    "@saulx/hash": "^1.1.0",
     "@saulx/prettier-config": "^1.0.0",
     "@types/node": "^16.9.4",
     "@types/react": "^17.0.22",

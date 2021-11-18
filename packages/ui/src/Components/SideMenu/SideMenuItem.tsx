@@ -13,6 +13,7 @@ const SideMenuItem: FC<SideMenuItemProps> = ({ title, onClick }) => {
         flexDirection: 'column',
         width: 200,
         minWidth: 200,
+        cursor: 'pointer',
       }}
       onClick={onClick}
     >

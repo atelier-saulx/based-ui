@@ -1,6 +1,6 @@
-import React, { FC } from 'react'
+import React, { FunctionComponent } from 'react'
 
-const ExampleComponent: FC = () => {
+const ExampleComponent: FunctionComponent = () => {
   return <div>[[ ExampleComponent ]]</div>
 }
 

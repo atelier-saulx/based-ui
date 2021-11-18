@@ -1,18 +1,27 @@
-import React, { CSSProperties, FC } from 'react'
+import React, { CSSProperties, FunctionComponent } from 'react'
+import { useColor } from '../../theme'
 import { SideMenuItem } from './SideMenuItem'
 
-export type SideMenuItem = {
+export type MenuItem = {
   title: string
   route: string
 }
 
 type SideMenuProps = {
   style?: CSSProperties
-  items: SideMenuItem[]
-  onClick?: (value) => void
+  items: MenuItem[]
+  Header?: JSX.Element
+  Footer?: JSX.Element
+  onClick?: (value: MenuItem) => void
 }
 
-const SideMenu: FC<SideMenuProps> = ({ style = {}, items = [], onClick }) => {
+const SideMenu: FunctionComponent<SideMenuProps> = ({
+  style = {},
+  items = [],
+  Header = null,
+  Footer = null,
+  onClick,
+}) => {
   const sideMenuItems = items.map((itemProps, index) => {
     return (
       <SideMenuItem
@@ -32,10 +41,16 @@ const SideMenu: FC<SideMenuProps> = ({ style = {}, items = [], onClick }) => {
         width: 200,
         minWidth: 200,
         overflowX: 'hidden',
+        backgroundColor: useColor({
+          color: 'background',
+          tone: 3,
+        }),
         ...style,
       }}
     >
-      {sideMenuItems}
+      <>{Header}</>
+      <>{sideMenuItems}</>
+      <>{Footer}</>
     </div>
   )
 }

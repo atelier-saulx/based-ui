@@ -1,11 +1,12 @@
 import React from 'react'
-import { SideMenu as Menu, SideMenuItem } from '@based/ui-next/dist'
+import { Logo } from '../logo'
+import { SideMenu as Menu, MenuItem } from '@based/ui-next/dist'
 import { useRouter } from 'next/router'
 
 const SideMenu = () => {
   const router = useRouter()
 
-  const menuItems: SideMenuItem[] = [
+  const menuItems: MenuItem[] = [
     {
       title: 'Home',
       route: '/',
@@ -20,14 +21,22 @@ const SideMenu = () => {
     },
   ]
 
+  const Header = (
+    <div
+      onClick={() => {
+        router.push('/')
+      }}
+    >
+      <Logo />
+    </div>
+  )
+
   return (
     <Menu
       items={menuItems}
+      Header={Header}
       onClick={({ route }) => {
         router.push(route)
-      }}
-      style={{
-        background: 'red',
       }}
     />
   )
