@@ -1,4 +1,5 @@
 import React, { FC } from 'react'
+import { Text } from '../Text'
 
 export type SideMenuItemProps = {
   title: string
@@ -17,7 +18,7 @@ const SideMenuItem: FC<SideMenuItemProps> = ({ title, onClick }) => {
       }}
       onClick={onClick}
     >
-      {title}
+      <Text>{title}</Text>
     </div>
   )
 }

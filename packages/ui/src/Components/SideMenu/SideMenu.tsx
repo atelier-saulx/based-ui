@@ -22,7 +22,7 @@ const SideMenu: FunctionComponent<SideMenuProps> = ({
   Footer = null,
   onClick,
 }) => {
-  const sideMenuItems = items.map((itemProps, index) => {
+  const SideMenuItems = items.map((itemProps, index) => {
     return (
       <SideMenuItem
         key={`SideMenuItem-${index}`}
@@ -49,7 +49,7 @@ const SideMenu: FunctionComponent<SideMenuProps> = ({
       }}
     >
       <>{Header}</>
-      <>{sideMenuItems}</>
+      <>{SideMenuItems}</>
       <>{Footer}</>
     </div>
   )
