@@ -17,7 +17,7 @@ const Home: NextPage = () => {
         <h1>Playground</h1>
 
         <div>
-          <Example></Example>
+          <Example />
         </div>
       </div>
     </div>
