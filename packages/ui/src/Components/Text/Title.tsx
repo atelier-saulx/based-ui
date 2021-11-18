@@ -6,7 +6,7 @@ type TextProps = {
   fontWeight?: 'regular' | 'medium' | 'semibold' | 'bold'
 }
 
-export const Text: FunctionComponent<TextProps> = ({
+const Title: FunctionComponent<TextProps> = ({
   children,
   value = '',
   style = {},
@@ -24,7 +24,7 @@ export const Text: FunctionComponent<TextProps> = ({
   return (
     <div
       style={{
-        fontSize: '15px',
+        fontSize: '22px',
         lineHeight: '24px',
         letterSpacing: '-0.015em',
         userSelect: 'text',
@@ -36,3 +36,5 @@ export const Text: FunctionComponent<TextProps> = ({
     </div>
   )
 }
+
+export { Title }
