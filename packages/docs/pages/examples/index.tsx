@@ -1,6 +1,8 @@
 import React from 'react'
 import Link from 'next/link'
 
+import { Title } from '@based/ui-next/dist'
+
 const PlaygroundLink = (
   <Link href="/playground">
     <a style={{ color: 'orange' }}>Playground</a>
@@ -13,7 +15,16 @@ const Examples = () => (
       padding: '20px',
     }}
   >
-    There are no examples yet. Check out {PlaygroundLink}.
+    <Title
+      fontWeight="bold"
+      style={{
+        marginBottom: '20px',
+      }}
+    >
+      Examples
+    </Title>
+
+    <p>There are no examples yet. Check out {PlaygroundLink}.</p>
   </div>
 )
 
