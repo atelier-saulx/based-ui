@@ -6,6 +6,7 @@
   src: url('./fonts/Font-Thin.woff2') format('woff2'),
     url('./fonts/Font-Thin.woff') format('woff');
 }
+
 @font-face {
   font-family: 'Font';
   font-style: italic;
@@ -108,6 +109,7 @@
   src: url('./fonts/Font-Bold.woff2') format('woff2'),
     url('./fonts/Font-Bold.woff') format('woff');
 }
+
 @font-face {
   font-family: 'Font';
   font-style: italic;
@@ -125,6 +127,7 @@
   src: url('./fonts/Font-ExtraBold.woff2') format('woff2'),
     url('./fonts/Font-ExtraBold.woff') format('woff');
 }
+
 @font-face {
   font-family: 'Font';
   font-style: italic;
@@ -142,6 +145,7 @@
   src: url('./fonts/Font-Black.woff2') format('woff2'),
     url('./fonts/Font-Black.woff') format('woff');
 }
+
 @font-face {
   font-family: 'Font';
   font-style: italic;
@@ -160,6 +164,7 @@ Usage:
     html { font-family: 'Font var', sans-serif; }
   }
 */
+
 @font-face {
   font-family: 'Font var';
   font-weight: 100 900;
@@ -168,6 +173,7 @@ Usage:
   font-named-instance: 'Regular';
   src: url('./fonts/Font-roman.var.woff2') format('woff2');
 }
+
 @font-face {
   font-family: 'Font var';
   font-weight: 100 900;

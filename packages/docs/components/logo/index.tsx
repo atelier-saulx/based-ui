@@ -95,11 +95,11 @@ const Logo = () => {
         <BaseLogo />
       </div>
       <Text
-        fontWeight="semibold"
+        fontWeight="bold"
         style={{
           display: 'flex',
           marginLeft: -60,
-          marginTop: 10,
+          marginTop: 14,
           fontSize: '22px',
         }}
       >

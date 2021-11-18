@@ -3,7 +3,7 @@ import React, { CSSProperties, FunctionComponent } from 'react'
 type TextProps = {
   value?: string
   style?: CSSProperties
-  fontWeight?: 'regular' | 'medium' | 'semibold'
+  fontWeight?: 'regular' | 'medium' | 'semibold' | 'bold'
 }
 
 export const Text: FunctionComponent<TextProps> = ({
@@ -12,6 +12,15 @@ export const Text: FunctionComponent<TextProps> = ({
   style = {},
   fontWeight = 'normal',
 }) => {
+  const weight =
+    fontWeight === 'bold'
+      ? 700
+      : fontWeight === 'semibold'
+      ? 600
+      : fontWeight === 'medium'
+      ? 500
+      : 'normal'
+
   return (
     <div
       style={{
@@ -19,12 +28,7 @@ export const Text: FunctionComponent<TextProps> = ({
         lineHeight: '24px',
         letterSpacing: '-0.015em',
         userSelect: 'text',
-        fontWeight:
-          fontWeight === 'semibold'
-            ? 600
-            : fontWeight === 'medium'
-            ? 500
-            : 'normal',
+        fontWeight: weight,
         ...style,
       }}
     >
