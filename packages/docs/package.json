@@ -1,8 +1,7 @@
 {
-  "name": "@based/docs",
+  "name": "@based/ui-docs",
   "version": "0.0.1",
-  "repository": "https://github.com/atelier-saulx/based-ui",
-  "description": "Documentation for @based/ui-next",
+  "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -10,19 +9,22 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "next": "^12.0.4",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "next": "12.0.4",
+    "react": "17.0.2",
+    "react-dom": "17.0.2"
   },
   "devDependencies": {
+    "@saulx/eslint-config": "^1.1.0",
+    "@saulx/prettier-config": "^1.0.0",
     "@types/node": "16.11.7",
     "@types/react": "17.0.35",
-    "eslint": "7",
     "eslint-config-next": "12.0.4",
-    "typescript": "4.5.2"
+    "eslint": "7",
+    "typescript": "4.5.2",
+    "@based/ui-next": "3.0.0"
   },
-  "sideEffects": false,
-  "main": "dist/index.js",
-  "module": "src/index.ts",
-  "license": "MIT"
+  "prettier": "@saulx/prettier-config",
+  "eslintConfig": {
+    "extends": "@saulx/eslint-config"
+  }
 }

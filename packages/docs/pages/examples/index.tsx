@@ -1,5 +1,5 @@
 import React from 'react'
-import { Example } from '../../../ui-next/dist'
+import { Example } from '@based/ui-next/dist'
 
 const Examples = () => (
   <>

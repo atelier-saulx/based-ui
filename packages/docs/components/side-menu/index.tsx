@@ -1,5 +1,5 @@
 import React from 'react'
-import { SideMenu as Menu, SideMenuItem } from '../../../ui-next/dist'
+import { SideMenu as Menu, SideMenuItem } from '@based/ui-next/dist'
 import { useRouter } from 'next/router'
 
 const SideMenu = () => {
