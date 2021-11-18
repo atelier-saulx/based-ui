@@ -1,4 +1,5 @@
 import '../styles/reset.css'
+import '../styles/font.css'
 
 import { SideMenu } from '../components/side-menu'
 import type { AppProps } from 'next/app'

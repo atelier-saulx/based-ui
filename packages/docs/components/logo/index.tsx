@@ -1,19 +1,18 @@
 import React, { FunctionComponent } from 'react'
+import { Text } from '@based/ui-next/dist'
 
-type LogoProps = {
+type BaseLogoProps = {
   isSmall?: boolean
   fillColor?: string
 }
 
-const Logo: FunctionComponent<LogoProps> = ({
+const BaseLogo: FunctionComponent<BaseLogoProps> = ({
   isSmall = false,
   fillColor = '#000',
 }) => {
   return isSmall ? (
     <div
       style={{
-        width: '100%',
-        padding: 8,
         cursor: 'pointer',
       }}
     >
@@ -31,12 +30,10 @@ const Logo: FunctionComponent<LogoProps> = ({
   ) : (
     <div
       style={{
-        width: '100%',
-        paddingTop: 24,
         cursor: 'pointer',
       }}
     >
-      <svg viewBox="0 0 997 429" fill="none">
+      <svg viewBox="0 0 997 249" fill="none">
         <g clipPath="url(#clip0)">
           <path
             d="M272 195.96V96H290.76V134.19C293.26 130.8 296.41 128.12 300.21 126.15C304 124.19 308.18 123.2 312.74 123.2C317.38 123.2 321.67 124.14 325.6 126.01C329.53 127.89 332.97 130.5 335.92 133.85C338.87 137.2 341.17 141.11 342.82 145.58C344.47 150.05 345.3 154.92 345.3 160.19C345.3 165.55 344.45 170.51 342.76 175.06C341.06 179.62 338.69 183.61 335.66 187.05C332.62 190.49 329.05 193.17 324.94 195.09C320.83 197.01 316.41 197.97 311.67 197.97C307.02 197.97 302.83 196.99 299.07 195.02C295.32 193.06 292.24 190.29 289.82 186.71L289.28 195.96H272ZM308.31 181.09C311.7 181.09 314.74 180.2 317.42 178.41C320.1 176.62 322.22 174.19 323.79 171.11C325.35 168.03 326.13 164.52 326.13 160.59C326.13 156.66 325.35 153.15 323.79 150.07C322.23 146.99 320.1 144.55 317.42 142.77C314.74 140.98 311.7 140.09 308.31 140.09C304.91 140.09 301.88 140.98 299.2 142.77C296.52 144.56 294.4 146.99 292.83 150.07C291.26 153.15 290.49 156.66 290.49 160.59C290.49 164.52 291.27 168.03 292.83 171.11C294.39 174.19 296.52 176.63 299.2 178.41C301.88 180.2 304.92 181.09 308.31 181.09Z"
@@ -78,6 +75,36 @@ const Logo: FunctionComponent<LogoProps> = ({
           </clipPath>
         </defs>
       </svg>
+    </div>
+  )
+}
+
+const Logo = () => {
+  return (
+    <div
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+      }}
+    >
+      <div
+        style={{
+          width: 200,
+        }}
+      >
+        <BaseLogo />
+      </div>
+      <Text
+        fontWeight="semibold"
+        style={{
+          display: 'flex',
+          marginLeft: -60,
+          marginTop: 10,
+          fontSize: '22px',
+        }}
+      >
+        UI
+      </Text>
     </div>
   )
 }

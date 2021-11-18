@@ -32,6 +32,16 @@ const SideMenu: FunctionComponent<SideMenuProps> = ({
     )
   })
 
+  const StyledMenuItems = (
+    <div
+      style={{
+        padding: '10px',
+      }}
+    >
+      {SideMenuItems}
+    </div>
+  )
+
   return (
     <div
       style={{
@@ -49,7 +59,7 @@ const SideMenu: FunctionComponent<SideMenuProps> = ({
       }}
     >
       <>{Header}</>
-      <>{SideMenuItems}</>
+      <>{StyledMenuItems}</>
       <>{Footer}</>
     </div>
   )
