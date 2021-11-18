@@ -10,7 +10,6 @@ const Button: FunctionComponent<ButtonProps> = ({ text, style, children }) => {
   return (
     <div
       style={{
-        padding: '10px',
         ...style,
       }}
     >
