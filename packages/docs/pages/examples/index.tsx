@@ -1,4 +1,3 @@
-import React from 'react'
 import Link from 'next/link'
 
 import { Title } from '@based/ui-next/dist'

@@ -1,4 +1,3 @@
-import React from 'react'
 import { LogoWithTitle } from '../logo'
 import { SideMenu as Menu, MenuItem } from '@based/ui-next/dist'
 import { useRouter } from 'next/router'
