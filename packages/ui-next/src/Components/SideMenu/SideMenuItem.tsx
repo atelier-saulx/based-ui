@@ -2,9 +2,10 @@ import React, { FC } from 'react'
 
 export type SideMenuItemProps = {
   title: string
+  onClick?: (value) => void
 }
 
-const SideMenuItem: FC<SideMenuItemProps> = ({ title }) => {
+const SideMenuItem: FC<SideMenuItemProps> = ({ title, onClick }) => {
   return (
     <div
       style={{
@@ -13,6 +14,7 @@ const SideMenuItem: FC<SideMenuItemProps> = ({ title }) => {
         width: 200,
         minWidth: 200,
       }}
+      onClick={onClick}
     >
       {title}
     </div>

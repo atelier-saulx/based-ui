@@ -1,22 +1,27 @@
 import React from 'react'
 import { SideMenu as Menu, SideMenuItem } from '../../../ui-next/dist'
+import { useRouter } from 'next/router'
 
 const SideMenu = () => {
+  const router = useRouter()
+
   const menuItems: SideMenuItem[] = [
     {
       title: 'Home',
+      route: '/',
     },
     {
       title: 'Examples',
-    },
-    {
-      title: 'Docs',
+      route: 'examples',
     },
   ]
 
   return (
     <Menu
       items={menuItems}
+      onClick={({ route }) => {
+        router.push(route)
+      }}
       style={{
         background: 'red',
       }}
