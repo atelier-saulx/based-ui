@@ -14,6 +14,10 @@ const SideMenu = () => {
       title: 'Examples',
       route: 'examples',
     },
+    {
+      title: 'Playground',
+      route: 'playground',
+    },
   ]
 
   return (

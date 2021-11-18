@@ -1,2 +1,2 @@
-export * from './Example'
+export * from './ExampleComponent'
 export * from './SideMenu'
