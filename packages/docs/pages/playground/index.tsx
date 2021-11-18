@@ -1,7 +1,7 @@
 import React from 'react'
 import { Playground as Wrapper } from '../../components/playground'
 
-import { Title, Button, ExampleComponent } from '@based/ui-next/dist'
+import { Title, Button, Text } from '@based/ui-next/dist'
 
 const Playground = () => (
   <div
@@ -20,7 +20,8 @@ const Playground = () => (
 
     <Wrapper>
       <Button>Button</Button>
-      <ExampleComponent />
+      <Title>Title</Title>
+      <Text>Text</Text>
     </Wrapper>
   </div>
 )
