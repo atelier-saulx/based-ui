@@ -83,6 +83,7 @@ export default {
                   {
                     icon: 'Captcha',
                     title: 'xxx',
+                    isSmall: false,
                   },
                 ]}
               />

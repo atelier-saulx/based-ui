@@ -22,6 +22,7 @@ declare module 'slate' {
 }
 
 // Define our own custom set of helpers.
+
 const CustomEditor = {
   isBoldMarkActive(editor) {
     const [match] = Editor.nodes(editor, {
@@ -32,9 +33,10 @@ const CustomEditor = {
   },
   toggleBoldMark(editor) {
     const isActive = CustomEditor.isBoldMarkActive(editor)
+
     Transforms.setNodes(
       editor,
-      { bold: isActive ? null : true },
+      { bold: isActive ? false : true },
       { match: (n) => Text.isText(n), split: true }
     )
   },
@@ -123,7 +125,7 @@ export default function RichText() {
             <u>Underline</u>
           </Button>
         </div>
-        <Editable renderLeaf={renderLeaf} placeholder="Enter some rich text…" />
+        <Editable renderLeaf={renderLeaf} placeholder="Enter some text…" />
       </Slate>
     </div>
   )
