@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
 import Link from 'next/link'
 
-import { Title } from '@based/ui-next/dist'
+import { Title, Text } from '@based/ui-next/dist'
 
 const Home: NextPage = () => {
   const ExamplesLink = (
@@ -32,10 +32,10 @@ const Home: NextPage = () => {
           Introduction to Based-UI
         </Title>
 
-        <p>
+        <Text>
           Based-UI is a component-suite to enrich your web applications, or to
           create CMS/DMS interfaces.
-        </p>
+        </Text>
 
         <div style={{ marginTop: '30px' }}>
           <p>To see our component suite, go to {ExamplesLink}.</p>

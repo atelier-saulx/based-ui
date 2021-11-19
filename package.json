@@ -24,9 +24,10 @@
   "scripts": {
     "start": "run-p start:*",
     "start:docs": "yarn workspace @based/ui-docs dev",
-    "start:start": "yarn workspace @based/ui-next start"
+    "start:ui": "yarn workspace @based/ui-next start"
   },
   "devDependencies": {
-    "npm-run-all": "^4.1.5"
+    "npm-run-all": "^4.1.5",
+    "typescript": ">=3.0.0"
   }
 }
