@@ -16,7 +16,7 @@ const Button = ({ label, to, active, prefix }) => {
         borderRadius: 4,
         paddingTop: 4,
         paddingBottom: 4,
-        marginBottom: 8,
+        marginBottom: 4,
         background: useColor({ color: 'divider', tone: 1 }),
         cursor: 'pointer',
         alignItems: 'center',
