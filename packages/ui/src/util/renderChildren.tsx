@@ -16,9 +16,9 @@ function renderChildren<T = PropsWithChildren<any>>(
   if (children === undefined) {
     return null
   }
+
   const Component = isComponent(children) ? children : null
-  // @ts-ignore
-  return Component ? <Component {...props} /> : children
+  return Component ? <Component {...props} /> : (children as Child)
 }
 
 export default renderChildren

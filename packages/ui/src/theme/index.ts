@@ -117,8 +117,7 @@ const inverseTheme = () => {
 
 const isTouch =
   typeof window !== 'undefined' &&
-  // @ts-ignore
-  ('ontouchstart' in window || navigator.msMaxTouchPoints)
+  ('ontouchstart' in window || (navigator as any).msMaxTouchPoints)
 
 if (isTouch) {
   const htmlStyle = document.documentElement.style

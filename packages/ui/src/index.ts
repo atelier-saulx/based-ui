@@ -13,7 +13,7 @@ import useHover from './hooks/events/useHover'
 import useDrag from './hooks/drag/useDrag'
 import useWindowSize from './hooks/events/useWindowSize'
 import useDrop from './hooks/drag/useDrop'
-import useInputValue from './hooks/useInputValue'
+import useScopedState from './hooks/useScopedState'
 import Avatar from './Components/Image/Avatar'
 import copyToClipboard from './util/copyToClipboard'
 export { SideMenuAlt } from './Components/SideMenu/SideMenuAlt'
@@ -60,7 +60,7 @@ export {
   useDrag,
   Avatar,
   useDrop,
-  useInputValue,
+  useScopedState,
 }
 export { EmbeddedMap } from './Components/Map'
 export { Label } from './Components/Text/Label'

@@ -4,6 +4,7 @@ import React, {
   CSSProperties,
   ComponentType,
   FunctionComponent,
+  useEffect,
 } from 'react'
 import { useColor, Color } from '../../theme'
 import { Down, IconName, iconFromString } from '../../icons'
@@ -14,7 +15,7 @@ import { getTextValue, TextValue } from '../../textParser'
 import useHover from '../../hooks/events/useHover'
 import { Text } from '../Text'
 import useDropdown, { OnSelect } from '../../hooks/overlay/useDropdown'
-import useInputValue from '../../hooks/useInputValue'
+import useScopedState from '../../hooks/useScopedState'
 import renderChildren from '../../util/renderChildren'
 
 type SelectInputProps = {
@@ -39,8 +40,6 @@ type SelectInputProps = {
   registerDoubleClick?: boolean
 }
 
-let stringifiedValue = JSON.stringify('')
-
 export const Select: FunctionComponent<SelectInputProps> = ({
   placeholder = '',
   onChange,
@@ -62,19 +61,23 @@ export const Select: FunctionComponent<SelectInputProps> = ({
   }
 
   const [isFocus, setFocus] = useState(false)
+  const [valueString, setValueString] = useState(JSON.stringify(value))
 
-  const [stateValue, setValue] = useInputValue<
+  const [stateValue, setValue] = useScopedState<
     DropdownOption | DropdownOption[]
   >(value, identifier, isFocus)
 
   /**
    * Force state-update when value is updated externally.
-   * This prevents an edge-case where component state is de-synced from consumer.
+   * This prevents an edge-case where internal component state is de-synced from consuming app.
    */
-  if (JSON.stringify(value) !== stringifiedValue) {
-    stringifiedValue = JSON.stringify(value)
-    setValue(value)
-  }
+  useEffect(() => {
+    const needsStateUpdate = JSON.stringify(value) !== valueString
+    if (needsStateUpdate) {
+      setValueString(JSON.stringify(value))
+      setValue(value)
+    }
+  }, [value])
 
   const [hover, isHover] = useHover()
 

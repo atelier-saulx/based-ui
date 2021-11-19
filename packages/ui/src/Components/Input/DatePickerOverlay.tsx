@@ -12,14 +12,20 @@ import { useColor } from '../../theme'
 
 type GenericEventHandler = EventHandler<SyntheticEvent>
 
-type DayCallProps = {
+type DayCellProps = {
   highlight?: boolean
   onClick?: GenericEventHandler
   children: ReactChild | ReactChildren[] | ComponentType
 }
-const DayCell = ({ highlight, onClick, children }: DayCallProps) => {
+
+const DayCell: FunctionComponent<DayCellProps> = ({
+  highlight,
+  onClick,
+  children,
+}) => {
   const [hover, isHover] = useHover()
-  const clickable = onClick
+  const clickable = Boolean(onClick)
+
   return (
     <div
       {...hover}
@@ -44,9 +50,11 @@ const DayCell = ({ highlight, onClick, children }: DayCallProps) => {
     </div>
   )
 }
-const dayOfTheWeekNames = ['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((v, i) => (
-  <DayCell key={i}>{v}</DayCell>
-))
+
+const dayOfTheWeekNames = ['S', 'M', 'T', 'W', 'T', 'F', 'S'].map(
+  (value, index) => <DayCell key={`DayCell-${index}`}>{value}</DayCell>
+)
+
 const months = [
   'January',
   'February',
@@ -71,18 +79,24 @@ export const DatePickerOverlay: FunctionComponent<DatePickerOverlayProps> = ({
   date,
   onChange,
 }) => {
-  if (!date) return null
+  if (!date) {
+    return null
+  }
+
   // day 0 is the last day of the previous month
   const amountDaysInMonth = new Date(
     date.getFullYear(),
     date.getMonth() + 1,
     0
   ).getDate()
+
   // Sunday is 0
   const startWeekDay = new Date(date.getFullYear(), date.getMonth(), 1).getDay()
+
   const emptyCells = [...Array(startWeekDay)].map((_, i) => (
     <DayCell key={i}>&nbsp;</DayCell>
   ))
+
   const days = [...Array(amountDaysInMonth).keys()].map((v, i) => {
     return (
       <DayCell
@@ -98,7 +112,9 @@ export const DatePickerOverlay: FunctionComponent<DatePickerOverlayProps> = ({
       </DayCell>
     )
   })
+
   const dayCells = emptyCells.concat(days)
+
   return (
     <div>
       <div

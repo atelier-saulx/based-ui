@@ -57,30 +57,31 @@ const Dot = ({ isHover }) => {
 }
 
 const Logic = ({ color, style }: { color: Color; style?: CSSProperties }) => {
-  const c = useColor(color)
+  const targetColor = useColor(color)
+
   return (
     <svg width="15" height="15" viewBox="0 0 15 15" fill="none" style={style}>
       <circle
         cx="12.5656"
         cy="6.17355"
         r="1.76522"
-        stroke={c}
+        stroke={targetColor}
         strokeWidth="1.33913"
       />
       <circle
         cx="12.5656"
         cy="12.261"
         r="1.76522"
-        stroke={c}
+        stroke={targetColor}
         strokeWidth="1.33913"
       />
       <path
         d="M1 1.3042V7.39115C1 10.0805 3.18018 12.2607 5.86957 12.2607H10.7391"
-        stroke={c}
+        stroke={targetColor}
         strokeWidth="1.33913"
         strokeLinecap="round"
       />
-      <path d="M10.7391 6.17383H1" stroke={c} strokeWidth="1.33913" />
+      <path d="M10.7391 6.17383H1" stroke={targetColor} strokeWidth="1.33913" />
     </svg>
   )
 }
@@ -92,7 +93,8 @@ const Jump: FunctionComponent<JumpProps<any>> = ({
   isHover,
   onClick,
 }) => {
-  const str = items.map((v) => v.index || v.id).join(', ')
+  const targetValue = items.map((value) => value.index || value.id).join(', ')
+
   return (
     <div
       css={{
@@ -100,19 +102,22 @@ const Jump: FunctionComponent<JumpProps<any>> = ({
         alignItems: 'center',
       }}
       onClick={useCallback(
-        (e) => {
-          onClick(e, data)
+        (event) => {
+          onClick(event, data)
         },
         [onClick, data]
       )}
     >
       <Dot isHover={isHover} />
+
       <Logic color={{ color: 'primary' }} style={{ marginLeft: 14 }} />
+
       <SubText style={{ marginLeft: 7.5 }} singleLine noSelect>
         {label}
       </SubText>
+
       <Text style={{ marginLeft: 5 }} weight="semibold" singleLine>
-        {str}
+        {targetValue}
       </Text>
     </div>
   )

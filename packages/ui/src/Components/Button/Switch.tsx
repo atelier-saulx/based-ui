@@ -1,7 +1,7 @@
 import React, { FunctionComponent, CSSProperties, useCallback } from 'react'
 import { useColor, Color } from '../../theme'
 import { OnValueChange } from '../../types'
-import useInputValue from '../../hooks/useInputValue'
+import useScopedState from '../../hooks/useScopedState'
 import { TextValue } from '../../textParser'
 import { Text } from '../Text'
 import '@compiled/react'
@@ -14,9 +14,11 @@ export type SwitchProps = {
   identifier?: any
 }
 
-export const Switch: FunctionComponent<
-  SwitchProps & { ignoreInternal?: boolean }
-> = ({
+type SwitchBaseProps = SwitchProps & {
+  ignoreInternal?: boolean
+}
+
+export const Switch: FunctionComponent<SwitchBaseProps> = ({
   onChange,
   color = { color: 'primary' },
   ignoreInternal,
@@ -26,7 +28,7 @@ export const Switch: FunctionComponent<
 }) => {
   let enabled, setValue
   if (!ignoreInternal) {
-    ;[enabled, setValue] = useInputValue(value, identifier, false)
+    ;[enabled, setValue] = useScopedState(value, identifier)
   } else {
     enabled = value
   }
@@ -75,12 +77,12 @@ export const Switch: FunctionComponent<
   )
 }
 
-export const SwitchTextButton: FunctionComponent<
-  SwitchProps & {
-    enabledText?: TextValue
-    disabledText?: TextValue
-  }
-> = ({
+export type SwitchTextButtonProps = SwitchProps & {
+  enabledText?: TextValue
+  disabledText?: TextValue
+}
+
+export const SwitchTextButton: FunctionComponent<SwitchTextButtonProps> = ({
   enabledText = 'Enabled',
   disabledText = 'Disabled',
   onChange,
@@ -89,7 +91,7 @@ export const SwitchTextButton: FunctionComponent<
   style,
   color,
 }) => {
-  const [enabled, setValue] = useInputValue(value, identifier, false)
+  const [enabled, setValue] = useScopedState(value, identifier)
 
   return (
     <div
@@ -99,11 +101,11 @@ export const SwitchTextButton: FunctionComponent<
         alignItems: 'center',
         ...style,
       }}
-      onClick={(e) => {
-        e.stopPropagation()
-        const v = !enabled
-        setValue(v)
-        onChange(v)
+      onClick={(event) => {
+        event.stopPropagation()
+        const value = !enabled
+        setValue(value)
+        onChange(value)
       }}
     >
       <Switch
@@ -111,9 +113,9 @@ export const SwitchTextButton: FunctionComponent<
         value={enabled}
         ignoreInternal
         onChange={useCallback(
-          (v) => {
-            setValue(v)
-            onChange(v)
+          (value) => {
+            setValue(value)
+            onChange(value)
           },
           [onChange]
         )}

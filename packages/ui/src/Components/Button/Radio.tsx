@@ -23,9 +23,11 @@ export const Radio: FunctionComponent<RadioProps> = ({
   style,
 }) => {
   let [enabled, update] = useReducer((x) => !x, value)
+
   if (overrideValue !== undefined) {
     enabled = overrideValue
   }
+
   return (
     <div
       css={{

@@ -11,7 +11,7 @@ import { Text } from '../Text'
 import { TextValue } from '../../textParser'
 import { OnValueChange } from '../../types'
 import { IconName, iconFromString } from '../../icons'
-import useInputValue from '../../hooks/useInputValue'
+import useScopedState from '../../hooks/useScopedState'
 import { useColor } from '../../theme'
 
 export type ToggleInputProps = {
@@ -36,11 +36,7 @@ export const CheckBox: FunctionComponent<ToggleInputProps & CheckProps> = ({
   onMouseEnter,
   ...rest
 }) => {
-  const [stateValue, setValue] = useInputValue<boolean>(
-    value,
-    identifier,
-    false
-  )
+  const [stateValue, setValue] = useScopedState<boolean>(value, identifier)
 
   const Icon = icon ? iconFromString(icon) : null
 
@@ -99,11 +95,7 @@ export const RadioButton: FunctionComponent<ToggleInputProps> = ({
   value = false,
   ...rest
 }) => {
-  const [stateValue, setValue] = useInputValue<boolean>(
-    value,
-    identifier,
-    false
-  )
+  const [stateValue, setValue] = useScopedState<boolean>(value, identifier)
 
   const Icon = icon ? iconFromString(icon) : null
 
@@ -122,11 +114,11 @@ export const RadioButton: FunctionComponent<ToggleInputProps> = ({
         ...style,
       }}
       onClick={useCallback(() => {
-        const v = !stateValue
+        const value = !stateValue
         if (onChange) {
-          onChange(v)
+          onChange(value)
         }
-        setValue(v)
+        setValue(value)
       }, [onChange, stateValue])}
     >
       <div

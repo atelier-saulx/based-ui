@@ -1,12 +1,12 @@
 import { useState, useRef, useEffect } from 'react'
 import { deepEqual } from '@saulx/utils'
 
-export default function useInputValue<T = string | number | undefined>(
-  value: T,
+export default function useScopedState<TValue = string | number | undefined>(
+  value: TValue,
   identifier: any,
-  noExternalUpdate: boolean
-): [T, (value: T) => void] {
-  const [stateValue, setValue] = useState<T>(value)
+  noExternalUpdate: boolean = false
+): [TValue, (value: TValue) => void] {
+  const [stateValue, setValue] = useState<TValue>(value)
   const identifierRef = useRef(identifier)
   const initialValue = useRef(value)
 
@@ -28,7 +28,7 @@ export default function useInputValue<T = string | number | undefined>(
         setValue(value)
       }
     }
-  }, [value, noExternalUpdate, identifier])
+  }, [value, identifier, noExternalUpdate])
 
   return [stateValue, setValue]
 }

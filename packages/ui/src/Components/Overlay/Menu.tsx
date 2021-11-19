@@ -32,14 +32,14 @@ export type NextProps = {
 
 const Next: FunctionComponent<NextProps> = ({ label, children }) => {
   const [hover, isHover] = useHover()
-  const ctx = useContext(OverlayContext)
+  const context = useContext(OverlayContext)
 
   return (
     <div>
       <div
         {...hover}
         onClick={useCallback(() => {
-          ctx.current.merge({ content: undefined })
+          context.current.merge({ content: undefined })
         }, [])}
         style={{
           display: 'flex',
@@ -103,28 +103,25 @@ export const ContextualMenuItem: FunctionComponent<ContextualMenuItemProps> = ({
   first,
 }) => {
   const [hover, isHover] = useHover()
-
-  const ctx = useContext(OverlayContext)
+  const context = useContext(OverlayContext)
 
   const click = useCallback(
-    (e) => {
+    (event) => {
       if (onClick) {
-        if (!onClick(e)) {
+        if (!onClick(event)) {
           removeOverlay()
         }
       } else {
-        ctx.current.merge({
+        context.current.merge({
           content: <Next label={label}>{children}</Next>,
         })
       }
     },
-    [onClick, children, ctx]
+    [onClick, children, context]
   )
   return (
     <div
       style={{
-        // paddingTop: border ? 7.5 : 0,
-        // marginTop: border ? 7.5 : 0,
         borderColor: useColor({
           color: 'foreground',
           tone: 5,
@@ -178,10 +175,10 @@ export const ContextualMenuItem: FunctionComponent<ContextualMenuItemProps> = ({
         </div>
         {onOptions
           ? React.createElement(iconFromString(optionsIcon || 'more'), {
-              onClick: (e) => {
-                e.preventDefault()
-                e.stopPropagation()
-                onOptions(e)
+              onClick: (event) => {
+                event.preventDefault()
+                event.stopPropagation()
+                onOptions(event)
               },
             })
           : null}
@@ -195,7 +192,9 @@ export const ContextualMenuItem: FunctionComponent<ContextualMenuItemProps> = ({
 
 export const Menu: FunctionComponent<GenericOverlayProps> = (initialProps) => {
   const props = useOverlayProps(initialProps)
+
   const { align, target, selectTarget, width = 256, y, x, maxY, maxX } = props
+
   const [elementRef, position, resize] = useOverlayPosition({
     align,
     y,
@@ -207,18 +206,18 @@ export const Menu: FunctionComponent<GenericOverlayProps> = (initialProps) => {
     maxX,
   })
 
-  const ctx = useContext(OverlayContext)
+  const context = useContext(OverlayContext)
 
   useEffect(() => {
     const x = () => {
       resize()
       setTimeout(() => resize, 200)
     }
-    ctx.current.listeners.add(x)
+    context.current.listeners.add(x)
     return () => {
-      ctx.current.listeners.delete(x)
+      context.current.listeners.delete(x)
     }
-  }, [ctx, resize])
+  }, [context, resize])
 
   const content = props.content
 

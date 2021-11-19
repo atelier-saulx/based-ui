@@ -1,7 +1,7 @@
 import React, { FunctionComponent, CSSProperties, useCallback } from 'react'
 import { useColor, Color } from '../../theme'
 import { OnValueChange } from '../../types'
-import useInputValue from '../../hooks/useInputValue'
+import useScopedState from '../../hooks/useScopedState'
 import { TextValue } from '../../textParser'
 import { Text } from '../Text'
 import { SubText } from '../Text/SubText'
@@ -29,7 +29,7 @@ export const SwitchExtended: FunctionComponent<SwitchExtendedProps> = ({
   color,
   style,
 }) => {
-  const [enabled, setValue] = useInputValue(value, identifier, false)
+  const [enabled, setValue] = useScopedState(value, identifier)
 
   return (
     <div
@@ -47,11 +47,11 @@ export const SwitchExtended: FunctionComponent<SwitchExtendedProps> = ({
           : '1px solid ' + useColor({ color: 'divider' }),
         ...style,
       }}
-      onClick={(e) => {
-        e.stopPropagation()
-        const v = !enabled
-        setValue(v)
-        onChange(v)
+      onClick={(event) => {
+        event.stopPropagation()
+        const value = !enabled
+        setValue(value)
+        onChange(value)
       }}
     >
       <div
@@ -82,9 +82,9 @@ export const SwitchExtended: FunctionComponent<SwitchExtendedProps> = ({
           value={enabled}
           ignoreInternal
           onChange={useCallback(
-            (v) => {
-              setValue(v)
-              onChange(v)
+            (value) => {
+              setValue(value)
+              onChange(value)
             },
             [onChange]
           )}

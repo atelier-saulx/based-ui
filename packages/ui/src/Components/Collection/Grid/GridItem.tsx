@@ -1,4 +1,9 @@
-import React, { useRef, useCallback } from 'react'
+import React, {
+  useRef,
+  useCallback,
+  CSSProperties,
+  FunctionComponent,
+} from 'react'
 import { useColor } from '../../../theme'
 import { Text } from '../../Text'
 import useHover from '../../../hooks/events/useHover'
@@ -19,7 +24,33 @@ const defaultitemProps = {
   },
 }
 
-const GridItem = ({
+type DataProps = {
+  items: any
+  context: {
+    columnCount: any
+    onClick: any
+    height: any
+    optionsIcon: any
+    width: any
+    exportData: any
+    Graphic: any
+    onDrop: any
+    onOptions: any
+    large: any
+    itemProps: any
+    activeId: any
+    contextualMenu: any
+  }
+}
+
+export type GridItemProps = {
+  style: CSSProperties
+  columnIndex: number
+  rowIndex: number
+  data: DataProps
+}
+
+const GridItem: FunctionComponent<GridItemProps> = ({
   style,
   columnIndex,
   rowIndex,
@@ -39,6 +70,7 @@ const GridItem = ({
     itemProps,
     activeId,
   } = context
+
   const index = columnIndex + rowIndex * columnCount
   const itemData = items[index]
 
@@ -96,19 +128,20 @@ const GridItem = ({
   const ref = useRef()
   const [drag, isDragging] = useDrag(wrappedData, ref)
   const [select, isSelected] = useSelect(wrappedData)
+
   const [drop, isDragOver] = useDrop(
     useCallback(
-      (e, { files, data }) => {
+      (event, { files, data }) => {
         if (onDrop) {
           if (data && data.length) {
             const oldIndex = data[0].index
             const newIndex = index > oldIndex ? index - 1 : index
-            return onDrop(e, {
+            return onDrop(event, {
               targetIndex: newIndex || index,
               data,
             })
           } else if (files) {
-            return onDrop(e, { files, targetIndex: index })
+            return onDrop(event, { files, targetIndex: index })
           }
         }
       },
@@ -118,10 +151,10 @@ const GridItem = ({
   )
 
   const Icon = iconName ? iconFromString(iconName) : null
+
   const OptionsIcon = optionsIcon
     ? typeof optionsIcon === 'string'
-      ? // @ts-ignore
-        iconFromString(optionsIcon)
+      ? iconFromString(optionsIcon)
       : optionsIcon
     : Settings
 
@@ -178,8 +211,8 @@ const GridItem = ({
           onOptions && context.contextualMenu
             ? useContextualMenu(
                 useCallback(
-                  (e) => {
-                    onOptions(e, wrappedData)
+                  (event) => {
+                    onOptions(event, wrappedData)
                   },
                   [wrappedData]
                 )
@@ -237,7 +270,6 @@ const GridItem = ({
               overflow: 'hidden',
               display: 'flex',
               flexDirection: 'column',
-              // justifyContent: hasGraphic ? 'flex-end' : 'flex-start',
               padding: 16,
             }}
           >
@@ -257,15 +289,17 @@ const GridItem = ({
                   }}
                 />
               ) : null}
+
               <TextComponent weight="medium" noSelect>
                 {title}
               </TextComponent>
             </div>
+
             {itemProps.info ? <Info data={info} /> : null}
+
             {!hasGraphic && itemProps.text ? (
               <div
                 style={{
-                  // height: '100%',
                   marginTop: 8,
                   marginBottom: 8,
                 }}
