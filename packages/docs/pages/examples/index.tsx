@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-import { Title } from '@based/ui-next/dist'
+import { Title } from '@based/ui-next'
 
 const PlaygroundLink = (
   <Link href="/playground">

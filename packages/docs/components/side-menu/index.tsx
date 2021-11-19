@@ -1,6 +1,7 @@
 import { LogoWithTitle } from '../logo'
-import { SideMenu as Menu, MenuItem } from '@based/ui-next/dist'
 import { useRouter } from 'next/router'
+
+import { SideMenu as Menu, MenuItem } from '@based/ui-next'
 
 const SideMenu = () => {
   const router = useRouter()

@@ -1,5 +1,6 @@
-import { Title, Button, Text } from '@based/ui-next/dist'
 import { DisplayComponent } from './displayComponent'
+
+import { Title, Button, Text } from '@based/ui-next'
 
 const Playground = () => {
   const components = [

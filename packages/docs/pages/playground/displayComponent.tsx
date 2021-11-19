@@ -1,6 +1,7 @@
 import React from 'react'
 import { FunctionComponent } from 'react'
-import { Text } from '@based/ui-next/dist'
+
+import { Text } from '@based/ui-next'
 
 type DisplayComponentProps = {}
 

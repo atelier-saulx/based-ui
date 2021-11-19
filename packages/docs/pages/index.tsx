@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
 import Link from 'next/link'
 
-import { Title, Text } from '@based/ui-next/dist'
+import { Title, Text } from '@based/ui-next'
 
 const Home: NextPage = () => {
   const ExamplesLink = (
