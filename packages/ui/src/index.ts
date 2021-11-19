@@ -75,6 +75,8 @@ export { ProgressIndicator } from './Components/ProgressIndicator/ProgressIndica
 export { SideMenu } from './Components/SideMenu/SideMenu'
 export { Topbar } from './Components/Topbar/Topbar'
 export { FileUpload } from './Components/Upload/Upload'
+export { uploadFile } from './Components/Upload/uploadFile'
+export { ProgressContext } from './Components/Upload/ProgressContext'
 export { ContextualMenuItem } from './Components/Overlay/Menu'
 export { Input } from './Components/Input/Text'
 export { Select } from './Components/Input/Select'
