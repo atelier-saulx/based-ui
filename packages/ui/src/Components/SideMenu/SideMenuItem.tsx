@@ -70,8 +70,8 @@ export const SideMenuItem: FunctionComponent<SideMenuItemProps> = ({
         )}
         style={{
           minHeight: 32,
-          paddingLeft: isSmall ? 6 : 8,
-          paddingRight: isSmall ? 6 : 8,
+          paddingLeft: isSmall ? 3 : 8,
+          paddingRight: isSmall ? 3 : 8,
           paddingTop: 4,
           paddingBottom: 4,
           display: 'flex',
