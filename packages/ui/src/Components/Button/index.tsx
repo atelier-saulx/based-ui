@@ -9,9 +9,14 @@ type ButtonProps = {
 
 const StyledButton = styled.button({
   alignItems: 'flex-start',
-  padding: '4px 8px',
+  background: useColor({ color: 'secondary' }),
+  borderRadius: '4px',
   cursor: 'pointer',
-  background: useColor({ color: 'primary' }),
+  fontSize: '15px',
+  fontWeight: '500',
+  letterSpacing: '-0.015em',
+  lineHeight: '24px',
+  padding: '4px 8px',
 })
 
 const Button: FunctionComponent<ButtonProps> = ({ text, style, children }) => {
