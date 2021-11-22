@@ -4,7 +4,9 @@ import '../styles/font.css'
 import type { AppProps } from 'next/app'
 
 import Head from 'next/head'
+
 import { SideMenu } from '../components/side-menu'
+import { useResetHooks } from '@based/ui-next'
 
 const HeadContent = () => {
   return (
@@ -20,6 +22,11 @@ const HeadContent = () => {
 }
 
 function App({ Component, pageProps }: AppProps) {
+  /**
+   * We do this to accommodate SSR
+   */
+  useResetHooks()
+
   const MainWrapper = ({ children }: any) => {
     return (
       <div
