@@ -5,7 +5,8 @@
   "description": "A library of front-end React components for Based",
   "dependencies": {
     "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react-dom": "^17.0.2",
+    "styled-components": "^5.3.3"
   },
   "devDependencies": {
     "@saulx/eslint-config": "^1.1.0",
@@ -13,6 +14,7 @@
     "@saulx/prettier-config": "^1.0.0",
     "@types/node": "^16.9.4",
     "@types/react": "^17.0.22",
+    "@types/styled-components": "^5.1.15",
     "fs-extra": "^10.0.0",
     "nano-css": "^5.3.4",
     "rimraf": "^3.0.2",

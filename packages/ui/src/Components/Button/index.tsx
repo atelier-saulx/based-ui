@@ -1,5 +1,5 @@
 import React, { CSSProperties, FunctionComponent } from 'react'
-import { useCss } from '../../hooks'
+import styled from 'styled-components'
 import { useColor } from '../../theme'
 
 type ButtonProps = {
@@ -8,7 +8,7 @@ type ButtonProps = {
 }
 
 const Button: FunctionComponent<ButtonProps> = ({ text, style, children }) => {
-  const className = useCss({
+  const Button = styled.button({
     alignItems: 'flex-start',
     padding: '4px 8px',
     cursor: 'pointer',
@@ -21,7 +21,7 @@ const Button: FunctionComponent<ButtonProps> = ({ text, style, children }) => {
         ...style,
       }}
     >
-      <button className={className}>{text ?? children}</button>
+      <Button>{text ?? children}</Button>
     </div>
   )
 }
