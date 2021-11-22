@@ -26,10 +26,10 @@ const Paragraph: FunctionComponent<TextProps> = ({
       style={{
         fontSize: '16px',
         fontWeight: targetWeight,
-        ...style,
         letterSpacing: '-0.015em',
         lineHeight: '20px',
         userSelect: 'text',
+        ...style,
       }}
     >
       {children ?? value}
