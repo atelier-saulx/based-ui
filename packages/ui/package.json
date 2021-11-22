@@ -9,7 +9,7 @@
     "styled-components": "^5.3.3"
   },
   "devDependencies": {
-    "@saulx/eslint-config": "^1.1.0",
+    "@saulx/eslint-config": "^1.1.1",
     "@saulx/hash": "^1.1.0",
     "@saulx/prettier-config": "^1.0.0",
     "@types/node": "^16.9.4",
@@ -17,14 +17,17 @@
     "@types/styled-components": "^5.1.15",
     "fs-extra": "^10.0.0",
     "nano-css": "^5.3.4",
-    "rimraf": "^3.0.2",
     "tsc-watch": "^4.5.0",
     "typescript": "4.4.3"
   },
   "sideEffects": false,
   "prettier": "@saulx/prettier-config",
   "eslintConfig": {
-    "extends": "@saulx/eslint-config"
+    "extends": "@saulx/eslint-config",
+    "rules": {
+      "react/jsx-curly-newline": 0,
+      "@typescript-eslint/no-unused-vars": "error"
+    }
   },
   "scripts": {
     "start": "tsc-watch --noClear -p ./tsconfig.json --onSuccess \"node ./postbuild.js\" --onFailure \"echo Build Failed\""

@@ -375,6 +375,23 @@
     eslint-plugin-react "^7.22.0"
     typescript "^4.1.3"
 
+"@saulx/eslint-config@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@saulx/eslint-config/-/eslint-config-1.1.1.tgz#5181ed7d8c0c68ad4874a5fc1e3df9b929d8c2e8"
+  integrity sha512-0LN8IUO3V7qFP91ADW+G1q2OeZia0zwqs3kq02SRzsnIsYsZSbKvgr9KAmaXuRpEND0qSRpLSvHmZj8/4Y90gw==
+  dependencies:
+    "@typescript-eslint/eslint-plugin" "^4.14.1"
+    "@typescript-eslint/parser" "^4.14.1"
+    eslint-config-prettier "^7.2.0"
+    eslint-config-standard "^16.0.2"
+    eslint-config-standard-jsx "^10.0.0"
+    eslint-config-standard-react "^11.0.1"
+    eslint-plugin-import "^2.22.1"
+    eslint-plugin-node "^11.1.0"
+    eslint-plugin-promise "^4.2.1"
+    eslint-plugin-react "^7.22.0"
+    typescript "^4.1.3"
+
 "@saulx/hash@^1.1.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@saulx/hash/-/hash-1.1.0.tgz#2870be739b350486884aa76562aff9703ef96b0e"
