@@ -7,21 +7,21 @@ type ButtonProps = {
   style?: CSSProperties
 }
 
-const Button: FunctionComponent<ButtonProps> = ({ text, style, children }) => {
-  const Button = styled.button({
-    alignItems: 'flex-start',
-    padding: '4px 8px',
-    cursor: 'pointer',
-    background: useColor({ color: 'primary' }),
-  })
+const StyledButton = styled.button({
+  alignItems: 'flex-start',
+  padding: '4px 8px',
+  cursor: 'pointer',
+  background: useColor({ color: 'primary' }),
+})
 
+const Button: FunctionComponent<ButtonProps> = ({ text, style, children }) => {
   return (
     <div
       style={{
         ...style,
       }}
     >
-      <Button>{text ?? children}</Button>
+      <StyledButton>{text ?? children}</StyledButton>
     </div>
   )
 }
