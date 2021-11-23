@@ -119,14 +119,14 @@ const isTouch =
 if (isTouch) {
   const htmlStyle = document.documentElement.style
   const updateBg = () => {
-    if (global.innerWidth < global.innerHeight) {
+    if (window.innerWidth < window.innerHeight) {
       htmlStyle.backgroundSize = 'auto 100vh'
     } else {
       htmlStyle.backgroundSize = '100vw auto'
     }
   }
   htmlStyle.backgroundPosition = 'center top'
-  global.addEventListener('resize', updateBg)
+  window.addEventListener('resize', updateBg)
   updateBg()
 }
 
@@ -135,7 +135,7 @@ let firstSet = false
 export const useTheme = (active?: 'light' | 'dark'): string => {
   if (active === undefined) {
     if (typeof window !== 'undefined') {
-      const isDark = global.matchMedia('(prefers-color-scheme: dark)').matches
+      const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches
       active = isDark ? 'dark' : 'light'
     } else {
       active = 'dark'

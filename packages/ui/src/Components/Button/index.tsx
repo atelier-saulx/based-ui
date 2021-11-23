@@ -1,24 +1,23 @@
 import React, { CSSProperties, FunctionComponent } from 'react'
-import styled from 'styled-components'
-import { useColor } from '../../theme'
+// import { useColor } from '../../theme'
 
 type ButtonProps = {
   text?: string
   style?: CSSProperties
 }
 
-const StyledButton = styled.button({
-  alignItems: 'flex-start',
-  background: useColor({ color: 'secondary' }),
-  borderRadius: '4px',
-  cursor: 'pointer',
-  fontSize: '15px',
-  fontWeight: '500',
-  letterSpacing: '-0.015em',
-  lineHeight: '24px',
-  margin: '6px',
-  padding: '4px 8px',
-})
+// const StyledButton = styled.button({
+//   alignItems: 'flex-start',
+//   background: useColor({ color: 'secondary' }),
+//   borderRadius: '4px',
+//   cursor: 'pointer',
+//   fontSize: '15px',
+//   fontWeight: '500',
+//   letterSpacing: '-0.015em',
+//   lineHeight: '24px',
+//   margin: '6px',
+//   padding: '4px 8px',
+// })
 
 const Button: FunctionComponent<ButtonProps> = ({ text, style, children }) => {
   return (
@@ -27,7 +26,8 @@ const Button: FunctionComponent<ButtonProps> = ({ text, style, children }) => {
         ...style,
       }}
     >
-      <StyledButton>{text ?? children}</StyledButton>
+      {/* <StyledButton>{text ?? children}</StyledButton> */}
+      <button>{text ?? children}</button>
     </div>
   )
 }

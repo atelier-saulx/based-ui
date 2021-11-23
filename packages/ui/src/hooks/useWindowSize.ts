@@ -9,22 +9,22 @@ function useWindowSize(): {
   }
 
   const [position, update] = useState({
-    width: global.innerWidth ?? 0,
-    height: global.innerHeight ?? 0,
+    width: window.innerWidth ?? 0,
+    height: window.innerHeight ?? 0,
   })
 
   useEffect(() => {
     const handler = () => {
       update({
-        width: global.innerWidth ?? 0,
-        height: global.innerHeight ?? 0,
+        width: window.innerWidth ?? 0,
+        height: window.innerHeight ?? 0,
       })
     }
 
-    global.addEventListener('resize', handler)
+    window.addEventListener('resize', handler)
 
     return () => {
-      global.removeEventListener('resize', handler)
+      window.removeEventListener('resize', handler)
     }
   }, [])
 
