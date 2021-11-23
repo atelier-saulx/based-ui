@@ -1,6 +1,7 @@
 import React, { FunctionComponent, useEffect } from 'react'
 import Prism from 'prismjs'
 import 'prismjs/themes/prism-tomorrow.css'
+import { useSetup } from './setup'
 
 export type CodeProps = {
   code: string
@@ -12,8 +13,10 @@ export const Code: FunctionComponent<CodeProps> = ({ code, language }) => {
     Prism.highlightAll()
   }, [])
 
+  useSetup()
+
   return (
-    <pre>
+    <pre data-toolbar-order="select-code,copy-code">
       <code className={`language-${language}`}>{code}</code>
     </pre>
   )
