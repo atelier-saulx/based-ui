@@ -1,12 +1,12 @@
 import React, { CSSProperties, FunctionComponent } from 'react'
 
-type BasicCardProps = {
+export type BasicCardProps = {
   value?: string
   style?: CSSProperties
   imageUrl?: string
 }
 
-const BasicCard: FunctionComponent<BasicCardProps> = ({
+export const BasicCard: FunctionComponent<BasicCardProps> = ({
   children,
   value = '',
   style = {},
@@ -45,5 +45,3 @@ const BasicCard: FunctionComponent<BasicCardProps> = ({
     </div>
   )
 }
-
-export { BasicCard }

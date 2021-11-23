@@ -7,7 +7,11 @@ export type SideMenuItemProps = {
   style?: CSSProperties
 }
 
-const SideMenuItem: FC<SideMenuItemProps> = ({ title, onClick, style }) => {
+export const SideMenuItem: FC<SideMenuItemProps> = ({
+  title,
+  onClick,
+  style,
+}) => {
   return (
     <div
       style={{
@@ -24,5 +28,3 @@ const SideMenuItem: FC<SideMenuItemProps> = ({ title, onClick, style }) => {
     </div>
   )
 }
-
-export { SideMenuItem }

@@ -7,7 +7,7 @@ export type MenuItem = {
   route: string
 }
 
-type SideMenuProps = {
+export type SideMenuProps = {
   menuItems: MenuItem[]
   Header?: JSX.Element
   Footer?: JSX.Element
@@ -15,7 +15,7 @@ type SideMenuProps = {
   style?: CSSProperties
 }
 
-const SideMenu: FunctionComponent<SideMenuProps> = ({
+export const SideMenu: FunctionComponent<SideMenuProps> = ({
   style = {},
   menuItems = [],
   Header = null,
@@ -67,5 +67,3 @@ const SideMenu: FunctionComponent<SideMenuProps> = ({
     </div>
   )
 }
-
-export { SideMenu }

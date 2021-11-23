@@ -2,11 +2,6 @@ import React, { CSSProperties, FunctionComponent } from 'react'
 import styled from 'styled-components'
 import { useColor } from '../../theme'
 
-type ButtonProps = {
-  text?: string
-  style?: CSSProperties
-}
-
 const StyledButton = styled.button({
   alignItems: 'flex-start',
   background: useColor({ color: 'secondary' }),
@@ -20,7 +15,16 @@ const StyledButton = styled.button({
   padding: '4px 8px',
 })
 
-const Button: FunctionComponent<ButtonProps> = ({ text, style, children }) => {
+export type ButtonProps = {
+  text?: string
+  style?: CSSProperties
+}
+
+export const Button: FunctionComponent<ButtonProps> = ({
+  text,
+  style,
+  children,
+}) => {
   return (
     <div
       style={{
@@ -31,5 +35,3 @@ const Button: FunctionComponent<ButtonProps> = ({ text, style, children }) => {
     </div>
   )
 }
-
-export { Button }
