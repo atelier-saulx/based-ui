@@ -1,6 +1,6 @@
 import { DisplayComponent } from './displayComponent'
 
-import { Title, Button, Text, Paragraph } from '@based/ui-next'
+import { Title, Button, Text, Paragraph, Avatar } from '@based/ui-next'
 
 const Playground = () => {
   const components = [
@@ -10,6 +10,12 @@ const Playground = () => {
     <Paragraph fontWeight={'medium'} key="Paragraph">
       Lorem ipsum dolor
     </Paragraph>,
+    <Avatar key="Avatar">YO</Avatar>,
+    <Avatar
+      key="Avatar-image"
+      size="medium"
+      imageUrl="https://images.unsplash.com/photo-1637599973708-6d41b75ec348?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyfHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=800&q=60"
+    />,
   ]
 
   return (
