@@ -39,7 +39,7 @@ const DisplayComponent: FunctionComponent<DisplayComponentProps> = ({
           backgroundColor: 'transparent',
         }}
       >
-        <div>{children}</div>
+        <div style={{ display: 'flex' }}>{children}</div>
       </div>
     </div>
   )

@@ -17,7 +17,8 @@ const BasicCard: FunctionComponent<BasicCardProps> = ({
       style={{
         border: '1px solid #eaebed',
         borderRadius: '4px',
-        maxWidth: '33%',
+        width: '31%',
+        margin: '1%',
         ...style,
       }}
     >

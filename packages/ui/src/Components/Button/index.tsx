@@ -16,6 +16,7 @@ const StyledButton = styled.button({
   fontWeight: '500',
   letterSpacing: '-0.015em',
   lineHeight: '24px',
+  margin: '6px',
   padding: '4px 8px',
 })
 
