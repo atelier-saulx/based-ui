@@ -1,7 +1,6 @@
 import React, { FunctionComponent, useEffect } from 'react'
 import Prism from 'prismjs'
 import 'prismjs/themes/prism-tomorrow.css'
-import './styles.css'
 
 export type CodeProps = {
   code: string

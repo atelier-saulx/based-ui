@@ -1,2 +1,2 @@
 export * from './side-menu'
-export * from './playground'
+export * from './code'

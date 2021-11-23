@@ -2,15 +2,20 @@ import React from 'react'
 import { FunctionComponent } from 'react'
 
 import { Text } from '@based/ui-next'
+import { Code } from '../../components'
 
-export type DisplayComponentProps = {}
+export type ShowcaseComponentProps = {
+  component: JSX.Element
+  code: string
+}
 
-const DisplayComponent: FunctionComponent<DisplayComponentProps> = ({
-  children,
+const ShowcaseComponent: FunctionComponent<ShowcaseComponentProps> = ({
+  component,
+  code,
 }) => {
   let componentName = ''
 
-  React.Children.forEach(children, (child) => {
+  React.Children.forEach(component, (child) => {
     componentName = (child as any)?.type.name
   })
 
@@ -39,10 +44,14 @@ const DisplayComponent: FunctionComponent<DisplayComponentProps> = ({
           backgroundColor: 'transparent',
         }}
       >
-        <div style={{ display: 'flex' }}>{children}</div>
+        <div style={{ display: 'flex' }}>{component}</div>
+      </div>
+
+      <div>
+        <Code code={code} language={'html'} />
       </div>
     </div>
   )
 }
 
-export { DisplayComponent }
+export { ShowcaseComponent }

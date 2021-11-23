@@ -1,4 +1,4 @@
-import { DisplayComponent } from './displayComponent'
+import { DisplayComponent, DisplayComponentProps } from './displayComponent'
 
 import {
   Title,
@@ -10,9 +10,9 @@ import {
 } from '@based/ui-next'
 
 const Playground = () => {
-  const components = [
+  const components: DisplayComponentProps[] = [
     <>
-      <Button key="Button">ButtonText</Button>{' '}
+      <Button key="Button">ButtonText</Button>
       <Button key="other-button">Button</Button>
     </>,
     <Title key="Title">Title</Title>,
@@ -45,7 +45,6 @@ const Playground = () => {
     </BasicCard>,
     <ResultCard key="ResultCard">
       <Text>Answers</Text>
-      {/* <h1>1k</h1> */}
       <Title fontWeight={'bold'}>1k</Title>
     </ResultCard>,
   ]

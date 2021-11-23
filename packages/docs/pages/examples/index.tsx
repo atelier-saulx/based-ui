@@ -1,30 +1,90 @@
-import Link from 'next/link'
+import { ShowcaseComponent, ShowcaseComponentProps } from './showcaseComponent'
 
-import { Title } from '@based/ui-next'
+import {
+  Title,
+  Button,
+  Text,
+  Avatar,
+  BasicCard,
+  ResultCard,
+} from '@based/ui-next'
 
-const PlaygroundLink = (
-  <Link href="/playground">
-    <a style={{ color: 'orange' }}>Playground</a>
-  </Link>
-)
+const Playground = () => {
+  const components: ShowcaseComponentProps[] = [
+    {
+      component: <Button>Button</Button>,
+      code: '<Button>Button</Button>',
+    },
+    {
+      component: <Title>Title</Title>,
+      code: '<Title>Title</Title>',
+    },
+    {
+      component: <Avatar>Avatar</Avatar>,
+      code: '<Avatar>Avatar</Avatar>',
+    },
+    {
+      component: (
+        <BasicCard
+          key="BasicCard"
+          imageUrl="https://images.unsplash.com/photo-1501785888041-af3ef285b470?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8bGFuZHNjYXBlfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60"
+        >
+          <Title fontWeight={'medium'}>Bonjour Senior</Title>
+          <Text>Hello Amigo</Text>
+        </BasicCard>
+      ),
+      code: `
+<BasicCard
+  key="BasicCard"
+  imageUrl="https://images.unsplash.com/photo-1501785888041-af3ef285b470?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8bGFuZHNjYXBlfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60"
+>
+  <Title fontWeight={'medium'}>Bonjour Senior</Title>
+  <Text>Hello Amigo</Text>
+</BasicCard>
+      `.trim(),
+    },
+    {
+      component: (
+        <ResultCard key="ResultCard">
+          <Text>Answers</Text>
+          <Title fontWeight={'bold'}>1k</Title>
+        </ResultCard>
+      ),
+      code: `
+<ResultCard key="ResultCard">
+  <Text>Answers</Text>
+  <Title fontWeight={'bold'}>1k</Title>
+</ResultCard>
+      `.trim(),
+    },
+  ]
 
-const Examples = () => (
-  <div
-    style={{
-      padding: '20px',
-    }}
-  >
-    <Title
-      fontWeight="bold"
+  return (
+    <div
       style={{
-        marginBottom: '20px',
+        paddingTop: '20px',
+        paddingBottom: '20px',
       }}
     >
-      Examples
-    </Title>
+      <Title
+        fontWeight="bold"
+        style={{
+          marginBottom: '20px',
+        }}
+      >
+        Examples
+      </Title>
 
-    <p>There are no examples yet. Check out {PlaygroundLink}.</p>
-  </div>
-)
+      <div>
+        {components.map((component, index) => (
+          <ShowcaseComponent
+            key={`ShowcaseComponent-${index}`}
+            {...component}
+          />
+        ))}
+      </div>
+    </div>
+  )
+}
 
-export default Examples
+export default Playground
