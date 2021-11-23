@@ -13,10 +13,8 @@ export const Code: FunctionComponent<CodeProps> = ({ code, language }) => {
   }, [])
 
   return (
-    <div className="Code">
-      <pre>
-        <code className={`language-${language}`}>{code}</code>
-      </pre>
-    </div>
+    <pre>
+      <code className={`language-${language}`}>{code}</code>
+    </pre>
   )
 }

@@ -50,7 +50,6 @@ export const Avatar: FunctionComponent<AvatarProps> = ({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        userSelect: 'text',
         ...style,
       }}
     >
