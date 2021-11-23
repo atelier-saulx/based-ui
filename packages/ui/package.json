@@ -6,16 +6,19 @@
   "dependencies": {
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "styled-components": "^5.3.3"
+    "styled-components": "^5.3.3",
+    "@saulx/hash": "^1.1.0"
   },
   "devDependencies": {
+    "@parcel/packager-ts": "^2.0.1",
+    "@parcel/transformer-typescript-types": "^2.0.1",
     "@saulx/eslint-config": "^1.1.1",
-    "@saulx/hash": "^1.1.0",
     "@saulx/prettier-config": "^1.0.0",
     "@types/node": "^16.9.4",
-    "@types/react": "^17.0.22",
+    "@types/react": "^17.0.36",
+    "@types/react-dom": "^17.0.11",
     "@types/styled-components": "^5.1.15",
-    "tsc-watch": "^4.5.0",
+    "parcel": "^2.0.1",
     "typescript": "4.4.3"
   },
   "sideEffects": false,
@@ -28,9 +31,12 @@
     }
   },
   "scripts": {
-    "start": "tsc-watch --noClear -p ./tsconfig.json --onSuccess \"node ./postbuild.js\" --onFailure \"echo Build Failed\""
+    "watch": "parcel watch",
+    "build": "parcel build"
   },
+  "source": "src/index.ts",
   "main": "dist/index.js",
-  "module": "dist/index.js",
+  "module": "dist/module.js",
+  "types": "dist/types.d.ts",
   "license": "MIT"
 }

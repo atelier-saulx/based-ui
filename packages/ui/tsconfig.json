@@ -3,6 +3,7 @@
     "rootDir": "src",
     "outDir": "dist",
     "jsx": "react",
+    "isolatedModules": true,
     "incremental": true,
     "composite": true,
     "target": "es2020",
