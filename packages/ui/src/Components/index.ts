@@ -1,4 +1,5 @@
 export * from './Avatar'
 export * from './Button'
+export * from './Cards'
 export * from './SideMenu'
 export * from './Text'

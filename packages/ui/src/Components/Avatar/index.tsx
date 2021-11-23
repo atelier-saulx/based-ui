@@ -18,11 +18,11 @@ const Avatar: FunctionComponent<AvatarProps> = ({
 }) => {
   const avatarSize =
     size === 'small'
-      ? '64px'
+      ? '54px'
       : size === 'medium'
-      ? '128px'
+      ? '96px'
       : size === 'large'
-      ? '256px'
+      ? '128px'
       : 'small'
 
   const avatarFontSize =
