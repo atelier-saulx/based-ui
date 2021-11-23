@@ -23,7 +23,7 @@
   ],
   "scripts": {
     "start": "run-p start:*",
-    "start:ui": "yarn workspace @based/ui-next start",
+    "start:ui": "yarn workspace @based/ui-next build",
     "start:docs": "yarn workspace @based/ui-docs dev"
   },
   "devDependencies": {
