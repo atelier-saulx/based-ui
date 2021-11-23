@@ -48,7 +48,7 @@ const ShowcaseComponent: FunctionComponent<ShowcaseComponentProps> = ({
       </div>
 
       <div>
-        <Code code={code} language={'html'} />
+        <Code code={code} language={'jsx'} />
       </div>
     </div>
   )
