@@ -22,6 +22,7 @@ export const ResultCard: FunctionComponent<ResultCardProps> = ({
         margin: '1%',
         padding: '32px 16px',
         textAlign: 'center',
+        userSelect: 'text',
         ...style,
       }}
     >
