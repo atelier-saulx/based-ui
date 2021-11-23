@@ -1,12 +1,12 @@
 import React, { CSSProperties, FunctionComponent } from 'react'
 
-type TextProps = {
+export type TitleProps = {
   value?: string
   style?: CSSProperties
   fontWeight?: 'regular' | 'medium' | 'semibold' | 'bold'
 }
 
-const Title: FunctionComponent<TextProps> = ({
+export const Title: FunctionComponent<TitleProps> = ({
   children,
   value = '',
   style = {},
@@ -36,5 +36,3 @@ const Title: FunctionComponent<TextProps> = ({
     </div>
   )
 }
-
-export { Title }

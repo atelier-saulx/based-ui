@@ -1,11 +1,11 @@
 import React, { CSSProperties, FunctionComponent } from 'react'
 
-type ResultCardProps = {
+export type ResultCardProps = {
   value?: string
   style?: CSSProperties
 }
 
-const ResultCard: FunctionComponent<ResultCardProps> = ({
+export const ResultCard: FunctionComponent<ResultCardProps> = ({
   children,
   value = '',
   style = {},
@@ -29,5 +29,3 @@ const ResultCard: FunctionComponent<ResultCardProps> = ({
     </div>
   )
 }
-
-export { ResultCard }

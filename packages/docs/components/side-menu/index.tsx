@@ -36,7 +36,7 @@ const SideMenu = () => {
     <Menu
       menuItems={menuItems}
       Header={Header}
-      onClick={({ route }) => router.push(route)}
+      onClick={({ route }: any) => router.push(route)}
     />
   )
 }

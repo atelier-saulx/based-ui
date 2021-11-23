@@ -1,12 +1,12 @@
 import React, { CSSProperties, FunctionComponent } from 'react'
 
-type TextProps = {
+export type TextProps = {
   value?: string
   style?: CSSProperties
   fontWeight?: 'regular' | 'medium' | 'semibold' | 'bold'
 }
 
-const Text: FunctionComponent<TextProps> = ({
+export const Text: FunctionComponent<TextProps> = ({
   children,
   value = '',
   style = {},
@@ -36,5 +36,3 @@ const Text: FunctionComponent<TextProps> = ({
     </div>
   )
 }
-
-export { Text }

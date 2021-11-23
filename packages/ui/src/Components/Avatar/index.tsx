@@ -1,15 +1,14 @@
 import React, { CSSProperties, FunctionComponent } from 'react'
 import { useColor } from '../../theme'
 
-type AvatarProps = {
+export type AvatarProps = {
   value?: string
   style?: CSSProperties
   imageUrl?: string
   size?: 'small' | 'medium' | 'large'
-  // bgColor? :
 }
 
-const Avatar: FunctionComponent<AvatarProps> = ({
+export const Avatar: FunctionComponent<AvatarProps> = ({
   children,
   value = '',
   style = {},
@@ -59,5 +58,3 @@ const Avatar: FunctionComponent<AvatarProps> = ({
     </div>
   )
 }
-
-export { Avatar }
