@@ -28,6 +28,7 @@ function App({ Component, pageProps }: AppProps) {
           display: 'flex',
           width: '100vw',
           height: '100vh',
+          overflowX: 'hidden',
         }}
       >
         {children}
@@ -43,6 +44,7 @@ function App({ Component, pageProps }: AppProps) {
           width: '100vw',
           height: '100vh',
           padding: '10px',
+          overflowX: 'hidden',
         }}
       >
         {children}
