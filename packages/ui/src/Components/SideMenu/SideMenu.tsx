@@ -1,5 +1,4 @@
 import React, { CSSProperties, FunctionComponent } from 'react'
-import { useColor } from '../../theme'
 import { SideMenuItem } from './SideMenuItem'
 
 export type MenuItem = {
@@ -54,10 +53,7 @@ export const SideMenu: FunctionComponent<SideMenuProps> = ({
         width: 200,
         minWidth: 200,
         overflowX: 'hidden',
-        backgroundColor: useColor({
-          color: 'background',
-          tone: 3,
-        }),
+        backgroundColor: 'red', // useColor
         ...style,
       }}
     >

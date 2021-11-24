@@ -1,5 +1,4 @@
 import React, { CSSProperties, FunctionComponent } from 'react'
-import { useColor } from '../../theme'
 
 export type AvatarProps = {
   value?: string
@@ -36,12 +35,12 @@ export const Avatar: FunctionComponent<AvatarProps> = ({
   return (
     <div
       style={{
-        background: useColor({ color: 'primary' }),
+        background: 'red', // useColor({ color: 'primary' }),
         backgroundImage: `url(${imageUrl})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center center',
         borderRadius: '50%',
-        color: useColor({ color: 'background' }),
+        color: 'red', // useColor({ color: 'background' }),
         fontSize: avatarFontSize,
         width: avatarSize,
         height: avatarSize,

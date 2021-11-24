@@ -1,10 +1,10 @@
 import React, { CSSProperties, FunctionComponent } from 'react'
 import styled from 'styled-components'
-import { useColor } from '../../theme'
+import { useTheme } from '../../theme'
 
 const StyledButton = styled.button({
   alignItems: 'flex-start',
-  background: useColor({ color: 'secondary' }),
+  background: 'red', // useColor({ token: 'secondary' }),
   borderRadius: '4px',
   cursor: 'pointer',
   fontSize: '15px',
@@ -25,6 +25,12 @@ export const Button: FunctionComponent<ButtonProps> = ({
   style,
   children,
 }) => {
+  const primaryColor = useTheme({ type: 'color', token: 'color-primary' })
+  const secondaryColor = useTheme({ type: 'color', token: 'color-secondary' })
+
+  console.log('>>>>>> primaryColor: ', primaryColor)
+  console.log('>>>>>> secondaryColor: ', secondaryColor)
+
   return (
     <div
       style={{
