@@ -65,3 +65,11 @@ export function resolveSize(
 
   return tokenConfig.size
 }
+
+export function setCSSProperty(
+  target: CSSStyleDeclaration = document.documentElement.style,
+  variable: string,
+  property: string
+) {
+  target.setProperty(`--${variable}`, `${property}`)
+}

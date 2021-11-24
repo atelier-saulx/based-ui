@@ -29,11 +29,11 @@ const Home: NextPage = () => {
             marginBottom: '20px',
           }}
         >
-          Introduction to Based-UI
+          Introduction to Aviato-UI
         </Title>
 
         <Text>
-          Based-UI is a component-suite to enrich your web applications, or to
+          Aviato-UI is a component-suite to enrich your web applications, or to
           create CMS/DMS interfaces.
         </Text>
 

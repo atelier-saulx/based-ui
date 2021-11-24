@@ -15,7 +15,7 @@ const HeadContent = () => {
         name="viewport"
         content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0, viewport-fit=cover"
       />
-      <meta property="og:title" content="Based-UI Documentation" key="title" />
+      <meta property="og:title" content="Aviato-UI" key="title" />
     </Head>
   )
 }
