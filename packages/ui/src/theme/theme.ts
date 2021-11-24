@@ -1,5 +1,7 @@
 import { resolveColor, resolveSize } from './utils'
 
+import TokenConfig from './token.config.json'
+
 export type ColorToken =
   | 'color-primary'
   | 'color-primaryAccent'
@@ -49,6 +51,11 @@ export type TokenConfiguration = {
 }
 
 const tokenConfiguration: () => TokenConfiguration = () => {
+  const useJSON = true
+  if (useJSON) {
+    return TokenConfig as TokenConfiguration
+  }
+
   return {
     color: {
       'color-primary': {
