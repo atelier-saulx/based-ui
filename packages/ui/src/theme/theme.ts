@@ -29,10 +29,12 @@ export type SizeToken =
 
 export type TokenPrimitive = ColorToken | SizeToken
 
-export type ColorTokenConfig = {
-  color: string
-  opacity?: number
-}
+export type ColorTokenConfig =
+  | string
+  | {
+      color: string
+      opacity?: number
+    }
 
 type SizeTokenConfig =
   | string
@@ -64,6 +66,8 @@ const tokenConfiguration: () => TokenConfiguration = () => {
       'color-tertiary': {
         color: 'rgba(0, 0, 0, 0.2)',
       },
+
+      'color-background': 'rgba(255, 255, 255, 0.8)',
     },
 
     size: {

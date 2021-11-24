@@ -36,6 +36,7 @@ export const Button: FunctionComponent<ButtonProps> = ({
   const primaryColor = useColor('color-primary')
   const secondaryColor = useColor('color-secondary')
   const tertiaryColor = useColor('color-tertiary')
+  const backgroundColor = useColor('color-background')
 
   const sizeSmall = useSize('size-sm')
   const sizeMedium = useSize('size-md')
@@ -49,6 +50,7 @@ export const Button: FunctionComponent<ButtonProps> = ({
   console.log('>>>>>> primaryColor: ', primaryColor)
   console.log('>>>>>> secondaryColor: ', secondaryColor)
   console.log('>>>>>> tertiaryColor: ', tertiaryColor)
+  console.log('>>>>>> backgroundColor: ', backgroundColor)
 
   console.log('>>>>>> sizeSmall: ', sizeSmall)
   console.log('>>>>>> sizeMedium: ', sizeMedium)

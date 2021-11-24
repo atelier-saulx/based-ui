@@ -23,13 +23,21 @@ export function resolveColor(
   token: ColorToken,
   config: ColorTokenCollection
 ): string {
-  const tokenObject = config[token]
-  if (!tokenObject) {
+  const tokenConfig = config[token]
+  if (!tokenConfig) {
     throw new Error(`Missing color token: ${token}`)
   }
 
-  const { color, opacity: inputOpacity = 1.0 } = tokenObject
-  const opacity = Math.min(Math.max(inputOpacity, 0), 1)
+  let color
+  let opacity = 1.0
+
+  if (typeof tokenConfig === 'string') {
+    color = tokenConfig
+  } else {
+    const { color: inputColor, opacity: inputOpacity = 1.0 } = tokenConfig
+    color = inputColor
+    opacity = Math.min(Math.max(inputOpacity, 0), 1)
+  }
 
   if (color.includes('#')) {
     return convertHexToRGBA(color, opacity)
