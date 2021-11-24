@@ -1,6 +1,6 @@
 import React, { CSSProperties, FunctionComponent } from 'react'
 import styled from 'styled-components'
-import { useTheme } from '../../theme'
+import { useColor, useTheme } from '../../theme'
 
 const StyledButton = styled.button({
   alignItems: 'flex-start',
@@ -25,9 +25,17 @@ export const Button: FunctionComponent<ButtonProps> = ({
   style,
   children,
 }) => {
-  const primaryColor = useTheme('color', 'color-primary')
-  const secondaryColor = useTheme('color', 'color-secondary')
-  const tertiaryColor = useTheme('color', 'color-tertiary')
+  const themePrimaryColor = useTheme('color', 'color-primary')
+  const themeSecondaryColor = useTheme('color', 'color-secondary')
+  const themeTertiaryColor = useTheme('color', 'color-tertiary')
+
+  console.log('>>>>>> themePrimaryColor: ', themePrimaryColor)
+  console.log('>>>>>> themeSecondaryColor: ', themeSecondaryColor)
+  console.log('>>>>>> themeTertiaryColor: ', themeTertiaryColor)
+
+  const primaryColor = useColor('color-primary')
+  const secondaryColor = useColor('color-secondary')
+  const tertiaryColor = useColor('color-tertiary')
 
   console.log('>>>>>> primaryColor: ', primaryColor)
   console.log('>>>>>> secondaryColor: ', secondaryColor)

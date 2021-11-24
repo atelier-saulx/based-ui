@@ -77,16 +77,16 @@ export type ColorTokenCollection = {
 }
 
 function useTheme(type: TokenType, token: TokenPrimitive): string {
-  const tokenConfig = tokenConfiguration()
-
   if (type === 'color') {
-    return resolveColor(
-      token as ColorToken,
-      tokenConfig.color as ColorTokenCollection
-    )
+    return useColor(token as ColorToken)
   }
 
   throw new Error(`Token-type not accepted: ${type}`)
 }
 
-export { useTheme }
+function useColor(token: ColorToken): string {
+  const tokenConfig = tokenConfiguration()
+  return resolveColor(token, tokenConfig.color as ColorTokenCollection)
+}
+
+export { useTheme, useColor }
