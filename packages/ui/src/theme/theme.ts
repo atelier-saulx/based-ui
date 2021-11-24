@@ -1,17 +1,5 @@
 import { resolveColor, resolveSize } from './utils'
 
-type ColorType = {
-  type: 'color'
-  config: ColorToken
-}
-
-type SizeType = {
-  type: 'size'
-  config: SizeToken
-}
-
-export type TokenType = ColorType | SizeType
-
 export type ColorToken =
   | 'color-primary'
   | 'color-primaryAccent'
@@ -96,16 +84,6 @@ export type SizeTokenCollection = {
   [key: string]: SizeTokenConfig
 }
 
-function useTheme(type: TokenType['type'], token: TokenType['config']): string {
-  if (type === 'color') {
-    return useColor(token as ColorToken)
-  } else if (type === 'size') {
-    return useSize(token as SizeToken)
-  } else {
-    console.warn(`Token-type not accepted: ${type}`)
-  }
-}
-
 function useColor(token: ColorToken): string {
   try {
     const tokenConfig = tokenConfiguration()
@@ -124,4 +102,4 @@ function useSize(token: SizeToken): string {
   }
 }
 
-export { useTheme, useColor, useSize }
+export { useColor, useSize }
