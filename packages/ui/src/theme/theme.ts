@@ -7,6 +7,8 @@ export type ColorToken =
   | 'color-primaryAccent'
   | 'color-secondary'
   | 'color-secondaryAccent'
+  | 'color-tertiary'
+  | 'color-tertiaryAccent'
   | 'color-background'
   | 'color-foreground'
   | 'color-divider'
@@ -49,12 +51,16 @@ const tokenConfiguration: () => TokenConfiguration = () => {
     color: {
       'color-primary': {
         color: '#FFFFFF',
-        opacity: 0.2,
+        opacity: 0.5,
       },
 
       'color-secondary': {
         color: 'rgb(0, 0, 0)',
-        opacity: 0.2,
+        opacity: 0.4,
+      },
+
+      'color-tertiary': {
+        color: 'rgba(0, 0, 0, 0.2)',
       },
     },
 
