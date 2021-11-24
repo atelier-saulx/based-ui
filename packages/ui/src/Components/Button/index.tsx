@@ -1,6 +1,8 @@
+/* eslint-disable no-console */
+
 import React, { CSSProperties, FunctionComponent } from 'react'
 import styled from 'styled-components'
-import { useColor, useTheme } from '../../theme'
+import { useColor, useSize, useTheme } from '../../theme'
 
 const StyledButton = styled.button({
   alignItems: 'flex-start',
@@ -29,17 +31,27 @@ export const Button: FunctionComponent<ButtonProps> = ({
   const themeSecondaryColor = useTheme('color', 'color-secondary')
   const themeTertiaryColor = useTheme('color', 'color-tertiary')
 
-  console.log('>>>>>> themePrimaryColor: ', themePrimaryColor)
-  console.log('>>>>>> themeSecondaryColor: ', themeSecondaryColor)
-  console.log('>>>>>> themeTertiaryColor: ', themeTertiaryColor)
+  const themeSizeLarge = useTheme('size', 'size-lg')
 
   const primaryColor = useColor('color-primary')
   const secondaryColor = useColor('color-secondary')
   const tertiaryColor = useColor('color-tertiary')
 
+  const sizeSmall = useSize('size-sm')
+  const sizeMedium = useSize('size-md')
+
+  console.log('>>>>>> themePrimaryColor: ', themePrimaryColor)
+  console.log('>>>>>> themeSecondaryColor: ', themeSecondaryColor)
+  console.log('>>>>>> themeTertiaryColor: ', themeTertiaryColor)
+
+  console.log('>>>>>> themeSizeLarge: ', themeSizeLarge)
+
   console.log('>>>>>> primaryColor: ', primaryColor)
   console.log('>>>>>> secondaryColor: ', secondaryColor)
   console.log('>>>>>> tertiaryColor: ', tertiaryColor)
+
+  console.log('>>>>>> sizeSmall: ', sizeSmall)
+  console.log('>>>>>> sizeMedium: ', sizeMedium)
 
   return (
     <div

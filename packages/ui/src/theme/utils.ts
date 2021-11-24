@@ -1,3 +1,4 @@
+import { SizeToken, SizeTokenCollection } from '.'
 import { ColorToken, ColorTokenCollection } from './theme'
 
 export function convertHexToRGBA(input: string, opacity: number): string {
@@ -27,7 +28,7 @@ export function resolveColor(
     throw new Error(`Missing color token: ${token}`)
   }
 
-  const { color, opacity: inputOpacity = 1.0 } = tokenObject ?? {}
+  const { color, opacity: inputOpacity = 1.0 } = tokenObject
   const opacity = Math.min(Math.max(inputOpacity, 0), 1)
 
   if (color.includes('#')) {
@@ -39,4 +40,20 @@ export function resolveColor(
   }
 
   throw new Error(`Cannot match color token: ${token}`)
+}
+
+export function resolveSize(
+  token: SizeToken,
+  config: SizeTokenCollection
+): string {
+  const tokenConfig = config[token]
+  if (!tokenConfig) {
+    throw new Error(`Missing size token: ${token}`)
+  }
+
+  if (typeof tokenConfig === 'string') {
+    return tokenConfig
+  }
+
+  return tokenConfig.size
 }

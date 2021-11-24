@@ -1,4 +1,4 @@
-import { resolveColor } from './utils'
+import { resolveColor, resolveSize } from './utils'
 
 export type TokenType = 'color' | 'size'
 
@@ -29,20 +29,22 @@ export type SizeToken =
 
 export type TokenPrimitive = ColorToken | SizeToken
 
-export type ColorTokenObject = {
+export type ColorTokenConfig = {
   color: string
   opacity?: number
 }
 
-type SizeTokenObject = {
-  size: string
-}
+type SizeTokenConfig =
+  | string
+  | {
+      size: string
+    }
 
-type TokenObject = ColorTokenObject | SizeTokenObject
+type TokenConfig = ColorTokenConfig | SizeTokenConfig
 
 export type TokenConfiguration = {
   [key in string]: {
-    [key: string]: TokenObject
+    [key: string]: TokenConfig
   }
 }
 
@@ -65,7 +67,7 @@ const tokenConfiguration: () => TokenConfiguration = () => {
     },
 
     size: {
-      'size-sm': { size: '12px' },
+      'size-sm': '12px',
       'size-md': { size: '16px' },
       'size-lg': { size: '20px' },
     },
@@ -73,20 +75,39 @@ const tokenConfiguration: () => TokenConfiguration = () => {
 }
 
 export type ColorTokenCollection = {
-  [key: string]: ColorTokenObject
+  [key: string]: ColorTokenConfig
+}
+
+export type SizeTokenCollection = {
+  [key: string]: SizeTokenConfig
 }
 
 function useTheme(type: TokenType, token: TokenPrimitive): string {
   if (type === 'color') {
     return useColor(token as ColorToken)
+  } else if (type === 'size') {
+    return useSize(token as SizeToken)
+  } else {
+    console.warn(`Token-type not accepted: ${type}`)
   }
-
-  throw new Error(`Token-type not accepted: ${type}`)
 }
 
 function useColor(token: ColorToken): string {
-  const tokenConfig = tokenConfiguration()
-  return resolveColor(token, tokenConfig.color as ColorTokenCollection)
+  try {
+    const tokenConfig = tokenConfiguration()
+    return resolveColor(token, tokenConfig.color as ColorTokenCollection)
+  } catch (error) {
+    console.warn('Color-resolve failed - error: ', error)
+  }
 }
 
-export { useTheme, useColor }
+function useSize(token: SizeToken): string {
+  try {
+    const tokenConfig = tokenConfiguration()
+    return resolveSize(token, tokenConfig.size as SizeTokenCollection)
+  } catch (error) {
+    console.warn('Size-resolve failed - error: ', error)
+  }
+}
+
+export { useTheme, useColor, useSize }
