@@ -1,6 +1,6 @@
 import { resolveColor } from './utils'
 
-type TokenType = 'color' | 'size'
+export type TokenType = 'color' | 'size'
 
 export type ColorToken =
   | 'color-primary'
@@ -39,7 +39,7 @@ type SizeTokenObject = {
 type TokenObject = ColorTokenObject | SizeTokenObject
 
 export type TokenConfiguration = {
-  [key in TokenType]: {
+  [key in string]: {
     [key: string]: TokenObject
   }
 }
@@ -70,20 +70,17 @@ export type ColorTokenCollection = {
   [key: string]: ColorTokenObject
 }
 
-type ThemeProps = {
-  type: TokenType
-  token: TokenPrimitive
-}
+function useTheme(type: TokenType, token: TokenPrimitive): string {
+  const tokenConfig = tokenConfiguration()
 
-export function useTheme({ type, token }: ThemeProps): string {
-  const isColorToken = type === 'color'
-
-  if (isColorToken) {
+  if (type === 'color') {
     return resolveColor(
       token as ColorToken,
-      tokenConfiguration().color as ColorTokenCollection
+      tokenConfig.color as ColorTokenCollection
     )
   }
 
   throw new Error(`Token-type not accepted: ${type}`)
 }
+
+export { useTheme }

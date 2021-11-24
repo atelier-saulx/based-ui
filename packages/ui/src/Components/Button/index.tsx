@@ -25,8 +25,8 @@ export const Button: FunctionComponent<ButtonProps> = ({
   style,
   children,
 }) => {
-  const primaryColor = useTheme({ type: 'color', token: 'color-primary' })
-  const secondaryColor = useTheme({ type: 'color', token: 'color-secondary' })
+  const primaryColor = useTheme('color', 'color-primary')
+  const secondaryColor = useTheme('color', 'color-secondary')
 
   console.log('>>>>>> primaryColor: ', primaryColor)
   console.log('>>>>>> secondaryColor: ', secondaryColor)
