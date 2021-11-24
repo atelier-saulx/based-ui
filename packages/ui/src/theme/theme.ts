@@ -1,6 +1,16 @@
 import { resolveColor, resolveSize } from './utils'
 
-export type TokenType = 'color' | 'size'
+type ColorType = {
+  type: 'color'
+  config: ColorToken
+}
+
+type SizeType = {
+  type: 'size'
+  config: SizeToken
+}
+
+export type TokenType = ColorType | SizeType
 
 export type ColorToken =
   | 'color-primary'
@@ -86,7 +96,7 @@ export type SizeTokenCollection = {
   [key: string]: SizeTokenConfig
 }
 
-function useTheme(type: TokenType, token: TokenPrimitive): string {
+function useTheme(type: TokenType['type'], token: TokenType['config']): string {
   if (type === 'color') {
     return useColor(token as ColorToken)
   } else if (type === 'size') {
