@@ -41,6 +41,10 @@ const genPath = (
   const points = []
   // also different for segments
   if (stepSize < 10) {
+    // MAKE AVARAGES
+
+    // 10 pixels is the smallest amount per x
+    // dX is hte result of what we need to calc to get to a stepSize of 10
     const dX = 10 / stepSize
     const condenseAmount = Math.round(dX)
     stepSize = width / (Math.floor(data.length / condenseAmount) - 1)
@@ -49,18 +53,25 @@ const genPath = (
     const pointArr = {}
     let amount = 0
     let setTotal = false
+
+    // len = 50k
     for (let i = 0; i < data.length - 1; i += condenseAmount) {
-      let v = 0
-      let min
-      let max
-      let c = 0
+      let total = 0
+      let min: number
+      let max: number
+      let pointsTraversed = 0
 
       const segs = {}
 
       for (let j = 0; j < condenseAmount; j++) {
-        if (data[i + j]) {
-          c++
-          const y = data[i + j].y
+        const dataPoint: {
+          x: number
+          y: number
+          segments?: { [key: string]: number }
+        } = data[i + j]
+        if (dataPoint) {
+          pointsTraversed++
+          const y = dataPoint.y
           if (min === undefined || y < min) {
             min = y
           }
@@ -68,18 +79,15 @@ const genPath = (
             max = y
           }
 
-          // segments
-
           // need to add points for all segments...
           if (segments) {
-            if (data[i + j].segments) {
-              for (const key in data[i + j].segments) {
-                const y = data[i + j].segments[key]
+            if (dataPoint.segments) {
+              for (const key in dataPoint.segments) {
+                const y = dataPoint.segments[key]
                 if (segs[key] === undefined) {
                   segs[key] = 0
                 }
                 segs[key] += y
-
                 if (y < min) {
                   min = y
                 }
@@ -90,7 +98,7 @@ const genPath = (
             }
           }
 
-          v += y
+          total += y
         }
       }
 
@@ -102,7 +110,7 @@ const genPath = (
         if (!setTotal) {
           amount++
         }
-        prevY += segs[key] / c
+        prevY += segs[key] / pointsTraversed
         pointArr[key].push([
           stepSize * (i / condenseAmount),
           (ySpread - (prevY - minY)) / pxValue,
@@ -110,7 +118,7 @@ const genPath = (
       }
       setTotal = true
 
-      const newY = v / c
+      const newY = total / pointsTraversed
       mins.push([
         stepSize * (i / condenseAmount),
         (ySpread - (min - minY)) / pxValue,
@@ -127,6 +135,7 @@ const genPath = (
     maxs.reverse()
 
     if (segments) {
+      // STACKED
       const children = []
       let i = 0
       let prev
@@ -172,6 +181,7 @@ const genPath = (
         </>
       )
     } else if (spread) {
+      // WITH SPREAD
       const p = genPathCurve(points, stepSize / 2)
       paths = (
         <>
@@ -195,6 +205,7 @@ const genPath = (
         </>
       )
     } else {
+      // NORMAL LINE
       const p = genPathCurve(points, stepSize / 2)
 
       paths = (
