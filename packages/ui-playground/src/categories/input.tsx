@@ -259,6 +259,12 @@ export default {
           onChange: () => {},
           value: true,
         },
+        {
+          children: 'Hello cannot uncheck',
+          onChange: () => {},
+          value: true,
+          noDeselect: true,
+        },
       ],
     },
     {

@@ -22,6 +22,7 @@ export type ToggleInputProps = {
   border?: boolean
   onMouseEnter?: EventHandler<SyntheticEvent>
   identifier?: any
+  overrideValue?: boolean
   children?: TextValue
 }
 
@@ -92,10 +93,15 @@ export const RadioButton: FunctionComponent<ToggleInputProps> = ({
   icon,
   border,
   identifier,
+  overrideValue,
   value = false,
   ...rest
 }) => {
-  const [stateValue, setValue] = useScopedState<boolean>(value, identifier)
+  let [stateValue, setValue] = useScopedState<boolean>(value, identifier)
+
+  if (overrideValue !== undefined) {
+    stateValue = overrideValue
+  }
 
   const Icon = icon ? iconFromString(icon) : null
 

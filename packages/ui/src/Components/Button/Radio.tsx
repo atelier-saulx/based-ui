@@ -13,6 +13,7 @@ export type RadioProps = {
   overrideValue?: boolean
   style?: CSSProperties
   color?: Color
+  noDeselect?: boolean
 }
 
 export const Radio: FunctionComponent<RadioProps> = ({
@@ -21,6 +22,7 @@ export const Radio: FunctionComponent<RadioProps> = ({
   value = false,
   overrideValue,
   style,
+  noDeselect,
 }) => {
   let [enabled, update] = useReducer((x) => !x, value)
 
