@@ -45,6 +45,7 @@ import LightningSvg from './Components/Lightning'
 import ListSvg from './Components/List'
 import LockSvg from './Components/Lock'
 import LogicSvg from './Components/Logic'
+import MessageSvg from './Components/Message'
 import MicrosoftColorSvg from './Components/MicrosoftColor'
 import MobileSvg from './Components/Mobile'
 import MoreSvg from './Components/More'
@@ -77,6 +78,7 @@ import ThankYouSvg from './Components/ThankYou'
 import TimeSvg from './Components/Time'
 import ToggleOffScreenSvg from './Components/ToggleOff'
 import ToggleOnSvg from './Components/ToggleOn'
+import TrophySvg from './Components/Trophy'
 import UnitedKingdomSvg from './Components/UnitedKingdom'
 import UnlockSvg from './Components/Unlock'
 import UpArrowSvg from './Components/UpArrow'
@@ -252,6 +254,7 @@ const Lightning = wrapIcon(LightningSvg)
 const List = wrapIcon(ListSvg)
 const Lock = wrapIcon(LockSvg)
 const Logic = wrapIcon(LogicSvg)
+const Message = wrapIcon(MessageSvg)
 const MicrosoftColor = wrapIcon(MicrosoftColorSvg)
 const Mobile = wrapIcon(MobileSvg)
 const More = wrapIcon(MoreSvg)
@@ -284,6 +287,7 @@ const ThankYou = wrapIcon(ThankYouSvg)
 const Time = wrapIcon(TimeSvg)
 const ToggleOff = wrapIcon(ToggleOffScreenSvg)
 const ToggleOn = wrapIcon(ToggleOnSvg)
+const Trophy = wrapIcon(TrophySvg)
 const UnitedKingdom = wrapIcon(UnitedKingdomSvg)
 const Unlock = wrapIcon(UnlockSvg)
 const Up = wrapIcon(UpSvg)
@@ -335,6 +339,7 @@ const icons = {
   List,
   Lock,
   Logic,
+  Message,
   MicrosoftColor,
   Mobile,
   More,
@@ -367,6 +372,7 @@ const icons = {
   Time,
   ToggleOff,
   ToggleOn,
+  Trophy,
   UnitedKingdom,
   Unlock,
   Up,
