@@ -457,6 +457,7 @@ export type IconName =
   | 'time'
   | 'toggleOff'
   | 'toggleOn'
+  | 'trophy'
   | 'unitedKingdom'
   | 'unlock'
   | 'up'
@@ -518,6 +519,7 @@ export {
   List,
   Lock,
   Logic,
+  Message,
   MicrosoftColor,
   Mobile,
   More,
@@ -547,6 +549,7 @@ export {
   Tablet,
   Tally,
   ThankYou,
+  Trophy,
   Time,
   ToggleOff,
   ToggleOn,
