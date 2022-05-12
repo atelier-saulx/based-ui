@@ -42,6 +42,8 @@ const ModalChildren = ({ children }) => {
   )
 }
 
+const m = randomLongText()
+
 export default {
   name: 'overlay',
   Render: ({ category }) => <RenderComponents grid category={category} />,
@@ -181,13 +183,17 @@ export default {
             <Button
               onClick={useModal(
                 (props) => {
-                  console.info('props', props)
+                  console.info('UPDATE NESTED MODAL SHIT', props)
 
                   return (
                     <div>
                       <div>THIS IS SOMETHING</div>
                       <br />
-                      <MultilineTextInput border />
+                      <MultilineTextInput
+                        onChange={() => {}}
+                        value={m}
+                        border
+                      />
                     </div>
                   )
                 },

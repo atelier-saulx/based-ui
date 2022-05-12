@@ -59,14 +59,14 @@ export const MultilineTextInput: FunctionComponent<MultilineInputProps> = ({
   useEffect(() => {
     if (ref.current) {
       // @ts-ignore
-      ref.current.style.height = 'auto'
+      // ref.current.style.height = 'auto'
 
       if (!stateValue) {
         // @ts-ignore
         ref.current.style.height = `42px`
       } else {
         // @ts-ignore
-        ref.current.style.height = `${ref.current.scrollHeight + 5}px`
+        ref.current.style.height = `${ref.current.scrollHeight}px`
       }
     }
   }, [stateValue])
@@ -145,6 +145,7 @@ export const MultilineTextInput: FunctionComponent<MultilineInputProps> = ({
           paddingBottom: isFocus ? 6.5 : 7.5,
           resize: 'none',
           width: '100%',
+          overflow: 'hidden',
           height: 'auto',
           appearance: 'none',
           fontFamily: 'Font',
