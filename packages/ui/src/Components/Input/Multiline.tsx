@@ -58,9 +58,6 @@ export const MultilineTextInput: FunctionComponent<MultilineInputProps> = ({
 
   useEffect(() => {
     if (ref.current) {
-      // @ts-ignore
-      // ref.current.style.height = 'auto'
-
       if (!stateValue) {
         // @ts-ignore
         ref.current.style.height = `42px`
@@ -147,6 +144,7 @@ export const MultilineTextInput: FunctionComponent<MultilineInputProps> = ({
           width: '100%',
           overflow: 'hidden',
           height: 'auto',
+          minHeight: 42,
           appearance: 'none',
           fontFamily: 'Font',
           color: useColor({ color: 'foreground' }),
