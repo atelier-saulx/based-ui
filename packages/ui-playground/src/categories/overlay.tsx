@@ -15,6 +15,7 @@ import {
 } from '@based/ui'
 import RenderComponents from '../RenderComponents'
 import { randomLongText, randomTitle } from './util'
+import { MultilineTextInput } from '@based/ui/src'
 
 const ModalChildren = ({ children }) => {
   return (
@@ -182,7 +183,13 @@ export default {
                 (props) => {
                   console.info('props', props)
 
-                  return <div>THIS IS SOMETHING</div>
+                  return (
+                    <div>
+                      <div>THIS IS SOMETHING</div>
+                      <br />
+                      <MultilineTextInput border />
+                    </div>
+                  )
                 },
                 {
                   header: {
@@ -204,7 +211,7 @@ export default {
                 }
               )}
             >
-              useModal + component
+              useModal + component + multilineinput
             </Button>
           )
         },
